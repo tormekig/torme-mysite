@@ -1,3 +1,6 @@
+import City from "./data/city.js"
+import MAComps from "./data/MACompartments.js"
+
 function AreaCode({ areaCode }) {
 	return (
 		<div className="areacode">
@@ -188,15 +191,29 @@ function Cities({ classifiedCities }) {
 
 }
 
-function MAAreaCodeInfo() {
+function MAAreaCodeInfo({ compCodeMain }) {
+
+	let MAComp
+
+	if (MAComps.some((c) => c.codeMain === compCodeMain)) {
+		MAComp = MAComps.find((c) => c.codeMain === compCodeMain)
+	} else {
+		return <div>Not Found</div>
+	}
+
+	const compCode = MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
+
+	const cities = City.filter(function(city) {
+		return city.compartmentCode === compCode;
+	})
 
 	const info = {
-		areaCode: "0152",
-		ma: "網走",
-		maDistinct: "1",
-		compartmentCode: "43",
-		pref: "北海道",
-		square: "861-622",
+		areaCode: "0" + MAComp.areaCode,
+		ma: MAComp.MAName,
+		maDistinct: MAComp.MAnum,
+		compartmentCode: compCode,
+		pref: MAComp.pref,
+		square: MAComp.square,
 		numberBands: [
 			{
 				start: "0152-1",
@@ -216,84 +233,7 @@ function MAAreaCodeInfo() {
 				note: []
 			},
 		],
-		cities: [
-			{
-				code: "01208",
-				distinct: "1",
-				pref: "北海道",
-				county: {
-					name: "",
-					kana: "",
-					type: "",
-					typeKana: "",
-				},
-				name: "北見",
-				kana: "きたみ",
-				type: "市",
-				typeKana: "し",
-				zone: {
-					name: "常呂町",
-					scale: ""
-				}
-			},
-			{
-				code: "01211",
-				distinct: "1",
-				pref: "北海道",
-				county: {
-					name: "",
-					kana: "",
-					type: "",
-					typeKana: "",
-				},
-				name: "網走",
-				kana: "あばしり",
-				type: "市",
-				typeKana: "し",
-				zone: {
-					name: "",
-					scale: ""
-				}
-			},
-			{
-				code: "01547",
-				distinct: "1",
-				pref: "北海道",
-				county: {
-					name: "斜里",
-					kana: "しゃり",
-					type: "郡",
-					typeKana: "ぐん",
-				},
-				name: "小清水",
-				kana: "こしみず",
-				type: "町",
-				typeKana: "町",
-				zone: {
-					name: "",
-					scale: ""
-				}
-			},
-			{
-				code: "01564",
-				distinct: "1",
-				pref: "北海道",
-				county: {
-					name: "網走",
-					kana: "あばしり",
-					type: "郡",
-					typeKana: "ぐん",
-				},
-				name: "大空",
-				kana: "おおぞら",
-				type: "町",
-				typeKana: "ちょう",
-				zone: {
-					name: "東藻琴、東藻琴清浦、東藻琴栄、東藻琴新富、東藻琴末広、東藻琴大進、東藻琴千草、東藻琴西倉、東藻琴福富、東藻琴明生及び東藻琴山園に限る。",
-					scale: ""
-				}
-			},
-		]
+		cities: cities
 	}
 
 	return (
@@ -325,10 +265,42 @@ function MAAreaCodeInfo() {
 
 }
 
+const displayMAAreaCodeInfos = (MAs) => {
+
+	const MAAreaCodeInfos = [];
+
+	MAs.forEach(function(MA, i) {
+		MAAreaCodeInfos.push(
+			<MAAreaCodeInfo key={i} compCodeMain={MA.codeMain}/>
+		)
+	})
+
+	return <div>{MAAreaCodeInfos}</div>
+
+}
+function searchMAAreaCodeInfos(type, query) {
+
+	let MAs;
+
+	if (type === 1) { // areaCode
+		MAs = MAComps.filter(function(MAComp) {
+				return MAComp.areaCode === query;
+		})
+	} else if (type === 2) { // MAName
+		MAs = MAComps.filter(function(MAComp) {
+			return MAComp.MAName === query;
+		})
+	}
+
+	return MAs;
+
+}
+
 export default function App() {
-	return (
-		<div>
-			<MAAreaCodeInfo />
-		</div>
-	);
+
+	const MAs = searchMAAreaCodeInfos(1, "45")
+	// const MAs = searchMAAreaCodeInfos(2, "相模原")
+
+	return <div>{ displayMAAreaCodeInfos(MAs) }</div>
+
 }
