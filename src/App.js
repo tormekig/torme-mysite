@@ -1,4 +1,5 @@
 import City from "./data/city.js"
+import NumberBandsList from "./data/numberBands.js"
 import MAComps from "./data/MACompartments.js"
 
 function AreaCode({ areaCode }) {
@@ -30,10 +31,13 @@ function NumberBands({ numberBands }) {
 	const lis = [];
 
 	numberBands.forEach(function(numberBand, i) {
-		let txt = numberBand.start
-		if (numberBand.start !== numberBand.end) {
-			txt += " ～ " + numberBand.end;
-		} 
+		let txt = numberBand.bandStart
+		if (numberBand.bandStart !== numberBand.bandEnd) {
+			txt += " ～ " + numberBand.bandEnd;
+		}
+		if (numberBand.eliminateCode !== '0') {
+			txt += "（" + numberBand.eliminateCode + "を除く）"
+		}
 		lis.push(
 			<li key={i}>
 				<div>{txt}</div>
@@ -203,6 +207,10 @@ function MAAreaCodeInfo({ compCodeMain }) {
 
 	const compCode = MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
 
+	const numberBands = NumberBandsList.filter(function(numberBand) {
+		return numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode;
+	})
+
 	const cities = City.filter(function(city) {
 		return city.compartmentCode === compCode;
 	})
@@ -214,22 +222,11 @@ function MAAreaCodeInfo({ compCodeMain }) {
 		compartmentCode: compCode,
 		pref: MAComp.pref,
 		square: MAComp.square,
-		numberBands: [
-			{
-				start: "0152-1",
-				end: "0152-1",
-				note: []
-			},
-			{
-				start: "0152-4",
-				end: "0152-6",
-				note: []
-			}
-		],
+		numberBands: numberBands,
 		numberDesignations: [
 			{
-				start: "015240",
-				end: "015269",
+				start: "None",
+				end: "None",
 				note: []
 			},
 		],
@@ -290,6 +287,12 @@ function searchMAAreaCodeInfos(type, query) {
 		MAs = MAComps.filter(function(MAComp) {
 			return MAComp.MAName === query;
 		})
+	} else if (type === 3) { // pref
+		MAs = MAComps.filter(function(MAComp) {
+			return MAComp.pref === query;
+		})
+	} else if (type === 100) {
+		MAs = MAComps.concat();
 	}
 
 	return MAs;
@@ -298,8 +301,10 @@ function searchMAAreaCodeInfos(type, query) {
 
 export default function App() {
 
-	const MAs = searchMAAreaCodeInfos(1, "45")
+	// const MAs = searchMAAreaCodeInfos(1, "3")
 	// const MAs = searchMAAreaCodeInfos(2, "相模原")
+	// const MAs = searchMAAreaCodeInfos(3, "兵庫県")
+	const MAs = searchMAAreaCodeInfos(100)
 
 	return <div>{ displayMAAreaCodeInfos(MAs) }</div>
 
