@@ -165,3 +165,7 @@ code {
 .appendix {
 	margin: 2rem 1rem;
 }
+
+.appendix li {
+	list-style: square;
+}
