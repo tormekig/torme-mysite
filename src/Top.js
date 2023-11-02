@@ -51,6 +51,7 @@ const Top = () => {
                     </li>
                 </ul>
             </div>
+            <small>Copyright 2023 torme_kig All rights reserved.</small>
         </div>
     )
 };
