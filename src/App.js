@@ -4,20 +4,18 @@ https://blog.mitsuto.com/react-router-dom
 https://reffect.co.jp/react/react-router-6/
 */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Top from "./Top";
 import MAAreaCode from "./MAAreaCode";
-// import Register from "./Register";
-// import Login from "./Login";
-// import Archive from "./Archive";
 import NotFound from "./NotFound";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={`/`} element={<MAAreaCode />} />
-        {/* <Route path={`/register/`} element={<Register />} />
-        <Route path={`/login/`} element={<Login />} />
-        <Route path={`/archive/:id`} element={<Archive />} /> */}
+        <Route path={`/`} element={<Top />} />
+        <Route path={`/areacode/:query`} element={<MAAreaCode type={1}/>} />
+        <Route path={`/MA/:query`} element={<MAAreaCode type={2}/>} />
+        <Route path={`/pref/:query`} element={<MAAreaCode type={3}/>} />
         <Route path={`*`} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
