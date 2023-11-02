@@ -1,6 +1,10 @@
 import City from "./data/city.js"
 import NumberBandsList from "./data/numberBands.js"
 import MAComps from "./data/MACompartments.js"
+import ScrollTop from "./ScrollTop.js";
+
+import { useParams } from "react-router-dom";
+
 
 function AreaCode({ areaCode }) {
 	return (
@@ -55,25 +59,25 @@ function NumberBands({ numberBands }) {
 
 function InfoTable({ maDistinct, compartmentCode, square, numberDesignations }) {
 
-	function NumberDesignations(numberDesignations) {
+	// function NumberDesignations(numberDesignations) {
 
-		const txt = [];
+	// 	const txt = [];
 	
-		numberDesignations.forEach(function(numberDesignation, i) {
+	// 	numberDesignations.forEach(function(numberDesignation, i) {
 			
-			let tmp = numberDesignation.start
-			if (numberDesignation.start !== numberDesignation.end) {
-				tmp += " ～ " + numberDesignation.end;
-			} 
-			txt.push(
-				<div key={i}>{tmp}</div>
-			)
+	// 		let tmp = numberDesignation.start
+	// 		if (numberDesignation.start !== numberDesignation.end) {
+	// 			tmp += " ～ " + numberDesignation.end;
+	// 		} 
+	// 		txt.push(
+	// 			<div key={i}>{tmp}</div>
+	// 		)
 
-		})
+	// 	})
 		
-		return txt;
+	// 	return txt;
 		
-	}
+	// }
 	
 	return (
 		<table>
@@ -90,10 +94,10 @@ function InfoTable({ maDistinct, compartmentCode, square, numberDesignations }) 
 					<td>方形区画</td>
 					<td>{square}</td>
 				</tr>
-				<tr>
+				{/* <tr>
 					<td>MA電気通信番号指定状況</td>
 					<td>{NumberDesignations(numberDesignations)}</td>
-				</tr>
+				</tr> */}
 			</tbody>
 		</table>
 	)
@@ -132,17 +136,20 @@ function Cities({ classifiedCities }) {
 
 		classifiedCities[pref][county].forEach(function(city, i) {
 
+			if (city.name === "") return false;
+
 			const cityFullTxt = city.pref + city.county.name + city.county.type + city.name + city.type
 			const googleMapURL = "https://www.google.com/maps/place/" + cityFullTxt;
 
 			let zone = city.zone.name ? <small> ({city.zone.name})</small> : null;
 
 			cities.push(
-				<a href={googleMapURL} target="blank" className="city" key={i}>
-					<span>
-						{city.name}{city.type}{zone}
-					</span>
-				</a>
+				<span className="city" key={i}>
+					<a href={googleMapURL} target="blank">
+							{city.name}{city.type}
+					</a>
+					{zone}
+				</span>
 			)
 
 		})
@@ -185,7 +192,7 @@ function Cities({ classifiedCities }) {
 
 		Object.keys(classifiedCities).forEach(function(pref, i) {
 			prefs.push(
-				<li key={i}>
+				<li className="prefList" key={i}>
 					<div className="prefofCities">
 						<p>{pref}</p>
 					</div>
@@ -301,13 +308,21 @@ function searchMAAreaCodeInfos(type, query) {
 
 }
 
-export default function MAAreaCode() {
+export default function MAAreaCode({ type }) {
+
+    const {query} = useParams();
 
 	// const MAs = searchMAAreaCodeInfos(1, "3")
 	// const MAs = searchMAAreaCodeInfos(2, "相模原")
-	const MAs = searchMAAreaCodeInfos(3, "北海道")
+	// const MAs = searchMAAreaCodeInfos(3, "北海道")
+	const MAs = searchMAAreaCodeInfos(type, query)
 	// const MAs = searchMAAreaCodeInfos(100)
 
-	return <div>{ displayMAAreaCodeInfos(MAs) }</div>
+	return (
+		<>
+			<ScrollTop />
+			<div>{ displayMAAreaCodeInfos(MAs) }</div>
+		</>
+	)
 
 }

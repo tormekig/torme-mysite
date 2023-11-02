@@ -3,6 +3,7 @@
 
 body {
 	margin: 0;
+	padding: 1rem;
 	font-family: 'Dancing Script', cursive;
 	font-family: 'Shippori Antique B1', sans-serif;
 	/* font-family: 'Shippori Mincho', serif; */
@@ -24,13 +25,22 @@ code {
 	line-height: 1.5;
 }
 
+.info {
+	width: 100%;
+	max-width: 864px;
+	margin: 2rem auto;
+	padding: 2rem 0;
+	border: 1px solid #ccc;
+	border-radius: 1rem;
+}
+
 .areacode {
 	width: 100%;
-	height: 8rem;
+	height: 5rem;
 	font-size: 4rem;
 	font-weight: bold;
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
 	justify-content: center;
 	font-family: 'Roboto', sans-serif;
 }
@@ -84,6 +94,10 @@ code {
 .citiesContainer > div {
 	width: 100%;
 	max-width: 512px;
+}
+
+.prefList {
+	margin: 1rem 0;
 }
 
 .prefofCities {
@@ -147,3 +161,7 @@ code {
 /* .infoTableContainer tr td:nth-of-type(2){
 	font-family: 'Roboto', sans-serif;
 } */
+
+.appendix {
+	margin: 2rem 1rem;
+}
