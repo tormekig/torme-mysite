@@ -16,6 +16,8 @@ const App = () => {
         <Route path={`/areacode/:query`} element={<MAAreaCode type={1}/>} />
         <Route path={`/MA/:query`} element={<MAAreaCode type={2}/>} />
         <Route path={`/pref/:query`} element={<MAAreaCode type={3}/>} />
+        <Route path={`/city/:query`} element={<MAAreaCode type={4}/>} />
+        <Route path={`/code/:query`} element={<MAAreaCode type={5}/>} />
         <Route path={`*`} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
