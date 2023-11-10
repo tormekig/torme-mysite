@@ -1,4 +1,4 @@
-const NumberBandsList = [
+const NumberBandList = [
   {
     id: '1',
     MA: '札幌',
@@ -6601,4 +6601,4 @@ const NumberBandsList = [
   },
 ]
 
-export default NumberBandsList
+export default NumberBandList

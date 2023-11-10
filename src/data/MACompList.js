@@ -1,4 +1,4 @@
-const MAComps = [
+const MACompList = [
   {
     codeMain: '1',
     codeSub: '',
@@ -5239,4 +5239,4 @@ const MAComps = [
   },
 ]
 
-export default MAComps
+export default MACompList
