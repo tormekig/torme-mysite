@@ -13,11 +13,12 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path={`/`} element={<Top />} />
-        <Route path={`/areacode/:query`} element={<MAAreaCode type={1}/>} />
-        <Route path={`/MA/:query`} element={<MAAreaCode type={2}/>} />
-        <Route path={`/pref/:query`} element={<MAAreaCode type={3}/>} />
-        <Route path={`/city/:query`} element={<MAAreaCode type={4}/>} />
-        <Route path={`/code/:query`} element={<MAAreaCode type={5}/>} />
+        <Route path={`/areacode/:query`} element={<MAAreaCode type={"areacode"}/>} />
+        <Route path={`/MA/:query`} element={<MAAreaCode type={"MA"}/>} />
+        <Route path={`/pref/:query`} element={<MAAreaCode type={"pref"}/>} />
+        <Route path={`/city/:query`} element={<MAAreaCode type={"city"}/>} />
+        <Route path={`/code/:query`} element={<MAAreaCode type={"code"}/>} />
+        <Route path={`/random`} element={<MAAreaCode type={"random"}/>} />
         <Route path={`*`} element={<NotFound />} />
       </Routes>
     </BrowserRouter>

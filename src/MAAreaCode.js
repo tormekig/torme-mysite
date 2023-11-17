@@ -7,13 +7,21 @@ import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } fr
 import ScrollTop from "./ScrollTop.js";
 
 import { useParams } from "react-router-dom";
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItemHeading,
+    AccordionItemButton,
+    AccordionItemPanel,
+} from 'react-accessible-accordion';
 
+import './css/accordion.scss';
 
 function convertCompCode(MAComp) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
 }
 
-function MAAreaCodeInfo({ compCode }) {
+function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 
 	const MAComp = MACompList.find((m) => convertCompCode(m) === compCode)
 
@@ -47,26 +55,43 @@ function MAAreaCodeInfo({ compCode }) {
 		<div className="info">
 
 			<AreaCode areaCode={info.areaCode}/>
-
 			<NumberBands numberBands={info.numberBands} />
 
-			<div className="MApref">
-				<Pref pref={info.pref} />
-				<MA ma={info.ma} />
-			</div>
+			<Accordion allowZeroExpanded preExpanded={[isExpanded]}>
 
-			<div className="citiesContainer">
-				<Cities classifiedCities={classifyCities(info.cities)} />
-			</div>
+				<AccordionItem uuid="item">
 
-			<div className="infoTableContainer">
-				<InfoTable
-					maDistinct={info.maDistinct}
-					compartmentCode={info.compartmentCode}
-					square={info.square}
-					numberDesignations={info.numberDesignations}
-				/>
-			</div>
+					<AccordionItemHeading>
+						<AccordionItemButton>
+							詳細
+						</AccordionItemButton>
+					</AccordionItemHeading>
+
+					<AccordionItemPanel>
+
+						<div className="MApref">
+							<Pref pref={info.pref} />
+							<MA ma={info.ma} />
+						</div>
+
+						<div className="citiesContainer">
+							<Cities classifiedCities={classifyCities(info.cities)} />
+						</div>
+
+						<div className="infoTableContainer">
+							<InfoTable
+								maDistinct={info.maDistinct}
+								compartmentCode={info.compartmentCode}
+								square={info.square}
+								numberDesignations={info.numberDesignations}
+							/>
+						</div>
+
+					</AccordionItemPanel>
+					
+				</AccordionItem>
+
+			</Accordion>
 
 		</div>
 	)
@@ -76,12 +101,17 @@ function MAAreaCodeInfo({ compCode }) {
 const displayMAAreaCodeInfos = (type, query) => {
 
 	const MAs = searchMAAreaCodeInfos(type, query)
+	const isExpanded = (type === "random") ? "" : "item";
 
 	const MAAreaCodeInfos = [];
 
 	MAs.forEach(function(MA, i) {
 		MAAreaCodeInfos.push(
-			<MAAreaCodeInfo key={i} compCode={convertCompCode(MA)}/>
+			<MAAreaCodeInfo
+				key={i}
+				compCode={convertCompCode(MA)}
+				isExpanded={isExpanded}
+			/>
 		)
 	})
 
@@ -93,25 +123,25 @@ function searchMAAreaCodeInfos(type, query) {
 
 	let MAs = [];
 
-	if (type === 1) { // areaCode
+	if (type === "areacode") {
 
 		MAs = MACompList.filter(function(MAComp) {
 			return MAComp.areaCode === query;
 		})
 
-	} else if (type === 2) { // MAName
+	} else if (type === "MA") { // MA name
 
 		MAs = MACompList.filter(function(MAComp) {
 			return MAComp.MAName === query;
 		})
 
-	} else if (type === 3) { // pref
+	} else if (type === "pref") {
 
 		MAs = MACompList.filter(function(MAComp) {
 			return MAComp.pref === query;
 		})
 
-	} else if (type === 4) { // city
+	} else if (type === "city") {
 
 		const cities = cityList.filter(function(city) {
 			return prefCountyCityName(city) === query;
@@ -124,11 +154,16 @@ function searchMAAreaCodeInfos(type, query) {
 			MAs = MAs.concat(MAtemp)
 		})
 
-	} else if (type === 5) { // areacode first digit
+	} else if (type === "code") { // areacode first digit
 
 		MAs = MACompList.filter(function(MAComp) {
 			return MAComp.areaCode.slice(0, 1) === query;
 		})
+
+	} else if (type === "random") {
+
+		const randomMAComp = MACompList[Math.floor(Math.random() * MACompList.length)]
+		MAs.push(randomMAComp)
 
 	} else if (type === 100) {
 
