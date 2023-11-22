@@ -6,6 +6,7 @@ https://reffect.co.jp/react/react-router-6/
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Top from "./Top";
 import MAAreaCode from "./MAAreaCode";
+import DisplayQuiz from "./DisplayQuiz";
 import NotFound from "./NotFound";
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path={`/city/:query`} element={<MAAreaCode type={"city"}/>} />
         <Route path={`/code/:query`} element={<MAAreaCode type={"code"}/>} />
         <Route path={`/random`} element={<MAAreaCode type={"random"}/>} />
+        <Route path={`/quiz`} element={<DisplayQuiz/>} />
         <Route path={`*`} element={<NotFound />} />
       </Routes>
     </BrowserRouter>

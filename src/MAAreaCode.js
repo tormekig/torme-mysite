@@ -16,22 +16,34 @@ import {
 } from 'react-accessible-accordion';
 
 import './css/accordion.scss';
+import { shuffleArray } from "./utils/tools.js"
 
 function convertCompCode(MAComp) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
+}
+
+export function getNumberBandsfromMAComp(MAComp) {
+
+	return numberBandList.filter(function(numberBand) {
+		return numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode;
+	})
+
+}
+
+function getCitiesfromMAComp(MAComp) {
+
+	return cityList.filter(function(city) {
+		return city.compartmentCode === convertCompCode(MAComp);
+	})
+
 }
 
 function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 
 	const MAComp = MACompList.find((m) => convertCompCode(m) === compCode)
 
-	const numberBands = numberBandList.filter(function(numberBand) {
-		return numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode;
-	})
-
-	const cities = cityList.filter(function(city) {
-		return city.compartmentCode === compCode;
-	})
+	const numberBands = getNumberBandsfromMAComp(MAComp)
+	const cities = getCitiesfromMAComp(MAComp)
 
 	const info = {
 		areaCode: "0" + MAComp.areaCode,
@@ -98,18 +110,18 @@ function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 
 }
 
-const displayMAAreaCodeInfos = (type, query) => {
+const displayMAAreaCodeInfos = (type, query, shuffle) => {
 
-	const MAs = searchMAAreaCodeInfos(type, query)
-	const isExpanded = (type === "random") ? "" : "item";
+	const MAComps = searchMAAreaCodeInfos(type, query, shuffle)
+	const isExpanded = (shuffle) ? "" : "item";
 
 	const MAAreaCodeInfos = [];
 
-	MAs.forEach(function(MA, i) {
+	MAComps.forEach(function(MAComp, i) {
 		MAAreaCodeInfos.push(
 			<MAAreaCodeInfo
 				key={i}
-				compCode={convertCompCode(MA)}
+				compCode={convertCompCode(MAComp)}
 				isExpanded={isExpanded}
 			/>
 		)
@@ -119,25 +131,25 @@ const displayMAAreaCodeInfos = (type, query) => {
 
 }
 
-function searchMAAreaCodeInfos(type, query) {
+export function searchMAAreaCodeInfos(type, query, shuffle) {
 
-	let MAs = [];
+	let MAComps = [];
 
 	if (type === "areacode") {
 
-		MAs = MACompList.filter(function(MAComp) {
+		MAComps = MACompList.concat().filter(function(MAComp) {
 			return MAComp.areaCode === query;
 		})
 
 	} else if (type === "MA") { // MA name
 
-		MAs = MACompList.filter(function(MAComp) {
+		MAComps = MACompList.concat().filter(function(MAComp) {
 			return MAComp.MAName === query;
 		})
 
 	} else if (type === "pref") {
 
-		MAs = MACompList.filter(function(MAComp) {
+		MAComps = MACompList.concat().filter(function(MAComp) {
 			return MAComp.pref === query;
 		})
 
@@ -148,41 +160,43 @@ function searchMAAreaCodeInfos(type, query) {
 		})
 
 		cities.forEach(function(city) {
-			let MAtemp = MACompList.filter((m) => {
+			let MAtemp = MACompList.concat().filter((m) => {
 				return convertCompCode(m) === city.compartmentCode;
 			})
-			MAs = MAs.concat(MAtemp)
+			MAComps = MAComps.concat(MAtemp)
 		})
 
 	} else if (type === "code") { // areacode first digit
 
-		MAs = MACompList.filter(function(MAComp) {
-			return MAComp.areaCode.slice(0, 1) === query;
+		MAComps = MACompList.concat().filter(function(MAComp) {
+			return MAComp.areaCode.slice(0, query.length) === query;
 		})
 
-	} else if (type === "random") {
+	} else if (type === "all") {
 
-		const randomMAComp = MACompList[Math.floor(Math.random() * MACompList.length)]
-		MAs.push(randomMAComp)
-
-	} else if (type === 100) {
-
-		MAs = MACompList.concat();
+		MAComps = MACompList.concat();
 
 	}
 
-	return MAs;
+	if (shuffle) {
+
+		MAComps = shuffleArray(MAComps)
+		
+	}
+
+	return MAComps;
 
 }
 
 export default function MAAreaCode({ type }) {
 
     const {query} = useParams();
+    const {shuffle} = useParams();
 
 	return (
 		<>
 			<ScrollTop />
-			<div>{ displayMAAreaCodeInfos(type, query) }</div>
+			<div>{ displayMAAreaCodeInfos(type, query, shuffle) }</div>
 			{/* <div>{ displayMAAreaCodeInfos(1, "3") }</div>
 			<div>{ displayMAAreaCodeInfos(2, "相模原") }</div>
 			<div>{ displayMAAreaCodeInfos(3, "北海道") }</div>
