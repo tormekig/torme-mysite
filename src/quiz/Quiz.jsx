@@ -2,12 +2,15 @@ import { useState } from "react";
 import Main from "./QuizMain";
 import './styles.css';
 
+const CORRECT_ANSWER = "1";
+
 function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
   const [start, setStart] = useState(false);
   const [questions, setQuestions] = useState(quiz.questions);
   const nrOfQuestions = quiz.questions.length;
 
   const shuffleAnswer = (oldQuestions = []) => {
+
     const newQuestions = oldQuestions.map((question) => {
 
       const answerWithIndex = question.answers?.map((ans, i) => [ans, i]);
@@ -16,10 +19,10 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
       );
       const shuffledAnswers = shuffledAnswersWithIndex.map((ans) => ans[0]);
 
-      const oldCorrectAnswer = question.correctAnswer;
       const newCorrectAnswer = shuffledAnswersWithIndex.findIndex(
-        (ans) => `${ans[1] + 1}` === `${oldCorrectAnswer}`,
+        (ans) => `${ans[1] + 1}` === `${CORRECT_ANSWER}`,
       ) + 1;
+
       return {
         ...question,
         correctAnswer: `${newCorrectAnswer}`,
@@ -27,10 +30,13 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
       }
 
     })
+
     return newQuestions;
+
   }
 
-  function quizStart() {
+  function startQuiz() {
+
     let newQuestions = quiz.questions;
 
     if (isShuffleAnswer) {
@@ -44,14 +50,15 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
     }));
 
     setQuestions(newQuestions);
-    setStart(true)
+    setStart(true);
+
   }
 
   return (
     <div className="quiz-container">
       {!start && (
         <div>
-          <button type="button" onClick={() => quizStart()} className="startQuizBtn">
+          <button type="button" onClick={() => startQuiz()} className="startQuizBtn">
             Start
           </button>
         </div>

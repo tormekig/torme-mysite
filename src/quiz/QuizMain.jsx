@@ -3,15 +3,15 @@ import { useCallback } from "react";
 import './styles.css';
 
 function Main({questions}) {
-  const [incorrectAnswer, setIncorrectAnswer] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [isIncorrect, setIsIncorrect] = useState(false);
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
 
   const [endQuiz, setEndQuiz] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [buttons, setButtons] = useState({});
-  const [correct, setCorrect] = useState([]);
-  const [incorrect, setIncorrect] = useState([]);
+  const [correctList, setCorrectList] = useState([]);
+  const [incorrectList, setIncorrectList] = useState([]);
   const [userInput, setUserInput] = useState([]);
 
   const [activeQuestion, setActiveQuestion] = useState(questions[currentQuestionIndex]);
@@ -21,7 +21,7 @@ function Main({questions}) {
   }, [currentQuestionIndex]);
 
   const nextQuestion = (currentQuestionIndex) => {
-    setIncorrectAnswer(false);
+    setIsIncorrect(false);
     setIsCorrect(false);
     setShowNextQuestionButton(false);
     setButtons({});
@@ -48,7 +48,7 @@ function Main({questions}) {
     }
   
     if (indexStr === correctAnswer) {
-      correct.push(currentQuestionIndex);
+      correctList.push(currentQuestionIndex);
   
       setButtons((prevState) => ({
         ...prevState,
@@ -59,11 +59,11 @@ function Main({questions}) {
       }));
   
       setIsCorrect(true);
-      setIncorrectAnswer(false);
-      setCorrect(correct);
+      setIsIncorrect(false);
+      setCorrectList(correctList);
       setShowNextQuestionButton(true);
     } else {
-      incorrect.push(currentQuestionIndex);
+      incorrectList.push(currentQuestionIndex);
 
       setButtons((prevState) => ({
         ...prevState,
@@ -77,8 +77,8 @@ function Main({questions}) {
       }))
 
       setIsCorrect(false);
-      setIncorrectAnswer(true);
-      setIncorrect(incorrect);
+      setIsIncorrect(true);
+      setIncorrectList(incorrectList);
       setShowNextQuestionButton(true);
     }
     setUserInput(userInputCopy);
@@ -149,14 +149,14 @@ function Main({questions}) {
     ))
   }
 
-  function InstantFeedback({incorrectAnswer, correctAnswer, question}) {
+  function InstantFeedback({isIncorrect, isCorrect, question}) {
     return (
         <>
-        {incorrectAnswer && (
-            <div className="feedback">incorrect {question.messageForIncorrectAnswer}</div>
+        {isIncorrect && (
+            <div className="feedback">不正解…</div>
         )}
-        {correctAnswer && (
-            <div className="feedback">correct {question.messageForCorrectAnswer}</div>
+        {isCorrect && (
+            <div className="feedback">正解！</div>
         )}
         </>
     )
@@ -165,7 +165,7 @@ function Main({questions}) {
   const renderResult = () => (
     <div>
       result
-      <div>{correct.length}</div>
+      <div>{correctList.length}</div>
       <div>{questions.length}</div>
       {renderQuizResultQuestions()}
     </div>
@@ -177,8 +177,8 @@ function Main({questions}) {
         <div className="question">
           <InstantFeedback 
             question={activeQuestion}
-            correctAnswer={isCorrect}
-            incorrectAnswer={incorrectAnswer}
+            isCorrect={isCorrect}
+            isIncorrect={isIncorrect}
           />
           <div>
             {`${(currentQuestionIndex + 1)} / ${questions.length}:`}

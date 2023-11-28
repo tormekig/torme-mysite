@@ -1,10 +1,7 @@
-import cityList from "./data/cityList.js"
-import { prefCountyCityName } from "./data/cityList.js"
+import { cityList, getPrefCountyCityName } from "./data/cityList.js"
 import numberBandList from "./data/numberBandList.js"
 import MACompList from "./data/MACompList.js"
 import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "./MAAreaCodeComponent.js"
-
-import ScrollTop from "./ScrollTop.js";
 
 import { useParams } from "react-router-dom";
 import {
@@ -16,7 +13,7 @@ import {
 } from 'react-accessible-accordion';
 
 import './css/accordion.scss';
-import { shuffleArray } from "./utils/tools.js"
+import { ScrollTop, shuffleArray } from "./utils/tools.js"
 
 function convertCompCode(MAComp) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
@@ -110,10 +107,10 @@ function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 
 }
 
-const displayMAAreaCodeInfos = (type, query, shuffle) => {
+const displayMAAreaCodeInfos = (type, query) => {
 
-	const MAComps = searchMAAreaCodeInfos(type, query, shuffle)
-	const isExpanded = (shuffle) ? "" : "item";
+	const MAComps = searchMAAreaCodeInfos(type, query)
+	const isExpanded = (type === "random") ? "" : "item";
 
 	const MAAreaCodeInfos = [];
 
@@ -131,17 +128,11 @@ const displayMAAreaCodeInfos = (type, query, shuffle) => {
 
 }
 
-export function searchMAAreaCodeInfos(type, query, shuffle) {
+export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 	let MAComps = [];
 
-	if (type === "areacode") {
-
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.areaCode === query;
-		})
-
-	} else if (type === "MA") { // MA name
+	if (type === "MA") { // MA name
 
 		MAComps = MACompList.concat().filter(function(MAComp) {
 			return MAComp.MAName === query;
@@ -156,7 +147,7 @@ export function searchMAAreaCodeInfos(type, query, shuffle) {
 	} else if (type === "city") {
 
 		const cities = cityList.filter(function(city) {
-			return prefCountyCityName(city) === query;
+			return getPrefCountyCityName(city) === query;
 		})
 
 		cities.forEach(function(city) {
@@ -166,8 +157,9 @@ export function searchMAAreaCodeInfos(type, query, shuffle) {
 			MAComps = MAComps.concat(MAtemp)
 		})
 
-	} else if (type === "code") { // areacode first digit
+	} else if (type === "code") { // areacode start digit
 
+		query = query.slice(1, query.length)
 		MAComps = MACompList.concat().filter(function(MAComp) {
 			return MAComp.areaCode.slice(0, query.length) === query;
 		})
@@ -175,6 +167,10 @@ export function searchMAAreaCodeInfos(type, query, shuffle) {
 	} else if (type === "all") {
 
 		MAComps = MACompList.concat();
+
+	} else if (type === "random") {
+
+		MAComps = shuffleArray(MACompList.concat()).slice(0, 1)
 
 	}
 
@@ -191,17 +187,11 @@ export function searchMAAreaCodeInfos(type, query, shuffle) {
 export default function MAAreaCode({ type }) {
 
     const {query} = useParams();
-    const {shuffle} = useParams();
 
 	return (
 		<>
 			<ScrollTop />
-			<div>{ displayMAAreaCodeInfos(type, query, shuffle) }</div>
-			{/* <div>{ displayMAAreaCodeInfos(1, "3") }</div>
-			<div>{ displayMAAreaCodeInfos(2, "相模原") }</div>
-			<div>{ displayMAAreaCodeInfos(3, "北海道") }</div>
-			<div>{ displayMAAreaCodeInfos(4, "北海道岩見沢市") }</div>
-			<div>{ displayMAAreaCodeInfos(100) }</div> */}
+			<div>{ displayMAAreaCodeInfos(type, query) }</div>
 		</>
 	)
 

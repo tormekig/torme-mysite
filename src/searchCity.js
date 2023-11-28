@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 
 import cityList from "./data/cityList"
-import { prefCityName, prefCountyCityName, prefCityKanaName, prefCountyCityKanaName } from "./data/cityList"
+import { getPrefCityName, getPrefCountyCityName, getPrefCityNameKana, getPrefCountyCityNameKana } from "./data/cityList"
 
 export default function SearchCity() {
 
@@ -23,10 +23,10 @@ export default function SearchCity() {
 
 		const searchedCities = cityList.filter(function(city) {
 			return (
-				prefCityName(city).indexOf(value) !== -1 ||
-				prefCountyCityName(city).indexOf(value) !== -1 ||
-				prefCityKanaName(city).indexOf(value) !== -1 ||
-				prefCountyCityKanaName(city).indexOf(value) !== -1
+				getPrefCityName(city).indexOf(value) !== -1 ||
+				getPrefCountyCityName(city).indexOf(value) !== -1 ||
+				getPrefCityNameKana(city).indexOf(value) !== -1 ||
+				getPrefCountyCityNameKana(city).indexOf(value) !== -1
 			) && city.distinct === '1';
 		});
 
@@ -42,8 +42,8 @@ export default function SearchCity() {
 				return (
 					<div key={i}>
 						<p>
-							<Link to={`/city/${prefCountyCityName(city)}`}>
-								<span>{prefCountyCityName(city)}</span>
+							<Link to={`/city/${getPrefCountyCityName(city)}`}>
+								<span>{getPrefCountyCityName(city)}</span>
 							</Link>
 						</p>
 					</div>

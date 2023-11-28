@@ -1,30 +1,30 @@
-import { prefName, prefKana } from "./prefList.js"
+import { getPrefName, getPrefNameKana } from "./prefList.js"
 
-export function cityName(city) {
+export function getCityName(city) {
   return city.name + city.type;
 }
 
-export function prefCityName(city) {
-  return prefName(city) + cityName(city);
+export function getPrefCityName(city) {
+  return getPrefName(city) + getCityName(city);
 }
 
-export function prefCountyCityName(city) {
-  return prefName(city) + city.county.name + city.county.type + cityName(city);
+export function getPrefCountyCityName(city) {
+  return getPrefName(city) + city.county.name + city.county.type + getCityName(city);
 }
 
-export function cityKanaName(city) {
+export function getCityNameKana(city) {
   return city.kana + city.typeKana;
 }
 
-export function prefCityKanaName(city) {
-  return prefKana(city) + cityKanaName(city);
+export function getPrefCityNameKana(city) {
+  return getPrefNameKana(city) + getCityNameKana(city);
 }
 
-export function prefCountyCityKanaName(city) {
-  return prefKana(city) + city.county.kana + city.county.typeKana + cityKanaName(city);
+export function getPrefCountyCityNameKana(city) {
+  return getPrefNameKana(city) + city.county.kana + city.county.typeKana + getCityNameKana(city);
 }
 
-const cityList = [
+export const cityList = [
   {
     code: '01100',
     distinct: '1',

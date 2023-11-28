@@ -1,11 +1,11 @@
-export function prefName(city) {
+export function getPrefName(city) {
   const pref = prefList.find(function(pref, i) {
     return pref.name === city.pref;
   })
   return pref.name;
 }
 
-export function prefKana(city) {
+export function getPrefNameKana(city) {
   const pref = prefList.find(function(pref, i) {
     return pref.name === city.pref;
   })
