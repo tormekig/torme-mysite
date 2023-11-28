@@ -1,6 +1,6 @@
 import Quiz from "./quiz/Quiz";
 
-function DisplayQuiz() {
+function displayQuiz() {
   
   const quizMode = "areacodeToMAName"
 
@@ -14,4 +14,4 @@ function DisplayQuiz() {
   
 }
 
-export default DisplayQuiz;
+export default displayQuiz;
