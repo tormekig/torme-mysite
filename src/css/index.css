@@ -138,6 +138,57 @@ code {
 	display: inline-block;
 }
 
+.prefListSimple {
+	text-align: left;
+	font-size: 0.8rem;
+	font-weight: normal;
+	margin: 0;
+	display: flex;
+}
+
+.prefListSimple > .prefofCities {
+	display: block;
+	padding: 0;
+}
+
+.prefListSimple > .prefofCities > p {
+	background: none;
+	white-space: nowrap;
+	padding: 0.5em;
+	border-radius: 0;
+	font-size: 1em;
+	width: 4rem;
+}
+
+.prefListSimple .countyList {
+	width: 100%;
+	white-space: collapse;
+	border: 1px solid #ccc;
+	border-radius: 0.5em;
+}
+
+.prefListSimple .cityList {
+	margin: 0.5em;
+}
+
+.prefListSimple .cityListwithBorder {
+	display: flex;
+	margin: 0.5em;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+}
+
+.prefListSimple .city {
+	background: none;
+	padding: 0;
+	border-radius: 1em;
+	margin: 0;
+	font-size: 1em;
+	letter-spacing: -1px;
+	display: inline-block;
+}
+
 .infoTableContainer {
 	display: flex;
 	justify-content: center;

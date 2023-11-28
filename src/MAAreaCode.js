@@ -35,18 +35,16 @@ function getCitiesfromMAComp(MAComp) {
 
 }
 
-function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
-
-	const MAComp = MACompList.find((m) => convertCompCode(m) === compCode)
+export function generateMAAreaCodeInfo(MAComp) {
 
 	const numberBands = getNumberBandsfromMAComp(MAComp)
 	const cities = getCitiesfromMAComp(MAComp)
 
-	const info = {
+	return {
 		areaCode: "0" + MAComp.areaCode,
 		ma: MAComp.MAName,
 		maDistinct: MAComp.MAnum,
-		compartmentCode: compCode,
+		compartmentCode: convertCompCode(MAComp),
 		pref: MAComp.pref,
 		square: MAComp.square,
 		numberBands: numberBands,
@@ -57,8 +55,14 @@ function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 				note: []
 			},
 		],
-		cities: cities
+		cities: classifyCities(cities)
 	}
+
+}
+
+function MAAreaCodeInfo({ MAComp, isExpanded="item" }) {
+
+	const info = generateMAAreaCodeInfo(MAComp)
 
 	return (
 		<div className="info">
@@ -84,7 +88,7 @@ function MAAreaCodeInfo({ compCode, isExpanded="item" }) {
 						</div>
 
 						<div className="citiesContainer">
-							<Cities classifiedCities={classifyCities(info.cities)} />
+							<Cities classifiedCities={info.cities} />
 						</div>
 
 						<div className="infoTableContainer">
@@ -118,7 +122,7 @@ const displayMAAreaCodeInfos = (type, query) => {
 		MAAreaCodeInfos.push(
 			<MAAreaCodeInfo
 				key={i}
-				compCode={convertCompCode(MAComp)}
+				MAComp={MAComp}
 				isExpanded={isExpanded}
 			/>
 		)

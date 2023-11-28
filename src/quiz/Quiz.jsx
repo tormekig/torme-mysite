@@ -1,13 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Main from "./QuizMain";
 import './styles.css';
+import generateQuizSet from "../generateQuiz";
 
 const CORRECT_ANSWER = "1";
 
-function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
+function Quiz({quizMode, isShuffleAnswer}) {
   const [start, setStart] = useState(false);
-  const [questions, setQuestions] = useState(quiz.questions);
-  const nrOfQuestions = quiz.questions.length;
+  const [questions, setQuestions] = useState([]);
+
+  const [isVisibleCities, setIsVisibleCities] = useState(true);
+  const [choiceRange, setChoiceRange] = useState("-1");
 
   const shuffleAnswer = (oldQuestions = []) => {
 
@@ -37,13 +40,14 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
 
   function startQuiz() {
 
-    let newQuestions = quiz.questions;
+    let newQuestions = generateQuizSet(
+      "areacodeToMAName",
+      choiceRange
+    );
 
-    if (isShuffleAnswer) {
-      newQuestions = shuffleAnswer(newQuestions);
-    }
+    newQuestions = shuffleAnswer(newQuestions);
 
-    newQuestions.length = nrOfQuestions;
+
     newQuestions = newQuestions.map((question, index) => ({
       ...question,
       questionIndex: index + 1,
@@ -53,11 +57,57 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
     setStart(true);
 
   }
+  
+  const changeIsVisibleCities = () => {
+    setIsVisibleCities(!isVisibleCities)
+  };
 
+  const changeChoiceRange = (event) => {
+    console.log(event.target.value, choiceRange)
+    setChoiceRange(event.target.value)
+  };
+
+  const radioButtons = [
+    {
+      label: "全て",
+      value: "-1"
+    },
+    {
+      label: "同一都道府県",
+      value: "0"
+    },
+    {
+      label: "市外局番2桁",
+      value: "1"
+    },
+    {
+      label: "市外局番3桁",
+      value: "2"
+    },
+    {
+      label: "市外局番4桁",
+      value: "3"
+    },
+  ]
   return (
     <div className="quiz-container">
       {!start && (
         <div>
+          <input
+            type="checkbox"
+            checked={isVisibleCities}
+            onChange={() => changeIsVisibleCities()}
+          /> 市町村名を表示
+          <br />
+          {radioButtons.map((radio, i) => {
+            return (
+              <div key={i}>
+                <input type="radio" name="choiceRange" 
+              value={radio.value} checked={radio.value === choiceRange} onChange={changeChoiceRange}/>
+                <label>{radio.label}</label>
+              </div>
+            )
+          })}
           <button type="button" onClick={() => startQuiz()} className="startQuizBtn">
             Start
           </button>
@@ -67,8 +117,8 @@ function Quiz({quiz, isShuffleAnswer, showInstantFeedback}) {
       {start && (
         <Main 
           questions={questions}
-          isShuffleAnswer={isShuffleAnswer}
-          showInstantFeedback={showInstantFeedback}
+          isVisibleCities={isVisibleCities}
+          choiceRange={choiceRange}
         />
       )}
     </div>
