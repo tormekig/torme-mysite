@@ -200,3 +200,79 @@ export function Cities({ classifiedCities }) {
 	return <div>{ displayPref() }</div>
 
 }
+
+
+export function CitiesSimple({ classifiedCities }) {
+
+	const displayCities = (pref, county) => {
+
+		const cities = [];
+
+		classifiedCities[pref][county].forEach(function(city, i) {
+
+			if (city.name === "") return false;
+
+			let zone = city.zone.name ? <small> (一部)</small> : null;
+
+			cities.push(
+				<span className="city" key={i}>
+					{city.name}{city.type}
+					{zone}
+					{(classifiedCities[pref][county].length - 1 !== i) && (<>、</>)}
+				</span>
+			)
+
+		})
+
+		return <ul>{cities}</ul>
+
+	}
+
+	const displayCounties = (pref) => {
+
+		const counties = [];
+
+		Object.keys(classifiedCities[pref]).forEach(function(county, i) {
+			let li = null;
+			if (county) {
+				li = (
+					<li className="cityListwithBorder" key={i}>
+						<div>{county}</div>
+						（{ displayCities(pref, county) }）
+					</li>
+				)
+			} else {
+				li = (
+					<li className="cityList" key={i}>
+						{ displayCities(pref, county) }
+					</li>
+				)
+			}
+			counties.push(li)
+		})
+
+		return <ul className="countyList">{counties}</ul>
+
+	}
+
+	const displayPref = () => {
+
+		const prefs = [];
+
+		Object.keys(classifiedCities).forEach(function(pref, i) {
+			prefs.push(
+				<li className="prefListSimple" key={i}>
+					<div className="prefofCities">
+						<p>{pref}</p>
+					</div>
+					{ displayCounties(pref) }
+				</li>
+			)
+		})
+
+		return <ul>{prefs}</ul>
+
+	}
+
+	return <div>{ displayPref() }</div>
+}

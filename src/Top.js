@@ -13,7 +13,7 @@ function Code() {
 
         codes.push(
             <li key={i}>
-                <Link to={`/code/${i}`}>
+                <Link to={`/code/0${i}`}>
                     <span>{i}</span>
                 </Link>
             </li>
