@@ -136,12 +136,10 @@ export function Cities({ classifiedCities }) {
 			let zone = city.zone.name ? <small> ({city.zone.name})</small> : null;
 
 			cities.push(
-				<span className="city" key={i}>
-					<a href={googleMapURL} target="blank">
-							{city.name}{city.type}
-					</a>
+				<a href={googleMapURL} target="blank" className="city" key={i}>
+					{city.name}{city.type}
 					{zone}
-				</span>
+				</a>
 			)
 
 		})

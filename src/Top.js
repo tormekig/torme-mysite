@@ -4,6 +4,7 @@ import SearchCity from "./searchCity.js"
 
 import prefList from "./data/prefList";
 import appendixList from "./data/appendixList";
+import { ScrollTop } from "./utils/tools.js";
 
 function Code() {
 
@@ -66,8 +67,12 @@ const Top = () => {
 
     return (
         <div>
+            <ScrollTop />
             <h1>市外局番データベース（仮）</h1>
             <p>めっちゃ質素です</p>
+            <Link to={`/quiz`}>
+                <span>クイズ</span>
+            </Link>
             <SearchCity />
             <ul><Code /></ul>
             <ul><Pref /></ul>

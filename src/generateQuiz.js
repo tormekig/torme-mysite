@@ -36,7 +36,7 @@ function generateMAChoices(answerMAComp, numOfDigit=0) {
     }
 
     codeFilteredMAs = generateEliminatedUniqueMAs(codeFilteredMAs, answerMAComp)
-console.log(answerMAComp, i, codeFilteredMAs)
+
     if (codeFilteredMAs.length >= NUM_OF_CHOICES - 1) break;
 
   }

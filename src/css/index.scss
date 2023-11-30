@@ -1,6 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Shippori+Antique+B1&family=Shippori+Mincho&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
+$color-red-1: #CA6074;
+$color-red-2: #D98A63;
+$color-red-3: #C0688E;
+$color-red-4: #C9726B;
+$color-green-1: #498E4E;
+$color-green-2: #6A9F5B;
+$color-green-3: #86CA5C;
+$color-green-4: #529B78;
+$color-blue-1: #495F8C;
+$color-blue-2: #2C78AE;
+$color-blue-3: #706D97;
+$color-blue-4: #1E748B;
+$color-yellow-1: #B39748;
+$color-yellow-2: #E7E55D;
+$color-yellow-3: #E6CD59;
+$color-yellow-4: #AFAE54;
+
+html {
+	font-size: 16px;
+}
+
+@media screen and (max-width: 480px) {
+	html {
+		font-size: 12px;
+	}
+}
+
 body {
 	margin: 0;
 	padding: 1rem;
@@ -9,7 +36,6 @@ body {
 	/* font-family: 'Shippori Mincho', serif; */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-size: 16px;
 }
 
 code {
@@ -25,6 +51,26 @@ code {
 	line-height: 1.5;
 }
 
+.MAAreaCode-header {
+	width: 100%;
+	max-width: 864px;
+	margin: 2rem auto;
+	padding: 0;
+	/* border: 1px solid #ccc; */
+	border-radius: 1rem;
+}
+
+.main-header {
+	font-size: 2.5rem;
+	font-weight: 700;
+	font-family: 'Roboto', 'Shippori Antique B1', sans-serif;
+}
+
+.sub-header {
+	font-size: 0.9rem;
+	color: #777;
+}
+
 .info {
 	width: 100%;
 	max-width: 864px;
@@ -32,6 +78,8 @@ code {
 	padding: 2rem 0;
 	border: 1px solid #ccc;
 	border-radius: 1rem;
+	background-color: #fff;
+	filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5));
 }
 
 .areacode {
@@ -57,32 +105,39 @@ code {
 .MApref {
 	width: 100%;
 	display: flex;
-}
-
-.MApref > div {
-	width: 50%;
-	font-weight: bold;
-	padding: 1rem;
-	display: flex;
-	align-items: flex-end;
+	
+	div {
+		width: 50%;
+		padding: 1.5rem;
+		display: flex;
+		align-items: flex-end;
+	}
 }
 
 .MApref > div > p {
 	line-height: 1.0;
+	color: #fff;
 }
+
+$offset: 2px;
+$blur: 2px;
+$shadow-color: rgba(255,255,255,0.8);
+$text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $shadow-color,(-$offset) $offset $blur $shadow-color,  $offset (-$offset) $blur $shadow-color,$offset 0 $blur $shadow-color, (-$offset)  0 $blur $shadow-color,0 $offset $blur $shadow-color,  0 (-$offset) $blur $shadow-color;
 
 .pref {
 	text-align: right;
-	background-color: #FFA24B;
-	font-size: 1.5rem;
+	background-color: $color-blue-1;
+	font-size: 1.8rem;
 	justify-content: flex-end;
+	// text-shadow: $text-shadow;
 }
 
 .ma {
 	text-align: left;
-	background-color: #90CAFF;
-	font-size: 2rem;
+	background-color: $color-blue-2;
+	font-size: 2.5rem;
 	justify-content: flex-start;
+	// text-shadow: $text-shadow;
 }
 
 .citiesContainer {
@@ -106,10 +161,11 @@ code {
 }
 
 .prefofCities > p {
-	background: #ff9090;
+	background: $color-blue-4;
 	padding: 0.25rem 1rem;
 	border-radius: 1rem 1rem 0 0;
 	font-size: 1.1rem;
+	color: #fff;
 }
 
 .countyList {
@@ -129,13 +185,23 @@ code {
 }
 
 .city {
-	background: rgba(159, 104, 232, 0.216);
+	background: $color-blue-3;
+	// text-shadow: $text-shadow;
 	padding: 2px 0.7rem;
 	border-radius: 1rem;
 	margin: 0.25rem;
 	font-size: 1rem;
 	letter-spacing: -1px;
 	display: inline-block;
+	filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+	transition: all .3s;
+	color: #fff;
+	text-decoration: none;
+}
+
+.city:hover {
+	color: $color-blue-3;
+	background-color: #fff;
 }
 
 .prefListSimple {
@@ -205,7 +271,7 @@ code {
 }
 
 .infoTableContainer tr td:nth-of-type(1){
-  text-align: right;
+	text-align: right;
 	border-right: 1px solid #333;
 }
 

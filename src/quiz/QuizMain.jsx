@@ -3,6 +3,7 @@ import './styles.css';
 import { CitiesSimple } from "../MAAreaCodeComponent";
 import { generateMAAreaCodeInfo } from "../MAAreaCode";
 import MAAreaCodeQuestion from "./MAAreaCodeQuizComponent";
+import { Link } from "react-router-dom";
 
 function Main({questions, isVisibleCities, choiceRange}) {
   const [isCorrect, setIsCorrect] = useState(false);
@@ -153,6 +154,10 @@ function Main({questions, isVisibleCities, choiceRange}) {
       result
       <div>{correctList.length}</div>
       <div>{questions.length}</div>
+      <button onClick={() => window.location.reload()}>もう一度遊ぶ</button>
+      <Link to={`/`}>
+          <span>トップへ戻る</span>
+      </Link>
       {questions.map((question, i) => {
         return (
           <div key={i}>

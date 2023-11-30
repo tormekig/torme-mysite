@@ -136,45 +136,53 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 	let MAComps = [];
 
-	if (type === "MA") { // MA name
+	switch (type) {
 
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.MAName === query;
-		})
+		case "MA" : // MA name
 
-	} else if (type === "pref") {
-
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.pref === query;
-		})
-
-	} else if (type === "city") {
-
-		const cities = cityList.filter(function(city) {
-			return getPrefCountyCityName(city) === query;
-		})
-
-		cities.forEach(function(city) {
-			let MAtemp = MACompList.concat().filter((m) => {
-				return convertCompCode(m) === city.compartmentCode;
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.MAName === query;
 			})
-			MAComps = MAComps.concat(MAtemp)
-		})
+			break;
 
-	} else if (type === "code") { // areacode start digit
+		case "pref":
 
-		query = query.slice(1, query.length)
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.areaCode.slice(0, query.length) === query;
-		})
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.pref === query;
+			})
+			break;
 
-	} else if (type === "all") {
+		case "city":
 
-		MAComps = MACompList.concat();
+			const cities = cityList.filter(function(city) {
+				return getPrefCountyCityName(city) === query;
+			})
 
-	} else if (type === "random") {
+			cities.forEach(function(city) {
+				let MAtemp = MACompList.concat().filter((m) => {
+					return convertCompCode(m) === city.compartmentCode;
+				})
+				MAComps = MAComps.concat(MAtemp)
+			})
+			break;
 
-		MAComps = shuffleArray(MACompList.concat()).slice(0, 1)
+		case "code": // areacode start digit
+
+			query = query.slice(1, query.length)
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.areaCode.slice(0, query.length) === query;
+			})
+			break;
+
+		case "all":
+
+			MAComps = MACompList.concat();
+			break;
+
+		case "random":
+
+			MAComps = shuffleArray(MACompList.concat()).slice(0, 1);
+			break;
 
 	}
 
@@ -188,6 +196,47 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 }
 
+function MAAreaCodeHeader({ type, query }) {
+
+	let mainHeader = query, subHeader;
+
+	switch (type) {
+
+		case "MA" : // MA name
+			subHeader = "MA名検索"
+			break;
+
+		case "pref":
+			subHeader = "都道府県名検索"
+			break;
+
+		case "city":
+			subHeader = "市町村名検索"
+			break;
+
+		case "code": // areacode start digit
+			subHeader = "市外局番検索（前方一致）"
+			break;
+
+		case "all":
+			mainHeader = "全て"
+			break;
+
+		case "random":
+			mainHeader = "ランダム表示"
+			break;
+
+	}
+
+	return (
+		<div className="MAAreaCode-header">
+			<div className="main-header">{mainHeader}</div>
+			<div className="sub-header">{subHeader}</div>
+		</div>
+	)
+
+}
+
 export default function MAAreaCode({ type }) {
 
     const {query} = useParams();
@@ -195,6 +244,7 @@ export default function MAAreaCode({ type }) {
 	return (
 		<>
 			<ScrollTop />
+			<MAAreaCodeHeader type={type} query={query} />
 			<div>{ displayMAAreaCodeInfos(type, query) }</div>
 		</>
 	)
