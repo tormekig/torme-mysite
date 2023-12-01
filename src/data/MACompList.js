@@ -7,6 +7,7 @@ const MACompList = [
     MAName: '札幌',
     areaCode: '11',
     square: '861-622',
+    color: 'red',
   },
   {
     codeMain: '2',
@@ -16,6 +17,7 @@ const MACompList = [
     MAName: '千歳',
     areaCode: '123',
     square: '848-634',
+    color: 'green',
   },
   {
     codeMain: '3',
@@ -25,6 +27,7 @@ const MACompList = [
     MAName: '夕張',
     areaCode: '123',
     square: '861-647',
+    color: 'green',
   },
   {
     codeMain: '4',
@@ -34,6 +37,7 @@ const MACompList = [
     MAName: '栗山',
     areaCode: '123',
     square: '861-639',
+    color: 'green',
   },
   {
     codeMain: '6',
@@ -43,6 +47,7 @@ const MACompList = [
     MAName: '芦別',
     areaCode: '124',
     square: '887-655',
+    color: 'green',
   },
   {
     codeMain: '7',
@@ -52,6 +57,7 @@ const MACompList = [
     MAName: '滝川',
     areaCode: '125',
     square: '889-644',
+    color: 'green',
   },
   {
     codeMain: '8',
@@ -61,6 +67,7 @@ const MACompList = [
     MAName: '岩見沢',
     areaCode: '126',
     square: '869-638',
+    color: 'green',
   },
   {
     codeMain: '10',
@@ -70,6 +77,7 @@ const MACompList = [
     MAName: '岩見沢',
     areaCode: '1267',
     square: '869-638',
+    color: 'green',
   },
   {
     codeMain: '11',
@@ -79,6 +87,7 @@ const MACompList = [
     MAName: '石狩',
     areaCode: '133',
     square: '872-621',
+    color: 'blue',
   },
   {
     codeMain: '12',
@@ -88,6 +97,7 @@ const MACompList = [
     MAName: '当別',
     areaCode: '133',
     square: '870-628',
+    color: 'blue',
   },
   {
     codeMain: '15',
@@ -97,6 +107,7 @@ const MACompList = [
     MAName: '小樽',
     areaCode: '134',
     square: '869-607',
+    color: 'blue',
   },
   {
     codeMain: '16',
@@ -106,6 +117,7 @@ const MACompList = [
     MAName: '余市',
     areaCode: '135',
     square: '869-599',
+    color: 'blue',
   },
   {
     codeMain: '17',
@@ -115,6 +127,7 @@ const MACompList = [
     MAName: '岩内',
     areaCode: '135',
     square: '857-587',
+    color: 'blue',
   },
   {
     codeMain: '18',
@@ -124,6 +137,7 @@ const MACompList = [
     MAName: '倶知安',
     areaCode: '136',
     square: '852-597',
+    color: 'blue',
   },
   {
     codeMain: '19',
@@ -133,6 +147,7 @@ const MACompList = [
     MAName: '寿都',
     areaCode: '136',
     square: '847-576',
+    color: 'blue',
   },
   {
     codeMain: '20',
@@ -142,6 +157,7 @@ const MACompList = [
     MAName: '鹿部',
     areaCode: '1372',
     square: '804-601',
+    color: 'blue',
   },
   {
     codeMain: '21',
@@ -151,6 +167,7 @@ const MACompList = [
     MAName: '森',
     areaCode: '1374',
     square: '809-591',
+    color: 'blue',
   },
   {
     codeMain: '22',
@@ -160,6 +177,7 @@ const MACompList = [
     MAName: '八雲',
     areaCode: '137',
     square: '817-578',
+    color: 'blue',
   },
   {
     codeMain: '23',
@@ -169,6 +187,7 @@ const MACompList = [
     MAName: '八雲',
     areaCode: '1377',
     square: '817-578',
+    color: 'blue',
   },
   {
     codeMain: '24',
@@ -178,6 +197,7 @@ const MACompList = [
     MAName: '今金',
     areaCode: '137',
     square: '826-567',
+    color: 'blue',
   },
   {
     codeMain: '25',
@@ -187,6 +207,7 @@ const MACompList = [
     MAName: '函館',
     areaCode: '138',
     square: '790-597',
+    color: 'blue',
   },
   {
     codeMain: '26',
@@ -196,6 +217,7 @@ const MACompList = [
     MAName: '木古内',
     areaCode: '1392',
     square: '785-585',
+    color: 'blue',
   },
   {
     codeMain: '27',
@@ -205,6 +227,7 @@ const MACompList = [
     MAName: '松前',
     areaCode: '139',
     square: '771-571',
+    color: 'blue',
   },
   {
     codeMain: '28',
@@ -214,6 +237,7 @@ const MACompList = [
     MAName: '江差',
     areaCode: '139',
     square: '795-572',
+    color: 'blue',
   },
   {
     codeMain: '30',
@@ -223,6 +247,7 @@ const MACompList = [
     MAName: '奥尻',
     areaCode: '1397',
     square: '812-547',
+    color: 'blue',
   },
   {
     codeMain: '31',
@@ -232,6 +257,7 @@ const MACompList = [
     MAName: '熊石',
     areaCode: '1398',
     square: '810-566',
+    color: 'blue',
   },
   {
     codeMain: '32',
@@ -241,6 +267,7 @@ const MACompList = [
     MAName: '伊達',
     areaCode: '142',
     square: '829-602',
+    color: 'yellow',
   },
   {
     codeMain: '33',
@@ -250,6 +277,7 @@ const MACompList = [
     MAName: '室蘭',
     areaCode: '143',
     square: '820-607',
+    color: 'yellow',
   },
   {
     codeMain: '34',
@@ -259,6 +287,7 @@ const MACompList = [
     MAName: '苫小牧',
     areaCode: '144',
     square: '838-632',
+    color: 'yellow',
   },
   {
     codeMain: '35',
@@ -268,6 +297,7 @@ const MACompList = [
     MAName: '早来',
     areaCode: '145',
     square: '845-641',
+    color: 'yellow',
   },
   {
     codeMain: '36',
@@ -277,6 +307,7 @@ const MACompList = [
     MAName: '鵡川',
     areaCode: '145',
     square: '834-646',
+    color: 'yellow',
   },
   {
     codeMain: '37',
@@ -286,6 +317,7 @@ const MACompList = [
     MAName: '門別富川',
     areaCode: '1456',
     square: '831-650',
+    color: 'yellow',
   },
   {
     codeMain: '38',
@@ -295,6 +327,7 @@ const MACompList = [
     MAName: '門別富川',
     areaCode: '1457',
     square: '831-650',
+    color: 'yellow',
   },
   {
     codeMain: '39',
@@ -304,6 +337,7 @@ const MACompList = [
     MAName: '浦河',
     areaCode: '146',
     square: '811-681',
+    color: 'yellow',
   },
   {
     codeMain: '41',
@@ -313,6 +347,7 @@ const MACompList = [
     MAName: '静内',
     areaCode: '146',
     square: '821-664',
+    color: 'yellow',
   },
   {
     codeMain: '42',
@@ -322,6 +357,7 @@ const MACompList = [
     MAName: 'えりも',
     areaCode: '1466',
     square: '803-697',
+    color: 'yellow',
   },
   {
     codeMain: '43',
@@ -331,6 +367,7 @@ const MACompList = [
     MAName: '網走',
     areaCode: '152',
     square: '915-738',
+    color: 'blue',
   },
   {
     codeMain: '44',
@@ -340,6 +377,7 @@ const MACompList = [
     MAName: '斜里',
     areaCode: '152',
     square: '909-754',
+    color: 'blue',
   },
   {
     codeMain: '45',
@@ -349,6 +387,7 @@ const MACompList = [
     MAName: '美幌',
     areaCode: '152',
     square: '904-732',
+    color: 'blue',
   },
   {
     codeMain: '46',
@@ -358,6 +397,7 @@ const MACompList = [
     MAName: '厚岸',
     areaCode: '153',
     square: '861-764',
+    color: 'blue',
   },
   {
     codeMain: '47',
@@ -367,6 +407,7 @@ const MACompList = [
     MAName: '根室',
     areaCode: '153',
     square: '877-793',
+    color: 'blue',
   },
   {
     codeMain: '48',
@@ -376,6 +417,7 @@ const MACompList = [
     MAName: '中標津',
     areaCode: '153',
     square: '889-767',
+    color: 'blue',
   },
   {
     codeMain: '49',
@@ -385,6 +427,7 @@ const MACompList = [
     MAName: '根室標津',
     areaCode: '153',
     square: '894-774',
+    color: 'blue',
   },
   {
     codeMain: '50',
@@ -394,6 +437,7 @@ const MACompList = [
     MAName: '釧路',
     areaCode: '154',
     square: '857-745',
+    color: 'blue',
   },
   {
     codeMain: '51',
@@ -403,6 +447,7 @@ const MACompList = [
     MAName: '白糠',
     areaCode: '1547',
     square: '855-733',
+    color: 'blue',
   },
   {
     codeMain: '52',
@@ -412,6 +457,7 @@ const MACompList = [
     MAName: '弟子屈',
     areaCode: '15',
     square: '885-747',
+    color: 'blue',
   },
   {
     codeMain: '53',
@@ -421,6 +467,7 @@ const MACompList = [
     MAName: '帯広',
     areaCode: '155',
     square: '854-698',
+    color: 'blue',
   },
   {
     codeMain: '54',
@@ -430,6 +477,7 @@ const MACompList = [
     MAName: '十勝池田',
     areaCode: '15',
     square: '854-707',
+    color: 'blue',
   },
   {
     codeMain: '55',
@@ -439,6 +487,7 @@ const MACompList = [
     MAName: '広尾',
     areaCode: '1558',
     square: '819-703',
+    color: 'blue',
   },
   {
     codeMain: '56',
@@ -448,6 +497,7 @@ const MACompList = [
     MAName: '本別',
     areaCode: '156',
     square: '865-714',
+    color: 'blue',
   },
   {
     codeMain: '57',
@@ -457,6 +507,7 @@ const MACompList = [
     MAName: '上士幌',
     areaCode: '1564',
     square: '871-700',
+    color: 'blue',
   },
   {
     codeMain: '58',
@@ -466,6 +517,7 @@ const MACompList = [
     MAName: '十勝清水',
     areaCode: '156',
     square: '859-684',
+    color: 'blue',
   },
   {
     codeMain: '59',
@@ -475,6 +527,7 @@ const MACompList = [
     MAName: '北見',
     areaCode: '157',
     square: '903-723',
+    color: 'blue',
   },
   {
     codeMain: '60',
@@ -484,6 +537,7 @@ const MACompList = [
     MAName: '紋別',
     areaCode: '158',
     square: '933-700',
+    color: 'blue',
   },
   {
     codeMain: '62',
@@ -493,6 +547,7 @@ const MACompList = [
     MAName: '遠軽',
     areaCode: '158',
     square: '917-708',
+    color: 'blue',
   },
   {
     codeMain: '63',
@@ -502,6 +557,7 @@ const MACompList = [
     MAName: '中湧別',
     areaCode: '1586',
     square: '924-710',
+    color: 'blue',
   },
   {
     codeMain: '64',
@@ -511,6 +567,7 @@ const MACompList = [
     MAName: '中湧別',
     areaCode: '1587',
     square: '924-710',
+    color: 'blue',
   },
   {
     codeMain: '65',
@@ -520,6 +577,7 @@ const MACompList = [
     MAName: '興部',
     areaCode: '158',
     square: '940-691',
+    color: 'blue',
   },
   {
     codeMain: '66',
@@ -529,6 +587,7 @@ const MACompList = [
     MAName: '稚内',
     areaCode: '162',
     square: '992-632',
+    color: 'red',
   },
   {
     codeMain: '67',
@@ -538,6 +597,7 @@ const MACompList = [
     MAName: '天塩',
     areaCode: '1632',
     square: '963-635',
+    color: 'red',
   },
   {
     codeMain: '68',
@@ -547,6 +607,7 @@ const MACompList = [
     MAName: '浜頓別',
     areaCode: '1634',
     square: '976-659',
+    color: 'red',
   },
   {
     codeMain: '69',
@@ -556,6 +617,7 @@ const MACompList = [
     MAName: '浜頓別',
     areaCode: '1635',
     square: '976-659',
+    color: 'red',
   },
   {
     codeMain: '70',
@@ -565,6 +627,7 @@ const MACompList = [
     MAName: '北見枝幸',
     areaCode: '163',
     square: '966-668',
+    color: 'red',
   },
   {
     codeMain: '71',
@@ -574,6 +637,7 @@ const MACompList = [
     MAName: '利尻礼文',
     areaCode: '163',
     square: '983-614',
+    color: 'red',
   },
   {
     codeMain: '72',
@@ -583,6 +647,7 @@ const MACompList = [
     MAName: '留萌',
     areaCode: '164',
     square: '910-632',
+    color: 'red',
   },
   {
     codeMain: '73',
@@ -592,6 +657,7 @@ const MACompList = [
     MAName: '石狩深川',
     areaCode: '164',
     square: '898-649',
+    color: 'red',
   },
   {
     codeMain: '74',
@@ -601,6 +667,7 @@ const MACompList = [
     MAName: '羽幌',
     areaCode: '164',
     square: '934-634',
+    color: 'red',
   },
   {
     codeMain: '75',
@@ -610,6 +677,7 @@ const MACompList = [
     MAName: '焼尻',
     areaCode: '1648',
     square: '938-623',
+    color: 'red',
   },
   {
     codeMain: '76',
@@ -619,6 +687,7 @@ const MACompList = [
     MAName: '士別',
     areaCode: '165',
     square: '923-662',
+    color: 'red',
   },
   {
     codeMain: '81',
@@ -628,6 +697,7 @@ const MACompList = [
     MAName: '名寄',
     areaCode: '1654',
     square: '933-664',
+    color: 'red',
   },
   {
     codeMain: '82',
@@ -637,6 +707,7 @@ const MACompList = [
     MAName: '名寄',
     areaCode: '1655',
     square: '933-664',
+    color: 'red',
   },
   {
     codeMain: '83',
@@ -646,6 +717,7 @@ const MACompList = [
     MAName: '美深',
     areaCode: '1656',
     square: '940-660',
+    color: 'red',
   },
   {
     codeMain: '84',
@@ -655,6 +727,7 @@ const MACompList = [
     MAName: '上川',
     areaCode: '1658',
     square: '905-678',
+    color: 'red',
   },
   {
     codeMain: '85',
@@ -664,6 +737,7 @@ const MACompList = [
     MAName: '旭川',
     areaCode: '166',
     square: '901-662',
+    color: 'red',
   },
   {
     codeMain: '86',
@@ -673,6 +747,7 @@ const MACompList = [
     MAName: '富良野',
     areaCode: '167',
     square: '877-663',
+    color: 'red',
   },
   {
     codeMain: '87',
@@ -682,6 +757,7 @@ const MACompList = [
     MAName: '弘前',
     areaCode: '172',
     square: '725-587',
+    color: 'red',
   },
   {
     codeMain: '88',
@@ -691,6 +767,7 @@ const MACompList = [
     MAName: '五所川原',
     areaCode: '173',
     square: '736-586',
+    color: 'red',
   },
   {
     codeMain: '89',
@@ -700,6 +777,7 @@ const MACompList = [
     MAName: '鰺ケ沢',
     areaCode: '173',
     square: '735-576',
+    color: 'red',
   },
   {
     codeMain: '90',
@@ -709,6 +787,7 @@ const MACompList = [
     MAName: '蟹田',
     areaCode: '174',
     square: '749-594',
+    color: 'red',
   },
   {
     codeMain: '91',
@@ -718,6 +797,7 @@ const MACompList = [
     MAName: 'むつ',
     areaCode: '175',
     square: '763-618',
+    color: 'red',
   },
   {
     codeMain: '92',
@@ -727,6 +807,7 @@ const MACompList = [
     MAName: '野辺地',
     areaCode: '175',
     square: '740-614',
+    color: 'red',
   },
   {
     codeMain: '93',
@@ -736,6 +817,7 @@ const MACompList = [
     MAName: '十和田',
     areaCode: '176',
     square: '725-618',
+    color: 'red',
   },
   {
     codeMain: '94',
@@ -745,6 +827,7 @@ const MACompList = [
     MAName: '青森',
     areaCode: '17',
     square: '737-598',
+    color: 'red',
   },
   {
     codeMain: '95',
@@ -754,6 +837,7 @@ const MACompList = [
     MAName: '八戸',
     areaCode: '178',
     square: '720-630',
+    color: 'red',
   },
   {
     codeMain: '96',
@@ -763,6 +847,7 @@ const MACompList = [
     MAName: '三戸',
     areaCode: '179',
     square: '712-621',
+    color: 'red',
   },
   {
     codeMain: '97',
@@ -772,6 +857,7 @@ const MACompList = [
     MAName: '横手',
     areaCode: '182',
     square: '654-592',
+    color: 'yellow',
   },
   {
     codeMain: '98',
@@ -781,6 +867,7 @@ const MACompList = [
     MAName: '湯沢',
     areaCode: '183',
     square: '645-588',
+    color: 'yellow',
   },
   {
     codeMain: '99',
@@ -790,6 +877,7 @@ const MACompList = [
     MAName: '本荘',
     areaCode: '184',
     square: '658-569',
+    color: 'yellow',
   },
   {
     codeMain: '100',
@@ -799,6 +887,7 @@ const MACompList = [
     MAName: '男鹿',
     areaCode: '185',
     square: '685-561',
+    color: 'yellow',
   },
   {
     codeMain: '101',
@@ -808,6 +897,7 @@ const MACompList = [
     MAName: '能代',
     areaCode: '185',
     square: '703-568',
+    color: 'yellow',
   },
   {
     codeMain: '102',
@@ -817,6 +907,7 @@ const MACompList = [
     MAName: '鹿角',
     areaCode: '186',
     square: '702-601',
+    color: 'yellow',
   },
   {
     codeMain: '103',
@@ -826,6 +917,7 @@ const MACompList = [
     MAName: '大館',
     areaCode: '186',
     square: '707-591',
+    color: 'yellow',
   },
   {
     codeMain: '104',
@@ -835,6 +927,7 @@ const MACompList = [
     MAName: '鷹巣',
     areaCode: '186',
     square: '704-583',
+    color: 'yellow',
   },
   {
     codeMain: '105',
@@ -844,6 +937,7 @@ const MACompList = [
     MAName: '大曲',
     areaCode: '187',
     square: '661-588',
+    color: 'yellow',
   },
   {
     codeMain: '106',
@@ -853,6 +947,7 @@ const MACompList = [
     MAName: '角館',
     areaCode: '187',
     square: '669-591',
+    color: 'yellow',
   },
   {
     codeMain: '107',
@@ -862,6 +957,7 @@ const MACompList = [
     MAName: '秋田',
     areaCode: '18',
     square: '676-572',
+    color: 'yellow',
   },
   {
     codeMain: '108',
@@ -871,6 +967,7 @@ const MACompList = [
     MAName: '一関',
     areaCode: '191',
     square: '632-616',
+    color: 'green',
   },
   {
     codeMain: '109',
@@ -880,6 +977,7 @@ const MACompList = [
     MAName: '大船渡',
     areaCode: '192',
     square: '640-641',
+    color: 'green',
   },
   {
     codeMain: '110',
@@ -889,6 +987,7 @@ const MACompList = [
     MAName: '宮古',
     areaCode: '193',
     square: '672-651',
+    color: 'green',
   },
   {
     codeMain: '111',
@@ -898,6 +997,7 @@ const MACompList = [
     MAName: '釜石',
     areaCode: '193',
     square: '651-648',
+    color: 'green',
   },
   {
     codeMain: '112',
@@ -907,6 +1007,7 @@ const MACompList = [
     MAName: '久慈',
     areaCode: '194',
     square: '702-642',
+    color: 'green',
   },
   {
     codeMain: '113',
@@ -916,6 +1017,7 @@ const MACompList = [
     MAName: '岩泉',
     areaCode: '194',
     square: '683-644',
+    color: 'green',
   },
   {
     codeMain: '114',
@@ -925,6 +1027,7 @@ const MACompList = [
     MAName: '岩手',
     areaCode: '195',
     square: '690-619',
+    color: 'green',
   },
   {
     codeMain: '115',
@@ -934,6 +1037,7 @@ const MACompList = [
     MAName: '二戸',
     areaCode: '195',
     square: '706-622',
+    color: 'green',
   },
   {
     codeMain: '116',
@@ -943,6 +1047,7 @@ const MACompList = [
     MAName: '盛岡',
     areaCode: '19',
     square: '675-617',
+    color: 'green',
   },
   {
     codeMain: '117',
@@ -952,6 +1057,7 @@ const MACompList = [
     MAName: '水沢',
     areaCode: '197',
     square: '644-617',
+    color: 'green',
   },
   {
     codeMain: '118',
@@ -961,6 +1067,7 @@ const MACompList = [
     MAName: '北上',
     areaCode: '197',
     square: '652-615',
+    color: 'green',
   },
   {
     codeMain: '119',
@@ -970,6 +1077,7 @@ const MACompList = [
     MAName: '花巻',
     areaCode: '198',
     square: '657-615',
+    color: 'green',
   },
   {
     codeMain: '120',
@@ -979,6 +1087,7 @@ const MACompList = [
     MAName: '遠野',
     areaCode: '198',
     square: '654-633',
+    color: 'green',
   },
   {
     codeMain: '121',
@@ -988,6 +1097,7 @@ const MACompList = [
     MAName: '仙台',
     areaCode: '22',
     square: '595-605',
+    color: 'blue',
   },
   {
     codeMain: '122',
@@ -997,6 +1107,7 @@ const MACompList = [
     MAName: '迫',
     areaCode: '220',
     square: '619-619',
+    color: 'blue',
   },
   {
     codeMain: '123',
@@ -1006,6 +1117,7 @@ const MACompList = [
     MAName: '岩沼',
     areaCode: '223',
     square: '586-605',
+    color: 'blue',
   },
   {
     codeMain: '124',
@@ -1015,6 +1127,7 @@ const MACompList = [
     MAName: '大河原',
     areaCode: '224',
     square: '583-600',
+    color: 'blue',
   },
   {
     codeMain: '125',
@@ -1024,6 +1137,7 @@ const MACompList = [
     MAName: '白石',
     areaCode: '224',
     square: '581-595',
+    color: 'blue',
   },
   {
     codeMain: '126',
@@ -1033,6 +1147,7 @@ const MACompList = [
     MAName: '石巻',
     areaCode: '225',
     square: '604-624',
+    color: 'blue',
   },
   {
     codeMain: '127',
@@ -1042,6 +1157,7 @@ const MACompList = [
     MAName: '気仙沼',
     areaCode: '226',
     square: '631-635',
+    color: 'blue',
   },
   {
     codeMain: '128',
@@ -1051,6 +1167,7 @@ const MACompList = [
     MAName: '築館',
     areaCode: '228',
     square: '621-611',
+    color: 'blue',
   },
   {
     codeMain: '129',
@@ -1060,6 +1177,7 @@ const MACompList = [
     MAName: '古川',
     areaCode: '229',
     square: '612-609',
+    color: 'blue',
   },
   {
     codeMain: '130',
@@ -1069,6 +1187,7 @@ const MACompList = [
     MAName: '新庄',
     areaCode: '233',
     square: '623-580',
+    color: 'red',
   },
   {
     codeMain: '131',
@@ -1078,6 +1197,7 @@ const MACompList = [
     MAName: '酒田',
     areaCode: '234',
     square: '631-560',
+    color: 'red',
   },
   {
     codeMain: '132',
@@ -1087,6 +1207,7 @@ const MACompList = [
     MAName: '鶴岡',
     areaCode: '235',
     square: '621-560',
+    color: 'red',
   },
   {
     codeMain: '133',
@@ -1096,6 +1217,7 @@ const MACompList = [
     MAName: '山形',
     areaCode: '23',
     square: '595-582',
+    color: 'red',
   },
   {
     codeMain: '134',
@@ -1105,6 +1227,7 @@ const MACompList = [
     MAName: '寒河江',
     areaCode: '237',
     square: '601-579',
+    color: 'red',
   },
   {
     codeMain: '135',
@@ -1114,6 +1237,7 @@ const MACompList = [
     MAName: '村山',
     areaCode: '237',
     square: '607-584',
+    color: 'red',
   },
   {
     codeMain: '136',
@@ -1123,6 +1247,7 @@ const MACompList = [
     MAName: '米沢',
     areaCode: '238',
     square: '576-572',
+    color: 'red',
   },
   {
     codeMain: '137',
@@ -1132,6 +1257,7 @@ const MACompList = [
     MAName: '長井',
     areaCode: '238',
     square: '586-569',
+    color: 'red',
   },
   {
     codeMain: '138',
@@ -1141,6 +1267,7 @@ const MACompList = [
     MAName: '磐城富岡',
     areaCode: '240',
     square: '544-612',
+    color: 'yellow',
   },
   {
     codeMain: '139',
@@ -1150,6 +1277,7 @@ const MACompList = [
     MAName: '喜多方',
     areaCode: '241',
     square: '561-562',
+    color: 'yellow',
   },
   {
     codeMain: '140',
@@ -1159,6 +1287,7 @@ const MACompList = [
     MAName: '田島',
     areaCode: '241',
     square: '536-557',
+    color: 'yellow',
   },
   {
     codeMain: '141',
@@ -1168,6 +1297,7 @@ const MACompList = [
     MAName: '会津山口',
     areaCode: '241',
     square: '538-547',
+    color: 'yellow',
   },
   {
     codeMain: '142',
@@ -1177,6 +1307,7 @@ const MACompList = [
     MAName: '柳津',
     areaCode: '241',
     square: '554-555',
+    color: 'yellow',
   },
   {
     codeMain: '143',
@@ -1186,6 +1317,7 @@ const MACompList = [
     MAName: '会津若松',
     areaCode: '242',
     square: '552-564',
+    color: 'yellow',
   },
   {
     codeMain: '144',
@@ -1195,6 +1327,7 @@ const MACompList = [
     MAName: '二本松',
     areaCode: '243',
     square: '558-587',
+    color: 'yellow',
   },
   {
     codeMain: '145',
@@ -1204,6 +1337,7 @@ const MACompList = [
     MAName: '原町',
     areaCode: '244',
     square: '560-610',
+    color: 'yellow',
   },
   {
     codeMain: '146',
@@ -1213,6 +1347,7 @@ const MACompList = [
     MAName: '福島',
     areaCode: '24',
     square: '567-588',
+    color: 'yellow',
   },
   {
     codeMain: '147',
@@ -1222,6 +1357,7 @@ const MACompList = [
     MAName: 'いわき',
     areaCode: '246',
     square: '528-607',
+    color: 'yellow',
   },
   {
     codeMain: '148',
@@ -1231,6 +1367,7 @@ const MACompList = [
     MAName: '石川',
     areaCode: '247',
     square: '533-588',
+    color: 'yellow',
   },
   {
     codeMain: '149',
@@ -1240,6 +1377,7 @@ const MACompList = [
     MAName: '三春',
     areaCode: '247',
     square: '549-589',
+    color: 'yellow',
   },
   {
     codeMain: '150',
@@ -1249,6 +1387,7 @@ const MACompList = [
     MAName: '須賀川',
     areaCode: '248',
     square: '541-584',
+    color: 'yellow',
   },
   {
     codeMain: '151',
@@ -1258,6 +1397,7 @@ const MACompList = [
     MAName: '白河',
     areaCode: '248',
     square: '532-577',
+    color: 'yellow',
   },
   {
     codeMain: '152',
@@ -1267,6 +1407,7 @@ const MACompList = [
     MAName: '郡山',
     areaCode: '24',
     square: '547-584',
+    color: 'yellow',
   },
   {
     codeMain: '153',
@@ -1276,6 +1417,7 @@ const MACompList = [
     MAName: '新潟',
     areaCode: '25',
     square: '576-526',
+    color: 'blue',
   },
   {
     codeMain: '154',
@@ -1285,6 +1427,7 @@ const MACompList = [
     MAName: '新津',
     areaCode: '250',
     square: '569-529',
+    color: 'blue',
   },
   {
     codeMain: '155',
@@ -1294,6 +1437,7 @@ const MACompList = [
     MAName: '新発田',
     areaCode: '254',
     square: '578-538',
+    color: 'blue',
   },
   {
     codeMain: '156',
@@ -1303,6 +1447,7 @@ const MACompList = [
     MAName: '村上',
     areaCode: '254',
     square: '593-545',
+    color: 'blue',
   },
   {
     codeMain: '157',
@@ -1312,6 +1457,7 @@ const MACompList = [
     MAName: '津川',
     areaCode: '254',
     square: '563-544',
+    color: 'blue',
   },
   {
     codeMain: '158',
@@ -1321,6 +1467,7 @@ const MACompList = [
     MAName: '上越',
     areaCode: '25',
     square: '535-489',
+    color: 'blue',
   },
   {
     codeMain: '159',
@@ -1330,6 +1477,7 @@ const MACompList = [
     MAName: '新井',
     areaCode: '255',
     square: '526-490',
+    color: 'blue',
   },
   {
     codeMain: '160',
@@ -1339,6 +1487,7 @@ const MACompList = [
     MAName: '糸魚川',
     areaCode: '25',
     square: '527-473',
+    color: 'blue',
   },
   {
     codeMain: '161',
@@ -1348,6 +1497,7 @@ const MACompList = [
     MAName: '安塚',
     areaCode: '25',
     square: '532-498',
+    color: 'blue',
   },
   {
     codeMain: '162',
@@ -1357,6 +1507,7 @@ const MACompList = [
     MAName: '巻',
     areaCode: '256',
     square: '567-518',
+    color: 'blue',
   },
   {
     codeMain: '163',
@@ -1366,6 +1517,7 @@ const MACompList = [
     MAName: '三条',
     areaCode: '256',
     square: '560-521',
+    color: 'blue',
   },
   {
     codeMain: '164',
@@ -1375,6 +1527,7 @@ const MACompList = [
     MAName: '十日町',
     areaCode: '25',
     square: '532-512',
+    color: 'blue',
   },
   {
     codeMain: '165',
@@ -1384,6 +1537,7 @@ const MACompList = [
     MAName: '柏崎',
     areaCode: '257',
     square: '545-503',
+    color: 'blue',
   },
   {
     codeMain: '166',
@@ -1393,6 +1547,7 @@ const MACompList = [
     MAName: '六日町',
     areaCode: '25',
     square: '528-518',
+    color: 'blue',
   },
   {
     codeMain: '167',
@@ -1402,6 +1557,7 @@ const MACompList = [
     MAName: '小出',
     areaCode: '25',
     square: '538-521',
+    color: 'blue',
   },
   {
     codeMain: '168',
@@ -1411,6 +1567,7 @@ const MACompList = [
     MAName: '長岡',
     areaCode: '258',
     square: '550-517',
+    color: 'blue',
   },
   {
     codeMain: '169',
@@ -1420,6 +1577,7 @@ const MACompList = [
     MAName: '佐渡',
     areaCode: '259',
     square: '585-498',
+    color: 'blue',
   },
   {
     codeMain: '171',
@@ -1429,6 +1587,7 @@ const MACompList = [
     MAName: '阿南町',
     areaCode: '260',
     square: '432-469',
+    color: 'green',
   },
   {
     codeMain: '172',
@@ -1438,6 +1597,7 @@ const MACompList = [
     MAName: '大町',
     areaCode: '261',
     square: '498-472',
+    color: 'green',
   },
   {
     codeMain: '173',
@@ -1447,6 +1607,7 @@ const MACompList = [
     MAName: '長野',
     areaCode: '26',
     square: '506-486',
+    color: 'green',
   },
   {
     codeMain: '174',
@@ -1456,6 +1617,7 @@ const MACompList = [
     MAName: '松本',
     areaCode: '263',
     square: '482-477',
+    color: 'green',
   },
   {
     codeMain: '175',
@@ -1465,6 +1627,7 @@ const MACompList = [
     MAName: '木曾福島',
     areaCode: '264',
     square: '461-464',
+    color: 'green',
   },
   {
     codeMain: '176',
@@ -1474,6 +1637,7 @@ const MACompList = [
     MAName: '伊那',
     areaCode: '265',
     square: '460-476',
+    color: 'green',
   },
   {
     codeMain: '177',
@@ -1483,6 +1647,7 @@ const MACompList = [
     MAName: '飯田',
     areaCode: '265',
     square: '443-469',
+    color: 'green',
   },
   {
     codeMain: '178',
@@ -1492,6 +1657,7 @@ const MACompList = [
     MAName: '諏訪',
     areaCode: '266',
     square: '472-483',
+    color: 'green',
   },
   {
     codeMain: '179',
@@ -1501,6 +1667,7 @@ const MACompList = [
     MAName: '小諸',
     areaCode: '267',
     square: '488-497',
+    color: 'green',
   },
   {
     codeMain: '180',
@@ -1510,6 +1677,7 @@ const MACompList = [
     MAName: '佐久',
     areaCode: '267',
     square: '482-499',
+    color: 'green',
   },
   {
     codeMain: '181',
@@ -1519,6 +1687,7 @@ const MACompList = [
     MAName: '上田',
     areaCode: '268',
     square: '492-489',
+    color: 'green',
   },
   {
     codeMain: '182',
@@ -1528,6 +1697,7 @@ const MACompList = [
     MAName: '中野',
     areaCode: '269',
     square: '511-495',
+    color: 'green',
   },
   {
     codeMain: '183',
@@ -1537,6 +1707,7 @@ const MACompList = [
     MAName: '飯山',
     areaCode: '269',
     square: '517-495',
+    color: 'green',
   },
   {
     codeMain: '184',
@@ -1546,6 +1717,7 @@ const MACompList = [
     MAName: '伊勢崎',
     areaCode: '270',
     square: '487-531',
+    color: 'red',
   },
   {
     codeMain: '185',
@@ -1555,6 +1727,7 @@ const MACompList = [
     MAName: '前橋',
     areaCode: '27',
     square: '491-526',
+    color: 'red',
   },
   {
     codeMain: '186',
@@ -1564,6 +1737,7 @@ const MACompList = [
     MAName: '高崎',
     areaCode: '27',
     square: '487-523',
+    color: 'red',
   },
   {
     codeMain: '187',
@@ -1573,6 +1747,7 @@ const MACompList = [
     MAName: '富岡',
     areaCode: '274',
     square: '484-518',
+    color: 'red',
   },
   {
     codeMain: '188',
@@ -1582,6 +1757,7 @@ const MACompList = [
     MAName: '藤岡',
     areaCode: '274',
     square: '483-526',
+    color: 'red',
   },
   {
     codeMain: '189',
@@ -1591,6 +1767,7 @@ const MACompList = [
     MAName: '太田',
     areaCode: '276',
     square: '486-540',
+    color: 'red',
   },
   {
     codeMain: '190',
@@ -1600,6 +1777,7 @@ const MACompList = [
     MAName: '桐生',
     areaCode: '277',
     square: '492-538',
+    color: 'red',
   },
   {
     codeMain: '191',
@@ -1609,6 +1787,7 @@ const MACompList = [
     MAName: '沼田',
     areaCode: '278',
     square: '505-525',
+    color: 'red',
   },
   {
     codeMain: '192',
@@ -1618,6 +1797,7 @@ const MACompList = [
     MAName: '渋川',
     areaCode: '279',
     square: '497-523',
+    color: 'red',
   },
   {
     codeMain: '193',
@@ -1627,6 +1807,7 @@ const MACompList = [
     MAName: '長野原',
     areaCode: '279',
     square: '500-507',
+    color: 'red',
   },
   {
     codeMain: '194',
@@ -1636,6 +1817,7 @@ const MACompList = [
     MAName: '古河',
     areaCode: '280',
     square: '480-554',
+    color: 'green',
   },
   {
     codeMain: '195',
@@ -1645,6 +1827,7 @@ const MACompList = [
     MAName: '栃木',
     areaCode: '282',
     square: '490-556',
+    color: 'green',
   },
   {
     codeMain: '196',
@@ -1654,6 +1837,7 @@ const MACompList = [
     MAName: '佐野',
     areaCode: '283',
     square: '487-549',
+    color: 'green',
   },
   {
     codeMain: '197',
@@ -1663,6 +1847,7 @@ const MACompList = [
     MAName: '足利',
     areaCode: '284',
     square: '488-543',
+    color: 'green',
   },
   {
     codeMain: '198',
@@ -1672,6 +1857,7 @@ const MACompList = [
     MAName: '真岡',
     areaCode: '285',
     square: '494-568',
+    color: 'green',
   },
   {
     codeMain: '199',
@@ -1681,6 +1867,7 @@ const MACompList = [
     MAName: '小山',
     areaCode: '285',
     square: '487-559',
+    color: 'green',
   },
   {
     codeMain: '200',
@@ -1690,6 +1877,7 @@ const MACompList = [
     MAName: '宇都宮',
     areaCode: '28',
     square: '501-562',
+    color: 'green',
   },
   {
     codeMain: '201',
@@ -1699,6 +1887,7 @@ const MACompList = [
     MAName: '黒磯',
     areaCode: '287',
     square: '523-570',
+    color: 'green',
   },
   {
     codeMain: '202',
@@ -1708,6 +1897,7 @@ const MACompList = [
     MAName: '大田原',
     areaCode: '287',
     square: '518-569',
+    color: 'green',
   },
   {
     codeMain: '203',
@@ -1717,6 +1907,7 @@ const MACompList = [
     MAName: '烏山',
     areaCode: '287',
     square: '506-574',
+    color: 'green',
   },
   {
     codeMain: '204',
@@ -1726,6 +1917,7 @@ const MACompList = [
     MAName: '今市',
     areaCode: '288',
     square: '510-554',
+    color: 'green',
   },
   {
     codeMain: '205',
@@ -1735,6 +1927,7 @@ const MACompList = [
     MAName: '鹿沼',
     areaCode: '289',
     square: '501-556',
+    color: 'green',
   },
   {
     codeMain: '206',
@@ -1744,6 +1937,7 @@ const MACompList = [
     MAName: '鉾田',
     areaCode: '291',
     square: '478-590',
+    color: 'red',
   },
   {
     codeMain: '207',
@@ -1753,6 +1947,7 @@ const MACompList = [
     MAName: '水戸',
     areaCode: '29',
     square: '490-589',
+    color: 'red',
   },
   {
     codeMain: '208',
@@ -1762,6 +1957,7 @@ const MACompList = [
     MAName: '高萩',
     areaCode: '293',
     square: '509-599',
+    color: 'red',
   },
   {
     codeMain: '209',
@@ -1771,6 +1967,7 @@ const MACompList = [
     MAName: '常陸太田',
     areaCode: '294',
     square: '500-591',
+    color: 'red',
   },
   {
     codeMain: '210',
@@ -1780,6 +1977,7 @@ const MACompList = [
     MAName: '常陸大宮',
     areaCode: '295',
     square: '500-586',
+    color: 'red',
   },
   {
     codeMain: '211',
@@ -1789,6 +1987,7 @@ const MACompList = [
     MAName: '大子',
     areaCode: '295',
     square: '512-583',
+    color: 'red',
   },
   {
     codeMain: '212',
@@ -1798,6 +1997,7 @@ const MACompList = [
     MAName: '笠間',
     areaCode: '296',
     square: '491-579',
+    color: 'red',
   },
   {
     codeMain: '213',
@@ -1807,6 +2007,7 @@ const MACompList = [
     MAName: '下館',
     areaCode: '296',
     square: '487-567',
+    color: 'red',
   },
   {
     codeMain: '214',
@@ -1816,6 +2017,7 @@ const MACompList = [
     MAName: '竜ケ崎',
     areaCode: '297',
     square: '464-576',
+    color: 'red',
   },
   {
     codeMain: '215',
@@ -1825,6 +2027,7 @@ const MACompList = [
     MAName: '水海道',
     areaCode: '297',
     square: '471-567',
+    color: 'red',
   },
   {
     codeMain: '216',
@@ -1834,6 +2037,7 @@ const MACompList = [
     MAName: '土浦',
     areaCode: '29',
     square: '474-577',
+    color: 'red',
   },
   {
     codeMain: '217',
@@ -1843,6 +2047,7 @@ const MACompList = [
     MAName: '石岡',
     areaCode: '299',
     square: '480-580',
+    color: 'red',
   },
   {
     codeMain: '218',
@@ -1852,6 +2057,7 @@ const MACompList = [
     MAName: '潮来',
     areaCode: '299',
     square: '466-592',
+    color: 'red',
   },
   {
     codeMain: '219',
@@ -1861,6 +2067,7 @@ const MACompList = [
     MAName: '東京',
     areaCode: '3',
     square: '452-557',
+    color: 'red',
   },
   {
     codeMain: '220',
@@ -1870,6 +2077,7 @@ const MACompList = [
     MAName: '武蔵野三鷹',
     areaCode: '422',
     square: '453-548',
+    color: 'green',
   },
   {
     codeMain: '221',
@@ -1879,6 +2087,7 @@ const MACompList = [
     MAName: '国分寺',
     areaCode: '42',
     square: '453-544',
+    color: 'green',
   },
   {
     codeMain: '222',
@@ -1888,6 +2097,7 @@ const MACompList = [
     MAName: '武蔵野三鷹',
     areaCode: '42',
     square: '453-548',
+    color: 'green',
   },
   {
     codeMain: '223',
@@ -1897,6 +2107,7 @@ const MACompList = [
     MAName: '立川',
     areaCode: '42',
     square: '453-541',
+    color: 'green',
   },
   {
     codeMain: '224',
@@ -1906,6 +2117,7 @@ const MACompList = [
     MAName: '八王子',
     areaCode: '42',
     square: '451-538',
+    color: 'green',
   },
   {
     codeMain: '225',
@@ -1915,6 +2127,7 @@ const MACompList = [
     MAName: '相模原',
     areaCode: '42',
     square: '446-539',
+    color: 'green',
   },
   {
     codeMain: '226',
@@ -1924,6 +2137,7 @@ const MACompList = [
     MAName: '青梅',
     areaCode: '428',
     square: '458-535',
+    color: 'green',
   },
   {
     codeMain: '227',
@@ -1933,6 +2147,7 @@ const MACompList = [
     MAName: '所沢',
     areaCode: '4',
     square: '458-543',
+    color: 'green',
   },
   {
     codeMain: '228',
@@ -1942,6 +2157,7 @@ const MACompList = [
     MAName: '飯能',
     areaCode: '42',
     square: '461-537',
+    color: 'green',
   },
   {
     codeMain: '229',
@@ -1951,6 +2167,7 @@ const MACompList = [
     MAName: '千葉',
     areaCode: '43',
     square: '448-573',
+    color: 'green',
   },
   {
     codeMain: '230',
@@ -1960,6 +2177,7 @@ const MACompList = [
     MAName: '市原',
     areaCode: '436',
     square: '443-572',
+    color: 'green',
   },
   {
     codeMain: '231',
@@ -1969,6 +2187,7 @@ const MACompList = [
     MAName: '木更津',
     areaCode: '438',
     square: '435-564',
+    color: 'green',
   },
   {
     codeMain: '232',
@@ -1978,6 +2197,7 @@ const MACompList = [
     MAName: '木更津',
     areaCode: '439',
     square: '435-564',
+    color: 'green',
   },
   {
     codeMain: '233',
@@ -1987,6 +2207,7 @@ const MACompList = [
     MAName: '川崎',
     areaCode: '44',
     square: '443-554',
+    color: 'green',
   },
   {
     codeMain: '234',
@@ -1996,6 +2217,7 @@ const MACompList = [
     MAName: '横浜',
     areaCode: '45',
     square: '439-551',
+    color: 'green',
   },
   {
     codeMain: '235',
@@ -2005,6 +2227,7 @@ const MACompList = [
     MAName: '小田原',
     areaCode: '460',
     square: '428-529',
+    color: 'green',
   },
   {
     codeMain: '236',
@@ -2014,6 +2237,7 @@ const MACompList = [
     MAName: '厚木',
     areaCode: '46',
     square: '439-539',
+    color: 'green',
   },
   {
     codeMain: '237',
@@ -2023,6 +2247,7 @@ const MACompList = [
     MAName: '平塚',
     areaCode: '463',
     square: '432-538',
+    color: 'green',
   },
   {
     codeMain: '238',
@@ -2032,6 +2257,7 @@ const MACompList = [
     MAName: '小田原',
     areaCode: '465',
     square: '428-529',
+    color: 'green',
   },
   {
     codeMain: '239',
@@ -2041,6 +2267,7 @@ const MACompList = [
     MAName: '藤沢',
     areaCode: '466',
     square: '433-545',
+    color: 'green',
   },
   {
     codeMain: '240',
@@ -2050,6 +2277,7 @@ const MACompList = [
     MAName: '藤沢',
     areaCode: '467',
     square: '433-545',
+    color: 'green',
   },
   {
     codeMain: '241',
@@ -2059,6 +2287,7 @@ const MACompList = [
     MAName: '横須賀',
     areaCode: '46',
     square: '430-553',
+    color: 'green',
   },
   {
     codeMain: '242',
@@ -2068,6 +2297,7 @@ const MACompList = [
     MAName: '館山',
     areaCode: '470',
     square: '413-562',
+    color: 'blue',
   },
   {
     codeMain: '243',
@@ -2077,6 +2307,7 @@ const MACompList = [
     MAName: '大原',
     areaCode: '470',
     square: '428-585',
+    color: 'blue',
   },
   {
     codeMain: '244',
@@ -2086,6 +2317,7 @@ const MACompList = [
     MAName: '鴨川',
     areaCode: '4',
     square: '420-573',
+    color: 'green',
   },
   {
     codeMain: '245',
@@ -2095,6 +2327,7 @@ const MACompList = [
     MAName: '柏',
     areaCode: '4',
     square: '461-566',
+    color: 'green',
   },
   {
     codeMain: '246',
@@ -2104,6 +2337,7 @@ const MACompList = [
     MAName: '市川',
     areaCode: '47',
     square: '454-564',
+    color: 'blue',
   },
   {
     codeMain: '247',
@@ -2113,6 +2347,7 @@ const MACompList = [
     MAName: '船橋',
     areaCode: '47',
     square: '453-567',
+    color: 'blue',
   },
   {
     codeMain: '248',
@@ -2122,6 +2357,7 @@ const MACompList = [
     MAName: '東金',
     areaCode: '475',
     square: '445-584',
+    color: 'blue',
   },
   {
     codeMain: '249',
@@ -2131,6 +2367,7 @@ const MACompList = [
     MAName: '茂原',
     areaCode: '475',
     square: '438-581',
+    color: 'blue',
   },
   {
     codeMain: '250',
@@ -2140,6 +2377,7 @@ const MACompList = [
     MAName: '成田',
     areaCode: '476',
     square: '458-582',
+    color: 'blue',
   },
   {
     codeMain: '251',
@@ -2149,6 +2387,7 @@ const MACompList = [
     MAName: '佐原',
     areaCode: '478',
     square: '463-590',
+    color: 'blue',
   },
   {
     codeMain: '252',
@@ -2158,6 +2397,7 @@ const MACompList = [
     MAName: '銚子',
     areaCode: '479',
     square: '455-605',
+    color: 'blue',
   },
   {
     codeMain: '253',
@@ -2167,6 +2407,7 @@ const MACompList = [
     MAName: '八日市場',
     areaCode: '479',
     square: '453-592',
+    color: 'blue',
   },
   {
     codeMain: '254',
@@ -2176,6 +2417,7 @@ const MACompList = [
     MAName: '浦和',
     areaCode: '48',
     square: '462-552',
+    color: 'yellow',
   },
   {
     codeMain: '255',
@@ -2185,6 +2427,7 @@ const MACompList = [
     MAName: '川口',
     areaCode: '48',
     square: '458-555',
+    color: 'yellow',
   },
   {
     codeMain: '256',
@@ -2194,6 +2437,7 @@ const MACompList = [
     MAName: '久喜',
     areaCode: '480',
     square: '473-553',
+    color: 'yellow',
   },
   {
     codeMain: '257',
@@ -2203,6 +2447,7 @@ const MACompList = [
     MAName: '熊谷',
     areaCode: '48',
     square: '477-540',
+    color: 'yellow',
   },
   {
     codeMain: '258',
@@ -2212,6 +2457,7 @@ const MACompList = [
     MAName: '草加',
     areaCode: '48',
     square: '460-559',
+    color: 'yellow',
   },
   {
     codeMain: '259',
@@ -2221,6 +2467,7 @@ const MACompList = [
     MAName: '川越',
     areaCode: '49',
     square: '465-544',
+    color: 'blue',
   },
   {
     codeMain: '260',
@@ -2230,6 +2477,7 @@ const MACompList = [
     MAName: '東松山',
     areaCode: '493',
     square: '472-541',
+    color: 'blue',
   },
   {
     codeMain: '261',
@@ -2239,6 +2487,7 @@ const MACompList = [
     MAName: '秩父',
     areaCode: '494',
     square: '469-526',
+    color: 'blue',
   },
   {
     codeMain: '262',
@@ -2248,6 +2497,7 @@ const MACompList = [
     MAName: '本庄',
     areaCode: '495',
     square: '483-531',
+    color: 'blue',
   },
   {
     codeMain: '263',
@@ -2257,6 +2507,7 @@ const MACompList = [
     MAName: '伊豆大島',
     areaCode: '4992',
     square: '400-538',
+    color: 'blue',
   },
   {
     codeMain: '264',
@@ -2266,6 +2517,7 @@ const MACompList = [
     MAName: '三宅',
     areaCode: '4994',
     square: '365-546',
+    color: 'blue',
   },
   {
     codeMain: '265',
@@ -2275,6 +2527,7 @@ const MACompList = [
     MAName: '八丈島',
     areaCode: '4996',
     square: '309-558',
+    color: 'blue',
   },
   {
     codeMain: '266',
@@ -2284,6 +2537,7 @@ const MACompList = [
     MAName: '小笠原',
     areaCode: '4998',
     square: '(-024)-677',
+    color: 'blue',
   },
   {
     codeMain: '267',
@@ -2293,6 +2547,7 @@ const MACompList = [
     MAName: '名古屋',
     areaCode: '52',
     square: '423-426',
+    color: 'yellow',
   },
   {
     codeMain: '268',
@@ -2302,6 +2557,7 @@ const MACompList = [
     MAName: '浜松',
     areaCode: '53',
     square: '398-464',
+    color: 'red',
   },
   {
     codeMain: '269',
@@ -2311,6 +2567,7 @@ const MACompList = [
     MAName: '田原',
     areaCode: '531',
     square: '396-443',
+    color: 'red',
   },
   {
     codeMain: '272',
@@ -2320,6 +2577,7 @@ const MACompList = [
     MAName: '豊橋',
     areaCode: '532',
     square: '401-448',
+    color: 'red',
   },
   {
     codeMain: '273',
@@ -2329,6 +2587,7 @@ const MACompList = [
     MAName: '豊橋',
     areaCode: '533',
     square: '401-448',
+    color: 'red',
   },
   {
     codeMain: '274',
@@ -2338,6 +2597,7 @@ const MACompList = [
     MAName: '新城',
     areaCode: '536',
     square: '409-453',
+    color: 'red',
   },
   {
     codeMain: '276',
@@ -2347,6 +2607,7 @@ const MACompList = [
     MAName: '設楽',
     areaCode: '536',
     square: '419-457',
+    color: 'red',
   },
   {
     codeMain: '280',
@@ -2356,6 +2617,7 @@ const MACompList = [
     MAName: '掛川',
     areaCode: '537',
     square: '401-477',
+    color: 'red',
   },
   {
     codeMain: '281',
@@ -2365,6 +2627,7 @@ const MACompList = [
     MAName: '磐田',
     areaCode: '538',
     square: '398-469',
+    color: 'red',
   },
   {
     codeMain: '282',
@@ -2374,6 +2637,7 @@ const MACompList = [
     MAName: '天竜',
     areaCode: '539',
     square: '404-469',
+    color: 'red',
   },
   {
     codeMain: '283',
@@ -2383,6 +2647,7 @@ const MACompList = [
     MAName: '静岡',
     areaCode: '54',
     square: '412-494',
+    color: 'blue',
   },
   {
     codeMain: '285',
@@ -2392,6 +2657,7 @@ const MACompList = [
     MAName: '富士宮',
     areaCode: '544',
     square: '426-505',
+    color: 'blue',
   },
   {
     codeMain: '286',
@@ -2401,6 +2667,7 @@ const MACompList = [
     MAName: '富士',
     areaCode: '545',
     square: '423-508',
+    color: 'blue',
   },
   {
     codeMain: '287',
@@ -2410,6 +2677,7 @@ const MACompList = [
     MAName: '島田',
     areaCode: '547',
     square: '405-484',
+    color: 'blue',
   },
   {
     codeMain: '288',
@@ -2419,6 +2687,7 @@ const MACompList = [
     MAName: '榛原',
     areaCode: '548',
     square: '400-487',
+    color: 'blue',
   },
   {
     codeMain: '289',
@@ -2428,6 +2697,7 @@ const MACompList = [
     MAName: '御殿場',
     areaCode: '550',
     square: '431-519',
+    color: 'yellow',
   },
   {
     codeMain: '290',
@@ -2437,6 +2707,7 @@ const MACompList = [
     MAName: '韮崎',
     areaCode: '551',
     square: '453-498',
+    color: 'yellow',
   },
   {
     codeMain: '291',
@@ -2446,6 +2717,7 @@ const MACompList = [
     MAName: '甲府',
     areaCode: '55',
     square: '451-503',
+    color: 'yellow',
   },
   {
     codeMain: '292',
@@ -2455,6 +2727,7 @@ const MACompList = [
     MAName: '山梨',
     areaCode: '553',
     square: '452-508',
+    color: 'yellow',
   },
   {
     codeMain: '293',
@@ -2464,6 +2737,7 @@ const MACompList = [
     MAName: '大月',
     areaCode: '554',
     square: '448-520',
+    color: 'yellow',
   },
   {
     codeMain: '294',
@@ -2473,6 +2747,7 @@ const MACompList = [
     MAName: '吉田',
     areaCode: '555',
     square: '441-514',
+    color: 'yellow',
   },
   {
     codeMain: '295',
@@ -2482,6 +2757,7 @@ const MACompList = [
     MAName: '鰍沢青柳',
     areaCode: '556',
     square: '444-498',
+    color: 'yellow',
   },
   {
     codeMain: '296',
@@ -2491,6 +2767,7 @@ const MACompList = [
     MAName: '身延',
     areaCode: '556',
     square: '435-496',
+    color: 'yellow',
   },
   {
     codeMain: '297',
@@ -2500,6 +2777,7 @@ const MACompList = [
     MAName: '伊東',
     areaCode: '557',
     square: '412-527',
+    color: 'yellow',
   },
   {
     codeMain: '298',
@@ -2509,6 +2787,7 @@ const MACompList = [
     MAName: '修善寺大仁',
     areaCode: '558',
     square: '413-520',
+    color: 'yellow',
   },
   {
     codeMain: '299',
@@ -2518,6 +2797,7 @@ const MACompList = [
     MAName: '下田',
     areaCode: '558',
     square: '396-519',
+    color: 'yellow',
   },
   {
     codeMain: '300',
@@ -2527,6 +2807,7 @@ const MACompList = [
     MAName: '沼津',
     areaCode: '55',
     square: '420-516',
+    color: 'yellow',
   },
   {
     codeMain: '301',
@@ -2536,6 +2817,7 @@ const MACompList = [
     MAName: '瀬戸',
     areaCode: '561',
     square: '426-436',
+    color: 'blue',
   },
   {
     codeMain: '304',
@@ -2545,6 +2827,7 @@ const MACompList = [
     MAName: '尾張横須賀',
     areaCode: '562',
     square: '415-425',
+    color: 'blue',
   },
   {
     codeMain: '305',
@@ -2554,6 +2837,7 @@ const MACompList = [
     MAName: '西尾',
     areaCode: '563',
     square: '407-433',
+    color: 'blue',
   },
   {
     codeMain: '306',
@@ -2563,6 +2847,7 @@ const MACompList = [
     MAName: '岡崎',
     areaCode: '564',
     square: '411-439',
+    color: 'blue',
   },
   {
     codeMain: '307',
@@ -2572,6 +2857,7 @@ const MACompList = [
     MAName: '豊田',
     areaCode: '565',
     square: '419-438',
+    color: 'blue',
   },
   {
     codeMain: '308',
@@ -2581,6 +2867,7 @@ const MACompList = [
     MAName: '刈谷',
     areaCode: '566',
     square: '413-431',
+    color: 'blue',
   },
   {
     codeMain: '309',
@@ -2590,6 +2877,7 @@ const MACompList = [
     MAName: '津島',
     areaCode: '567',
     square: '424-419',
+    color: 'blue',
   },
   {
     codeMain: '312',
@@ -2599,6 +2887,7 @@ const MACompList = [
     MAName: '春日井',
     areaCode: '568',
     square: '428-430',
+    color: 'blue',
   },
   {
     codeMain: '313',
@@ -2608,6 +2897,7 @@ const MACompList = [
     MAName: '半田',
     areaCode: '569',
     square: '408-428',
+    color: 'blue',
   },
   {
     codeMain: '314',
@@ -2617,6 +2907,7 @@ const MACompList = [
     MAName: '多治見',
     areaCode: '572',
     square: '432-437',
+    color: 'yellow',
   },
   {
     codeMain: '315',
@@ -2626,6 +2917,7 @@ const MACompList = [
     MAName: '恵那',
     areaCode: '573',
     square: '439-450',
+    color: 'yellow',
   },
   {
     codeMain: '316',
@@ -2635,6 +2927,7 @@ const MACompList = [
     MAName: '中津川',
     areaCode: '573',
     square: '441-454',
+    color: 'yellow',
   },
   {
     codeMain: '317',
@@ -2644,6 +2937,7 @@ const MACompList = [
     MAName: '美濃加茂',
     areaCode: '574',
     square: '438-432',
+    color: 'yellow',
   },
   {
     codeMain: '318',
@@ -2653,6 +2947,7 @@ const MACompList = [
     MAName: '美濃白川',
     areaCode: '574',
     square: '446-440',
+    color: 'yellow',
   },
   {
     codeMain: '319',
@@ -2662,6 +2957,7 @@ const MACompList = [
     MAName: '関',
     areaCode: '575',
     square: '441-428',
+    color: 'yellow',
   },
   {
     codeMain: '320',
@@ -2671,6 +2967,7 @@ const MACompList = [
     MAName: '郡上八幡',
     areaCode: '575',
     square: '456-430',
+    color: 'yellow',
   },
   {
     codeMain: '321',
@@ -2680,6 +2977,7 @@ const MACompList = [
     MAName: '下呂',
     areaCode: '576',
     square: '459-443',
+    color: 'yellow',
   },
   {
     codeMain: '322',
@@ -2689,6 +2987,7 @@ const MACompList = [
     MAName: '荘川',
     areaCode: '5769',
     square: '471-431',
+    color: 'yellow',
   },
   {
     codeMain: '323',
@@ -2698,6 +2997,7 @@ const MACompList = [
     MAName: '高山',
     areaCode: '577',
     square: '477-444',
+    color: 'yellow',
   },
   {
     codeMain: '324',
@@ -2707,6 +3007,7 @@ const MACompList = [
     MAName: '神岡',
     areaCode: '578',
     square: '488-446',
+    color: 'yellow',
   },
   {
     codeMain: '325',
@@ -2716,6 +3017,7 @@ const MACompList = [
     MAName: '岐阜',
     areaCode: '58',
     square: '437-421',
+    color: 'red',
   },
   {
     codeMain: '326',
@@ -2725,6 +3027,7 @@ const MACompList = [
     MAName: '高富',
     areaCode: '581',
     square: '442-422',
+    color: 'red',
   },
   {
     codeMain: '332',
@@ -2734,6 +3037,7 @@ const MACompList = [
     MAName: '大垣',
     areaCode: '584',
     square: '434-414',
+    color: 'red',
   },
   {
     codeMain: '333',
@@ -2743,6 +3047,7 @@ const MACompList = [
     MAName: '揖斐川',
     areaCode: '585',
     square: '441-412',
+    color: 'red',
   },
   {
     codeMain: '334',
@@ -2752,6 +3057,7 @@ const MACompList = [
     MAName: '一宮',
     areaCode: '586',
     square: '431-422',
+    color: 'red',
   },
   {
     codeMain: '336',
@@ -2761,6 +3067,7 @@ const MACompList = [
     MAName: '一宮',
     areaCode: '587',
     square: '431-422',
+    color: 'red',
   },
   {
     codeMain: '337',
@@ -2770,6 +3077,7 @@ const MACompList = [
     MAName: '津',
     areaCode: '59',
     square: '398-408',
+    color: 'green',
   },
   {
     codeMain: '338',
@@ -2779,6 +3087,7 @@ const MACompList = [
     MAName: '四日市',
     areaCode: '59',
     square: '412-414',
+    color: 'green',
   },
   {
     codeMain: '339',
@@ -2788,6 +3097,7 @@ const MACompList = [
     MAName: '桑名',
     areaCode: '594',
     square: '418-417',
+    color: 'green',
   },
   {
     codeMain: '340',
@@ -2797,6 +3107,7 @@ const MACompList = [
     MAName: '上野',
     areaCode: '595',
     square: '401-391',
+    color: 'green',
   },
   {
     codeMain: '341',
@@ -2806,6 +3117,7 @@ const MACompList = [
     MAName: '亀山',
     areaCode: '595',
     square: '406-406',
+    color: 'green',
   },
   {
     codeMain: '343',
@@ -2815,6 +3127,7 @@ const MACompList = [
     MAName: '伊勢',
     areaCode: '596',
     square: '386-417',
+    color: 'green',
   },
   {
     codeMain: '344',
@@ -2824,6 +3137,7 @@ const MACompList = [
     MAName: '尾鷲',
     areaCode: '597',
     square: '362-392',
+    color: 'green',
   },
   {
     codeMain: '347',
@@ -2833,6 +3147,7 @@ const MACompList = [
     MAName: '熊野',
     areaCode: '597',
     square: '352-388',
+    color: 'green',
   },
   {
     codeMain: '348',
@@ -2842,6 +3157,7 @@ const MACompList = [
     MAName: '熊野',
     areaCode: '5979',
     square: '352-388',
+    color: 'green',
   },
   {
     codeMain: '349',
@@ -2851,6 +3167,7 @@ const MACompList = [
     MAName: '松阪',
     areaCode: '598',
     square: '390-409',
+    color: 'green',
   },
   {
     codeMain: '355',
@@ -2860,6 +3177,7 @@ const MACompList = [
     MAName: '三瀬谷',
     areaCode: '598',
     square: '380-403',
+    color: 'green',
   },
   {
     codeMain: '357',
@@ -2869,6 +3187,7 @@ const MACompList = [
     MAName: '鳥羽',
     areaCode: '599',
     square: '385-423',
+    color: 'green',
   },
   {
     codeMain: '358',
@@ -2878,6 +3197,7 @@ const MACompList = [
     MAName: '阿児',
     areaCode: '599',
     square: '377-422',
+    color: 'green',
   },
   {
     codeMain: '363',
@@ -2887,6 +3207,7 @@ const MACompList = [
     MAName: '大阪',
     areaCode: '6',
     square: '397-361',
+    color: 'blue',
   },
   {
     codeMain: '364',
@@ -2896,6 +3217,7 @@ const MACompList = [
     MAName: '寝屋川',
     areaCode: '72',
     square: '401-368',
+    color: 'red',
   },
   {
     codeMain: '365',
@@ -2905,6 +3227,7 @@ const MACompList = [
     MAName: '富田林',
     areaCode: '721',
     square: '386-366',
+    color: 'red',
   },
   {
     codeMain: '366',
@@ -2914,6 +3237,7 @@ const MACompList = [
     MAName: '堺',
     areaCode: '72',
     square: '391-360',
+    color: 'red',
   },
   {
     codeMain: '368',
@@ -2923,6 +3247,7 @@ const MACompList = [
     MAName: '岸和田貝塚',
     areaCode: '72',
     square: '384-355',
+    color: 'red',
   },
   {
     codeMain: '369',
@@ -2932,6 +3257,7 @@ const MACompList = [
     MAName: '和泉',
     areaCode: '725',
     square: '386-358',
+    color: 'red',
   },
   {
     codeMain: '370',
@@ -2941,6 +3267,7 @@ const MACompList = [
     MAName: '茨木',
     areaCode: '72',
     square: '404-365',
+    color: 'red',
   },
   {
     codeMain: '371',
@@ -2950,6 +3277,7 @@ const MACompList = [
     MAName: '池田',
     areaCode: '72',
     square: '404-359',
+    color: 'red',
   },
   {
     codeMain: '372',
@@ -2959,6 +3287,7 @@ const MACompList = [
     MAName: '八尾',
     areaCode: '72',
     square: '393-366',
+    color: 'red',
   },
   {
     codeMain: '373',
@@ -2968,6 +3297,7 @@ const MACompList = [
     MAName: '和歌山',
     areaCode: '73',
     square: '371-346',
+    color: 'blue',
   },
   {
     codeMain: '374',
@@ -2977,6 +3307,7 @@ const MACompList = [
     MAName: '新宮',
     areaCode: '735',
     square: '343-382',
+    color: 'blue',
   },
   {
     codeMain: '375',
@@ -2986,6 +3317,7 @@ const MACompList = [
     MAName: '串本',
     areaCode: '735',
     square: '329-372',
+    color: 'blue',
   },
   {
     codeMain: '376',
@@ -2995,6 +3327,7 @@ const MACompList = [
     MAName: '岩出',
     areaCode: '736',
     square: '373-352',
+    color: 'blue',
   },
   {
     codeMain: '377',
@@ -3004,6 +3337,7 @@ const MACompList = [
     MAName: '和歌山橋本',
     areaCode: '736',
     square: '376-366',
+    color: 'blue',
   },
   {
     codeMain: '378',
@@ -3013,6 +3347,7 @@ const MACompList = [
     MAName: '湯浅',
     areaCode: '737',
     square: '360-345',
+    color: 'blue',
   },
   {
     codeMain: '379',
@@ -3022,6 +3357,7 @@ const MACompList = [
     MAName: '御坊',
     areaCode: '738',
     square: '352-344',
+    color: 'blue',
   },
   {
     codeMain: '380',
@@ -3031,6 +3367,7 @@ const MACompList = [
     MAName: '田辺',
     areaCode: '739',
     square: '344-354',
+    color: 'blue',
   },
   {
     codeMain: '381',
@@ -3040,6 +3377,7 @@ const MACompList = [
     MAName: '今津',
     areaCode: '740',
     square: '436-388',
+    color: 'yellow',
   },
   {
     codeMain: '382',
@@ -3049,6 +3387,7 @@ const MACompList = [
     MAName: '奈良',
     areaCode: '742',
     square: '396-377',
+    color: 'yellow',
   },
   {
     codeMain: '383',
@@ -3058,6 +3397,7 @@ const MACompList = [
     MAName: '奈良',
     areaCode: '743',
     square: '396-377',
+    color: 'yellow',
   },
   {
     codeMain: '385',
@@ -3067,6 +3407,7 @@ const MACompList = [
     MAName: '大和高田',
     areaCode: '744',
     square: '387-372',
+    color: 'yellow',
   },
   {
     codeMain: '387',
@@ -3076,6 +3417,7 @@ const MACompList = [
     MAName: '大和高田',
     areaCode: '745',
     square: '387-372',
+    color: 'yellow',
   },
   {
     codeMain: '388',
@@ -3085,6 +3427,7 @@ const MACompList = [
     MAName: '大和榛原',
     areaCode: '745',
     square: '388-382',
+    color: 'yellow',
   },
   {
     codeMain: '389',
@@ -3094,6 +3437,7 @@ const MACompList = [
     MAName: '吉野',
     areaCode: '746',
     square: '380-377',
+    color: 'yellow',
   },
   {
     codeMain: '392',
@@ -3103,6 +3447,7 @@ const MACompList = [
     MAName: '十津川',
     areaCode: '746',
     square: '358-374',
+    color: 'yellow',
   },
   {
     codeMain: '393',
@@ -3112,6 +3457,7 @@ const MACompList = [
     MAName: '上北山',
     areaCode: '7468',
     square: '366-384',
+    color: 'yellow',
   },
   {
     codeMain: '394',
@@ -3121,6 +3467,7 @@ const MACompList = [
     MAName: '五条',
     areaCode: '747',
     square: '378-370',
+    color: 'yellow',
   },
   {
     codeMain: '396',
@@ -3130,6 +3477,7 @@ const MACompList = [
     MAName: '下市',
     areaCode: '747',
     square: '379-374',
+    color: 'yellow',
   },
   {
     codeMain: '397',
@@ -3139,6 +3487,7 @@ const MACompList = [
     MAName: '八日市',
     areaCode: '748',
     square: '420-395',
+    color: 'yellow',
   },
   {
     codeMain: '398',
@@ -3148,6 +3497,7 @@ const MACompList = [
     MAName: '水口',
     areaCode: '748',
     square: '412-393',
+    color: 'yellow',
   },
   {
     codeMain: '399',
@@ -3157,6 +3507,7 @@ const MACompList = [
     MAName: '彦根',
     areaCode: '749',
     square: '429-397',
+    color: 'yellow',
   },
   {
     codeMain: '400',
@@ -3166,6 +3517,7 @@ const MACompList = [
     MAName: '長浜',
     areaCode: '749',
     square: '435-398',
+    color: 'yellow',
   },
   {
     codeMain: '401',
@@ -3175,6 +3527,7 @@ const MACompList = [
     MAName: '京都',
     areaCode: '75',
     square: '414-374',
+    color: 'green',
   },
   {
     codeMain: '402',
@@ -3184,6 +3537,7 @@ const MACompList = [
     MAName: '小松',
     areaCode: '761',
     square: '492-408',
+    color: 'red',
   },
   {
     codeMain: '403',
@@ -3193,6 +3547,7 @@ const MACompList = [
     MAName: '加賀',
     areaCode: '761',
     square: '486-402',
+    color: 'red',
   },
   {
     codeMain: '405',
@@ -3202,6 +3557,7 @@ const MACompList = [
     MAName: '金沢',
     areaCode: '76',
     square: '501-418',
+    color: 'red',
   },
   {
     codeMain: '406',
@@ -3211,6 +3567,7 @@ const MACompList = [
     MAName: '福野',
     areaCode: '763',
     square: '502-430',
+    color: 'red',
   },
   {
     codeMain: '407',
@@ -3220,6 +3577,7 @@ const MACompList = [
     MAName: '富山',
     areaCode: '76',
     square: '508-443',
+    color: 'red',
   },
   {
     codeMain: '408',
@@ -3229,6 +3587,7 @@ const MACompList = [
     MAName: '魚津',
     areaCode: '765',
     square: '515-451',
+    color: 'red',
   },
   {
     codeMain: '409',
@@ -3238,6 +3597,7 @@ const MACompList = [
     MAName: '高岡',
     areaCode: '766',
     square: '511-434',
+    color: 'red',
   },
   {
     codeMain: '410',
@@ -3247,6 +3607,7 @@ const MACompList = [
     MAName: '七尾',
     areaCode: '767',
     square: '527-432',
+    color: 'red',
   },
   {
     codeMain: '411',
@@ -3256,6 +3617,7 @@ const MACompList = [
     MAName: '羽咋',
     areaCode: '767',
     square: '519-424',
+    color: 'red',
   },
   {
     codeMain: '412',
@@ -3265,6 +3627,7 @@ const MACompList = [
     MAName: '輪島',
     areaCode: '768',
     square: '547-431',
+    color: 'red',
   },
   {
     codeMain: '413',
@@ -3274,6 +3637,7 @@ const MACompList = [
     MAName: '能都',
     areaCode: '768',
     square: '542-441',
+    color: 'red',
   },
   {
     codeMain: '414',
@@ -3283,6 +3647,7 @@ const MACompList = [
     MAName: '敦賀',
     areaCode: '770',
     square: '450-390',
+    color: 'blue',
   },
   {
     codeMain: '415',
@@ -3292,6 +3657,7 @@ const MACompList = [
     MAName: '小浜',
     areaCode: '770',
     square: '442-375',
+    color: 'blue',
   },
   {
     codeMain: '416',
@@ -3301,6 +3667,7 @@ const MACompList = [
     MAName: '亀岡',
     areaCode: '771',
     square: '415-366',
+    color: 'blue',
   },
   {
     codeMain: '417',
@@ -3310,6 +3677,7 @@ const MACompList = [
     MAName: '園部',
     areaCode: '771',
     square: '420-361',
+    color: 'blue',
   },
   {
     codeMain: '418',
@@ -3319,6 +3687,7 @@ const MACompList = [
     MAName: '宮津',
     areaCode: '772',
     square: '444-350',
+    color: 'blue',
   },
   {
     codeMain: '419',
@@ -3328,6 +3697,7 @@ const MACompList = [
     MAName: '峰山',
     areaCode: '772',
     square: '448-344',
+    color: 'blue',
   },
   {
     codeMain: '420',
@@ -3337,6 +3707,7 @@ const MACompList = [
     MAName: '福知山',
     areaCode: '773',
     square: '431-346',
+    color: 'blue',
   },
   {
     codeMain: '421',
@@ -3346,6 +3717,7 @@ const MACompList = [
     MAName: '舞鶴',
     areaCode: '773',
     square: '440-358',
+    color: 'blue',
   },
   {
     codeMain: '422',
@@ -3355,6 +3727,7 @@ const MACompList = [
     MAName: '宇治',
     areaCode: '774',
     square: '408-376',
+    color: 'blue',
   },
   {
     codeMain: '423',
@@ -3364,6 +3737,7 @@ const MACompList = [
     MAName: '大津',
     areaCode: '77',
     square: '414-379',
+    color: 'blue',
   },
   {
     codeMain: '424',
@@ -3373,6 +3747,7 @@ const MACompList = [
     MAName: '福井',
     areaCode: '776',
     square: '473-397',
+    color: 'blue',
   },
   {
     codeMain: '425',
@@ -3382,6 +3757,7 @@ const MACompList = [
     MAName: '武生',
     areaCode: '778',
     square: '464-395',
+    color: 'blue',
   },
   {
     codeMain: '426',
@@ -3391,6 +3767,7 @@ const MACompList = [
     MAName: '大野',
     areaCode: '779',
     square: '469-409',
+    color: 'blue',
   },
   {
     codeMain: '428',
@@ -3400,6 +3777,7 @@ const MACompList = [
     MAName: '神戸',
     areaCode: '78',
     square: '396-347',
+    color: 'yellow',
   },
   {
     codeMain: '429',
@@ -3409,6 +3787,7 @@ const MACompList = [
     MAName: '播磨山崎',
     areaCode: '790',
     square: '414-318',
+    color: 'green',
   },
   {
     codeMain: '430',
@@ -3418,6 +3797,7 @@ const MACompList = [
     MAName: '福崎',
     areaCode: '790',
     square: '412-329',
+    color: 'green',
   },
   {
     codeMain: '431',
@@ -3427,6 +3807,7 @@ const MACompList = [
     MAName: '竜野',
     areaCode: '791',
     square: '406-318',
+    color: 'green',
   },
   {
     codeMain: '432',
@@ -3436,6 +3817,7 @@ const MACompList = [
     MAName: '相生',
     areaCode: '791',
     square: '403-315',
+    color: 'green',
   },
   {
     codeMain: '435',
@@ -3445,6 +3827,7 @@ const MACompList = [
     MAName: '姫路',
     areaCode: '79',
     square: '405-325',
+    color: 'green',
   },
   {
     codeMain: '438',
@@ -3454,6 +3837,7 @@ const MACompList = [
     MAName: '加古川',
     areaCode: '79',
     square: '401-332',
+    color: 'green',
   },
   {
     codeMain: '439',
@@ -3463,6 +3847,7 @@ const MACompList = [
     MAName: '三木',
     areaCode: '794',
     square: '403-338',
+    color: 'green',
   },
   {
     codeMain: '440',
@@ -3472,6 +3857,7 @@ const MACompList = [
     MAName: '西脇',
     areaCode: '795',
     square: '413-338',
+    color: 'green',
   },
   {
     codeMain: '441',
@@ -3481,6 +3867,7 @@ const MACompList = [
     MAName: '三田',
     areaCode: '79',
     square: '408-350',
+    color: 'green',
   },
   {
     codeMain: '442',
@@ -3490,6 +3877,7 @@ const MACompList = [
     MAName: '丹波柏原',
     areaCode: '795',
     square: '421-343',
+    color: 'green',
   },
   {
     codeMain: '443',
@@ -3499,6 +3887,7 @@ const MACompList = [
     MAName: '豊岡',
     areaCode: '796',
     square: '444-333',
+    color: 'green',
   },
   {
     codeMain: '444',
@@ -3508,6 +3897,7 @@ const MACompList = [
     MAName: '浜坂',
     areaCode: '796',
     square: '449-316',
+    color: 'green',
   },
   {
     codeMain: '445',
@@ -3517,6 +3907,7 @@ const MACompList = [
     MAName: '八鹿',
     areaCode: '79',
     square: '437-330',
+    color: 'green',
   },
   {
     codeMain: '446',
@@ -3526,6 +3917,7 @@ const MACompList = [
     MAName: '西宮',
     areaCode: '797',
     square: '399-354',
+    color: 'green',
   },
   {
     codeMain: '447',
@@ -3535,6 +3927,7 @@ const MACompList = [
     MAName: '西宮',
     areaCode: '798',
     square: '399-354',
+    color: 'green',
   },
   {
     codeMain: '448',
@@ -3544,6 +3937,7 @@ const MACompList = [
     MAName: '洲本',
     areaCode: '799',
     square: '377-333',
+    color: 'green',
   },
   {
     codeMain: '449',
@@ -3553,6 +3947,7 @@ const MACompList = [
     MAName: '津名',
     areaCode: '799',
     square: '383-334',
+    color: 'green',
   },
   {
     codeMain: '450',
@@ -3562,6 +3957,7 @@ const MACompList = [
     MAName: '広島',
     areaCode: '82',
     square: '381-221',
+    color: 'blue',
   },
   {
     codeMain: '451',
@@ -3571,6 +3967,7 @@ const MACompList = [
     MAName: '柳井',
     areaCode: '820',
     square: '357-203',
+    color: 'blue',
   },
   {
     codeMain: '452',
@@ -3580,6 +3977,7 @@ const MACompList = [
     MAName: '久賀',
     areaCode: '820',
     square: '356-210',
+    color: 'blue',
   },
   {
     codeMain: '453',
@@ -3589,6 +3987,7 @@ const MACompList = [
     MAName: '呉',
     areaCode: '823',
     square: '372-225',
+    color: 'blue',
   },
   {
     codeMain: '454',
@@ -3598,6 +3997,7 @@ const MACompList = [
     MAName: '三次',
     areaCode: '824',
     square: '403-241',
+    color: 'blue',
   },
   {
     codeMain: '455',
@@ -3607,6 +4007,7 @@ const MACompList = [
     MAName: '東広島',
     areaCode: '82',
     square: '382-234',
+    color: 'blue',
   },
   {
     codeMain: '456',
@@ -3616,6 +4017,7 @@ const MACompList = [
     MAName: '庄原',
     areaCode: '824',
     square: '406-248',
+    color: 'blue',
   },
   {
     codeMain: '461',
@@ -3625,6 +4027,7 @@ const MACompList = [
     MAName: '千代田',
     areaCode: '826',
     square: '396-226',
+    color: 'blue',
   },
   {
     codeMain: '462',
@@ -3634,6 +4037,7 @@ const MACompList = [
     MAName: '安芸吉田',
     areaCode: '826',
     square: '395-234',
+    color: 'blue',
   },
   {
     codeMain: '463',
@@ -3643,6 +4047,7 @@ const MACompList = [
     MAName: '加計',
     areaCode: '826',
     square: '392-216',
+    color: 'blue',
   },
   {
     codeMain: '465',
@@ -3652,6 +4057,7 @@ const MACompList = [
     MAName: '岩国',
     areaCode: '827',
     square: '368-209',
+    color: 'blue',
   },
   {
     codeMain: '467',
@@ -3661,6 +4067,7 @@ const MACompList = [
     MAName: '廿日市',
     areaCode: '829',
     square: '378-216',
+    color: 'blue',
   },
   {
     codeMain: '468',
@@ -3670,6 +4077,7 @@ const MACompList = [
     MAName: '下関',
     areaCode: '83',
     square: '356-149',
+    color: 'red',
   },
   {
     codeMain: '469',
@@ -3679,6 +4087,7 @@ const MACompList = [
     MAName: '下松',
     areaCode: '833',
     square: '359-192',
+    color: 'red',
   },
   {
     codeMain: '470',
@@ -3688,6 +4097,7 @@ const MACompList = [
     MAName: '徳山',
     areaCode: '834',
     square: '361-190',
+    color: 'red',
   },
   {
     codeMain: '471',
@@ -3697,6 +4107,7 @@ const MACompList = [
     MAName: '防府',
     areaCode: '835',
     square: '361-179',
+    color: 'red',
   },
   {
     codeMain: '472',
@@ -3706,6 +4117,7 @@ const MACompList = [
     MAName: '宇部',
     areaCode: '836',
     square: '356-163',
+    color: 'red',
   },
   {
     codeMain: '474',
@@ -3715,6 +4127,7 @@ const MACompList = [
     MAName: '長門',
     areaCode: '837',
     square: '379-162',
+    color: 'red',
   },
   {
     codeMain: '475',
@@ -3724,6 +4137,7 @@ const MACompList = [
     MAName: '美祢',
     areaCode: '837',
     square: '368-162',
+    color: 'red',
   },
   {
     codeMain: '477',
@@ -3733,6 +4147,7 @@ const MACompList = [
     MAName: '萩',
     areaCode: '838',
     square: '381-173',
+    color: 'red',
   },
   {
     codeMain: '478',
@@ -3742,6 +4157,7 @@ const MACompList = [
     MAName: '田万川',
     areaCode: '8387',
     square: '394-185',
+    color: 'red',
   },
   {
     codeMain: '479',
@@ -3751,6 +4167,7 @@ const MACompList = [
     MAName: '田万川',
     areaCode: '8388',
     square: '394-185',
+    color: 'red',
   },
   {
     codeMain: '481',
@@ -3760,6 +4177,7 @@ const MACompList = [
     MAName: '山口',
     areaCode: '83',
     square: '369-175',
+    color: 'red',
   },
   {
     codeMain: '483',
@@ -3769,6 +4187,7 @@ const MACompList = [
     MAName: '山口',
     areaCode: '8396',
     square: '369-175',
+    color: 'red',
   },
   {
     codeMain: '485',
@@ -3778,6 +4197,7 @@ const MACompList = [
     MAName: '因島',
     areaCode: '845',
     square: '374-254',
+    color: 'green',
   },
   {
     codeMain: '486',
@@ -3787,6 +4207,7 @@ const MACompList = [
     MAName: '竹原',
     areaCode: '846',
     square: '378-242',
+    color: 'green',
   },
   {
     codeMain: '487',
@@ -3796,6 +4217,7 @@ const MACompList = [
     MAName: '木江',
     areaCode: '846',
     square: '372-241',
+    color: 'green',
   },
   {
     codeMain: '488',
@@ -3805,6 +4227,7 @@ const MACompList = [
     MAName: '府中',
     areaCode: '847',
     square: '390-257',
+    color: 'green',
   },
   {
     codeMain: '489',
@@ -3814,6 +4237,7 @@ const MACompList = [
     MAName: '甲山',
     areaCode: '847',
     square: '391-249',
+    color: 'green',
   },
   {
     codeMain: '494',
@@ -3823,6 +4247,7 @@ const MACompList = [
     MAName: '東城',
     areaCode: '8477',
     square: '408-260',
+    color: 'green',
   },
   {
     codeMain: '495',
@@ -3832,6 +4257,7 @@ const MACompList = [
     MAName: '東城',
     areaCode: '847',
     square: '408-260',
+    color: 'green',
   },
   {
     codeMain: '496',
@@ -3841,6 +4267,7 @@ const MACompList = [
     MAName: '尾道☆',
     areaCode: '848',
     square: '381-254',
+    color: 'green',
   },
   {
     codeMain: '498',
@@ -3850,6 +4277,7 @@ const MACompList = [
     MAName: '尾道☆',
     areaCode: '84',
     square: '381-254',
+    color: 'green',
   },
   {
     codeMain: '499',
@@ -3859,6 +4287,7 @@ const MACompList = [
     MAName: '福山☆',
     areaCode: '84',
     square: '385-263',
+    color: 'green',
   },
   {
     codeMain: '500',
@@ -3868,6 +4297,7 @@ const MACompList = [
     MAName: '西郷',
     areaCode: '8512',
     square: '481-268',
+    color: 'yellow',
   },
   {
     codeMain: '501',
@@ -3877,6 +4307,7 @@ const MACompList = [
     MAName: '海士',
     areaCode: '8514',
     square: '475-256',
+    color: 'yellow',
   },
   {
     codeMain: '502',
@@ -3886,6 +4317,7 @@ const MACompList = [
     MAName: '松江',
     areaCode: '852',
     square: '440-253',
+    color: 'yellow',
   },
   {
     codeMain: '503',
@@ -3895,6 +4327,7 @@ const MACompList = [
     MAName: '出雲',
     areaCode: '853',
     square: '434-239',
+    color: 'yellow',
   },
   {
     codeMain: '504',
@@ -3904,6 +4337,7 @@ const MACompList = [
     MAName: '安来',
     areaCode: '854',
     square: '438-262',
+    color: 'yellow',
   },
   {
     codeMain: '505',
@@ -3913,6 +4347,7 @@ const MACompList = [
     MAName: '木次',
     areaCode: '854',
     square: '430-245',
+    color: 'yellow',
   },
   {
     codeMain: '506',
@@ -3922,6 +4357,7 @@ const MACompList = [
     MAName: '掛合',
     areaCode: '854',
     square: '425-241',
+    color: 'yellow',
   },
   {
     codeMain: '507',
@@ -3931,6 +4367,7 @@ const MACompList = [
     MAName: '石見大田',
     areaCode: '854',
     square: '425-226',
+    color: 'yellow',
   },
   {
     codeMain: '508',
@@ -3940,6 +4377,7 @@ const MACompList = [
     MAName: '浜田',
     areaCode: '855',
     square: '408-206',
+    color: 'yellow',
   },
   {
     codeMain: '509',
@@ -3949,6 +4387,7 @@ const MACompList = [
     MAName: '江津',
     areaCode: '855',
     square: '414-213',
+    color: 'yellow',
   },
   {
     codeMain: '510',
@@ -3958,6 +4397,7 @@ const MACompList = [
     MAName: '川本',
     areaCode: '855',
     square: '413-225',
+    color: 'yellow',
   },
   {
     codeMain: '511',
@@ -3967,6 +4407,7 @@ const MACompList = [
     MAName: '益田',
     areaCode: '856',
     square: '396-194',
+    color: 'yellow',
   },
   {
     codeMain: '512',
@@ -3976,6 +4417,7 @@ const MACompList = [
     MAName: '津和野',
     areaCode: '856',
     square: '384-190',
+    color: 'yellow',
   },
   {
     codeMain: '513',
@@ -3985,6 +4427,7 @@ const MACompList = [
     MAName: '鳥取',
     areaCode: '857',
     square: '442-306',
+    color: 'yellow',
   },
   {
     codeMain: '514',
@@ -3994,6 +4437,7 @@ const MACompList = [
     MAName: '郡家',
     areaCode: '858',
     square: '437-307',
+    color: 'yellow',
   },
   {
     codeMain: '515',
@@ -4003,6 +4447,7 @@ const MACompList = [
     MAName: '倉吉',
     areaCode: '858',
     square: '438-287',
+    color: 'yellow',
   },
   {
     codeMain: '516',
@@ -4012,6 +4457,7 @@ const MACompList = [
     MAName: '米子',
     areaCode: '859',
     square: '438-265',
+    color: 'yellow',
   },
   {
     codeMain: '517',
@@ -4021,6 +4467,7 @@ const MACompList = [
     MAName: '根雨',
     areaCode: '859',
     square: '427-269',
+    color: 'yellow',
   },
   {
     codeMain: '518',
@@ -4030,6 +4477,7 @@ const MACompList = [
     MAName: '倉敷',
     areaCode: '86',
     square: '392-282',
+    color: 'red',
   },
   {
     codeMain: '519',
@@ -4039,6 +4487,7 @@ const MACompList = [
     MAName: '岡山',
     areaCode: '86',
     square: '395-290',
+    color: 'red',
   },
   {
     codeMain: '520',
@@ -4048,6 +4497,7 @@ const MACompList = [
     MAName: '玉野',
     areaCode: '863',
     square: '386-289',
+    color: 'red',
   },
   {
     codeMain: '522',
@@ -4057,6 +4507,7 @@ const MACompList = [
     MAName: '鴨方',
     areaCode: '865',
     square: '388-273',
+    color: 'red',
   },
   {
     codeMain: '525',
@@ -4066,6 +4517,7 @@ const MACompList = [
     MAName: '笠岡',
     areaCode: '865',
     square: '387-270',
+    color: 'red',
   },
   {
     codeMain: '526',
@@ -4075,6 +4527,7 @@ const MACompList = [
     MAName: '高梁',
     areaCode: '866',
     square: '403-276',
+    color: 'red',
   },
   {
     codeMain: '527',
@@ -4084,6 +4537,7 @@ const MACompList = [
     MAName: '井原',
     areaCode: '866',
     square: '392-268',
+    color: 'red',
   },
   {
     codeMain: '528',
@@ -4093,6 +4547,7 @@ const MACompList = [
     MAName: '総社',
     areaCode: '866',
     square: '396-281',
+    color: 'red',
   },
   {
     codeMain: '529',
@@ -4102,6 +4557,7 @@ const MACompList = [
     MAName: '新見',
     areaCode: '867',
     square: '413-269',
+    color: 'red',
   },
   {
     codeMain: '530',
@@ -4111,6 +4567,7 @@ const MACompList = [
     MAName: '久世',
     areaCode: '867',
     square: '418-283',
+    color: 'red',
   },
   {
     codeMain: '531',
@@ -4120,6 +4577,7 @@ const MACompList = [
     MAName: '加茂川',
     areaCode: '867',
     square: '408-285',
+    color: 'red',
   },
   {
     codeMain: '532',
@@ -4129,6 +4587,7 @@ const MACompList = [
     MAName: '津山',
     areaCode: '868',
     square: '417-294',
+    color: 'red',
   },
   {
     codeMain: '533',
@@ -4138,6 +4597,7 @@ const MACompList = [
     MAName: '美作',
     areaCode: '868',
     square: '414-301',
+    color: 'red',
   },
   {
     codeMain: '534',
@@ -4147,6 +4607,7 @@ const MACompList = [
     MAName: '備前',
     areaCode: '869',
     square: '400-301',
+    color: 'red',
   },
   {
     codeMain: '535',
@@ -4156,6 +4617,7 @@ const MACompList = [
     MAName: '邑久',
     areaCode: '869',
     square: '395-297',
+    color: 'red',
   },
   {
     codeMain: '538',
@@ -4165,6 +4627,7 @@ const MACompList = [
     MAName: '赤磐',
     areaCode: '86',
     square: '401-294',
+    color: 'red',
   },
   {
     codeMain: '540',
@@ -4174,6 +4637,7 @@ const MACompList = [
     MAName: '観音寺',
     areaCode: '875',
     square: '365-275',
+    color: 'blue',
   },
   {
     codeMain: '541',
@@ -4183,6 +4647,7 @@ const MACompList = [
     MAName: '丸亀',
     areaCode: '877',
     square: '374-282',
+    color: 'blue',
   },
   {
     codeMain: '542',
@@ -4192,6 +4657,7 @@ const MACompList = [
     MAName: '高松',
     areaCode: '87',
     square: '377-294',
+    color: 'blue',
   },
   {
     codeMain: '543',
@@ -4201,6 +4667,7 @@ const MACompList = [
     MAName: '三本松',
     areaCode: '879',
     square: '372-307',
+    color: 'blue',
   },
   {
     codeMain: '544',
@@ -4210,6 +4677,7 @@ const MACompList = [
     MAName: '土庄',
     areaCode: '879',
     square: '385-301',
+    color: 'blue',
   },
   {
     codeMain: '545',
@@ -4219,6 +4687,7 @@ const MACompList = [
     MAName: '土佐中村',
     areaCode: '880',
     square: '303-238',
+    color: 'yellow',
   },
   {
     codeMain: '546',
@@ -4228,6 +4697,7 @@ const MACompList = [
     MAName: '宿毛',
     areaCode: '880',
     square: '300-228',
+    color: 'yellow',
   },
   {
     codeMain: '547',
@@ -4237,6 +4707,7 @@ const MACompList = [
     MAName: '窪川',
     areaCode: '880',
     square: '315-248',
+    color: 'yellow',
   },
   {
     codeMain: '548',
@@ -4246,6 +4717,7 @@ const MACompList = [
     MAName: '土佐清水',
     areaCode: '880',
     square: '291-238',
+    color: 'yellow',
   },
   {
     codeMain: '549',
@@ -4255,6 +4727,7 @@ const MACompList = [
     MAName: '鴨島',
     areaCode: '883',
     square: '362-308',
+    color: 'yellow',
   },
   {
     codeMain: '550',
@@ -4264,6 +4737,7 @@ const MACompList = [
     MAName: '脇町',
     areaCode: '883',
     square: '362-298',
+    color: 'yellow',
   },
   {
     codeMain: '551',
@@ -4273,6 +4747,7 @@ const MACompList = [
     MAName: '阿波池田',
     areaCode: '883',
     square: '360-282',
+    color: 'yellow',
   },
   {
     codeMain: '552',
@@ -4282,6 +4757,7 @@ const MACompList = [
     MAName: '阿南',
     areaCode: '884',
     square: '354-321',
+    color: 'yellow',
   },
   {
     codeMain: '553',
@@ -4291,6 +4767,7 @@ const MACompList = [
     MAName: '丹生谷',
     areaCode: '884',
     square: '351-313',
+    color: 'yellow',
   },
   {
     codeMain: '554',
@@ -4300,6 +4777,7 @@ const MACompList = [
     MAName: '牟岐',
     areaCode: '884',
     square: '340-309',
+    color: 'yellow',
   },
   {
     codeMain: '555',
@@ -4309,6 +4787,7 @@ const MACompList = [
     MAName: '小松島',
     areaCode: '885',
     square: '359-318',
+    color: 'yellow',
   },
   {
     codeMain: '557',
@@ -4318,6 +4797,7 @@ const MACompList = [
     MAName: '徳島',
     areaCode: '88',
     square: '362-316',
+    color: 'yellow',
   },
   {
     codeMain: '558',
@@ -4327,6 +4807,7 @@ const MACompList = [
     MAName: '嶺北',
     areaCode: '887',
     square: '346-274',
+    color: 'yellow',
   },
   {
     codeMain: '559',
@@ -4336,6 +4817,7 @@ const MACompList = [
     MAName: '室戸',
     areaCode: '887',
     square: '319-296',
+    color: 'yellow',
   },
   {
     codeMain: '560',
@@ -4345,6 +4827,7 @@ const MACompList = [
     MAName: '安芸',
     areaCode: '887',
     square: '331-285',
+    color: 'yellow',
   },
   {
     codeMain: '562',
@@ -4354,6 +4837,7 @@ const MACompList = [
     MAName: '土佐山田',
     areaCode: '887',
     square: '337-275',
+    color: 'yellow',
   },
   {
     codeMain: '563',
@@ -4363,6 +4847,7 @@ const MACompList = [
     MAName: '高知',
     areaCode: '88',
     square: '334-268',
+    color: 'yellow',
   },
   {
     codeMain: '564',
@@ -4372,6 +4857,7 @@ const MACompList = [
     MAName: '佐川',
     areaCode: '889',
     square: '331-256',
+    color: 'yellow',
   },
   {
     codeMain: '565',
@@ -4381,6 +4867,7 @@ const MACompList = [
     MAName: '須崎',
     areaCode: '889',
     square: '325-256',
+    color: 'yellow',
   },
   {
     codeMain: '566',
@@ -4390,6 +4877,7 @@ const MACompList = [
     MAName: '久万',
     areaCode: '892',
     square: '339-239',
+    color: 'red',
   },
   {
     codeMain: '567',
@@ -4399,6 +4887,7 @@ const MACompList = [
     MAName: '大洲',
     areaCode: '893',
     square: '331-222',
+    color: 'red',
   },
   {
     codeMain: '568',
@@ -4408,6 +4897,7 @@ const MACompList = [
     MAName: '八幡浜',
     areaCode: '894',
     square: '329-216',
+    color: 'red',
   },
   {
     codeMain: '569',
@@ -4417,6 +4907,7 @@ const MACompList = [
     MAName: '宇和',
     areaCode: '894',
     square: '323-220',
+    color: 'red',
   },
   {
     codeMain: '570',
@@ -4426,6 +4917,7 @@ const MACompList = [
     MAName: '宇和島',
     areaCode: '895',
     square: '316-222',
+    color: 'red',
   },
   {
     codeMain: '571',
@@ -4435,6 +4927,7 @@ const MACompList = [
     MAName: '御荘',
     areaCode: '895',
     square: '301-221',
+    color: 'red',
   },
   {
     codeMain: '572',
@@ -4444,6 +4937,7 @@ const MACompList = [
     MAName: '伊予三島',
     areaCode: '896',
     square: '357-270',
+    color: 'red',
   },
   {
     codeMain: '573',
@@ -4453,6 +4947,7 @@ const MACompList = [
     MAName: '伯方',
     areaCode: '897',
     square: '370-251',
+    color: 'red',
   },
   {
     codeMain: '574',
@@ -4462,6 +4957,7 @@ const MACompList = [
     MAName: '新居浜',
     areaCode: '897',
     square: '356-257',
+    color: 'red',
   },
   {
     codeMain: '575',
@@ -4471,6 +4967,7 @@ const MACompList = [
     MAName: '今治',
     areaCode: '898',
     square: '362-245',
+    color: 'red',
   },
   {
     codeMain: '576',
@@ -4480,6 +4977,7 @@ const MACompList = [
     MAName: '松山',
     areaCode: '89',
     square: '350-233',
+    color: 'red',
   },
   {
     codeMain: '577',
@@ -4489,6 +4987,7 @@ const MACompList = [
     MAName: '前原',
     areaCode: '92',
     square: '334-113',
+    color: 'red',
   },
   {
     codeMain: '578',
@@ -4498,6 +4997,7 @@ const MACompList = [
     MAName: '福岡',
     areaCode: '92',
     square: '336-123',
+    color: 'red',
   },
   {
     codeMain: '579',
@@ -4507,6 +5007,7 @@ const MACompList = [
     MAName: '郷ノ浦',
     areaCode: '920',
     square: '345-90',
+    color: 'red',
   },
   {
     codeMain: '580',
@@ -4516,6 +5017,7 @@ const MACompList = [
     MAName: '厳原',
     areaCode: '920',
     square: '370-74',
+    color: 'red',
   },
   {
     codeMain: '581',
@@ -4525,6 +5027,7 @@ const MACompList = [
     MAName: '対馬佐賀',
     areaCode: '920',
     square: '384-80',
+    color: 'red',
   },
   {
     codeMain: '582',
@@ -4534,6 +5037,7 @@ const MACompList = [
     MAName: '北九州',
     areaCode: '93',
     square: '352-146',
+    color: 'yellow',
   },
   {
     codeMain: '583',
@@ -4543,6 +5047,7 @@ const MACompList = [
     MAName: '行橋',
     areaCode: '930',
     square: '344-150',
+    color: 'yellow',
   },
   {
     codeMain: '584',
@@ -4552,6 +5057,7 @@ const MACompList = [
     MAName: '宗像',
     areaCode: '940',
     square: '348-130',
+    color: 'blue',
   },
   {
     codeMain: '585',
@@ -4561,6 +5067,7 @@ const MACompList = [
     MAName: '久留米',
     areaCode: '942',
     square: '321-126',
+    color: 'blue',
   },
   {
     codeMain: '586',
@@ -4570,6 +5077,7 @@ const MACompList = [
     MAName: '八女',
     areaCode: '943',
     square: '315-128',
+    color: 'blue',
   },
   {
     codeMain: '587',
@@ -4579,6 +5087,7 @@ const MACompList = [
     MAName: '田主丸',
     areaCode: '943',
     square: '322-135',
+    color: 'blue',
   },
   {
     codeMain: '588',
@@ -4588,6 +5097,7 @@ const MACompList = [
     MAName: '瀬高',
     areaCode: '944',
     square: '311-124',
+    color: 'blue',
   },
   {
     codeMain: '589',
@@ -4597,6 +5107,7 @@ const MACompList = [
     MAName: '甘木',
     areaCode: '946',
     square: '327-134',
+    color: 'blue',
   },
   {
     codeMain: '590',
@@ -4606,6 +5117,7 @@ const MACompList = [
     MAName: '田川',
     areaCode: '947',
     square: '339-141',
+    color: 'blue',
   },
   {
     codeMain: '591',
@@ -4615,6 +5127,7 @@ const MACompList = [
     MAName: '飯塚',
     areaCode: '948',
     square: '338-136',
+    color: 'blue',
   },
   {
     codeMain: '592',
@@ -4624,6 +5137,7 @@ const MACompList = [
     MAName: '直方',
     areaCode: '949',
     square: '344-138',
+    color: 'blue',
   },
   {
     codeMain: '593',
@@ -4633,6 +5147,7 @@ const MACompList = [
     MAName: '直方',
     areaCode: '949',
     square: '344-138',
+    color: 'blue',
   },
   {
     codeMain: '594',
@@ -4642,6 +5157,7 @@ const MACompList = [
     MAName: '平戸',
     areaCode: '950',
     square: '324-082',
+    color: 'yellow',
   },
   {
     codeMain: '595',
@@ -4651,6 +5167,7 @@ const MACompList = [
     MAName: '佐賀',
     areaCode: '952',
     square: '317-116',
+    color: 'yellow',
   },
   {
     codeMain: '596',
@@ -4660,6 +5177,7 @@ const MACompList = [
     MAName: '武雄',
     areaCode: '954',
     square: '314-103',
+    color: 'yellow',
   },
   {
     codeMain: '597',
@@ -4669,6 +5187,7 @@ const MACompList = [
     MAName: '鹿島',
     areaCode: '954',
     square: '309-106',
+    color: 'yellow',
   },
   {
     codeMain: '598',
@@ -4678,6 +5197,7 @@ const MACompList = [
     MAName: '唐津',
     areaCode: '955',
     square: '328-102',
+    color: 'yellow',
   },
   {
     codeMain: '599',
@@ -4687,6 +5207,7 @@ const MACompList = [
     MAName: '伊万里',
     areaCode: '955',
     square: '318-097',
+    color: 'yellow',
   },
   {
     codeMain: '600',
@@ -4696,6 +5217,7 @@ const MACompList = [
     MAName: '佐世保',
     areaCode: '956',
     square: '313-088',
+    color: 'yellow',
   },
   {
     codeMain: '601',
@@ -4705,6 +5227,7 @@ const MACompList = [
     MAName: '諫早',
     areaCode: '957',
     square: '295-102',
+    color: 'yellow',
   },
   {
     codeMain: '602',
@@ -4714,6 +5237,7 @@ const MACompList = [
     MAName: '島原',
     areaCode: '957',
     square: '291-117',
+    color: 'yellow',
   },
   {
     codeMain: '603',
@@ -4723,6 +5247,7 @@ const MACompList = [
     MAName: '長崎',
     areaCode: '95',
     square: '289-094',
+    color: 'yellow',
   },
   {
     codeMain: '604',
@@ -4732,6 +5257,7 @@ const MACompList = [
     MAName: '大瀬戸',
     areaCode: '959',
     square: '299-084',
+    color: 'yellow',
   },
   {
     codeMain: '605',
@@ -4741,6 +5267,7 @@ const MACompList = [
     MAName: '福江',
     areaCode: '959',
     square: '286-045',
+    color: 'yellow',
   },
   {
     codeMain: '606',
@@ -4750,6 +5277,7 @@ const MACompList = [
     MAName: '有川',
     areaCode: '959',
     square: '302-060',
+    color: 'yellow',
   },
   {
     codeMain: '607',
@@ -4759,6 +5287,7 @@ const MACompList = [
     MAName: '熊本',
     areaCode: '96',
     square: '292-133',
+    color: 'red',
   },
   {
     codeMain: '608',
@@ -4768,6 +5297,7 @@ const MACompList = [
     MAName: '松橋',
     areaCode: '964',
     square: '284-131',
+    color: 'red',
   },
   {
     codeMain: '609',
@@ -4777,6 +5307,7 @@ const MACompList = [
     MAName: '八代',
     areaCode: '965',
     square: '276-127',
+    color: 'red',
   },
   {
     codeMain: '610',
@@ -4786,6 +5317,7 @@ const MACompList = [
     MAName: '人吉',
     areaCode: '966',
     square: '260-133',
+    color: 'red',
   },
   {
     codeMain: '611',
@@ -4795,6 +5327,7 @@ const MACompList = [
     MAName: '水俣',
     areaCode: '966',
     square: '259-116',
+    color: 'red',
   },
   {
     codeMain: '612',
@@ -4804,6 +5337,7 @@ const MACompList = [
     MAName: '熊本一の宮',
     areaCode: '967',
     square: '300-152',
+    color: 'red',
   },
   {
     codeMain: '613',
@@ -4813,6 +5347,7 @@ const MACompList = [
     MAName: '矢部',
     areaCode: '967',
     square: '286-145',
+    color: 'red',
   },
   {
     codeMain: '614',
@@ -4822,6 +5357,7 @@ const MACompList = [
     MAName: '高森',
     areaCode: '967',
     square: '293-153',
+    color: 'red',
   },
   {
     codeMain: '615',
@@ -4831,6 +5367,7 @@ const MACompList = [
     MAName: '山鹿',
     areaCode: '968',
     square: '304-133',
+    color: 'red',
   },
   {
     codeMain: '616',
@@ -4840,6 +5377,7 @@ const MACompList = [
     MAName: '玉名',
     areaCode: '968',
     square: '299-127',
+    color: 'red',
   },
   {
     codeMain: '617',
@@ -4849,6 +5387,7 @@ const MACompList = [
     MAName: '天草',
     areaCode: '969',
     square: '273-107',
+    color: 'red',
   },
   {
     codeMain: '619',
@@ -4858,6 +5397,7 @@ const MACompList = [
     MAName: '佐伯',
     areaCode: '972',
     square: '301-189',
+    color: 'green',
   },
   {
     codeMain: '620',
@@ -4867,6 +5407,7 @@ const MACompList = [
     MAName: '臼杵',
     areaCode: '972',
     square: '310-185',
+    color: 'green',
   },
   {
     codeMain: '621',
@@ -4876,6 +5417,7 @@ const MACompList = [
     MAName: '日田',
     areaCode: '973',
     square: '321-146',
+    color: 'green',
   },
   {
     codeMain: '622',
@@ -4885,6 +5427,7 @@ const MACompList = [
     MAName: '玖珠',
     areaCode: '973',
     square: '319-156',
+    color: 'green',
   },
   {
     codeMain: '623',
@@ -4894,6 +5437,7 @@ const MACompList = [
     MAName: '三重',
     areaCode: '974',
     square: '302-174',
+    color: 'green',
   },
   {
     codeMain: '624',
@@ -4903,6 +5447,7 @@ const MACompList = [
     MAName: '竹田',
     areaCode: '974',
     square: '301-166',
+    color: 'green',
   },
   {
     codeMain: '625',
@@ -4912,6 +5457,7 @@ const MACompList = [
     MAName: '大分',
     areaCode: '97',
     square: '316-177',
+    color: 'green',
   },
   {
     codeMain: '626',
@@ -4921,6 +5467,7 @@ const MACompList = [
     MAName: '別府',
     areaCode: '977',
     square: '318-172',
+    color: 'green',
   },
   {
     codeMain: '627',
@@ -4930,6 +5477,7 @@ const MACompList = [
     MAName: '国東',
     areaCode: '978',
     square: '334-184',
+    color: 'green',
   },
   {
     codeMain: '628',
@@ -4939,6 +5487,7 @@ const MACompList = [
     MAName: '豊後高田',
     areaCode: '978',
     square: '334-170',
+    color: 'green',
   },
   {
     codeMain: '629',
@@ -4948,6 +5497,7 @@ const MACompList = [
     MAName: '杵築',
     areaCode: '978',
     square: '326-178',
+    color: 'green',
   },
   {
     codeMain: '630',
@@ -4957,6 +5507,7 @@ const MACompList = [
     MAName: '中津',
     areaCode: '979',
     square: '337-159',
+    color: 'green',
   },
   {
     codeMain: '631',
@@ -4966,6 +5517,7 @@ const MACompList = [
     MAName: '那覇',
     areaCode: '98',
     square: '(-073)-(-046)',
+    color: 'blue',
   },
   {
     codeMain: '632',
@@ -4975,6 +5527,7 @@ const MACompList = [
     MAName: '名護',
     areaCode: '980',
     square: '(-052)-(-032)',
+    color: 'blue',
   },
   {
     codeMain: '633',
@@ -4984,6 +5537,7 @@ const MACompList = [
     MAName: '南大東',
     areaCode: '9802',
     square: '(-094)-131',
+    color: 'blue',
   },
   {
     codeMain: '634',
@@ -4993,6 +5547,7 @@ const MACompList = [
     MAName: '沖縄宮古',
     areaCode: '980',
     square: '(-151)-(-168)',
+    color: 'blue',
   },
   {
     codeMain: '635',
@@ -5002,6 +5557,7 @@ const MACompList = [
     MAName: '八重山',
     areaCode: '980',
     square: '(-177)-(-227)',
+    color: 'blue',
   },
   {
     codeMain: '636',
@@ -5011,6 +5567,7 @@ const MACompList = [
     MAName: '延岡',
     areaCode: '982',
     square: '280-177',
+    color: 'blue',
   },
   {
     codeMain: '637',
@@ -5020,6 +5577,7 @@ const MACompList = [
     MAName: '日向',
     areaCode: '982',
     square: '271-175',
+    color: 'blue',
   },
   {
     codeMain: '638',
@@ -5029,6 +5587,7 @@ const MACompList = [
     MAName: '高千穂',
     areaCode: '982',
     square: '287-161',
+    color: 'blue',
   },
   {
     codeMain: '639',
@@ -5038,6 +5597,7 @@ const MACompList = [
     MAName: '高鍋',
     areaCode: '983',
     square: '255-168',
+    color: 'blue',
   },
   {
     codeMain: '640',
@@ -5047,6 +5607,7 @@ const MACompList = [
     MAName: '小林',
     areaCode: '984',
     square: '247-142',
+    color: 'blue',
   },
   {
     codeMain: '641',
@@ -5056,6 +5617,7 @@ const MACompList = [
     MAName: '宮崎',
     areaCode: '985',
     square: '243-163',
+    color: 'blue',
   },
   {
     codeMain: '642',
@@ -5065,6 +5627,7 @@ const MACompList = [
     MAName: '都城',
     areaCode: '986',
     square: '232-145',
+    color: 'blue',
   },
   {
     codeMain: '643',
@@ -5074,6 +5637,7 @@ const MACompList = [
     MAName: '日南',
     areaCode: '987',
     square: '225-160',
+    color: 'blue',
   },
   {
     codeMain: '644',
@@ -5083,6 +5647,7 @@ const MACompList = [
     MAName: '中之島',
     areaCode: '9912',
     square: '129-079',
+    color: 'green',
   },
   {
     codeMain: '645',
@@ -5092,6 +5657,7 @@ const MACompList = [
     MAName: '硫黄島',
     areaCode: '9913',
     square: '180-103',
+    color: 'green',
   },
   {
     codeMain: '646',
@@ -5101,6 +5667,7 @@ const MACompList = [
     MAName: '鹿児島',
     areaCode: '99',
     square: '225-120',
+    color: 'green',
   },
   {
     codeMain: '647',
@@ -5110,6 +5677,7 @@ const MACompList = [
     MAName: '指宿',
     areaCode: '993',
     square: '206-123',
+    color: 'green',
   },
   {
     codeMain: '648',
@@ -5119,6 +5687,7 @@ const MACompList = [
     MAName: '加世田',
     areaCode: '993',
     square: '215-108',
+    color: 'green',
   },
   {
     codeMain: '649',
@@ -5128,6 +5697,7 @@ const MACompList = [
     MAName: '志布志',
     areaCode: '99',
     square: '219-145',
+    color: 'green',
   },
   {
     codeMain: '650',
@@ -5137,6 +5707,7 @@ const MACompList = [
     MAName: '鹿屋',
     areaCode: '994',
     square: '214-133',
+    color: 'green',
   },
   {
     codeMain: '651',
@@ -5146,6 +5717,7 @@ const MACompList = [
     MAName: '大根占',
     areaCode: '994',
     square: '206-129',
+    color: 'green',
   },
   {
     codeMain: '652',
@@ -5155,6 +5727,7 @@ const MACompList = [
     MAName: '加治木',
     areaCode: '995',
     square: '233-126',
+    color: 'green',
   },
   {
     codeMain: '653',
@@ -5164,6 +5737,7 @@ const MACompList = [
     MAName: '大口',
     areaCode: '995',
     square: '251-125',
+    color: 'green',
   },
   {
     codeMain: '654',
@@ -5173,6 +5747,7 @@ const MACompList = [
     MAName: '出水',
     areaCode: '996',
     square: '252-113',
+    color: 'green',
   },
   {
     codeMain: '655',
@@ -5182,6 +5757,7 @@ const MACompList = [
     MAName: '川内',
     areaCode: '996',
     square: '237-109',
+    color: 'green',
   },
   {
     codeMain: '656',
@@ -5191,6 +5767,7 @@ const MACompList = [
     MAName: '中甑',
     areaCode: '9969',
     square: '239-089',
+    color: 'green',
   },
   {
     codeMain: '657',
@@ -5200,6 +5777,7 @@ const MACompList = [
     MAName: '名瀬',
     areaCode: '997',
     square: '047-054',
+    color: 'green',
   },
   {
     codeMain: '658',
@@ -5209,6 +5787,7 @@ const MACompList = [
     MAName: '徳之島',
     areaCode: '997',
     square: '011-027',
+    color: 'green',
   },
   {
     codeMain: '659',
@@ -5218,6 +5797,7 @@ const MACompList = [
     MAName: '種子島',
     areaCode: '997',
     square: '177-137',
+    color: 'green',
   },
   {
     codeMain: '660',
@@ -5227,6 +5807,7 @@ const MACompList = [
     MAName: '屋久島',
     areaCode: '997',
     square: '160-116',
+    color: 'green',
   },
   {
     codeMain: '661',
@@ -5236,6 +5817,7 @@ const MACompList = [
     MAName: '瀬戸内',
     areaCode: '997',
     square: '034-044',
+    color: 'green',
   },
 ]
 

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function AreaCode({ areaCode }) {
 	return (
 		<div className="areacode">
@@ -22,14 +24,22 @@ export function Pref({ pref }) {
 	)
 }
 
-export function NumberBands({ numberBands }) {
+export function NumberBands({ areaCode, numberBands }) {
+
+	function insertStr(str, id, val) {
+		var res = str.slice(0, id) + val + str.slice(id);
+		return res;
+	}
 
 	const lis = [];
 
 	numberBands.forEach(function(numberBand, i) {
-		let txt = numberBand.bandStart
-		if (numberBand.bandStart !== numberBand.bandEnd) {
-			txt += " ～ " + numberBand.bandEnd;
+		const bandStart = insertStr(numberBand.bandStart, areaCode.length, "-")
+		const bandEnd = insertStr(numberBand.bandEnd, areaCode.length, "-")
+
+		let txt = bandStart
+		if (bandStart !== bandEnd) {
+			txt += " ～ " + bandEnd;
 		}
 		if (numberBand.eliminateCode !== '0') {
 			txt += "（" + numberBand.eliminateCode + "を除く）"
@@ -131,15 +141,14 @@ export function Cities({ classifiedCities }) {
 			if (city.name === "") return false;
 
 			const cityFullTxt = city.pref + city.county.name + city.county.type + city.name + city.type
-			const googleMapURL = "https://www.google.com/maps/place/" + cityFullTxt;
 
 			let zone = city.zone.name ? <small> ({city.zone.name})</small> : null;
 
 			cities.push(
-				<a href={googleMapURL} target="blank" className="city" key={i}>
+				<Link to={`/city/${cityFullTxt}`} className="city" key={i}>
 					{city.name}{city.type}
 					{zone}
-				</a>
+				</Link>
 			)
 
 		})
@@ -184,7 +193,7 @@ export function Cities({ classifiedCities }) {
 			prefs.push(
 				<li className="prefList" key={i}>
 					<div className="prefofCities">
-						<p>{pref}</p>
+						<Link to={`/pref/${pref}`}>{pref}</Link>
 					</div>
 					{ displayCounties(pref) }
 				</li>

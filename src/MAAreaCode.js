@@ -1,4 +1,4 @@
-import { cityList, getPrefCountyCityName } from "./data/cityList.js"
+import { cityList, getCityName, getPrefCountyCityName, getPrefCountyName } from "./data/cityList.js"
 import numberBandList from "./data/numberBandList.js"
 import MACompList from "./data/MACompList.js"
 import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "./MAAreaCodeComponent.js"
@@ -14,6 +14,7 @@ import {
 
 import './css/accordion.scss';
 import { ScrollTop, shuffleArray } from "./utils/tools.js"
+import { Code3digit, Header } from "./Top.js";
 
 function convertCompCode(MAComp) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
@@ -55,7 +56,8 @@ export function generateMAAreaCodeInfo(MAComp) {
 				note: []
 			},
 		],
-		cities: classifyCities(cities)
+		cities: classifyCities(cities),
+		color: MAComp.color,
 	}
 
 }
@@ -65,10 +67,10 @@ function MAAreaCodeInfo({ MAComp, isExpanded="item" }) {
 	const info = generateMAAreaCodeInfo(MAComp)
 
 	return (
-		<div className="info">
+		<div className={"info MAComp-" + info.color}>
 
 			<AreaCode areaCode={info.areaCode}/>
-			<NumberBands numberBands={info.numberBands} />
+			<NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
 
 			<Accordion allowZeroExpanded preExpanded={[isExpanded]}>
 
@@ -111,11 +113,11 @@ function MAAreaCodeInfo({ MAComp, isExpanded="item" }) {
 
 }
 
-const displayMAAreaCodeInfos = (type, query) => {
+function MAAreaCodeInfos ({type, query}) {
 
-	const MAComps = searchMAAreaCodeInfos(type, query)
+	const [headerInfo, MAComps] = searchMAAreaCodeInfos(type, query)
 	const isExpanded = (type === "random") ? "" : "item";
-
+	console.log(isExpanded, type)
 	const MAAreaCodeInfos = [];
 
 	MAComps.forEach(function(MAComp, i) {
@@ -128,17 +130,30 @@ const displayMAAreaCodeInfos = (type, query) => {
 		)
 	})
 
-	return <div>{MAAreaCodeInfos}</div>
+	return (
+		<div>
+			<MAAreaCodeHeader info={headerInfo} />
+			<div>{MAAreaCodeInfos}</div>
+		</div>
+	)
 
 }
 
 export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 	let MAComps = [];
+	let headerInfo = {
+		mainHeaderSub: "",
+		mainHeader: query,
+		mainHeaderLink: "",
+		subHeader: "",
+	}
 
 	switch (type) {
 
 		case "MA" : // MA name
+
+			headerInfo.subHeader = "MA名検索"
 
 			MAComps = MACompList.concat().filter(function(MAComp) {
 				return MAComp.MAName === query;
@@ -147,12 +162,16 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 		case "pref":
 
+			headerInfo.subHeader = "都道府県名検索"
+
 			MAComps = MACompList.concat().filter(function(MAComp) {
 				return MAComp.pref === query;
 			})
 			break;
 
 		case "city":
+
+			headerInfo.subHeader = "市町村名検索"
 
 			const cities = cityList.filter(function(city) {
 				return getPrefCountyCityName(city) === query;
@@ -164,9 +183,15 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 				})
 				MAComps = MAComps.concat(MAtemp)
 			})
+
+			headerInfo.mainHeaderSub = getPrefCountyName(cities[0]);
+			headerInfo.mainHeader = getCityName(cities[0]);
+			headerInfo.mainHeaderLink = "https://www.google.com/maps/place/" + query;
 			break;
 
 		case "code": // areacode start digit
+
+			headerInfo.subHeader = "市外局番検索（前方一致）"
 
 			query = query.slice(1, query.length)
 			MAComps = MACompList.concat().filter(function(MAComp) {
@@ -176,64 +201,57 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 		case "all":
 
+			headerInfo.mainHeader = "全て"
+
 			MAComps = MACompList.concat();
 			break;
 
 		case "random":
 
+			headerInfo.mainHeader = "ランダム表示"
+
 			MAComps = shuffleArray(MACompList.concat()).slice(0, 1);
+			break;
+
+		default:
 			break;
 
 	}
 
 	if (shuffle) {
 
+		headerInfo.subHeader += "（シャッフル）"
 		MAComps = shuffleArray(MAComps)
 		
 	}
 
-	return MAComps;
+	return [headerInfo, MAComps];
 
 }
 
-function MAAreaCodeHeader({ type, query }) {
-
-	let mainHeader = query, subHeader;
-
-	switch (type) {
-
-		case "MA" : // MA name
-			subHeader = "MA名検索"
-			break;
-
-		case "pref":
-			subHeader = "都道府県名検索"
-			break;
-
-		case "city":
-			subHeader = "市町村名検索"
-			break;
-
-		case "code": // areacode start digit
-			subHeader = "市外局番検索（前方一致）"
-			break;
-
-		case "all":
-			mainHeader = "全て"
-			break;
-
-		case "random":
-			mainHeader = "ランダム表示"
-			break;
-
-	}
+function MAAreaCodeHeader({ info }) {
 
 	return (
 		<div className="MAAreaCode-header">
-			<div className="main-header">{mainHeader}</div>
-			<div className="sub-header">{subHeader}</div>
+			<div className="main-header">
+				<div className="main-header-sub">{info.mainHeaderSub}</div>
+				<div className="main-header-main">{info.mainHeader}</div>
+				{info.mainHeaderLink &&
+					<a className="main-header-link" href={info.mainHeaderLink} target="blank">Google Mapで見る</a>
+				}
+			</div>
+			<div className="sub-header">{info.subHeader}</div>
 		</div>
 	)
+
+}
+
+function displayCode3digit(type, query) {
+
+	if (type !== "code") return (<></>)
+
+	const code2 = query.charAt(1);
+	return Code3digit(code2);
 
 }
 
@@ -244,8 +262,13 @@ export default function MAAreaCode({ type }) {
 	return (
 		<>
 			<ScrollTop />
-			<MAAreaCodeHeader type={type} query={query} />
-			<div>{ displayMAAreaCodeInfos(type, query) }</div>
+			<Header />
+			<div className="MAAreaCode-container">
+				<div className="code-list-middle">
+					{displayCode3digit(type, query)}
+				</div>
+				<MAAreaCodeInfos type={type} query={query} />
+			</div>
 		</>
 	)
 
