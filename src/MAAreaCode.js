@@ -155,25 +155,27 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 			headerInfo.subHeader = "MA名検索"
 
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.MAName === query;
-		})
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.MAName === query;
+			})
+			break;
 
 		case "pref":
 
 			headerInfo.subHeader = "都道府県名検索"
-
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.pref === query;
-		})
+			
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.pref === query;
+			})
+			break;
 
 		case "city":
 
 			headerInfo.subHeader = "市町村名検索"
 
-		const cities = cityList.filter(function(city) {
-			return getPrefCountyCityName(city) === query;
-		})
+			const cities = cityList.filter(function(city) {
+				return getPrefCountyCityName(city) === query;
+			})
 
 			cities.forEach(function(city) {
 				let MAtemp = MACompList.concat().filter((m) => {
@@ -191,16 +193,18 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 			headerInfo.subHeader = "市外局番検索（前方一致）"
 
-		query = query.slice(1, query.length)
-		MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.areaCode.slice(0, query.length) === query;
-		})
+			query = query.slice(1, query.length)
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.areaCode.slice(0, query.length) === query;
+			})
+			break;
 
 		case "all":
 
 			headerInfo.mainHeader = "全て"
 
-		MAComps = MACompList.concat();
+			MAComps = MACompList.concat();
+			break;
 
 		case "random":
 
