@@ -19,13 +19,7 @@ $color-yellow-3: #E6CD59;
 $color-yellow-4: #AFAE54;
 
 html {
-	font-size: 16px;
-}
-
-@media screen and (max-width: 480px) {
-	html {
-		font-size: 12px;
-	}
+	font-size: 12px;
 }
 
 body {
@@ -57,12 +51,33 @@ code {
 	justify-content: center;
 	background-color: #fff;
 	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-	position: sticky;
+	position: fixed;
 	top: 0;
 	z-index: 100;
 }
 
 .header-content {
+	display: flex;
+	align-items: center;
+	padding: 1rem;
+}
+
+.main-content {
+	margin-top: 172px;
+}
+
+@media screen and (max-width: 480px) {
+	.header-content {
+		display: block;
+	}
+
+	.main-content {
+		margin-top: 120px;
+	}
+	
+}
+
+.header-left {
 	display: flex;
 	align-items: center;
 }
@@ -73,7 +88,7 @@ code {
 	display: block;
 	text-decoration: none;
 	color: #fff;
-	padding: 1rem;
+	padding: 0.5rem 1rem;
 	transition: all .3s;
 }
 
@@ -81,6 +96,7 @@ code {
 	color: $color-green-4;
 	font-size: 1.8rem;
 	font-weight: bold;
+	margin-right: 1rem;
 }
 
 .link-title:hover {
@@ -200,6 +216,21 @@ code {
 .all-code-list-container > li:nth-child(6) a {
 	width: 527.766px;
     text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+	.code-list-middle a {
+		padding: 1rem 0.5rem;
+	}
+	.all-code-list-container a {
+		padding: 1rem 0.5rem;
+	}
+
+	.all-code-list-container > li:nth-child(3) a,
+	.all-code-list-container > li:nth-child(6) a {
+		width: 331.17px;
+	}
+	
 }
 
 .pref-all-list-container {
@@ -422,19 +453,26 @@ $text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $
 }
 
 .prefList {
+	font-size: 1rem;
 	margin: 1rem 0;
+}
+
+@media screen and (max-width: 480px) {
+	.prefList {
+		font-size: 16px;
+	}
 }
 
 .prefofCities {
 	display: flex;
-	padding: 0 1rem;
+	padding: 0 1em;
 }
 
 .prefofCities > a {
 	text-decoration: none;
-	padding: 0.25rem 1rem;
-	border-radius: 1rem 1rem 0 0;
-	font-size: 1.1rem;
+	padding: 0.25em 1em;
+	border-radius: 1em 1em 0 0;
+	font-size: 1.1em;
 	color: #fff;
 	border-style: solid;
 	border-top-width: 2px;
@@ -445,25 +483,25 @@ $text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $
 }
 
 .countyList {
-	border-radius: 0.5rem;
+	border-radius: 0.5em;
 }
 
 .cityList {
-	margin: 1rem;
+	margin: 1em;
 }
 
 .cityListwithBorder {
-	margin: 1rem;
-	padding: 0.5rem;
+	margin: 1em;
+	padding: 0.5em;
 	border: 1px solid #ccc;
-	border-radius: 0.5rem;
+	border-radius: 0.5em;
 }
 
 .city {
-	padding: 2px 0.7rem;
-	border-radius: 1rem;
-	margin: 0.25rem;
-	font-size: 1rem;
+	padding: 2px 0.7em;
+	border-radius: 1em;
+	margin: 0.25em;
+	font-size: 1em;
 	letter-spacing: -1px;
 	display: inline-block;
 	filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
@@ -584,7 +622,7 @@ $text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $
 
 .prefListSimple {
 	text-align: left;
-	font-size: 0.8rem;
+	font-size: 0.8em;
 	font-weight: normal;
 	margin: 0;
 	display: flex;
@@ -602,7 +640,7 @@ $text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $
 	padding: 0.5em;
 	border-radius: 0;
 	font-size: 1em;
-	width: 4rem;
+	width: 4em;
 }
 
 .prefListSimple .countyList {

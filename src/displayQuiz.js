@@ -10,9 +10,11 @@ function displayQuiz() {
     <div>
       <ScrollTop />
       <Header />
-      <Quiz
-        mode={quizMode}
-      />
+      <div className="main-content">
+        <Quiz
+          mode={quizMode}
+        />
+      </div>
     </div>
   );
   
