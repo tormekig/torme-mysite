@@ -18,6 +18,7 @@ const App = () => {
         <Route path={`/pref/:query`} element={<MAAreaCode type={"pref"}/>} />
         <Route path={`/city/:query`} element={<MAAreaCode type={"city"}/>} />
         <Route path={`/code/:query`} element={<MAAreaCode type={"code"}/>} />
+        <Route path={`/all`} element={<MAAreaCode type={"all"}/>} />
         <Route path={`/random`} element={<MAAreaCode type={"random"}/>} />
         <Route path={`/quiz`} element={<DisplayQuiz/>} />
         <Route path={`*`} element={<NotFound />} />

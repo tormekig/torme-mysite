@@ -1,4 +1,6 @@
+import { Header } from "./Top";
 import Quiz from "./quiz/Quiz";
+import { ScrollTop } from "./utils/tools";
 
 function displayQuiz() {
   
@@ -6,6 +8,8 @@ function displayQuiz() {
 
   return (
     <div>
+      <ScrollTop />
+      <Header />
       <Quiz
         mode={quizMode}
       />

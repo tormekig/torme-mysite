@@ -8,6 +8,10 @@ export function getPrefCityName(city) {
   return getPrefName(city) + getCityName(city);
 }
 
+export function getPrefCountyName(city) {
+  return getPrefName(city) + city.county.name + city.county.type;
+}
+
 export function getPrefCountyCityName(city) {
   return getPrefName(city) + city.county.name + city.county.type + getCityName(city);
 }
