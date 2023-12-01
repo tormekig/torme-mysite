@@ -9,7 +9,7 @@ function MAAreaCodeQuestion({ MAComp }) {
 		<div className="MA-question">
 
 			<AreaCode areaCode={info.areaCode}/>
-			<NumberBands numberBands={info.numberBands} />
+			<NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
 
 		</div>
 	)

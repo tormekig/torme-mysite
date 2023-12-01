@@ -35,20 +35,26 @@ export default function SearchCity() {
 	}
 
 	return (
-		<div>
-			<h4>Search</h4>
-			<input type="text" value={inputValue} onChange={handleInputChange} />
-			{showCities.map((city, i) => {
-				return (
-					<div key={i}>
-						<p>
-							<Link to={`/city/${getPrefCountyCityName(city)}`}>
-								<span>{getPrefCountyCityName(city)}</span>
-							</Link>
-						</p>
+		<div className='search-city-container'>
+			<h4 className='search-city-header'>市町村検索</h4>
+			<div className='search-city-content'>
+				<div className='search-city-text-outer'>
+					<div className='search-city-text-container'>
+						<input type="text" value={inputValue} onChange={handleInputChange} placeholder="Search" />
 					</div>
-				);
-			})}
+				</div>
+				<ul className='search-city-list'>
+					{showCities.map((city, i) => {
+						return (
+							<li key={i}>
+								<Link to={`/city/${getPrefCountyCityName(city)}`}>
+									<span>{getPrefCountyCityName(city)}</span>
+								</Link>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
 		</div>
 	)
 }
