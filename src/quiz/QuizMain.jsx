@@ -150,14 +150,12 @@ function Main({questions, isVisibleCities, choiceRange}) {
   }
 
   const renderResult = () => (
-    <div>
-      result
-      <div>{correctList.length}</div>
-      <div>{questions.length}</div>
-      <button onClick={() => window.location.reload()}>もう一度遊ぶ</button>
-      <Link to={`/`}>
-          <span>トップへ戻る</span>
-      </Link>
+    <div className="result-container">
+      <h2 className="result-header">結果発表</h2>
+      <div className="result-number">{questions.length} 問中 {correctList.length} 問正解</div>
+      <div>
+        <button className="btn" onClick={() => window.location.reload()}>もう一度遊ぶ</button>
+      </div>
       {questions.map((question, i) => {
         return (
           <div key={i}>
@@ -196,7 +194,7 @@ function Main({questions, isVisibleCities, choiceRange}) {
           isIncorrect={isIncorrect}
         />
         <div>
-          {`${(currentQuestionIndex + 1)} / ${questions.length}:`}
+          {!endQuiz && `${(currentQuestionIndex + 1)} / ${questions.length}:`}
         </div>
         {question && <MAAreaCodeQuestion MAComp={question.subject} />}
         <div className="answers">

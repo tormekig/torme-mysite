@@ -90,27 +90,39 @@ function Quiz({quizMode, isShuffleAnswer}) {
     },
   ]
   return (
-    <div className="quiz-container">
+    <div className="MAAreaCode-container quiz-container">
       {!start && (
         <div>
-          <input
-            type="checkbox"
-            checked={isVisibleCities}
-            onChange={() => changeIsVisibleCities()}
-          /> 市町村名を表示
-          <br />
-          {radioButtons.map((radio, i) => {
-            return (
-              <div key={i}>
-                <input type="radio" name="choiceRange" 
-              value={radio.value} checked={radio.value === choiceRange} onChange={changeChoiceRange}/>
-                <label>{radio.label}</label>
-              </div>
-            )
-          })}
-          <button type="button" onClick={() => startQuiz()} className="startQuizBtn">
-            Start
-          </button>
+          <div className="start-choice">
+            <input
+              type="checkbox"
+              checked={isVisibleCities}
+              onChange={() => changeIsVisibleCities()}
+            /> 市町村名を表示
+          </div>
+          <div className="choice-container">
+            <h3>出題範囲</h3>
+            {radioButtons.map((radio, i) => {
+              return (
+                <div key={i} className="start-choice">
+                  <label>
+                    <input type="radio"
+                      name="choiceRange" 
+                      value={radio.value}
+                      checked={radio.value === choiceRange}
+                      onChange={changeChoiceRange}
+                    />
+                      {radio.label}
+                    </label>
+                </div>
+              )
+            })}
+          </div>
+          <div className="startQuizBtn-container">
+            <button type="button" onClick={() => startQuiz()} className="startQuizBtn btn">
+              Start
+            </button>
+          </div>
         </div>
       )}
 
