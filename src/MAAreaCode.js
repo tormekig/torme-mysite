@@ -263,11 +263,13 @@ export default function MAAreaCode({ type }) {
 		<>
 			<ScrollTop />
 			<Header />
-			<div className="MAAreaCode-container">
-				<div className="code-list-middle">
-					{displayCode3digit(type, query)}
+            <div className="main-content">
+				<div className="MAAreaCode-container">
+					<div className="code-list-middle">
+						{displayCode3digit(type, query)}
+					</div>
+					<MAAreaCodeInfos type={type} query={query} />
 				</div>
-				<MAAreaCodeInfos type={type} query={query} />
 			</div>
 		</>
 	)

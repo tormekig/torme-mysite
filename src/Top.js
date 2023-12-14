@@ -133,10 +133,14 @@ export function Header() {
     return (
         <div className="header-container">
             <div className="header-content">
-                <Link to={`/`} className="link-title">市外局番手帳</Link>
-                <Code2digit />
-                <Link to={`/quiz`} className="link-quiz">クイズ</Link>
-                <Link to={`/random`} className="link-random">ランダム</Link>
+                <div className="header-left">
+                    <Link to={`/`} className="link-title">市外局番手帳</Link>
+                    <Link to={`/quiz`} className="link-quiz">クイズ</Link>
+                    <Link to={`/random`} className="link-random">ランダム</Link>
+                </div>
+                <div className="header-right">
+                    <Code2digit />
+                </div>
             </div>
         </div>
     )
@@ -148,12 +152,14 @@ const Top = () => {
         <div>
             <ScrollTop />
             <Header />
-            <AllCode3digit />
-            <SearchCity />
-            <Pref />
-            <Appendix />
-            <div className="copyright-container">
-                <p>Copyright 2023 torme_kig All rights reserved.</p>
+            <div className="main-content">
+                <AllCode3digit />
+                <SearchCity />
+                <Pref />
+                <Appendix />
+                <div className="copyright-container">
+                    <p>Copyright 2023 torme_kig All rights reserved.</p>
+                </div>
             </div>
         </div>
     )
