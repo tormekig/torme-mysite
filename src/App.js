@@ -8,6 +8,7 @@ import Top from "./Top";
 import MAAreaCode from "./MAAreaCode";
 import DisplayQuiz from "./displayQuiz";
 import NotFound from "./NotFound";
+import Yamanote from "./Yamanote";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path={`/all`} element={<MAAreaCode type={"all"}/>} />
         <Route path={`/random`} element={<MAAreaCode type={"random"}/>} />
         <Route path={`/quiz`} element={<DisplayQuiz/>} />
+        <Route path={`/yamanote`} element={<Yamanote/>} />
         <Route path={`*`} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
