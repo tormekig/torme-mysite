@@ -1,11 +1,43 @@
+import { useState } from 'react';
 import { Link } from "react-router-dom";
 
 import SearchCity from "./searchCity.js"
 
-import prefList from "./data/prefList";
-import appendixList from "./data/appendixList";
-import { ScrollTop } from "./utils/tools.js";
+import prefList from "./data/prefList.js";
+import appendixList from "./data/appendixList.js";
+import { ScrollTop } from "../utils/tools.js";
 import codeColors from "./data/codeColor.js";
+
+export function SearchPushNumber() {
+
+	const [inputValue, setInputValue] = useState()
+
+	const handleInputChange = (e) => {
+		setInputValue(e.target.value)
+	}
+
+    return (
+        <div className='search-push-number-container'>
+            <h4 className='search-push-number-header'>市外局番検索</h4>
+			<div className='search-push-number-content'>
+				<div className='search-push-number-text-outer'>
+					<div className='search-push-number-text-container'>
+						<input type="text" value={inputValue} onChange={handleInputChange} placeholder="045" />
+					</div>
+				</div>
+                <ul className="push-number-exec-container">
+                    <Link to={`/areacode/code/${inputValue}`}>
+                        <span>完全一致検索</span>
+                    </Link>
+                    <Link to={`/areacode/code/prefix/${inputValue}`}>
+                        <span>前方一致検索</span>
+                    </Link>
+                </ul>
+            </div>
+        </div>
+
+    )
+}
 
 export function Code2digit() {
 
@@ -16,7 +48,7 @@ export function Code2digit() {
         let first = (codeColors[i-1][0].color !== "none") ? codeColors[i-1][0].color : codeColors[i-1][1].color
         codes.push(
             <li key={i}>
-                <Link to={`/code/0${i}`} className={`code-list-${first}`}>0{i}</Link>
+                <Link to={`/areacode/code/prefix/0${i}`} className={`code-list-${first}`}>0{i}</Link>
             </li>
         )
 
@@ -40,7 +72,7 @@ export function Code3digit(code2) {
         codes.push(
             <li key={i}>
                 <Link
-                    to={`/code/${elem.code}`}
+                    to={`/areacode/code/prefix/${elem.code}`}
                     className={`code-list-${elem.color}`}
                 >
                     {elem.code}
@@ -88,7 +120,7 @@ function Pref() {
 
         prefs.push(
             <li key={i}>
-                <Link to={`/pref/${pref.name}`}>
+                <Link to={`/areacode/pref/${pref.name}`}>
                     <span>{pref.name}</span>
                 </Link>
             </li>
@@ -134,9 +166,9 @@ export function Header() {
         <div className="header-container">
             <div className="header-content">
                 <div className="header-left">
-                    <Link to={`/`} className="link-title">市外局番手帳</Link>
-                    <Link to={`/quiz`} className="link-quiz">クイズ</Link>
-                    <Link to={`/random`} className="link-random">ランダム</Link>
+                    <Link to={`/areacode`} className="link-title">市外局番手帳</Link>
+                    <Link to={`/areacode/quiz`} className="link-quiz">クイズ</Link>
+                    <Link to={`/areacode/random`} className="link-random">ランダム</Link>
                 </div>
                 <div className="header-right">
                     <Code2digit />
@@ -153,6 +185,7 @@ const Top = () => {
             <ScrollTop />
             <Header />
             <div className="main-content">
+                <SearchPushNumber />
                 <AllCode3digit />
                 <SearchCity />
                 <Pref />

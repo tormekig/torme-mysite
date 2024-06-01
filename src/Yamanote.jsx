@@ -1,4 +1,4 @@
-import YamanoteInfo from "./data/YamanoteInfo";
+import YamanoteInfo from "./YamanoteInfo";
 import { ScrollTop } from "./utils/tools";
 import './yamanote.css';
 

@@ -47,7 +47,7 @@ export default function SearchCity() {
 					{showCities.map((city, i) => {
 						return (
 							<li key={i}>
-								<Link to={`/city/${getPrefCountyCityName(city)}`}>
+								<Link to={`/areacode/city/${getPrefCountyCityName(city)}`}>
 									<span>{getPrefCountyCityName(city)}</span>
 								</Link>
 							</li>

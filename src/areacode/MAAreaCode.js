@@ -12,8 +12,9 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
+import './css/index.scss';
 import './css/accordion.scss';
-import { ScrollTop, shuffleArray } from "./utils/tools.js"
+import { ScrollTop, shuffleArray } from "../utils/tools.js"
 import { Code3digit, Header } from "./Top.js";
 
 function convertCompCode(MAComp) {
@@ -191,6 +192,16 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 		case "code": // areacode start digit
 
+			headerInfo.subHeader = "市外局番検索（完全一致）"
+
+			query = query.slice(1, query.length)
+			MAComps = MACompList.concat().filter(function(MAComp) {
+				return MAComp.areaCode === query;
+			})
+			break;
+
+		case "code_prefix": // areacode start digit
+
 			headerInfo.subHeader = "市外局番検索（前方一致）"
 
 			query = query.slice(1, query.length)
@@ -248,7 +259,7 @@ function MAAreaCodeHeader({ info }) {
 
 function displayCode3digit(type, query) {
 
-	if (type !== "code") return (<></>)
+	if (type !== "code" && type !== "code_prefix") return (<></>)
 
 	const code2 = query.charAt(1);
 	return Code3digit(code2);

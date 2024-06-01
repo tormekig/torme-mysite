@@ -1,6 +1,6 @@
-import { Header } from "./Top";
-import Quiz from "./quiz/Quiz";
-import { ScrollTop } from "./utils/tools";
+import { Header } from "../Top";
+import Quiz from "./Quiz";
+import { ScrollTop } from "../../utils/tools";
 
 function displayQuiz() {
   

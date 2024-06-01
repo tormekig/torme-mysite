@@ -3,7 +3,6 @@ import './styles.css';
 import { CitiesSimple } from "../MAAreaCodeComponent";
 import { generateMAAreaCodeInfo } from "../MAAreaCode";
 import MAAreaCodeQuestion from "./MAAreaCodeQuizComponent";
-import { Link } from "react-router-dom";
 
 function Main({questions, isVisibleCities, choiceRange}) {
   const [isCorrect, setIsCorrect] = useState(false);

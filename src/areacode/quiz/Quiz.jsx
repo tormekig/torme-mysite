@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Main from "./QuizMain";
 import './styles.css';
-import generateQuizSet from "../generateQuiz";
+import generateQuizSet from "./generateQuiz";
 
 const CORRECT_ANSWER = "1";
 

@@ -1,7 +1,7 @@
-import { searchMAAreaCodeInfos } from './MAAreaCode';
+import { searchMAAreaCodeInfos } from '../MAAreaCode';
 
-import './css/quiz.css';
-import { shuffleArray } from './utils/tools';
+import '../css/quiz.css';
+import { shuffleArray } from '../../utils/tools';
 
 const NUM_OF_CHOICES = 3;
 // const NUM_OF_DIGIT_IN_AREACODE = -1; // -1: all

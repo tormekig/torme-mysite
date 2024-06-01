@@ -145,7 +145,7 @@ export function Cities({ classifiedCities }) {
 			let zone = city.zone.name ? <small> ({city.zone.name})</small> : null;
 
 			cities.push(
-				<Link to={`/city/${cityFullTxt}`} className="city" key={i}>
+				<Link to={`/areacode/city/${cityFullTxt}`} className="city" key={i}>
 					{city.name}{city.type}
 					{zone}
 				</Link>
@@ -193,7 +193,7 @@ export function Cities({ classifiedCities }) {
 			prefs.push(
 				<li className="prefList" key={i}>
 					<div className="prefofCities">
-						<Link to={`/pref/${pref}`}>{pref}</Link>
+						<Link to={`/areacode/pref/${pref}`}>{pref}</Link>
 					</div>
 					{ displayCounties(pref) }
 				</li>
