@@ -1,7 +1,7 @@
 import { shuffleArray } from "../utils/tools";
 import { convertCompCode } from "./MAAreaCode";
 import MACompList from "./data/MACompList";
-import cityList, { getCityName, getPrefCountyCityName, getPrefCountyName } from "./data/cityList";
+import cityList, { getCityName, getPrefCountyCityName, getPrefCountyCityNameKanaWithSlash, getPrefCountyName } from "./data/cityList";
 import { getPrefName } from "./data/prefList";
 
 export function searchMAAreaCodeInfos(type, query, shuffle=false) {
@@ -10,6 +10,7 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 	let headerInfo = {
 		mainHeaderSub: "",
 		mainHeader: query,
+		mainHeaderRuby: "",
 		mainHeaderLink: "",
 		subHeader: "",
 	}
@@ -62,6 +63,7 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 
 			headerInfo.mainHeaderSub = getPrefCountyName(cities[0]);
 			headerInfo.mainHeader = getCityName(cities[0]);
+			headerInfo.mainHeaderRuby = getPrefCountyCityNameKanaWithSlash(cities[0]);
 			headerInfo.mainHeaderLink = "https://www.google.com/maps/place/" + query;
 			break;
 

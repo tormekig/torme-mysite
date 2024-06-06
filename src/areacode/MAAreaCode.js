@@ -307,7 +307,7 @@ const CheckBtnItems = (props) =>
 
 function MAAreaCodeHeader({ info, displayParam, setDisplayParam }) {
 
-
+	
 	const handleChange = (e) => {
 		if (displayParam.includes(e.target.value)) {
 			setDisplayParam(
@@ -324,6 +324,9 @@ function MAAreaCodeHeader({ info, displayParam, setDisplayParam }) {
 				<div className={MAList.mainHeader}>
 					<div className={MAList.mainHeaderSub}>{info.mainHeaderSub}</div>
 					<div className={MAList.mainHeaderMain}>{info.mainHeader}</div>
+					{info.mainHeaderRuby && 
+						<div className={MAList.mainHeaderRuby}>{info.mainHeaderRuby}</div>
+					}
 					{info.mainHeaderLink &&
 						<a className={MAList.mainHeaderLink} href={info.mainHeaderLink} target="blank">Google Mapで見る</a>
 					}

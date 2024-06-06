@@ -28,6 +28,10 @@ export function getPrefCountyCityNameKana(city) {
   return getPrefNameKana(city) + city.county.kana + city.county.typeKana + getCityNameKana(city);
 }
 
+export function getPrefCountyCityNameKanaWithSlash(city) {
+  return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameKana(city)}`;
+}
+
 export const cityList = [
   {
     code: '01100',
