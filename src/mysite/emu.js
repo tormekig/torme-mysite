@@ -4,7 +4,7 @@ import mysite from './css/mysite.module.scss';
 import { Header } from './Top';
 import { ScrollTop } from '../utils/tools';
 
-export function SasameContent() {
+export function EmuContent() {
   return (
     <div id={mysite.sasameContent}>
       <div className={mysite.introPhoto}>
@@ -24,14 +24,14 @@ export function SasameContent() {
           whileInView={{ transform: "translateX(0%)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
           className="profile-name-main">
-            銀花 ささめ
+            鳳 えむ
         </motion.div>
         <motion.div
           initial={{ transform: "translateX(50%)", opacity: 0 }}
           whileInView={{ transform: "translateX(0%)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
           className={mysite.profileNameSmall}>
-            Sasame Kanehana
+            Emu Otori
         </motion.div>
         </h2>
         <div className={mysite.profileText}>
@@ -438,7 +438,7 @@ export function Sasame() {
       <div className="splashbg"></div>
       <div id="container">
 
-      <SasameContent/>
+      <EmuContent/>
       <SasamePersonality/>
       <HowToTakePictures/>
       <Memories/>

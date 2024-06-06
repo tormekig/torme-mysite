@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import './css/index.css';
+import mysite from './css/mysite.module.scss';
 import { SasameContent } from './sasame';
 import { motion } from 'framer-motion';
 import { Timeline } from 'react-twitter-widgets';
+import { ScrollTop } from '../utils/tools';
+import { EmuContent } from './emu';
 
 function LinkButton() {
 
@@ -33,13 +35,13 @@ function LinkButton() {
 
   links.forEach(function(link, i) {
     buttons.push(
-      <li className="link-button" key={i}>
+      <li className={mysite.linkButton} key={i}>
         <a href={link.url} target="_blank">
-          <div className="link-icon">
+          <div className={mysite.linkIcon}>
             <img src={link.img} />
           </div>
-            <div className="link-text">
-            <div className="link-text-sub">{link.text}</div>
+            <div className={mysite.linkText}>
+            <div className={mysite.linkTextSub}>{link.text}</div>
           </div>
         </a>
       </li>
@@ -47,29 +49,29 @@ function LinkButton() {
   })
 
   return (
-    <ul id="link-button-container">
+    <ul id={mysite.linkButtonContainer}>
       {buttons}
     </ul>
   )
 }
 function TopContent() {
   return (
-    <div id="top-content">
-    <div id="center-box">
-      <div id="top-img-back-rect"></div>
-      <div id="top-left-content">
+    <div id={mysite.topContent}>
+    <div id={mysite.centerBox}>
+      <div id={mysite.topImgBackRect}></div>
+      <div id={mysite.topLeftContent}>
         <motion.div
           initial={{ transform: "rotate(-5deg) scale(1.2)", opacity: 0 }}
           whileInView={{ transform: "rotate(-3deg) scale(1)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 1.5 }}
-          id="top-img-container"
+          id={mysite.topImgContainer}
         >
-          <img id="top-img" src="img\221023.jpg" />
+          <img id={mysite.topImg} src="img\221023.jpg" />
         </motion.div>
       </div>
-      <div id="top-box">
-        <h2 id="top-name" className="bgextend bgLRextend">
-          <span className="bgappearTrigger bgappear">Torme<span className="top-name-blue"> - kig</span></span>
+      <div id={mysite.topBox}>
+        <h2 id={mysite.topName} className="bgextend bgLRextend">
+          <span className="bgappearTrigger bgappear">Torme<span className={mysite.topNameBlue}> - kig</span></span>
         </h2>
         <LinkButton/>
       </div>
@@ -80,19 +82,20 @@ function TopContent() {
 
 function TormeContent() {
   return (
-    <div id="torme-content">
-      <div id="profile-content">
-        <motion.h2 className="fadeDown"
+    <div id={mysite.tormeContent}>
+      <div id={mysite.profileContent}>
+        <motion.h2
           initial={{ transform: "translateY(-5rem)", opacity: 0 }}
           whileInView={{ transform: "translateX(0)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
         >
           Torme's Profile
         </motion.h2>
-        <motion.div className="profile-text"
+        <motion.div
           initial={{ transform: "translateX(-5rem)", opacity: 0 }}
           whileInView={{ transform: "translateX(0)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
+          className={mysite.profileText}
         >
           <p>
             私に興味を持っていただいてありがとうございます。<br />
@@ -104,10 +107,11 @@ function TormeContent() {
           </p>
           <p>法やルールはしっかりと守り、趣味の活動を続けていく所存です。</p>
         </motion.div>
-        <motion.table className="profile-table"
+        <motion.table
           initial={{ transform: "translateX(5rem)", opacity: 0 }}
           whileInView={{ transform: "translateX(0)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
+          className={mysite.profileTable}
         >
           <tbody>
             <tr>
@@ -137,33 +141,33 @@ function TormeContent() {
 
 export function Header({color, ja, en}) {
   return (
-    <div className={"headline headline-" + color}>
-      <h1 className="headline-main">
+    <div className={`${mysite.headline} ${color}`}>
+      <h1 className={mysite.headlineMain}>
         <motion.span
           initial={{ transform: "translateX(-50%)", opacity: 0 }}
           whileInView={{ transform: "translateX(0%)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
-          className="slide-in">
+        >
           <motion.span
           initial={{ transform: "translateX(50%)", opacity: 0 }}
           whileInView={{ transform: "translateX(0%)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
-          className="slide-in_inner">
+        >
             {en}
           </motion.span>
         </motion.span>
       </h1>
-      <p className="headline-sub">
+      <p className={mysite.headlineSub}>
         <motion.span
           initial={{ transform: "translateX(50%)", opacity: 0 }}
           whileInView={{ transform: "translateX(0%)", opacity: 1 }}
           transition={{ ease: "easeInOut", duration: 0.8 }}
-          className="slide-in">
+        >
           <motion.span
-          initial={{ transform: "translateX(-50%)", opacity: 0 }}
-          whileInView={{ transform: "translateX(0%)", opacity: 1 }}
-          transition={{ ease: "easeInOut", duration: 0.8 }}
-          className="slide-in_inner">
+            initial={{ transform: "translateX(-50%)", opacity: 0 }}
+            whileInView={{ transform: "translateX(0%)", opacity: 1 }}
+            transition={{ ease: "easeInOut", duration: 0.8 }}
+          >
             {ja}
           </motion.span>
         </motion.span>
@@ -177,6 +181,7 @@ function Characters() {
     <div>
       <Header ja={"キャラクター紹介"} en={"Characters"} />
       <SasameContent/>
+      <EmuContent/>
     </div>
   )
 }
@@ -235,8 +240,8 @@ function Gallery() {
   })
 
   return (
-    <div id="gallery-container">
-      <ul id="gallery">
+    <div id={mysite.galleryContainer}>
+      <ul id={mysite.gallery}>
         {galleries}
       </ul>
     </div>
@@ -246,70 +251,70 @@ function Gallery() {
 function SocialMedia() {
   return (
     <div>
-      <Header color={"green"} ja={"ソーシャルメディア"} en={"Social Media"} />
-      <div className="social-media-content-container">
-        <div className="social-media-content youtube">
-          <div className="social-media-header">
-            <div className="social-media-header-main">YouTube</div>
-            <div className="social-media-header-sub">おすすめ動画</div>
+      <Header color={mysite.headlineGreen} ja={"ソーシャルメディア"} en={"Social Media"} />
+      <div className={mysite.socialMediaContentContainer}>
+        <div className={`${mysite.socialMediaContent} ${mysite.youtube}`}>
+          <div className={mysite.socialMediaHeader}>
+            <div className={mysite.socialMediaHeaderMain}>YouTube</div>
+            <div className={mysite.socialMediaHeaderSub}>おすすめ動画</div>
           </div>
-          <div className="social-media-iframe">
-            <div className="youtube-iframe">
+          <div>
+            <div className={mysite.youtubeIframe}>
               <iframe width="100%" src="https://www.youtube.com/embed/mdYZVuJvwKg?si=keNIQPgkj67DzlKG" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
             </div>
           </div>
-          <div className="social-media-title">
+          <div className={mysite.socialMediaTitle}>
             <a href="https://www.youtube.com/watch?v=mdYZVuJvwKg">
               【着ぐるみ】ささめのGeoGuessr実況【日本版 #1】
             </a>
           </div>
-          <div className="social-media-footer">
-            <a href="https://www.youtube.com/@torme_kig" className="social-media-author" target="_blank">
-              <div className="social-media-icon-container youtube">
+          <div className={mysite.socialMediaFooter}>
+            <a href="https://www.youtube.com/@torme_kig" className={mysite.socialMediaAuthor} target="_blank">
+              <div className={`${mysite.socialMediaIconContainer} ${mysite.youtube}`}>
                 <img src="https://yt3.ggpht.com/8VvqQAHpmpU1lqoDpNqDC2TRZmHtqn8eO14WorAfrs9QPfIWUMHm3r2hCm0WU_2UX51Bq7QjKA=s48-c-k-c0x00ffffff-no-rj" />
               </div>
               <div>とるめ</div>
             </a>
-            <a href="https://www.youtube.com/@torme_kig" className="social-media-button youtube" target="_blank">
+            <a href="https://www.youtube.com/@torme_kig" className={`${mysite.socialMediaButton} ${mysite.youtube}`} target="_blank">
               アカウントへ
             </a>
           </div>
         </div>
       </div>
-      <div className="social-media-content-container">
-        <div className="social-media-content instagram">
-          <div className="social-media-header">
-            <div className="social-media-header-main">Instagram</div>
-            <div className="social-media-header-sub">ささめの日常アカウント</div>
+      <div className={mysite.socialMediaContentContainer}>
+        <div className={`${mysite.socialMediaContent} ${mysite.instagram}`}>
+          <div className={mysite.socialMediaHeader}>
+            <div className={mysite.socialMediaHeaderMain}>Instagram</div>
+            <div className={mysite.socialMediaHeaderSub}>ささめの日常アカウント</div>
           </div>
-          <div className="social-media-iframe">
-            <div className="instagram-iframe">
+          <div>
+            <div className={mysite.instagramIframe}>
               <img src=''/>
             </div>
           </div>
-          <div className="social-media-footer instagram">
-            <a href="https://www.instagram.com/sasame0123/" className="social-media-author" target="_blank">
-              <div className="social-media-icon-container instagram">
+          <div className={`${mysite.socialMediaFooter} ${mysite.instagram}`}>
+            <a href="https://www.instagram.com/sasame0123/" className={mysite.socialMediaAuthor} target="_blank">
+              <div className={`${mysite.socialMediaIconContainer} ${mysite.instagram}`}>
                 <img src="./img/instagram-icon.jpg" />
               </div>
               <div>sasame0123</div>
             </a>
-            <a href="https://www.instagram.com/sasame0123/" className="social-media-button instagram" target="_blank">
+            <a href="https://www.instagram.com/sasame0123/" className={`${mysite.socialMediaButton} ${mysite.instagram}`} target="_blank">
               アカウントへ
             </a>
           </div>
         </div>
       </div>
-      <div className="social-media-content-container">
-        <div className="social-media-content X">
-          <div className="social-media-header">
-            <div className="social-media-header-main">X<small> (Twitter)</small></div>
+      <div className={mysite.socialMediaContentContainer}>
+        <div className={`${mysite.socialMediaContent} ${mysite.X}`}>
+          <div className={mysite.socialMediaHeader}>
+            <div className={mysite.socialMediaHeaderMain}>X<small> (Twitter)</small></div>
           </div>
-          <div className="social-media-main-column">
-            <div className="social-media-main">
-              <div className="social-media-main-header">着ぐるみさんの写真アカウント</div>
-              <div className="social-media-iframe">
-                <div className="X-iframe">
+          <div className={mysite.socialMediaMainColumn}>
+            <div className={mysite.socialMediaMain}>
+              <div className={mysite.socialMediaMainHeader}>着ぐるみさんの写真アカウント</div>
+              <div>
+                <div>
                   <Timeline
                     dataSource={{
                       sourceType: 'profile',
@@ -320,23 +325,23 @@ function SocialMedia() {
                     }}
                   />
                 </div>
-                <div className="social-media-footer X">
-                  <a href="https://twitter.com/torme_kig" className="social-media-author" target="_blank">
-                    <div className="social-media-icon-container X">
+                <div className={`${mysite.socialMediaFooter} ${mysite.X}`}>
+                  <a href="https://twitter.com/torme_kig" className={mysite.socialMediaAuthor} target="_blank">
+                    <div className={`${mysite.socialMediaIconContainer} ${mysite.X}`}>
                       <img src="https://pbs.twimg.com/profile_images/1773969111179202560/FVE4EqPI_400x400.jpg" />
                     </div>
                     <div>@torme_kig</div>
                   </a>
-                  <a href="https://twitter.com/torme_kig" className="social-media-button X" target="_blank">
+                  <a href="https://twitter.com/torme_kig" className={`${mysite.socialMediaButton} ${mysite.X}`} target="_blank">
                     アカウントへ
                   </a>
                 </div>
               </div>
             </div>
-            <div className="social-media-main">
-              <div className="social-media-main-header">とるめの雑談アカウント</div>
-              <div className="social-media-iframe">
-                <div className="X-iframe">
+            <div className={mysite.socialMediaMain}>
+              <div className={mysite.socialMediaMainHeader}>とるめの雑談アカウント</div>
+              <div>
+                <div>
                   <Timeline
                     dataSource={{
                       sourceType: 'profile',
@@ -346,14 +351,14 @@ function SocialMedia() {
                       height: '1500'
                     }}
                   />
-                  <div className="social-media-footer X">
-                    <a href="https://twitter.com/torme_etc" className="social-media-author">
-                      <div className="social-media-icon-container X">
+                  <div className={`${mysite.socialMediaFooter} ${mysite.X}`}>
+                    <a href="https://twitter.com/torme_etc" className={mysite.socialMediaAuthor} target="_blank">
+                    <div className={`${mysite.socialMediaIconContainer} ${mysite.X}`}>
                         <img src="https://pbs.twimg.com/profile_images/1550079970617487362/cNeFJAF5_400x400.jpg" />
                       </div>
                       <div>@torme_etc</div>
                     </a>
-                    <a href="https://twitter.com/torme_etc" className="social-media-button X" target="_blank">
+                    <a href="https://twitter.com/torme_etc" className={`${mysite.socialMediaButton} ${mysite.X}`} target="_blank">
                       アカウントへ
                     </a>
                   </div>
@@ -370,7 +375,8 @@ function SocialMedia() {
 const Top = () => {
 
   return (
-    <div>
+    <div className={mysite.mysiteBody}>
+    <ScrollTop />
     <main>
       <div id="loading">
         <div id="loading-logo">
@@ -383,15 +389,15 @@ const Top = () => {
       <Characters/>
       <Gallery/>
 
-      <div className="dot-content" style={{backgroundImage: `url("./img/221029.jpg")`}}>
-        <div className="dot-content-inner">
-          <motion.div className="dot-content-content"
+      <div className={mysite.dotContent} style={{backgroundImage: `url("./img/221029.jpg")`}}>
+        <div className={mysite.dotContentInner}>
+          <motion.div className={mysite.dotContentContent}
             initial={{ transform: "scale(1.2)", opacity: 0 }}
             whileInView={{ transform: "scale(1.0)", opacity: 1 }}
             transition={{ ease: "easeInOut", duration: 1.0 }}
           >
             <div>ささめのことをもっと知りたい方はこちら</div>
-            <div className="dot-content-content-a-outer">
+            <div className={mysite.dotContentContentAOuter}>
               <Link to={`/sasame`}>ささめの部屋</Link>
             </div>
           </motion.div>
@@ -400,8 +406,8 @@ const Top = () => {
 
       <SocialMedia/>
 
-      <footer id="footer-container">
-        <div className="footer">
+      <footer id={mysite.footerContainer}>
+        <div className={mysite.footer}>
           <small>copyright 2023 torme_kig All rights reserved.</small>
         </div>
       </footer>

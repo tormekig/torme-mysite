@@ -1,49 +1,22 @@
-body {
-    font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic, "Noto Sans Japanese", Meiryo, メイリオ, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #000;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: calc(33em / 1000);
-}
-
-@media screen and (max-width: 864px) {
-    body {
-        font-size: 14px;
-    }
-}
-
-* {
-    box-sizing: border-box;
-    word-wrap: break-word;
-    line-height: 1.5em;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
 a {
     text-decoration: none;
 }
 
-.personality-content {
+.personalityContent {
     padding: 2rem;
 }
 
-.personality-intro {
+.personalityIntro {
     margin: 12rem auto 20rem auto;
+
+    p {
+        text-align: center;
+        margin: 0 auto 3rem 0;
+        font-family: 'Shippori Mincho', serif;
+    }
 }
 
-.personality-intro p {
-    text-align: center;
-    margin: 0 auto 3rem 0;
-    font-family: 'Shippori Mincho', serif;
-}
-
-#sasame-table-head {
+#sasameTableHead {
     width: fit-content;
     color: #7E8FD7;
     text-align: center;
@@ -56,23 +29,23 @@ a {
     background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,#e9f4ff 3px, #e9f4ff 7px); */
 }
 
-.sasame-table-bottom {
+.sasameTableBottom {
     font-size: 0.8rem;
     margin: 4rem 0 12rem 0;
     text-align: right;
 }
 
 @media screen and (max-width: 864px) {
-    .personality-content {
+    .personalityContent {
         padding: 1rem;
     }
 
-    .personality-intro {
+    .personalityIntro {
         margin: 12rem auto 20rem auto;
     }
 }
 
-.howtotakepictures-content {
+.howtotakepicturesContent {
     padding: 4rem 2rem;
     max-width: 864px;
     width: 100%;
@@ -80,38 +53,42 @@ a {
     /* text-align: center; */
 }
 
-.howtotakepictures-intro p {
-    text-align: center;
-    margin: 0 auto 1rem 0;
+.howtotakepicturesIntro {
+    p {
+        text-align: center;
+        margin: 0 auto 1rem 0;
+    }
 }
 
-.three-tips-header {
+.threeTipsHeader {
     font-weight: bold;
     text-align: center;
     margin-top: 3rem;
     font-size: 1.2rem;
 }
 
-.three-tips {
+.threeTips {
     border: 2px dotted #FEC488;
     border-radius: 1rem;
     padding: 1rem 2rem;
     margin: 1rem 2rem;
     font-weight: bold;
+
+    span {
+        color: #71BBD0;
+    }
+
+    li {
+        margin: 1rem 0 1rem 1rem;
+        list-style: decimal;
+    }
 }
 
-.three-tips span {
-    color: #71BBD0;
-}
-
-.three-tips li {
-    margin: 1rem 0 1rem 1rem;
-    list-style: decimal;
-}
-
-.howtotakepictures-intro-2 p {
-    text-align: center;
-    margin: 3rem 0;
+.howtotakepicturesIntro2 {
+    p {
+        text-align: center;
+        margin: 3rem 0;
+    }
 }
 
 .howtotakepictures-content h3 {
@@ -132,26 +109,29 @@ a {
     color: #BAC4EE;
 }
 
-.point-tips p {
-    margin: 1rem;
+.pointTips {
+    p {
+        margin: 1rem;
+    }
+    span {
+        color: #FF8100;
+        font-weight: bold;
+    }
 }
 
-.point-tips p span,
-.point-situation p span {
-    color: #FF8100;
-    font-weight: bold;
+.pointSituation {
+    span {
+        color: #FF8100;
+        font-weight: bold;
+    }
 }
 
-.point-img-container {
+.pointImgContainer {
     width: 100%;
     margin: 1rem;
 }
 
-.point-img-header {
-    text-align: center;
-}
-
-.point-img-content {
+.pointImgContent {
     width: auto;
     max-width: 100%;
     padding: 1rem;
@@ -162,7 +142,7 @@ a {
     gap: 2rem;
 }
 
-.point-img-inner {
+.pointImgInner {
     border: 2px solid #FFDB87;
     padding: 1.5rem;
     border-radius: 4px;
@@ -171,10 +151,15 @@ a {
     align-items: center;
     gap: 1rem;
     position: relative;
+
+    img {
+        display: block;
+        width: 192px;
+    }
 }
 
-.point-img-bad,
-.point-img-good {
+.pointImgBad,
+.pointImgGood {
     position: absolute;
     top: 0;
     left: 0;
@@ -184,7 +169,8 @@ a {
     transform: translate(-50%,-50%)
 }
 
-.point-img-bad::before, .point-img-bad::after {
+.pointImgBad::before,
+.pointImgBad::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -194,15 +180,15 @@ a {
     background: #3C51A5;
 }
 
-.point-img-bad::before {
+.pointImgBad::before {
     transform: translate(-2px, -50%) rotate(45deg);
 }
 
-.point-img-bad::after {
+.pointImgBad::after {
     transform: translate(-2px, -50%) rotate(-45deg);
 }
 
-.point-img-good::before {
+.pointImgGood::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -215,12 +201,7 @@ a {
     transform: translate(-50%, -50%)
 }
 
-.point-img-inner img {
-    display: block;
-    width: 192px;
-}
-
-.horizontal-img {
+.horizontalImg {
     width: auto !important;
     height: 192px;
 }
@@ -238,114 +219,116 @@ a {
     margin: 1rem;
 }
 
-.situation-img-container {
+.situationImgContainer {
     margin-bottom: 3rem;
 }
 
 @media screen and (max-width: 864px) {
-    .howtotakepictures-content {
+    .howtotakepicturesContent {
         padding: 3rem 1rem;
     }
 
-    .three-tips {
+    .threeTips {
         margin: 1rem 0;
     }
 
-    .point-img-container {
+    .pointImgContainer {
         width: auto;
         height: auto;
     }
 
-    .point-img-content {
+    .pointImgContent {
         flex-direction: column;
     }
 
-    .point-img-inner {
+    .pointImgInner {
         flex-direction: column;
+
+        img {
+            display: block;
+            width: 100% !important;
+            max-width: 256px;
+        }
     }
 
-    .point-img-inner img {
-        display: block;
-        width: 100% !important;
-        max-width: 256px;
-    }
-
-    .horizontal-img {
+    .horizontalImg {
         height: auto !important;
     }
 }
 
-.trip-content {
+.tripContent {
     max-width: 100%;
     color: #fff;
     font-family: 'Shippori Mincho', serif;
 }
 
-.trip-content-inner {
+.tripContentInner {
     padding: 0 4rem;
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.trip-content:nth-child(2n+1) .trip-content-inner {
-    flex-direction: row-reverse;
+.tripContent:nth-child(2n+1) {
+    .tripContentInner {
+        flex-direction: row-reverse;
+    }
 }
 
-.kozushima-2307 {
+.kozushima2307 {
     background-color: #7E8FD7;
 }
 
-.inage-2306 {
+.inage2306 {
     background-color: #71BBD0;
 }
 
-.trip-header-bottom {
+.tripHeaderBottom {
     padding: 1rem;
     letter-spacing: .3rem;
     white-space: nowrap;
 }
 
-.trip-header-top {
+.tripHeaderTop {
     -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
     text-orientation: upright;
 }
 
-.trip-header-text-main {
+.tripHeaderTextMain {
     font-size: 2.5rem;
     letter-spacing: 1rem;
     padding: 4rem 0 4rem 0.5rem;
     border-left: 1px solid #fff;
 }
 
-.trip-header-text-sub {
+.tripHeaderTextSub {
     font-size: 1rem;
     letter-spacing: .5rem;
     padding: 4.5rem 0.5rem;
     color: #fff;
 }
 
-.trip-main {
+.tripMain {
     padding: 4rem 3rem;
     min-width: 0;
 }
 
-.trip-main-img-container {
+.tripMainImgContainer {
     width: 100%;
 }
 
 @media screen and (max-width: 864px) {
-    .trip-content-inner {
+    .tripContentInner {
         display: block;
         padding: 0 1rem;
     }
 
-    .trip-header {
+    .tripHeader {
         margin: 0 auto;
     }
 
-    .trip-main {
+    .tripMain {
         padding: 1rem;
     }
 }
@@ -355,36 +338,36 @@ a {
     max-width: 1024px;
     -webkit-mask-image: linear-gradient(90deg, rgb(255, 255, 255, 0) 0%, rgba(255, 255, 255) 5%, rgba(255, 255, 255) 95%, rgba(255, 255, 255, 0) 100%);
     mask-image: linear-gradient(90deg, rgb(255, 255, 255, 0) 0%, rgba(255, 255, 255) 5%, rgba(255, 255, 255) 95%, rgba(255, 255, 255, 0) 100%);
+    
+    img {
+        width: 100%;
+        height: auto;
+    }
+    
+    .slick-slide {
+        margin: 0 10px;
+    }
 }
 
-.slider img {
-    width: 100%;
-    height: auto;
-}
-
-.slider .slick-slide {
-    margin: 0 10px;
-}
-
-.hover-img-container {
+.hoverImgContainer {
     overflow: hidden;
-}
 
-.hover-img-container a {
-    display: block;
-    transition: all .3s;
-    overflow: hidden;
-}
+    a {
+        display: block;
+        transition: all .3s;
+        overflow: hidden;
+    }
+    img {
+        transform: scale(1);
+        transition: all .3s;
+    }
+} 
 
-.hover-img-container:hover a {
-    transform: scale(0.96);
-}
-
-.hover-img-container:hover img {
-    transform: scale(1.1);
-}
-
-.hover-img-container img {
-    transform: scale(1);
-    transition: all .3s;
+.hoverImgContainer:hover {
+    a {
+        transform: scale(0.96);
+    }
+    img {
+        transform: scale(1.1);
+    }
 }
