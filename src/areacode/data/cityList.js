@@ -29,7 +29,13 @@ export function getPrefCountyCityNameKana(city) {
 }
 
 export function getPrefCountyCityNameKanaWithSlash(city) {
-  return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameKana(city)}`;
+  if (!city.county.kana) {
+    return `${getPrefNameKana(city)} / ${getCityNameKana(city)}`;
+  } else if (!getCityNameKana(city)) {
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana}`;
+  } else {
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameKana(city)}`;
+  }
 }
 
 export const cityList = [
