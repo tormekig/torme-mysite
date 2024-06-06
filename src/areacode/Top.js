@@ -256,13 +256,17 @@ const Top = () => {
             <ScrollTop />
             <Header />
             <div className={areacode.mainContent}>
-                <SearchPushNumber />
-                <AllCode3digit />
-                <SearchCity />
-                <PrefList />
-                <Appendix />
-                <div className={areacode.copyrightContainer}>
-                    <p>Copyright 2023 torme_kig All rights reserved.</p>
+				<div className={areacode.MAAreaCodeContainer}>
+                    <div className={areacode.searchBox}>
+                        <SearchPushNumber />
+                    </div>
+                    <AllCode3digit />
+                    <SearchCity />
+                    <PrefList />
+                    <Appendix />
+                    <div className={areacode.copyrightContainer}>
+                        <p>Copyright 2023 torme_kig All rights reserved.</p>
+                    </div>
                 </div>
             </div>
         </div>

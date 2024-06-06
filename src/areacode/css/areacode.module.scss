@@ -116,8 +116,21 @@ code {
 	background-color: #fff;
 }
 
-.searchPushNumberContainer {
-	// width: 100%;
+.mainContent {
+	margin: 0;
+}
+
+.MAAreaCodeContainer {
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.searchBox {
+	display: flex;
+	align-items: stretch;
+    justify-content: center;
 }
 
 .searchPushNumberContent {

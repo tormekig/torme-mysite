@@ -33,3 +33,21 @@
         // filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
     }
 }
+
+.modalCloseButton {
+	font-family: "Noto Sans JP", sans-serif;
+	white-space: nowrap;
+    padding: 2rem;
+	color: #fff;
+    text-align: center;
+
+	span {
+	    background-color: #CA6074;
+		margin: 0;
+		padding: 8px;
+        border-radius: 4px;
+		text-decoration: none;
+		color: #fff;
+	    cursor: pointer;
+	}
+}

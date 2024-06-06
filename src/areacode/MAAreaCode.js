@@ -375,9 +375,9 @@ function SearchModal({closeFunc}) {
 					<SearchCity closeFunc={closeFunc} />
 				</TabPanel>
 			</Tabs>
-			<button	onClick={() => {closeFunc();}}>
-				閉じる
-			</button>
+			<div className="modalCloseButton" onClick={() => {closeFunc();}}>
+				<span>閉じる</span>
+			</div>
 		</div>
 	)
 }
