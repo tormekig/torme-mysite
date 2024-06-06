@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 
+import areacode from "./css/areacode.module.scss";
+
 import cityList from "./data/cityList"
 import { getPrefCityName, getPrefCountyCityName, getPrefCityNameKana, getPrefCountyCityNameKana } from "./data/cityList"
 
-export default function SearchCity() {
+export default function SearchCity({ closeFunc }) {
 
 	const [showCities, setShowCities] = useState([])
-	const [inputValue, setInputValue] = useState()
+	const [inputValue, setInputValue] = useState("")
 
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value)
@@ -35,19 +37,19 @@ export default function SearchCity() {
 	}
 
 	return (
-		<div className='search-city-container'>
-			<h4 className='search-city-header'>市町村検索</h4>
-			<div className='search-city-content'>
-				<div className='search-city-text-outer'>
-					<div className='search-city-text-container'>
+		<div className={areacode.searchCityContainer}>
+			<h4 className={areacode.searchCityHeader}>市町村検索</h4>
+			<div className={areacode.searchCityContent}>
+				<div className={areacode.searchCityTextOuter}>
+					<div className={areacode.searchCityTextContainer}>
 						<input type="text" value={inputValue} onChange={handleInputChange} placeholder="Search" />
 					</div>
 				</div>
-				<ul className='search-city-list'>
+				<ul className={areacode.searchCityList}>
 					{showCities.map((city, i) => {
 						return (
 							<li key={i}>
-								<Link to={`/areacode/city/${getPrefCountyCityName(city)}`}>
+								<Link to={`/areacode/city/${getPrefCountyCityName(city)}`} onClick={closeFunc}>
 									<span>{getPrefCountyCityName(city)}</span>
 								</Link>
 							</li>

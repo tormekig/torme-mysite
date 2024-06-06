@@ -1,0 +1,35 @@
+.ReactModal__Overlay {
+    opacity: 0;
+    z-index: 100;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+    opacity: 0;
+}
+
+.searchDetailBox {
+	font-family: "Noto Sans JP", sans-serif;
+
+	.react-tabs__tab-list {
+		display: flex;
+	}
+    .react-tabs__tab {
+        padding: 1rem 2rem;
+        cursor: pointer;
+    }
+    .react-tabs__tab--selected {
+        color: #C9726B;
+        font-weight: 700;
+        border-bottom: 2px solid #C9726B;
+    }
+    .react-tabs__tab-panel {
+        width: 100%;
+        background-color: #f3f4f7;
+        // box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+        // filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.2));
+    }
+}

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import MAList from "./css/MAList.module.scss"
 
 export function AreaCode({ areaCode }) {
 	return (
-		<div className="areacode">
+		<div className={MAList.areacode}>
 			<p>{areaCode}</p>
 		</div>
 	)
@@ -10,7 +11,7 @@ export function AreaCode({ areaCode }) {
 
 export function MA({ ma }) {
 	return (
-		<div className="ma">
+		<div className={MAList.ma}>
 			<p>{ma}</p>
 		</div>
 	)
@@ -18,7 +19,7 @@ export function MA({ ma }) {
 
 export function Pref({ pref }) {
 	return (
-		<div className="pref">
+		<div className={MAList.pref}>
 			<p>{pref}</p>
 		</div>
 	)
@@ -37,12 +38,13 @@ export function NumberBands({ areaCode, numberBands }) {
 		const bandStart = insertStr(numberBand.bandStart, areaCode.length, "-")
 		const bandEnd = insertStr(numberBand.bandEnd, areaCode.length, "-")
 
-		let txt = bandStart
+		let txt = `${bandStart}`
 		if (bandStart !== bandEnd) {
-			txt += " ～ " + bandEnd;
+			txt = `${txt} ～ ${bandEnd}`;
 		}
 		if (numberBand.eliminateCode !== '0') {
-			txt += "（" + numberBand.eliminateCode + "を除く）"
+			let elim = "（" + numberBand.eliminateCode + "を除く）"
+			txt = <div>{txt}<br /><small>{elim}</small></div>
 		}
 		lis.push(
 			<li key={i}>
@@ -53,7 +55,7 @@ export function NumberBands({ areaCode, numberBands }) {
 
 	return (
 		<div>
-			<ul className="numberBands">{lis}</ul>
+			<ul className={MAList.numberBands}>{lis}</ul>
 		</div>
 	)
 
@@ -130,7 +132,7 @@ export function classifyCities(cities) {
 
 }
 
-export function Cities({ classifiedCities }) {
+export function Cities({ classifiedCities, areaDisplayFull, colorStyle }) {
 
 	const displayCities = (pref, county) => {
 
@@ -142,10 +144,20 @@ export function Cities({ classifiedCities }) {
 
 			const cityFullTxt = city.pref + city.county.name + city.county.type + city.name + city.type
 
-			let zone = city.zone.name ? <small> ({city.zone.name})</small> : null;
+			let zone = null;
+			if (city.zone.name) {
+				zone = <small> ({city.zone.name})</small>;
+				if (!areaDisplayFull) {
+					zone = <small>※</small>
+				}
+			}
 
 			cities.push(
-				<Link to={`/areacode/city/${cityFullTxt}`} className="city" key={i}>
+				<Link to={`/areacode/city/${cityFullTxt}`}
+					className={MAList.city}
+					style={colorStyle.background}
+					key={i}
+				>
 					{city.name}{city.type}
 					{zone}
 				</Link>
@@ -153,7 +165,7 @@ export function Cities({ classifiedCities }) {
 
 		})
 
-		return <ul>{cities}</ul>
+		return <ul className={MAList.cityListUl}>{cities}</ul>
 
 	}
 
@@ -165,14 +177,14 @@ export function Cities({ classifiedCities }) {
 			let li = null;
 			if (county) {
 				li = (
-					<li className="cityListwithBorder" key={i}>
-						<div>{county}</div>
+					<li className={MAList.cityListwithBorder} key={i}>
+						<div className={MAList.countyName}>{county}</div>
 						{ displayCities(pref, county) }
 					</li>
 				)
 			} else {
 				li = (
-					<li className="cityList" key={i}>
+					<li className={MAList.cityList} key={i}>
 						<div>{county}</div>
 						{ displayCities(pref, county) }
 					</li>
@@ -181,7 +193,7 @@ export function Cities({ classifiedCities }) {
 			counties.push(li)
 		})
 
-		return <ul className="countyList">{counties}</ul>
+		return <ul className={MAList.countyList}>{counties}</ul>
 
 	}
 
@@ -191,9 +203,9 @@ export function Cities({ classifiedCities }) {
 
 		Object.keys(classifiedCities).forEach(function(pref, i) {
 			prefs.push(
-				<li className="prefList" key={i}>
-					<div className="prefofCities">
-						<Link to={`/areacode/pref/${pref}`}>{pref}</Link>
+				<li className={MAList.prefList} key={i}>
+					<div className={MAList.prefofCities}>
+						<Link to={`/areacode/pref/${pref}`} style={colorStyle.text}>{pref}</Link>
 					</div>
 					{ displayCounties(pref) }
 				</li>
@@ -222,7 +234,7 @@ export function CitiesSimple({ classifiedCities }) {
 			let zone = city.zone.name ? <small> (一部)</small> : null;
 
 			cities.push(
-				<span className="city" key={i}>
+				<span className={MAList.city} key={i}>
 					{city.name}{city.type}
 					{zone}
 					{(classifiedCities[pref][county].length - 1 !== i) && (<>、</>)}
@@ -243,14 +255,14 @@ export function CitiesSimple({ classifiedCities }) {
 			let li = null;
 			if (county) {
 				li = (
-					<li className="cityListwithBorder" key={i}>
+					<li className={MAList.cityListwithBorder} key={i}>
 						<div>{county}</div>
 						（{ displayCities(pref, county) }）
 					</li>
 				)
 			} else {
 				li = (
-					<li className="cityList" key={i}>
+					<li className={MAList.cityList} key={i}>
 						{ displayCities(pref, county) }
 					</li>
 				)
@@ -258,7 +270,7 @@ export function CitiesSimple({ classifiedCities }) {
 			counties.push(li)
 		})
 
-		return <ul className="countyList">{counties}</ul>
+		return <ul className={MAList.countyList}>{counties}</ul>
 
 	}
 
@@ -268,8 +280,8 @@ export function CitiesSimple({ classifiedCities }) {
 
 		Object.keys(classifiedCities).forEach(function(pref, i) {
 			prefs.push(
-				<li className="prefListSimple" key={i}>
-					<div className="prefofCities">
+				<li className={MAList.prefListSimple} key={i}>
+					<div className={MAList.prefofCities}>
 						<p>{pref}</p>
 					</div>
 					{ displayCounties(pref) }

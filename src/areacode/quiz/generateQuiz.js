@@ -1,4 +1,4 @@
-import { searchMAAreaCodeInfos } from '../MAAreaCode';
+import { searchMAAreaCodeInfos } from '../searchMAAreaCodeInfos';
 
 import '../css/quiz.css';
 import { shuffleArray } from '../../utils/tools';

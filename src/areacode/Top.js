@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import SearchCity from "./searchCity.js"
+
+import areacode from "./css/areacode.module.scss";
 
 import prefList from "./data/prefList.js";
 import appendixList from "./data/appendixList.js";
@@ -10,28 +12,55 @@ import codeColors from "./data/codeColor.js";
 
 export function SearchPushNumber() {
 
-	const [inputValue, setInputValue] = useState()
+    const navigate = useNavigate();
+
+	const [inputValue, setInputValue] = useState([""])
+    const [isError, setIsError] = useState(false);
+    const pattern = new RegExp(/^0\d{1,4}$/);
 
 	const handleInputChange = (e) => {
-		setInputValue(e.target.value)
+		setInputValue(e.target.value);
+        if (!pattern.test(e.target.value))
+            setIsError(true);
+        else setIsError(false);
 	}
 
+    const startSearchMatch = () => {
+        if (isError) return false;
+        navigate(`/areacode/code/${inputValue}`)
+    }
+
+    const startSearchPrefix = () => {
+        if (isError) return false;
+        navigate(`/areacode/code/prefix/${inputValue}`)
+    }
+
     return (
-        <div className='search-push-number-container'>
-            <h4 className='search-push-number-header'>市外局番検索</h4>
-			<div className='search-push-number-content'>
-				<div className='search-push-number-text-outer'>
-					<div className='search-push-number-text-container'>
-						<input type="text" value={inputValue} onChange={handleInputChange} placeholder="045" />
-					</div>
-				</div>
-                <ul className="push-number-exec-container">
-                    <Link to={`/areacode/code/${inputValue}`}>
-                        <span>完全一致検索</span>
-                    </Link>
-                    <Link to={`/areacode/code/prefix/${inputValue}`}>
-                        <span>前方一致検索</span>
-                    </Link>
+        <div className={areacode.searchPushNumberContainer}>
+            <h4 className={areacode.searchPushNumberHeader}>
+                市外局番検索
+                {isError ? <small>市外局番の形式を満たしていません</small> : <></>}
+            </h4>
+			<div className={areacode.searchPushNumberContent}>
+                <ul className={areacode.searchPushNumberExecContainer}>
+                    <li className={areacode.searchPushNumberTextContainer}>
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder="045"
+                        />
+                    </li>
+                    <li className={areacode.searchPushNumberMatchButton}>
+                        <div onClick={startSearchMatch}>
+                            <span>完全一致検索</span>
+                        </div>
+                    </li>
+                    <li className={areacode.searchPushNumberPrefixButton}>
+                        <div onClick={startSearchPrefix}>
+                            <span>前方一致検索</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -45,35 +74,78 @@ export function Code2digit() {
 
     for (let i = 1; i <= 9; i++) {
 
-        let first = (codeColors[i-1][0].color !== "none") ? codeColors[i-1][0].color : codeColors[i-1][1].color
+        const colorStyle = getColorStyle(i * 10 + 5);
+
         codes.push(
             <li key={i}>
-                <Link to={`/areacode/code/prefix/0${i}`} className={`code-list-${first}`}>0{i}</Link>
+                <Link
+                    to={`/areacode/code/prefix/0${i}`}
+                    // className={areacode[`code-list-${first}`]}
+                    style={colorStyle.background}
+                >
+                    0{i}
+                </Link>
             </li>
         )
 
     }
 
     return (
-        <div className="code-list-container">
-            <ul className="code-list">
+        <div className={areacode.codeListContainer}>
+            <ul className={areacode.codeList}>
                 {codes}
             </ul>
         </div>
     )
 }
 
+function calcColor(digit2) {
+    const startHue = 360 / 88 * 60, inc = -1;
+    const hue = startHue / 88 * inc * digit2 + startHue;
+    return `hsl(${hue}, 48%, 55%)`
+}
+
+function getColorStyle(digit2) {
+
+	const color = calcColor(digit2);
+
+	return {
+		background: {
+			backgroundColor: color,
+			color: "#fff",
+		},
+		text: {
+			color: color
+		}
+	}
+}
+
+export function getColorStyleByAreaCode(areaCode) {
+	const digit2 = 
+		areaCode.length === 2 ?
+		areaCode[1] * 10:
+		areaCode[1] * 10 + +areaCode[2];
+
+    return getColorStyle(digit2);
+}
+
 export function Code3digit(code2) {
 
     const codes = [];
 
+    if (!codeColors[code2-1]) return (<></>);
+
     codeColors[code2-1].forEach(function(elem, i) {
+
+        const digit2 = (code2) * 10 + i;
+        const colorStyle = getColorStyle(digit2);
 
         codes.push(
             <li key={i}>
                 <Link
                     to={`/areacode/code/prefix/${elem.code}`}
-                    className={`code-list-${elem.color}`}
+                    // className={areacode[`code-list-${i}`]}
+                    style={colorStyle.background}
                 >
                     {elem.code}
                 </Link>
@@ -83,22 +155,21 @@ export function Code3digit(code2) {
     })
 
     return (
-        <div className="code-list-container">
-            <ul className="code-list">
+        <div className={areacode.codeListContainer}>
+            <ul className={areacode.codeList}>
                 {codes}
             </ul>
         </div>
     )
 }
 
-function AllCode3digit() {
+export function AllCode3digit({ closeFunc }) {
 
     const codeLists = [];
 
     for (let i = 1; i <= 9; i++) {
-
         codeLists.push(
-            <li key={i}>  
+            <li key={i} onClick={closeFunc}>  
                 {Code3digit(i)}
             </li>
         )
@@ -106,13 +177,13 @@ function AllCode3digit() {
     }
 
     return (
-        <ul className="all-code-list-container"> 
+        <ul className={areacode.allCodeListContainer}> 
             {codeLists}
         </ul>
     )
 }
 
-function Pref() {
+export function PrefList({ closeFunc }) {
 
     const prefs = [];
 
@@ -120,7 +191,7 @@ function Pref() {
 
         prefs.push(
             <li key={i}>
-                <Link to={`/areacode/pref/${pref.name}`}>
+                <Link to={`/areacode/pref/${pref.name}`} onClick={closeFunc}>
                     <span>{pref.name}</span>
                 </Link>
             </li>
@@ -129,8 +200,8 @@ function Pref() {
     })
 
     return (
-        <div className="pref-all-list-container">
-            <ul className="pref-all-list">
+        <div className={areacode.prefAllListContainer}>
+            <ul className={areacode.prefAllList}>
                 {prefs}
             </ul>
         </div>
@@ -153,7 +224,7 @@ function Appendix() {
     })
 
     return (
-        <div className="appendix">
+        <div className={areacode.appendix}>
             <h3>参考資料</h3>
             <ul>{appendixes}</ul>
         </div>
@@ -163,14 +234,14 @@ function Appendix() {
 
 export function Header() {
     return (
-        <div className="header-container">
-            <div className="header-content">
-                <div className="header-left">
-                    <Link to={`/areacode`} className="link-title">市外局番手帳</Link>
-                    <Link to={`/areacode/quiz`} className="link-quiz">クイズ</Link>
-                    <Link to={`/areacode/random`} className="link-random">ランダム</Link>
+        <div className={areacode.headerContainer}>
+            <div className={areacode.headerContent}>
+                <div className={areacode.headerLeft}>
+                    <Link to={`/areacode`} className={areacode.linkTitle}>市外局番手帳</Link>
+                    <Link to={`/areacode/quiz`} className={areacode.linkQuiz}>クイズ</Link>
+                    <Link to={`/areacode/random`} className={areacode.linkRandom}>ランダム</Link>
                 </div>
-                <div className="header-right">
+                <div className={areacode.headerRight}>
                     <Code2digit />
                 </div>
             </div>
@@ -181,16 +252,16 @@ export function Header() {
 const Top = () => {
 
     return (
-        <div>
+        <div className={areacode.areacodeBody}>
             <ScrollTop />
             <Header />
-            <div className="main-content">
+            <div className={areacode.mainContent}>
                 <SearchPushNumber />
                 <AllCode3digit />
                 <SearchCity />
-                <Pref />
+                <PrefList />
                 <Appendix />
-                <div className="copyright-container">
+                <div className={areacode.copyrightContainer}>
                     <p>Copyright 2023 torme_kig All rights reserved.</p>
                 </div>
             </div>

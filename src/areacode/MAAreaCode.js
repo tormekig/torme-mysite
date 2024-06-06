@@ -1,9 +1,8 @@
-import { cityList, getCityName, getPrefCountyCityName, getPrefCountyName } from "./data/cityList.js"
+import { cityList } from "./data/cityList.js"
 import numberBandList from "./data/numberBandList.js"
-import MACompList from "./data/MACompList.js"
 import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "./MAAreaCodeComponent.js"
 
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import {
     Accordion,
     AccordionItem,
@@ -12,12 +11,19 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import './css/index.scss';
+import MAList from "./css/MAList.module.scss";
 import './css/accordion.scss';
-import { ScrollTop, shuffleArray } from "../utils/tools.js"
-import { Code3digit, Header } from "./Top.js";
+import './css/searchModal.scss';
+import { ScrollTop } from "../utils/tools.js"
+import { Code3digit, Header, AllCode3digit, PrefList, SearchPushNumber, getColorStyleByAreaCode } from "./Top.js";
+import { AnimatePresence, motion } from "framer-motion";
+import { searchMAAreaCodeInfos } from "./searchMAAreaCodeInfos.jsx";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import SearchCity from "./searchCity.js";
+import Modal from "react-modal";
+import { useState } from "react";
 
-function convertCompCode(MAComp) {
+export function convertCompCode(MAComp) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
 }
 
@@ -63,195 +69,201 @@ export function generateMAAreaCodeInfo(MAComp) {
 
 }
 
-function MAAreaCodeInfo({ MAComp, isExpanded="item" }) {
+function MAAreaCodeInfoBlock({ MAComp, isExpanded="item" }) {
 
 	const info = generateMAAreaCodeInfo(MAComp)
+	const colorStyle = getColorStyleByAreaCode(info.areaCode)
 
 	return (
-		<div className={"info MAComp-" + info.color}>
+		<div className={`${MAList.infoBlock}`}>
+			<div className={`${MAList["MAComp-" + info.color]}`}>
 
-			<AreaCode areaCode={info.areaCode}/>
-			<NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
+				<AreaCode areaCode={info.areaCode} colorStyle={colorStyle} />
+				<NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
 
-			<Accordion allowZeroExpanded preExpanded={[isExpanded]}>
+				<Accordion allowZeroExpanded preExpanded={[isExpanded]}>
 
-				<AccordionItem uuid="item">
+					<AccordionItem uuid="item">
 
-					<AccordionItemHeading>
-						<AccordionItemButton>
-							詳細
-						</AccordionItemButton>
-					</AccordionItemHeading>
+						<AccordionItemHeading>
+							<AccordionItemButton>
+								詳細
+							</AccordionItemButton>
+						</AccordionItemHeading>
 
-					<AccordionItemPanel>
+						<AccordionItemPanel>
 
-						<div className="MApref">
-							<Pref pref={info.pref} />
-							<MA ma={info.ma} />
-						</div>
+							<div className={MAList.MApref}>
+								<Pref pref={info.pref} />
+								<MA ma={info.ma} />
+							</div>
 
-						<div className="citiesContainer">
-							<Cities classifiedCities={info.cities} />
-						</div>
+							<div className={MAList.citiesContainer}>
+								<Cities classifiedCities={info.cities} colorStyle={colorStyle} />
+							</div>
 
-						<div className="infoTableContainer">
-							<InfoTable
-								maDistinct={info.maDistinct}
-								compartmentCode={info.compartmentCode}
-								square={info.square}
-								numberDesignations={info.numberDesignations}
-							/>
-						</div>
+							<div className={MAList.infoTableContainer}>
+								<InfoTable
+									maDistinct={info.maDistinct}
+									compartmentCode={info.compartmentCode}
+									square={info.square}
+									numberDesignations={info.numberDesignations}
+								/>
+							</div>
 
-					</AccordionItemPanel>
-					
-				</AccordionItem>
+						</AccordionItemPanel>
+						
+					</AccordionItem>
 
-			</Accordion>
+				</Accordion>
+
+			</div>
 
 		</div>
 	)
 
 }
 
-function MAAreaCodeInfos ({type, query}) {
+function MAAreaCodeInfoTable({ MAComps, displayParam }) {
+	
+	function MAAreaCodeInfoRow({ MAComp }) {
+	
+		const info = generateMAAreaCodeInfo(MAComp);
+		const colorStyle = getColorStyleByAreaCode(info.areaCode)
+	
+		return (
+			<motion.tr
+				className={`${MAList.infoRow} ${MAList["MAComp-" + info.color]}`}
+			>
+	
+				{displayParam.includes("市外局番") && 
+				<td style={colorStyle.background}>
+					<AreaCode areaCode={info.areaCode}/>
+				</td>
+				}
+	
+				{displayParam.includes("番号領域") && 
+				<td>
+					<NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
+				</td>
+				}
+	
+				{displayParam.includes("都道府県") && 
+				<td>
+					<Pref pref={info.pref} className={MAList.pref} />
+				</td>
+				}
+	
+				{displayParam.includes("MA名") && 
+				<td>
+					<MA ma={info.ma} className={MAList.MA} />
+				</td>
+				}
+	
+				{displayParam.includes("市区町村") && 
+				<td className={MAList.citiesContainerTd}>
+					<Cities
+						classifiedCities={info.cities}
+						areaDisplayFull={displayParam.includes("一部地域詳細表示")}
+						colorStyle={colorStyle}
+					/>
+				</td>
+				}
+	
+				{displayParam.includes("MA独立番号") && 
+				<td>
+					<div className={MAList.additionalInfo}>
+						<p>{info.maDistinct}</p>
+					</div>
+				</td>
+				}
+	
+				{displayParam.includes("番号区画コード") && 
+				<td>
+					<div className={MAList.additionalInfo}>
+						<p>{info.compartmentCode}</p>
+					</div>
+				</td>
+				}
+
+				{displayParam.includes("方形区画") && 
+				<td>
+					<div className={MAList.additionalInfo}>
+						<p>{info.square}</p>
+					</div>
+				</td>
+				}
+	
+			</motion.tr>
+		)
+	
+	}
+	
+	return (
+		<table className={MAList.infoTable}>
+			<thead>
+				<tr>
+					{displayParam.includes("市外局番") && (<th>市外局番</th>)}
+					{displayParam.includes("番号領域") && (<th>番号領域</th>)}
+					{displayParam.includes("都道府県") && (<th>都道府県</th>)}
+					{displayParam.includes("MA名") && (<th>MA名</th>)}
+					{displayParam.includes("市区町村") && (<th>市区町村</th>)}
+					{displayParam.includes("MA独立番号") && (<th>MA<br/>独立番号</th>)}
+					{displayParam.includes("番号区画コード") && (<th>番号区画<br/>コード</th>)}
+					{displayParam.includes("方形区画") && (<th>方形区画</th>)}
+				</tr>
+			</thead>
+			<tbody>
+			{MAComps.map((MAComp, i) => {
+				return (
+					<MAAreaCodeInfoRow
+						key={i}
+						custom={i}
+						MAComp={MAComp}
+					/>
+				)
+			})}
+			</tbody>
+		</table>
+	)
+}
+
+function MAAreaCodeInfos ({type, query, style}) {
+
+    const [displayParam, setDisplayParam] = useState([
+		"市外局番",
+		"番号領域",
+		"都道府県",
+		"MA名",
+		"市区町村"
+	]);
 
 	const [headerInfo, MAComps] = searchMAAreaCodeInfos(type, query)
 	const isExpanded = (type === "random") ? "" : "item";
-	console.log(isExpanded, type)
-	const MAAreaCodeInfos = [];
+	let MAAreaCodeInfos = [];
 
-	MAComps.forEach(function(MAComp, i) {
-		MAAreaCodeInfos.push(
-			<MAAreaCodeInfo
-				key={i}
-				MAComp={MAComp}
-				isExpanded={isExpanded}
-			/>
-		)
-	})
+	if (style === "card") {
+		MAComps.forEach(function(MAComp, i) {
+			MAAreaCodeInfos.push(
+				<MAAreaCodeInfoBlock
+					key={i}
+					MAComp={MAComp}
+					isExpanded={isExpanded}
+				/>
+			)
+		})
+	} else {
+		MAAreaCodeInfos = <MAAreaCodeInfoTable MAComps={MAComps} displayParam={displayParam} />
+	}
 
 	return (
 		<div>
-			<MAAreaCodeHeader info={headerInfo} />
-			<div>{MAAreaCodeInfos}</div>
-		</div>
-	)
-
-}
-
-export function searchMAAreaCodeInfos(type, query, shuffle=false) {
-
-	let MAComps = [];
-	let headerInfo = {
-		mainHeaderSub: "",
-		mainHeader: query,
-		mainHeaderLink: "",
-		subHeader: "",
-	}
-
-	switch (type) {
-
-		case "MA" : // MA name
-
-			headerInfo.subHeader = "MA名検索"
-
-			MAComps = MACompList.concat().filter(function(MAComp) {
-				return MAComp.MAName === query;
-			})
-			break;
-
-		case "pref":
-
-			headerInfo.subHeader = "都道府県名検索"
-
-			MAComps = MACompList.concat().filter(function(MAComp) {
-				return MAComp.pref === query;
-			})
-			break;
-
-		case "city":
-
-			headerInfo.subHeader = "市町村名検索"
-
-			const cities = cityList.filter(function(city) {
-				return getPrefCountyCityName(city) === query;
-			})
-
-			cities.forEach(function(city) {
-				let MAtemp = MACompList.concat().filter((m) => {
-					return convertCompCode(m) === city.compartmentCode;
-				})
-				MAComps = MAComps.concat(MAtemp)
-			})
-
-			headerInfo.mainHeaderSub = getPrefCountyName(cities[0]);
-			headerInfo.mainHeader = getCityName(cities[0]);
-			headerInfo.mainHeaderLink = "https://www.google.com/maps/place/" + query;
-			break;
-
-		case "code": // areacode start digit
-
-			headerInfo.subHeader = "市外局番検索（完全一致）"
-
-			query = query.slice(1, query.length)
-			MAComps = MACompList.concat().filter(function(MAComp) {
-				return MAComp.areaCode === query;
-			})
-			break;
-
-		case "code_prefix": // areacode start digit
-
-			headerInfo.subHeader = "市外局番検索（前方一致）"
-
-			query = query.slice(1, query.length)
-			MAComps = MACompList.concat().filter(function(MAComp) {
-				return MAComp.areaCode.slice(0, query.length) === query;
-			})
-			break;
-
-		case "all":
-
-			headerInfo.mainHeader = "全て"
-
-			MAComps = MACompList.concat();
-			break;
-
-		case "random":
-
-			headerInfo.mainHeader = "ランダム表示"
-
-			MAComps = shuffleArray(MACompList.concat()).slice(0, 1);
-			break;
-
-		default:
-			break;
-
-	}
-
-	if (shuffle) {
-
-		headerInfo.subHeader += "（シャッフル）"
-		MAComps = shuffleArray(MAComps)
-		
-	}
-
-	return [headerInfo, MAComps];
-
-}
-
-function MAAreaCodeHeader({ info }) {
-
-	return (
-		<div className="MAAreaCode-header">
-			<div className="main-header">
-				<div className="main-header-sub">{info.mainHeaderSub}</div>
-				<div className="main-header-main">{info.mainHeader}</div>
-				{info.mainHeaderLink &&
-					<a className="main-header-link" href={info.mainHeaderLink} target="blank">Google Mapで見る</a>
-				}
-			</div>
-			<div className="sub-header">{info.subHeader}</div>
+			<MAAreaCodeHeader info={headerInfo} displayParam={displayParam} setDisplayParam={setDisplayParam} />
+			<AnimatePresence mode="wait">
+				<div key="content">
+					{MAAreaCodeInfos}
+				</div>
+			</AnimatePresence>
 		</div>
 	)
 
@@ -266,23 +278,158 @@ function displayCode3digit(type, query) {
 
 }
 
-export default function MAAreaCode({ type }) {
+const items = [
+	"市外局番",
+	"番号領域",
+	"都道府県",
+	"MA名",
+	"市区町村",
+	"一部地域詳細表示",
+	"MA独立番号",
+	"番号区画コード",
+	"方形区画",
+];
 
-    const {query} = useParams();
+const CheckBtnItems = (props) => 
+	items.map((item) => {
+		return (
+			<label key={item}>
+				<input
+					type="checkbox"
+					value={item}
+					onChange={props.handleChange}
+					checked={props.displayParam.includes(item)}
+				/>
+				{item}
+			</label>
+		);
+	});
+
+function MAAreaCodeHeader({ info, displayParam, setDisplayParam }) {
+
+
+	const handleChange = (e) => {
+		if (displayParam.includes(e.target.value)) {
+			setDisplayParam(
+				displayParam.filter((checkedValue) => checkedValue !== e.target.value)
+			);
+		} else {
+			setDisplayParam([...displayParam, e.target.value]);
+		}
+	};
 
 	return (
-		<>
-			<ScrollTop />
-			<Header />
-            <div className="main-content">
-				<div className="MAAreaCode-container">
-					<div className="code-list-middle">
-						{displayCode3digit(type, query)}
-					</div>
-					<MAAreaCodeInfos type={type} query={query} />
+		<div className={MAList.MAAreaCodeHeader}>
+			<div>
+				<div className={MAList.mainHeader}>
+					<div className={MAList.mainHeaderSub}>{info.mainHeaderSub}</div>
+					<div className={MAList.mainHeaderMain}>{info.mainHeader}</div>
+					{info.mainHeaderLink &&
+						<a className={MAList.mainHeaderLink} href={info.mainHeaderLink} target="blank">Google Mapで見る</a>
+					}
+				</div>
+				<div className={MAList.subHeader}>{info.subHeader}</div>
+			</div>
+
+			<div className={MAList.checkBtnContainer}>
+				<CheckBtnItems
+					handleChange={handleChange}
+					displayParam={displayParam}
+				/>
+			</div>
+		</div>
+	)
+
+}
+
+function SearchBox({openFunc}) {
+	return (
+		<div className={MAList.searchBox}>
+			<SearchPushNumber />
+			<div className={MAList.openSearchDetailContainer}>
+				<div className={MAList.openSearchDetail} onClick={() => {openFunc();}}>
+					<span>その他検索<br/><small>（3桁表・都道府県・市区町村）</small></span>
 				</div>
 			</div>
-		</>
+		</div>
+	)
+}
+
+function SearchModal({closeFunc}) {
+	return (
+		<div className={MAList.searchBoxContainer}>
+			<Tabs className="searchDetailBox">
+				<TabList>
+					<Tab>3桁表</Tab>
+					<Tab>都道府県</Tab>
+					<Tab>市区町村</Tab>
+				</TabList>
+			
+				<TabPanel>
+					<AllCode3digit closeFunc={closeFunc} />
+				</TabPanel>
+				<TabPanel>
+					<PrefList closeFunc={closeFunc} />
+				</TabPanel>
+				<TabPanel>
+					<SearchCity closeFunc={closeFunc} />
+				</TabPanel>
+			</Tabs>
+			<button	onClick={() => {closeFunc();}}>
+				閉じる
+			</button>
+		</div>
+	)
+}
+
+export default function MAAreaCode({ type }) {
+
+	Modal.setAppElement('#root');
+
+    const {query} = useParams();
+	
+	const [searchParams] = useSearchParams();
+	const style = searchParams.get("style");
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);	
+	const openModal = () => {
+		setModalIsOpen(true);
+	};
+	const closeModal = () => {
+		setModalIsOpen(false);
+	};
+	const customStyles = {
+		content: {
+			margin: '0 auto',
+			maxWidth: '1280px',
+			inset: '4rem'
+		},
+		overlay: {
+			transition: 'opacity 200ms ease-in-out',
+		},
+	};
+
+	return (
+		<div id="areacodeBody" className={MAList.areacodeBody}>
+			<ScrollTop />
+			<Header />
+            <div className={MAList.mainContent}>
+				<div className={MAList.MAAreaCodeContainer}>
+					<SearchBox openFunc={openModal} />
+					<Modal
+						isOpen={modalIsOpen}
+						style={customStyles}
+						closeTimeoutMS={200}
+					>
+						<SearchModal closeFunc={closeModal} />
+					</Modal>
+					<MAAreaCodeInfos type={type} query={query} style={style} />
+					<div className={MAList.codeListMiddle}>
+						{displayCode3digit(type, query)}
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 
 }
