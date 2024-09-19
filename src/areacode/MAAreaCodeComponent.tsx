@@ -1,7 +1,20 @@
 import { Link } from "react-router-dom";
 import MAList from "./css/MAList.module.scss"
+import { NumberBandInfo, NumberDesignation } from "./MAAreaCode";
+import { CityInfo } from "./data/cityList";
 
-export function AreaCode({ areaCode }) {
+
+export interface ColorStyle {
+    background: {
+        backgroundColor: string;
+        color: string;
+    };
+    text: {
+        color: string;
+    };
+}
+
+export function AreaCode({ areaCode, colorStyle }: { areaCode: string, colorStyle?: ColorStyle }) {
 	return (
 		<div className={MAList.areacode}>
 			<p>{areaCode}</p>
@@ -9,7 +22,7 @@ export function AreaCode({ areaCode }) {
 	)
 }
 
-export function MA({ ma }) {
+export function MA({ ma, className }: { ma: string, className?: any }) {
 	return (
 		<div className={MAList.ma}>
 			<p>{ma}</p>
@@ -17,7 +30,7 @@ export function MA({ ma }) {
 	)
 }
 
-export function Pref({ pref }) {
+export function Pref({ pref, className }: { pref: string, className?: any }) {
 	return (
 		<div className={MAList.pref}>
 			<p>{pref}</p>
@@ -25,20 +38,20 @@ export function Pref({ pref }) {
 	)
 }
 
-export function NumberBands({ areaCode, numberBands }) {
+export function NumberBands({ areaCode, numberBands, className }: {areaCode: string, numberBands: NumberBandInfo[], className?: any[]}) {
 
-	function insertStr(str, id, val) {
+	function insertStr(str: string, id: number, val: string): string {
 		var res = str.slice(0, id) + val + str.slice(id);
 		return res;
 	}
 
-	const lis = [];
+	const lis: React.JSX.Element[] = [];
 
 	numberBands.forEach(function(numberBand, i) {
 		const bandStart = insertStr(numberBand.bandStart, areaCode.length, "-")
 		const bandEnd = insertStr(numberBand.bandEnd, areaCode.length, "-")
 
-		let txt = `${bandStart}`
+		let txt: string | React.JSX.Element = `${bandStart}`
 		if (bandStart !== bandEnd) {
 			txt = `${txt} ～ ${bandEnd}`;
 		}
@@ -61,7 +74,7 @@ export function NumberBands({ areaCode, numberBands }) {
 
 }
 
-export function InfoTable({ maDistinct, compartmentCode, square, numberDesignations }) {
+export function InfoTable({ maDistinct, compartmentCode, square, numberDesignations }: { maDistinct: string, compartmentCode: string, square: string, numberDesignations: NumberDesignation[] }) {
 
 	// function NumberDesignations(numberDesignations) {
 
@@ -107,10 +120,15 @@ export function InfoTable({ maDistinct, compartmentCode, square, numberDesignati
 	)
 }
 
+interface ClassifiedCities {
+	[key: string]: {
+		[key: string]: CityInfo[]
+	}
+}
 
-export function classifyCities(cities) {
+export function classifyCities(cities: CityInfo[]) {
 
-	const classifiedCities = {}
+	const classifiedCities: ClassifiedCities = {}
 
 	for (const city of cities) {
 
@@ -132,11 +150,11 @@ export function classifyCities(cities) {
 
 }
 
-export function Cities({ classifiedCities, areaDisplayFull, colorStyle }) {
+export function Cities({ classifiedCities, areaDisplayFull, colorStyle }: { classifiedCities: ClassifiedCities, areaDisplayFull?: boolean, colorStyle: ColorStyle }) {
 
-	const displayCities = (pref, county) => {
+	const displayCities = (pref: string, county: string) => {
 
-		const cities = [];
+		const cities: React.JSX.Element[] = [];
 
 		classifiedCities[pref][county].forEach(function(city, i) {
 
@@ -169,9 +187,9 @@ export function Cities({ classifiedCities, areaDisplayFull, colorStyle }) {
 
 	}
 
-	const displayCounties = (pref) => {
+	const displayCounties = (pref: string) => {
 
-		const counties = [];
+		const counties: React.JSX.Element[] = [];
 
 		Object.keys(classifiedCities[pref]).forEach(function(county, i) {
 			let li = null;
@@ -199,7 +217,7 @@ export function Cities({ classifiedCities, areaDisplayFull, colorStyle }) {
 
 	const displayPref = () => {
 
-		const prefs = [];
+		const prefs: React.JSX.Element[] = [];
 
 		Object.keys(classifiedCities).forEach(function(pref, i) {
 			prefs.push(
@@ -221,11 +239,11 @@ export function Cities({ classifiedCities, areaDisplayFull, colorStyle }) {
 }
 
 
-export function CitiesSimple({ classifiedCities }) {
+export function CitiesSimple({ classifiedCities }: { classifiedCities: ClassifiedCities }) {
 
-	const displayCities = (pref, county) => {
+	const displayCities = (pref: string, county: string) => {
 
-		const cities = [];
+		const cities: React.JSX.Element[] = [];
 
 		classifiedCities[pref][county].forEach(function(city, i) {
 
@@ -247,9 +265,9 @@ export function CitiesSimple({ classifiedCities }) {
 
 	}
 
-	const displayCounties = (pref) => {
+	const displayCounties = (pref: string) => {
 
-		const counties = [];
+		const counties: React.JSX.Element[] = [];
 
 		Object.keys(classifiedCities[pref]).forEach(function(county, i) {
 			let li = null;
@@ -276,7 +294,7 @@ export function CitiesSimple({ classifiedCities }) {
 
 	const displayPref = () => {
 
-		const prefs = [];
+		const prefs: React.JSX.Element[] = [];
 
 		Object.keys(classifiedCities).forEach(function(pref, i) {
 			prefs.push(

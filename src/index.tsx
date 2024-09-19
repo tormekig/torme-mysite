@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import './css/index.scss';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from 'reportWebVitals';
 
 const rootElement = document.getElementById('root');
 // https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/

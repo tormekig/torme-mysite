@@ -1,4 +1,14 @@
-const YamanoteInfo = [
+interface Transfer {
+  line: string;
+  station: string;
+}
+
+interface Station {
+  name: string;
+  transfers: Transfer[];
+}
+
+const YamanoteInfo: Station[] = [
   {
     name: "東京",
     transfers: [

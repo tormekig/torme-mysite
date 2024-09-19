@@ -13,7 +13,7 @@ export function ScrollTop() {
     
 }
 
-export function shuffleArray(array) {
+export function shuffleArray(array: any[]) {
 	var bool = [1, -1];
 	return array.concat().sort(function (a, b) {
 		return bool[Math.floor(Math.random() * bool.length)];

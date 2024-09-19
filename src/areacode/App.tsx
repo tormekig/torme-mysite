@@ -3,11 +3,12 @@ https://ralacode.com/blog/post/how-to-use-react-router/
 https://blog.mitsuto.com/react-router-dom
 https://reffect.co.jp/react/react-router-6/
 */
-import Top from "./Top";
-import MAAreaCode from "./MAAreaCode";
-import DisplayQuiz from "./quiz/displayQuiz";
+import Top from "areacode/Top";
+import MAAreaCode from "areacode/MAAreaCode";
+import DisplayQuiz from "areacode/quiz/displayQuiz";
+import { RoutePath } from "myUtil";
 
-export const areacodeRoutes = [
+export const areacodeRoutes: RoutePath[] = [
   {
     path: ``,
     children: <Top />

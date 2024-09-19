@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import mysite from './css/mysite.module.scss';
-import { SasameContent } from './sasame';
+import mysite from 'mysite/css/mysite.module.scss';
+import { SasameContent } from 'mysite/sasame';
 import { motion } from 'framer-motion';
 import { Timeline } from 'react-twitter-widgets';
 import { ScrollTop } from '../utils/tools';
-import { EmuContent } from './emu';
+import { EmuContent } from 'mysite/emu';
 
 function LinkButton() {
 
-  const buttons = [];
+  const buttons: React.JSX.Element[] = [];
 
   const links = [
     {
@@ -139,7 +139,7 @@ function TormeContent() {
   )
 }
 
-export function Header({color, ja, en}) {
+export function Header({color, ja, en}: {color?: string, ja: string, en: string}) {
   return (
     <div className={`${mysite.headline} ${color}`}>
       <h1 className={mysite.headlineMain}>
@@ -188,7 +188,12 @@ function Characters() {
 
 function Gallery() {
 
-  const imgs = [
+  interface Img {
+    img: string;
+    caption?: string;
+  }
+
+  const imgs: Img[] = [
     {
       img: "img/220723.jpg"
     },
@@ -221,7 +226,7 @@ function Gallery() {
     },
   ]
 
-  const galleries = []
+  const galleries: React.JSX.Element[] = []
 
   imgs.forEach(function(img, i) {
     const caption = img.caption ? img.caption : "";

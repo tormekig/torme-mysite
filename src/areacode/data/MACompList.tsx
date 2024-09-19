@@ -1,4 +1,15 @@
-const MACompList = [
+export interface MACompInfo {
+  codeMain: string;
+  codeSub: string;
+  MAnum: string;
+  pref: string;
+  MAName: string;
+  areaCode: string;
+  square: string;
+  color: string;
+}
+
+const MACompList: MACompInfo[] = [
   {
     codeMain: '1',
     codeSub: '',

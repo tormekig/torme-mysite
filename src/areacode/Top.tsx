@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-import SearchCity from "./searchCity.js"
+import SearchCity from "areacode/searchCity.jsx"
 
-import areacode from "./css/areacode.module.scss";
+import areacode from "areacode/css/areacode.module.scss";
 
-import prefList from "./data/prefList.js";
-import appendixList from "./data/appendixList.js";
+import prefList from "areacode/data/prefList.jsx";
+import appendixList from "areacode/data/appendixList.jsx";
 import { ScrollTop } from "../utils/tools.js";
-import codeColors from "./data/codeColor.js";
+import codeColors from "areacode/data/codeColor.jsx";
+import { ColorStyle } from './MAAreaCodeComponent.jsx';
 
 export function SearchPushNumber() {
 
@@ -99,13 +100,13 @@ export function Code2digit() {
     )
 }
 
-function calcColor(digit2) {
+function calcColor(digit2: number) {
     const startHue = 360 / 88 * 60, inc = -1;
     const hue = startHue / 88 * inc * digit2 + startHue;
     return `hsl(${hue}, 48%, 55%)`
 }
 
-function getColorStyle(digit2) {
+function getColorStyle(digit2: number) {
 
 	const color = calcColor(digit2);
 
@@ -120,18 +121,18 @@ function getColorStyle(digit2) {
 	}
 }
 
-export function getColorStyleByAreaCode(areaCode) {
+export function getColorStyleByAreaCode(areaCode: string): ColorStyle {
 	const digit2 = 
 		areaCode.length === 2 ?
-		areaCode[1] * 10:
-		areaCode[1] * 10 + +areaCode[2];
+		Number(areaCode.charAt(1)) * 10:
+		Number(areaCode.charAt(1)) * 10 + +areaCode[2];
 
     return getColorStyle(digit2);
 }
 
-export function Code3digit(code2) {
+export function Code3digit(code2: number) {
 
-    const codes = [];
+    const codes: React.JSX.Element[] = [];
 
     if (!codeColors[code2-1]) return (<></>);
 
@@ -163,7 +164,7 @@ export function Code3digit(code2) {
     )
 }
 
-export function AllCode3digit({ closeFunc }) {
+export function AllCode3digit({ closeFunc }: { closeFunc?: () => void }) {
 
     const codeLists = [];
 
@@ -183,9 +184,9 @@ export function AllCode3digit({ closeFunc }) {
     )
 }
 
-export function PrefList({ closeFunc }) {
+export function PrefList({ closeFunc }: { closeFunc?: () => void }) {
 
-    const prefs = [];
+    const prefs: React.JSX.Element[] = [];
 
     prefList.forEach(function(pref, i) {
 
@@ -211,7 +212,7 @@ export function PrefList({ closeFunc }) {
 
 function Appendix() {
 
-    const appendixes = []
+    const appendixes: React.JSX.Element[] = []
 
     appendixList.forEach(function(appendix, i) {
 

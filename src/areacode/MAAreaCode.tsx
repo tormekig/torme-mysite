@@ -1,6 +1,6 @@
 import { cityList } from "./data/cityList.js"
 import numberBandList from "./data/numberBandList.js"
-import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "./MAAreaCodeComponent.js"
+import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "./MAAreaCodeComponent.jsx"
 
 import { useParams, useSearchParams } from "react-router-dom";
 import {
@@ -11,23 +11,25 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import MAList from "./css/MAList.module.scss";
+import MAList from "areacode/css/MAList.module.scss";
 import './css/accordion.scss';
 import './css/searchModal.scss';
 import { ScrollTop } from "../utils/tools.js"
-import { Code3digit, Header, AllCode3digit, PrefList, SearchPushNumber, getColorStyleByAreaCode } from "./Top.js";
+import { Code3digit, Header, AllCode3digit, PrefList, SearchPushNumber, getColorStyleByAreaCode } from "areacode/Top";
 import { AnimatePresence, motion } from "framer-motion";
-import { searchMAAreaCodeInfos } from "./searchMAAreaCodeInfos.jsx";
+import { HeaderInfo, searchMAAreaCodeInfos } from "areacode/searchMAAreaCodeInfo";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import SearchCity from "./searchCity.js";
+import SearchCity from "areacode/searchCity";
 import Modal from "react-modal";
 import { useState } from "react";
+import { SearchType } from "./searchMAAreaCodeInfo.jsx";
+import { MACompInfo } from "./data/MACompList.jsx";
 
-export function convertCompCode(MAComp) {
+export function convertCompCode(MAComp: MACompInfo) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
 }
 
-export function getNumberBandsfromMAComp(MAComp) {
+export function getNumberBandsfromMAComp(MAComp: MACompInfo) {
 
 	return numberBandList.filter(function(numberBand) {
 		return numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode;
@@ -35,7 +37,7 @@ export function getNumberBandsfromMAComp(MAComp) {
 
 }
 
-function getCitiesfromMAComp(MAComp) {
+function getCitiesfromMAComp(MAComp: MACompInfo) {
 
 	return cityList.filter(function(city) {
 		return city.compartmentCode === convertCompCode(MAComp);
@@ -43,7 +45,35 @@ function getCitiesfromMAComp(MAComp) {
 
 }
 
-export function generateMAAreaCodeInfo(MAComp) {
+export interface NumberBandInfo {
+    id: string;
+    MA: string;
+    areaCode: string;
+    bandStart: string;
+    bandEnd: string;
+    eliminateCode: string;
+}
+
+export interface NumberDesignation {
+    start: string;
+    end: string;
+    note: [];
+}
+
+interface MAAreaCodeInfo {
+	areaCode: string,
+	ma: string,
+	maDistinct: string,
+	compartmentCode: string,
+	pref: string,
+	square: string,
+	numberBands: NumberBandInfo[],
+	numberDesignations: NumberDesignation[],
+	cities: any, // TODO
+	color: string,
+}
+
+export function generateMAAreaCodeInfo(MAComp: MACompInfo): MAAreaCodeInfo {
 
 	const numberBands = getNumberBandsfromMAComp(MAComp)
 	const cities = getCitiesfromMAComp(MAComp)
@@ -69,7 +99,7 @@ export function generateMAAreaCodeInfo(MAComp) {
 
 }
 
-function MAAreaCodeInfoBlock({ MAComp, isExpanded="item" }) {
+function MAAreaCodeInfoBlock({ MAComp, isExpanded="item" }: { MAComp: MACompInfo, isExpanded: string}) {
 
 	const info = generateMAAreaCodeInfo(MAComp)
 	const colorStyle = getColorStyleByAreaCode(info.areaCode)
@@ -124,9 +154,9 @@ function MAAreaCodeInfoBlock({ MAComp, isExpanded="item" }) {
 
 }
 
-function MAAreaCodeInfoTable({ MAComps, displayParam }) {
+function MAAreaCodeInfoTable({ MAComps, displayParam }: { MAComps: MACompInfo[], displayParam: string[] }) {
 	
-	function MAAreaCodeInfoRow({ MAComp }) {
+	function MAAreaCodeInfoRow({ MAComp, custom }: { MAComp: MACompInfo, custom: number }) {
 	
 		const info = generateMAAreaCodeInfo(MAComp);
 		const colorStyle = getColorStyleByAreaCode(info.areaCode)
@@ -228,7 +258,7 @@ function MAAreaCodeInfoTable({ MAComps, displayParam }) {
 	)
 }
 
-function MAAreaCodeInfos ({type, query, style}) {
+function MAAreaCodeInfos ({type, query, style}: {type: SearchType, query: string, style: string}) {
 
     const [displayParam, setDisplayParam] = useState([
 		"市外局番",
@@ -238,9 +268,9 @@ function MAAreaCodeInfos ({type, query, style}) {
 		"市区町村"
 	]);
 
-	const [headerInfo, MAComps] = searchMAAreaCodeInfos(type, query)
+	const {headerInfo, MAComps} = searchMAAreaCodeInfos(type, query)
 	const isExpanded = (type === "random") ? "" : "item";
-	let MAAreaCodeInfos = [];
+	let MAAreaCodeInfos: any = []; // TODO: fix any
 
 	if (style === "card") {
 		MAComps.forEach(function(MAComp, i) {
@@ -269,12 +299,12 @@ function MAAreaCodeInfos ({type, query, style}) {
 
 }
 
-function displayCode3digit(type, query) {
+function displayCode3digit(type: SearchType, query: string) {
 
 	if (type !== "code" && type !== "code_prefix") return (<></>)
 
 	const code2 = query.charAt(1);
-	return Code3digit(code2);
+	return Code3digit(Number(code2));
 
 }
 
@@ -290,7 +320,7 @@ const items = [
 	"方形区画",
 ];
 
-const CheckBtnItems = (props) => 
+const CheckBtnItems = (props: { handleChange: (e: any) => void, displayParam: string[] }) => 
 	items.map((item) => {
 		return (
 			<label key={item}>
@@ -305,10 +335,10 @@ const CheckBtnItems = (props) =>
 		);
 	});
 
-function MAAreaCodeHeader({ info, displayParam, setDisplayParam }) {
+function MAAreaCodeHeader({ info, displayParam, setDisplayParam }: { info: HeaderInfo, displayParam: string[], setDisplayParam: React.Dispatch<React.SetStateAction<string[]>>}) {
 
 	
-	const handleChange = (e) => {
+	const handleChange = (e: any) => {
 		if (displayParam.includes(e.target.value)) {
 			setDisplayParam(
 				displayParam.filter((checkedValue) => checkedValue !== e.target.value)
@@ -345,7 +375,7 @@ function MAAreaCodeHeader({ info, displayParam, setDisplayParam }) {
 
 }
 
-function SearchBox({openFunc}) {
+function SearchBox({ openFunc }: { openFunc: () => void }) {
 	return (
 		<div className={MAList.searchBox}>
 			<SearchPushNumber />
@@ -358,7 +388,7 @@ function SearchBox({openFunc}) {
 	)
 }
 
-function SearchModal({closeFunc}) {
+function SearchModal({ closeFunc }: { closeFunc: () => void }) {
 	return (
 		<div className={MAList.searchBoxContainer}>
 			<Tabs className="searchDetailBox">
@@ -385,14 +415,16 @@ function SearchModal({closeFunc}) {
 	)
 }
 
-export default function MAAreaCode({ type }) {
+export default function MAAreaCode({ type }: { type: SearchType }) {
 
 	Modal.setAppElement('#root');
 
-    const {query} = useParams();
+    const {query: _query} = useParams();
+	const query: string = _query ? _query : ""
 	
 	const [searchParams] = useSearchParams();
-	const style = searchParams.get("style");
+	const _style = searchParams.get("style");
+	const style = _style ? _style : "";
 
     const [modalIsOpen, setModalIsOpen] = useState(false);	
 	const openModal = () => {

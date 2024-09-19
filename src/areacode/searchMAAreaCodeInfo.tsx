@@ -1,13 +1,23 @@
 import { shuffleArray } from "../utils/tools";
 import { convertCompCode } from "./MAAreaCode";
-import MACompList from "./data/MACompList";
+import MACompList, { MACompInfo } from "./data/MACompList";
 import cityList, { getCityName, getPrefCountyCityName, getPrefCountyCityNameKanaWithSlash, getPrefCountyName } from "./data/cityList";
 import { getPrefName } from "./data/prefList";
 
-export function searchMAAreaCodeInfos(type, query, shuffle=false) {
+export type SearchType = "MA" | "pref" | "city" | "code" | "code_prefix" | "all" | "random";
 
-	let MAComps = [];
-	let headerInfo = {
+export interface HeaderInfo {
+	mainHeaderSub: string;
+	mainHeader: string;
+	mainHeaderRuby: string;
+	mainHeaderLink: string;
+	subHeader: string;
+}
+
+export function searchMAAreaCodeInfos(type: SearchType, query: string, shuffle: boolean = false) {
+
+	let MAComps: MACompInfo[] = [];
+	let headerInfo: HeaderInfo = {
 		mainHeaderSub: "",
 		mainHeader: query,
 		mainHeaderRuby: "",
@@ -113,6 +123,9 @@ export function searchMAAreaCodeInfos(type, query, shuffle=false) {
 		
 	}
 
-	return [headerInfo, MAComps];
+	return {
+		headerInfo: headerInfo,
+		MAComps: MAComps
+	};
 
 }

@@ -1,34 +1,34 @@
-import { getPrefName, getPrefNameKana } from "./prefList.js"
+import { getPrefName, getPrefNameKana } from "./prefList.jsx"
 
-export function getCityName(city) {
+export function getCityName(city: CityInfo) {
   return city.name + city.type;
 }
 
-export function getPrefCityName(city) {
+export function getPrefCityName(city: CityInfo) {
   return getPrefName(city) + getCityName(city);
 }
 
-export function getPrefCountyName(city) {
+export function getPrefCountyName(city: CityInfo) {
   return getPrefName(city) + city.county.name + city.county.type;
 }
 
-export function getPrefCountyCityName(city) {
+export function getPrefCountyCityName(city: CityInfo) {
   return getPrefName(city) + city.county.name + city.county.type + getCityName(city);
 }
 
-export function getCityNameKana(city) {
+export function getCityNameKana(city: CityInfo) {
   return city.kana + city.typeKana;
 }
 
-export function getPrefCityNameKana(city) {
+export function getPrefCityNameKana(city: CityInfo) {
   return getPrefNameKana(city) + getCityNameKana(city);
 }
 
-export function getPrefCountyCityNameKana(city) {
+export function getPrefCountyCityNameKana(city: CityInfo) {
   return getPrefNameKana(city) + city.county.kana + city.county.typeKana + getCityNameKana(city);
 }
 
-export function getPrefCountyCityNameKanaWithSlash(city) {
+export function getPrefCountyCityNameKanaWithSlash(city: CityInfo) {
   if (!city.county.kana) {
     return `${getPrefNameKana(city)} / ${getCityNameKana(city)}`;
   } else if (!getCityNameKana(city)) {
@@ -38,7 +38,29 @@ export function getPrefCountyCityNameKanaWithSlash(city) {
   }
 }
 
-export const cityList = [
+export interface CityInfo {
+  code: string;
+  distinct: string;
+  pref: string;
+  county: {
+    name: string;
+    type: string;
+    kana: string;
+    typeKana: string;
+    note: string;
+  },
+  name: string;
+  type: string;
+  kana: string;
+  typeKana: string;
+  compartmentCode: string;
+  zone: {
+    name: string;
+    scale: string;
+  },
+}
+
+export const cityList: CityInfo[] = [
   {
     code: '01100',
     distinct: '1',

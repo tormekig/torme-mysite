@@ -1,10 +1,16 @@
-import YamanoteInfo from "./YamanoteInfo";
-import { ScrollTop } from "./utils/tools";
+import YamanoteInfo from "YamanoteInfo";
 import './yamanote.css';
+import { ScrollTop } from "utils/tools";
 
-function getStation(i) {
+interface TransferInformation {
+    line: string;
+    station: string;
+    transferStations: string[];
+}
 
-    const transferInfos = []
+function getStation(i: number) {
+
+    const transferInfos: TransferInformation[] = []
 
     YamanoteInfo[i].transfers.forEach(function(transfer) {
         const line = transfer.line
@@ -23,8 +29,8 @@ function getStation(i) {
     }
 }
 
-function getStationsFromLine(line) {
-    const stations = []
+function getStationsFromLine(line: string) {
+    const stations: string[] = []
 
     YamanoteInfo.forEach(function(sta) {
         sta.transfers.forEach(function(transfer) {
@@ -54,14 +60,14 @@ function getRandomStation() {
     return <Station i={Math.floor( Math.random() * YamanoteInfo.length )}/>
 }
 
-function Station({ i }) {
+function Station({ i }: { i: number }) {
 
     const stationInfos = getStation(i)
 
-    const ts = []
+    const ts: React.JSX.Element[] = []
 
-    function displayTransferStations(transferStations) {
-        const stations = []
+    function displayTransferStations(transferStations: string[]): React.JSX.Element[] {
+        const stations: React.JSX.Element[] = []
         transferStations.forEach(function(s, i) {
             stations.push(
                 <div key={i}>{s}</div>

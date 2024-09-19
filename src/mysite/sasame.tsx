@@ -156,7 +156,13 @@ function SasamePersonality() {
 
 function HowToTakePictures() {
 
-  function Img({type, group, imgs}) {
+  interface ImgInfo {
+    src: string;
+    alt: string;
+    horizontal?: boolean;
+  }
+
+  function Img({type, group, imgs}: {type?: string, group: string, imgs: ImgInfo[]}) {
     const mark = type ? (<div className={type}></div>) : ""
     return (
       <div className={sasame.pointImgInner}>
@@ -356,7 +362,16 @@ function HowToTakePictures() {
 
 function Memories() {
 
-  const data = [
+  interface MemoryInfo {
+    className: any;
+    textmain: string;
+    textsub: string;
+    triptime: string;
+    triplocation: string;
+    imgs: string[];
+  }
+
+  const data: MemoryInfo[] = [
     {
       className: sasame.kozushima2307,
       textmain: "神津島",
@@ -384,7 +399,7 @@ function Memories() {
     },
   ]
 
-  function Memory({data}) {
+  function Memory({data}: {data: MemoryInfo}) {
     return (
       <div className={`${sasame.tripContent} ${data.className}`}>
         <div className={sasame.tripContentInner}>
