@@ -6,8 +6,8 @@ https://reffect.co.jp/react/react-router-6/
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import areacodeRoutes from "./areacode/App.js";
 import mysiteRoutes from "./mysite/App.js";
-import NotFound from "./NotFound";
-import Yamanote from "./Yamanote";
+import NotFound from "./NotFound.js";
+import Yamanote from "./Yamanote.jsx";
 
 const App = () => {
   return (
