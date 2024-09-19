@@ -1,0 +1,9 @@
+export declare const modalCloseButton: string
+export declare const reactModalOverlay: string
+export declare const reactModalOverlayAfterOpen: string
+export declare const reactModalOverlayBeforeClose: string
+export declare const reactTabsTab: string
+export declare const reactTabsTabList: string
+export declare const reactTabsTabPanel: string
+export declare const reactTabsTabSelected: string
+export declare const searchDetailBox: string

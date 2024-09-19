@@ -311,7 +311,7 @@ function SocialMedia() {
         </div>
       </div>
       <div className={mysite.socialMediaContentContainer}>
-        <div className={`${mysite.socialMediaContent} ${mysite.X}`}>
+        <div className={`${mysite.socialMediaContent} ${mysite.x}`}>
           <div className={mysite.socialMediaHeader}>
             <div className={mysite.socialMediaHeaderMain}>X<small> (Twitter)</small></div>
           </div>
@@ -330,14 +330,14 @@ function SocialMedia() {
                     }}
                   />
                 </div>
-                <div className={`${mysite.socialMediaFooter} ${mysite.X}`}>
+                <div className={`${mysite.socialMediaFooter} ${mysite.x}`}>
                   <a href="https://twitter.com/torme_kig" className={mysite.socialMediaAuthor} target="_blank">
-                    <div className={`${mysite.socialMediaIconContainer} ${mysite.X}`}>
+                    <div className={`${mysite.socialMediaIconContainer} ${mysite.x}`}>
                       <img src="https://pbs.twimg.com/profile_images/1773969111179202560/FVE4EqPI_400x400.jpg" />
                     </div>
                     <div>@torme_kig</div>
                   </a>
-                  <a href="https://twitter.com/torme_kig" className={`${mysite.socialMediaButton} ${mysite.X}`} target="_blank">
+                  <a href="https://twitter.com/torme_kig" className={`${mysite.socialMediaButton} ${mysite.x}`} target="_blank">
                     アカウントへ
                   </a>
                 </div>
@@ -356,14 +356,14 @@ function SocialMedia() {
                       height: '1500'
                     }}
                   />
-                  <div className={`${mysite.socialMediaFooter} ${mysite.X}`}>
+                  <div className={`${mysite.socialMediaFooter} ${mysite.x}`}>
                     <a href="https://twitter.com/torme_etc" className={mysite.socialMediaAuthor} target="_blank">
-                    <div className={`${mysite.socialMediaIconContainer} ${mysite.X}`}>
+                    <div className={`${mysite.socialMediaIconContainer} ${mysite.x}`}>
                         <img src="https://pbs.twimg.com/profile_images/1550079970617487362/cNeFJAF5_400x400.jpg" />
                       </div>
                       <div>@torme_etc</div>
                     </a>
-                    <a href="https://twitter.com/torme_etc" className={`${mysite.socialMediaButton} ${mysite.X}`} target="_blank">
+                    <a href="https://twitter.com/torme_etc" className={`${mysite.socialMediaButton} ${mysite.x}`} target="_blank">
                       アカウントへ
                     </a>
                   </div>

@@ -183,7 +183,7 @@ export function Cities({ classifiedCities, areaDisplayFull, colorStyle }: { clas
 
 		})
 
-		return <ul className={MAList.cityListUl}>{cities}</ul>
+		return <ul>{cities}</ul>
 
 	}
 

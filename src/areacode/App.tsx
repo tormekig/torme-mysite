@@ -5,7 +5,7 @@ https://reffect.co.jp/react/react-router-6/
 */
 import Top from "areacode/Top";
 import MAAreaCode from "areacode/MAAreaCode";
-import DisplayQuiz from "areacode/quiz/displayQuiz";
+// import DisplayQuiz from "areacode/quiz/displayQuiz";
 import { RoutePath } from "myUtil";
 
 export const areacodeRoutes: RoutePath[] = [
@@ -41,10 +41,10 @@ export const areacodeRoutes: RoutePath[] = [
     path: `random`,
     children: <MAAreaCode type={"random"}/>
   },
-  {
-    path: `quiz`,
-    children: <DisplayQuiz />
-  },
+  // {
+  //   path: `quiz`,
+  //   children: <DisplayQuiz />
+  // },
 ];
 
 export default areacodeRoutes;

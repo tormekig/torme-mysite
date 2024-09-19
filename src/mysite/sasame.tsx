@@ -413,9 +413,9 @@ function Memories() {
               <div>{data.triplocation}</div>
             </div>
           </div>
-          <div className={sasame.tripmain}>
+          <div className={sasame.tripMain}>
             <div className={sasame.tripMainImgContainer}>
-              <ul className={`${sasame.slider} ${sasame.gallery}`}>
+              <ul className={`${sasame.slider}`}>
                 {data.imgs.map((img, i) => {
                   return (
                     <li className={sasame.hoverImgContainer} key={i}>

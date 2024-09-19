@@ -4,8 +4,8 @@ https://blog.mitsuto.com/react-router-dom
 https://reffect.co.jp/react/react-router-6/
 */
 import { RoutePath } from "myUtil";
-import Top from "mysite/Top";
 import { Sasame } from "mysite/sasame";
+import Top from "mysite/Top";
 
 export const mysiteRoutes: RoutePath[] = [
   {

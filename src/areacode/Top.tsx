@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 
-import SearchCity from "areacode/searchCity.jsx"
+import SearchCity from "areacode/searchCity"
 
 import areacode from "areacode/css/areacode.module.scss";
 
-import prefList from "areacode/data/prefList.jsx";
-import appendixList from "areacode/data/appendixList.jsx";
-import { ScrollTop } from "../utils/tools.js";
-import codeColors from "areacode/data/codeColor.jsx";
-import { ColorStyle } from './MAAreaCodeComponent.jsx';
+import prefList from "areacode/data/prefList";
+import appendixList from "areacode/data/appendixList";
+import { ScrollTop } from "utils/tools";
+import codeColors from "areacode/data/codeColor";
+import { ColorStyle } from 'areacode/MAAreaCodeComponent';
 
 export function SearchPushNumber() {
 
@@ -19,7 +19,7 @@ export function SearchPushNumber() {
     const [isError, setIsError] = useState(false);
     const pattern = new RegExp(/^0\d{1,4}$/);
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: any) => {
 		setInputValue(e.target.value);
         if (!pattern.test(e.target.value))
             setIsError(true);
@@ -37,8 +37,8 @@ export function SearchPushNumber() {
     }
 
     return (
-        <div className={areacode.searchPushNumberContainer}>
-            <h4 className={areacode.searchPushNumberHeader}>
+        <div>
+            <h4>
                 市外局番検索
                 {isError ? <small>市外局番の形式を満たしていません</small> : <></>}
             </h4>
@@ -242,7 +242,7 @@ export function Header() {
                     <Link to={`/areacode/quiz`} className={areacode.linkQuiz}>クイズ</Link>
                     <Link to={`/areacode/random`} className={areacode.linkRandom}>ランダム</Link>
                 </div>
-                <div className={areacode.headerRight}>
+                <div>
                     <Code2digit />
                 </div>
             </div>
@@ -257,7 +257,7 @@ const Top = () => {
             <ScrollTop />
             <Header />
             <div className={areacode.mainContent}>
-				<div className={areacode.MAAreaCodeContainer}>
+				<div className={areacode.maAreaCodeContainer}>
                     <div className={areacode.searchBox}>
                         <SearchPushNumber />
                     </div>

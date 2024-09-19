@@ -1,4 +1,4 @@
-import { getPrefName, getPrefNameKana } from "./prefList.jsx"
+import { getPrefName, getPrefNameKana } from "areacode/data/prefList"
 
 export function getCityName(city: CityInfo) {
   return city.name + city.type;

@@ -1,15 +1,22 @@
-export function getPrefName(city) {
-  const pref = prefList.find(function(pref, i) {
-    return pref.name === city.pref;
-  })
-  return pref.name;
+import { CityInfo } from "areacode/data/cityList";
+
+interface PrefInfo {
+  name: string;
+  kana: string
 }
 
-export function getPrefNameKana(city) {
+export function getPrefName(city: CityInfo): string {
   const pref = prefList.find(function(pref, i) {
     return pref.name === city.pref;
   })
-  return pref.kana;
+  return pref ? pref.name : "";
+}
+
+export function getPrefNameKana(city: CityInfo): string {
+  const pref = prefList.find(function(pref, i) {
+    return pref.name === city.pref;
+  })
+  return pref ? pref.kana : "";
 }
 
 const prefList = [

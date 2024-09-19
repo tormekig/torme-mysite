@@ -3,20 +3,22 @@ import { Link } from "react-router-dom";
 
 import areacode from "./css/areacode.module.scss";
 
-import cityList from "./data/cityList"
+import cityList, { CityInfo } from "./data/cityList"
 import { getPrefCityName, getPrefCountyCityName, getPrefCityNameKana, getPrefCountyCityNameKana } from "./data/cityList"
 
-export default function SearchCity({ closeFunc }) {
+export default function SearchCity({ closeFunc }: { closeFunc?: () => void }) {
 
-	const [showCities, setShowCities] = useState([])
+	const cities: CityInfo[] = []
+
+	const [showCities, setShowCities] = useState(cities)
 	const [inputValue, setInputValue] = useState("")
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: any) => {
 		setInputValue(e.target.value)
 		search(e.target.value)
 	}
 
-	const search = (value) => {
+	const search = (value: string) => {
 
 		if (value === "") {
 			setShowCities([]);
