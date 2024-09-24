@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import areacode from "./css/areacode.module.scss";
+import areacode from "../assets/css/areacode.module.scss";
 
-import cityList, { CityInfo } from "./data/cityList"
-import { getPrefCityName, getPrefCountyCityName, getPrefCityNameKana, getPrefCountyCityNameKana } from "./data/cityList"
+import cityList, { CityInfo } from "../data/cityList"
+import { getPrefCityName, getPrefCountyCityName, getPrefCityNameKana, getPrefCountyCityNameKana } from "../data/cityList"
 
-export default function SearchCity({ closeFunc }: { closeFunc?: () => void }) {
+export function SearchCity({ closeFunc }: { closeFunc?: () => void }) {
 
 	const cities: CityInfo[] = []
 

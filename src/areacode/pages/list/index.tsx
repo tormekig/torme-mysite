@@ -1,6 +1,6 @@
 import { cityList } from "areacode/data/cityList"
 import numberBandList from "areacode/data/numberBandList"
-import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "areacode/MAAreaCodeComponent"
+import { AreaCode, NumberBands, Pref, MA, Cities, classifyCities, InfoTable } from "../detail";
 
 import { useParams, useSearchParams } from "react-router-dom";
 import {
@@ -11,19 +11,17 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import MAList from "areacode/css/MAList.module.scss";
-import 'areacode/css/accordion.scss';
-import 'areacode/css/searchModal.scss';
+import MAList from "areacode/assets/css/MAList.module.scss";
+import 'areacode/assets/css/accordion.scss';
+import 'areacode/assets/css/searchModal.scss';
 import { ScrollTop } from "utils/tools"
-import { Code3digit, Header, AllCode3digit, PrefList, SearchPushNumber, getColorStyleByAreaCode } from "areacode/Top";
 import { AnimatePresence, motion } from "framer-motion";
-import { HeaderInfo, searchMAAreaCodeInfos } from "areacode/searchMAAreaCodeInfo";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import SearchCity from "areacode/searchCity";
 import Modal from "react-modal";
 import { useState } from "react";
-import { SearchType } from "./searchMAAreaCodeInfo.jsx";
-import { MACompInfo } from "areacode/data/MACompList.jsx";
+import { searchMAAreaCodeInfos, SearchType } from "./searchMAAreaCodeInfo";
+import { MACompInfo } from "areacode/data/MACompList";
+import { Code3digit, getColorStyleByAreaCode, Header, SearchModal, SearchPushNumber } from "../../components";
+import { MAAreaCodeHeader } from "./header";
 
 export function convertCompCode(MAComp: MACompInfo) {
 	return MAComp.codeSub === "" ? MAComp.codeMain : (MAComp.codeMain + "-" + MAComp.codeSub)
@@ -310,78 +308,6 @@ function displayCode3digit(type: SearchType, query: string) {
 
 }
 
-const items = [
-	"市外局番",
-	"番号領域",
-	"都道府県",
-	"MA名",
-	"市区町村",
-	"一部地域詳細表示",
-	"MA独立番号",
-	"番号区画コード",
-	"方形区画",
-];
-
-function CheckBtnItems (props: { handleChange: (e: any) => void, displayParam: string[] }) {
-	
-	const ts: React.JSX.Element[] = items.map((item) => {
-		return (
-			<label key={item}>
-				<input
-					type="checkbox"
-					value={item}
-					onChange={props.handleChange}
-					checked={props.displayParam.includes(item)}
-				/>
-				{item}
-			</label>
-		);
-	});
-
-	return <div>{ts}</div>;
-	
-}
-
-function MAAreaCodeHeader({ info, displayParam, setDisplayParam }: { info: HeaderInfo, displayParam: string[], setDisplayParam: React.Dispatch<React.SetStateAction<string[]>>}) {
-
-	
-	const handleChange = (e: any) => {
-		if (displayParam.includes(e.target.value)) {
-			setDisplayParam(
-				displayParam.filter((checkedValue) => checkedValue !== e.target.value)
-			);
-		} else {
-			setDisplayParam([...displayParam, e.target.value]);
-		}
-	};
-
-	return (
-		<div className={MAList.maAreaCodeHeader}>
-			<div>
-				<div className={MAList.mainHeader}>
-					<div className={MAList.mainHeaderSub}>{info.mainHeaderSub}</div>
-					<div className={MAList.mainHeaderMain}>{info.mainHeader}</div>
-					{info.mainHeaderRuby && 
-						<div className={MAList.mainHeaderRuby}>{info.mainHeaderRuby}</div>
-					}
-					{info.mainHeaderLink &&
-						<a className={MAList.mainHeaderLink} href={info.mainHeaderLink} target="blank">Google Mapで見る</a>
-					}
-				</div>
-				<div className={MAList.subHeader}>{info.subHeader}</div>
-			</div>
-
-			<div className={MAList.checkBtnContainer}>
-				<CheckBtnItems
-					handleChange={handleChange}
-					displayParam={displayParam}
-				/>
-			</div>
-		</div>
-	)
-
-}
-
 function SearchBox({ openFunc }: { openFunc: () => void }) {
 	return (
 		<div className={MAList.searchBox}>
@@ -395,34 +321,8 @@ function SearchBox({ openFunc }: { openFunc: () => void }) {
 	)
 }
 
-function SearchModal({ closeFunc }: { closeFunc: () => void }) {
-	return (
-		<div>
-			<Tabs className="searchDetailBox">
-				<TabList>
-					<Tab>3桁表</Tab>
-					<Tab>都道府県</Tab>
-					<Tab>市区町村</Tab>
-				</TabList>
-			
-				<TabPanel>
-					<AllCode3digit closeFunc={closeFunc} />
-				</TabPanel>
-				<TabPanel>
-					<PrefList closeFunc={closeFunc} />
-				</TabPanel>
-				<TabPanel>
-					<SearchCity closeFunc={closeFunc} />
-				</TabPanel>
-			</Tabs>
-			<div className="modalCloseButton" onClick={() => {closeFunc();}}>
-				<span>閉じる</span>
-			</div>
-		</div>
-	)
-}
 
-export default function MAAreaCode({ type }: { type: SearchType }) {
+export default function MAAreaCodeList({ type }: { type: SearchType }) {
 
 	Modal.setAppElement('#root');
 

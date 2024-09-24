@@ -1,18 +1,8 @@
 import { Link } from "react-router-dom";
-import MAList from "./css/MAList.module.scss"
-import { NumberBandInfo, NumberDesignation } from "./MAAreaCode";
-import { CityInfo } from "./data/cityList";
-
-
-export interface ColorStyle {
-    background: {
-        backgroundColor: string;
-        color: string;
-    };
-    text: {
-        color: string;
-    };
-}
+import MAList from "../../assets/css/MAList.module.scss"
+import { NumberBandInfo, NumberDesignation } from "../list";
+import { CityInfo } from "../../data/cityList";
+import { ColorStyle } from "../../components";
 
 export function AreaCode({ areaCode, colorStyle }: { areaCode: string, colorStyle?: ColorStyle }) {
 	return (

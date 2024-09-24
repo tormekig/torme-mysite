@@ -3,8 +3,8 @@ https://ralacode.com/blog/post/how-to-use-react-router/
 https://blog.mitsuto.com/react-router-dom
 https://reffect.co.jp/react/react-router-6/
 */
-import Top from "areacode/Top";
-import MAAreaCode from "areacode/MAAreaCode";
+import MAAreaCodeList from "areacode/pages/list";
+import Top from "areacode/pages/top";
 // import DisplayQuiz from "areacode/quiz/displayQuiz";
 import { RoutePath } from "myUtil";
 
@@ -15,31 +15,31 @@ export const areacodeRoutes: RoutePath[] = [
   },
   {
     path: `MA/:query`,
-    children: <MAAreaCode type={"MA"}/>
+    children: <MAAreaCodeList type={"MA"}/>
   },
   {
     path: `pref/:query`,
-    children: <MAAreaCode type={"pref"}/>
+    children: <MAAreaCodeList type={"pref"}/>
   },
   {
     path: `city/:query`,
-    children: <MAAreaCode type={"city"}/>
+    children: <MAAreaCodeList type={"city"}/>
   },
   {
     path: `code/:query`,
-    children: <MAAreaCode type={"code"}/>
+    children: <MAAreaCodeList type={"code"}/>
   },
   {
     path: `code/prefix/:query`,
-    children: <MAAreaCode type={"code_prefix"}/>
+    children: <MAAreaCodeList type={"code_prefix"}/>
   },
   {
     path: `all`,
-    children: <MAAreaCode type={"all"}/>
+    children: <MAAreaCodeList type={"all"}/>
   },
   {
     path: `random`,
-    children: <MAAreaCode type={"random"}/>
+    children: <MAAreaCodeList type={"random"}/>
   },
   // {
   //   path: `quiz`,

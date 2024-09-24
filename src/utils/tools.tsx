@@ -19,3 +19,7 @@ export function shuffleArray(array: any[]) {
 		return bool[Math.floor(Math.random() * bool.length)];
 	})
 }
+
+export function isWithinRange(value: number, min: number, max: number): boolean {
+    return value >= min && value <= max;
+}

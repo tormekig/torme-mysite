@@ -1,8 +1,8 @@
-import { shuffleArray } from "../utils/tools";
-import { convertCompCode } from "./MAAreaCode";
-import MACompList, { MACompInfo } from "./data/MACompList";
-import cityList, { getCityName, getPrefCountyCityName, getPrefCountyCityNameKanaWithSlash, getPrefCountyName } from "./data/cityList";
-import { getPrefName } from "./data/prefList";
+import { shuffleArray } from "../../../utils/tools";
+import { convertCompCode } from ".";
+import MACompList, { MACompInfo } from "../../data/MACompList";
+import cityList, { getCityName, getPrefCountyCityName, getPrefCountyCityNameKanaWithSlash, getPrefCountyName } from "../../data/cityList";
+import { getPrefName } from "../../data/prefList";
 
 export type SearchType = "MA" | "pref" | "city" | "code" | "code_prefix" | "all" | "random";
 
@@ -14,7 +14,10 @@ export interface HeaderInfo {
 	subHeader: string;
 }
 
-export function searchMAAreaCodeInfos(type: SearchType, query: string, shuffle: boolean = false) {
+export function searchMAAreaCodeInfos(type: SearchType, query: string, shuffle: boolean = false): {
+    headerInfo: HeaderInfo;
+    MAComps: MACompInfo[];
+} {
 
 	let MAComps: MACompInfo[] = [];
 	let headerInfo: HeaderInfo = {

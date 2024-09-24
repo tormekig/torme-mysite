@@ -8,18 +8,18 @@ interface TransferInformation {
     transferStations: string[];
 }
 
-function getStation(i: number) {
+function getStation(i: number): {
+    name: string;
+    transferInfos: TransferInformation[];
+}{
 
     const transferInfos: TransferInformation[] = []
 
     YamanoteInfo[i].transfers.forEach(function(transfer) {
-        const line = transfer.line
-        const transferStation = transfer.station;
-        const transferStations = getStationsFromLine(line);
         transferInfos.push({
-            line: line,
-            station: transferStation,
-            transferStations: transferStations,
+            line: transfer.line,
+            station: transfer.station,
+            transferStations: getStationsFromLine(transfer.line),
         })
     })
 
@@ -29,7 +29,7 @@ function getStation(i: number) {
     }
 }
 
-function getStationsFromLine(line: string) {
+function getStationsFromLine(line: string): string[] {
     const stations: string[] = []
 
     YamanoteInfo.forEach(function(sta) {
@@ -56,7 +56,7 @@ function getStationsFromLine(line: string) {
 //     return stations;
 // }
 
-function getRandomStation() {
+function getRandomStation(): React.JSX.Element {
     return <Station i={Math.floor( Math.random() * YamanoteInfo.length )}/>
 }
 
