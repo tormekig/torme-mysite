@@ -1,3 +1,4 @@
+import React from 'react';
 import areacode from "areacode/assets/css/areacode.module.scss";
 import { Link } from "react-router-dom";
 import { Code2digit } from "./numberTable";

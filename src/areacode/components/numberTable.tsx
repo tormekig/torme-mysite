@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import { getColorStyleByAreaCode } from "./color";
 import areacode from "areacode/assets/css/areacode.module.scss";

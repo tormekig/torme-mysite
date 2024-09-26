@@ -1,9 +1,10 @@
+import React from 'react';
 
 import areacode from "areacode/assets/css/areacode.module.scss";
 
 import { ScrollTop } from "utils/tools";
 import { Appendix } from './appendix';
-import { AllCode3digit, Header, PrefList, SearchCity, SearchPushNumber } from '../../components';
+import { AllCode3digit, Header, AllPref, SearchCity, SearchPushNumber } from '../../components';
 
 const Top = () => {
 
@@ -18,7 +19,7 @@ const Top = () => {
                     </div>
                     <AllCode3digit />
                     <SearchCity />
-                    <PrefList />
+                    <AllPref />
                     <Appendix />
                     <div className={areacode.copyrightContainer}>
                         <p>Copyright 2023 torme_kig All rights reserved.</p>

@@ -1,3 +1,4 @@
+import React from 'react';
 import YamanoteInfo from "YamanoteInfo";
 import './yamanote.css';
 import { ScrollTop } from "utils/tools";

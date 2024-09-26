@@ -1,10 +1,9 @@
-import { motion } from 'framer-motion';
-import sasame from './css/sasame.module.scss';
-import mysite from './css/mysite.module.scss';
-import { Header } from './Top';
-import { ScrollTop } from '../utils/tools';
+import React from 'react';
 
-export function EmuContent() {
+import { motion } from 'framer-motion';
+import mysite from '../../css/mysite.module.scss';
+
+export function Content() {
   return (
     <div id={mysite.sasameContent}>
       <div className={mysite.introPhoto}>

@@ -38,6 +38,12 @@ export function getPrefCountyCityNameKanaWithSlash(city: CityInfo) {
   }
 }
 
+export function getCityListByPref(pref: string) {
+  return cityList.filter(function(city) {
+    return getPrefName(city) === pref;
+  })
+}
+
 export interface CityInfo {
   code: string;
   distinct: string;

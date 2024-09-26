@@ -1,3 +1,4 @@
+import React from 'react';
 import { AreaCode, NumberBands } from "../MAAreaCodeComponent.js"
 import { generateMAAreaCodeInfo } from "../MAAreaCode.js"
 

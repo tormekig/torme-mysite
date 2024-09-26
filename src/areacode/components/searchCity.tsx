@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 
@@ -13,7 +14,7 @@ export function SearchCity({ closeFunc }: { closeFunc?: () => void }) {
 	const [showCities, setShowCities] = useState(cities)
 	const [inputValue, setInputValue] = useState("")
 
-	const handleInputChange = (e: any) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(e.target.value)
 		search(e.target.value)
 	}

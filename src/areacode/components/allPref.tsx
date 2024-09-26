@@ -1,8 +1,9 @@
+import React from 'react';
 import areacode from "areacode/assets/css/areacode.module.scss";
 import prefList from "areacode/data/prefList";
 import { Link } from "react-router-dom";
 
-export function PrefList({ closeFunc }: { closeFunc?: () => void }) {
+export function AllPref({ closeFunc }: { closeFunc?: () => void }) {
 
     const prefs: React.JSX.Element[] = [];
 

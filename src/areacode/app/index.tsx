@@ -3,6 +3,7 @@ https://ralacode.com/blog/post/how-to-use-react-router/
 https://blog.mitsuto.com/react-router-dom
 https://reffect.co.jp/react/react-router-6/
 */
+import React from 'react';
 import MAAreaCodeList from "areacode/pages/list";
 import Top from "areacode/pages/top";
 // import DisplayQuiz from "areacode/quiz/displayQuiz";

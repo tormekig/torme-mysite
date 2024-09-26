@@ -1,3 +1,4 @@
+import React from 'react';
 import { Header } from "../Top";
 import Quiz from "./Quiz";
 import { ScrollTop } from "../../utils/tools";

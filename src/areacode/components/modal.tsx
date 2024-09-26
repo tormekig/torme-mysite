@@ -1,5 +1,6 @@
+import React from 'react';
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { AllCode3digit, PrefList, SearchCity } from "./";
+import { AllCode3digit, AllPref, SearchCity } from "./";
 
 export function SearchModal({ closeFunc }: { closeFunc: () => void }) {
 	return (
@@ -15,7 +16,7 @@ export function SearchModal({ closeFunc }: { closeFunc: () => void }) {
 					<AllCode3digit closeFunc={closeFunc} />
 				</TabPanel>
 				<TabPanel>
-					<PrefList closeFunc={closeFunc} />
+					<AllPref closeFunc={closeFunc} />
 				</TabPanel>
 				<TabPanel>
 					<SearchCity closeFunc={closeFunc} />

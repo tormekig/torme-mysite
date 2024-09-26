@@ -1,5 +1,26 @@
+import React from 'react';
 import MAList from "areacode/assets/css/MAList.module.scss";
-import { HeaderInfo } from "./searchMAAreaCodeInfo";
+
+export class HeaderInfo {
+	public mainHeaderSub: string = "";
+	public mainHeader: string = "";
+	public mainHeaderRuby: string = "";
+	public mainHeaderLink: string = "";
+	public subHeader: string = "";
+
+	constructor(query?: string) {
+		return this.init(query);
+	}
+
+	public init(query?: string) {
+		this.mainHeaderSub = "";
+		this.mainHeader = query ? query : "";
+		this.mainHeaderRuby = "";
+		this.mainHeaderLink = "";
+		this.subHeader = "";
+		return this;
+	}
+}
 
 const items = [
 	"市外局番",
@@ -13,7 +34,7 @@ const items = [
 	"方形区画",
 ];
 
-function CheckBtnItems (props: { handleChange: (e: any) => void, displayParam: string[] }) {
+function CheckBtnItems (props: { handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void, displayParam: string[] }) {
 	
 	const ts: React.JSX.Element[] = items.map((item) => {
 		return (
@@ -35,7 +56,7 @@ function CheckBtnItems (props: { handleChange: (e: any) => void, displayParam: s
 
 export function MAAreaCodeHeader({ info, displayParam, setDisplayParam }: { info: HeaderInfo, displayParam: string[], setDisplayParam: React.Dispatch<React.SetStateAction<string[]>>}) {
 
-	const handleChange = (e: any) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (displayParam.includes(e.target.value)) {
 			setDisplayParam(
 				displayParam.filter((checkedValue) => checkedValue !== e.target.value)

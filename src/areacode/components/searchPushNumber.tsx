@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import areacode from "areacode/assets/css/areacode.module.scss";
@@ -6,11 +7,11 @@ export function SearchPushNumber() {
 
     const navigate = useNavigate();
 
-	const [inputValue, setInputValue] = useState([""])
+	const [inputValue, setInputValue] = useState("")
     const [isError, setIsError] = useState(false);
     const pattern = new RegExp(/^0\d{1,4}$/);
 
-	const handleInputChange = (e: any) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue(e.target.value);
         if (!pattern.test(e.target.value))
             setIsError(true);

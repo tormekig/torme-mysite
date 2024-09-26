@@ -5,7 +5,7 @@ import generateQuizSet from "./generateQuiz";
 
 const CORRECT_ANSWER = "1";
 
-function Quiz({quizMode, isShuffleAnswer}) {
+function Quiz() {
   const [start, setStart] = useState(false);
   const [questions, setQuestions] = useState([]);
 
