@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Header } from 'mysite/components/Header'
 
-import sasame from '../../css/sasame.module.scss'
+import sasame from '../../assets/css/sasame.module.scss'
 
 interface MemoryInfo {
   className: string

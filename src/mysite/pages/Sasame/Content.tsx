@@ -2,7 +2,7 @@ import React from 'react'
 
 import { motion } from 'framer-motion'
 
-import mysite from '../../css/mysite.module.scss'
+import mysite from '../../assets/css/mysite.module.scss'
 
 export function Content() {
   return (
