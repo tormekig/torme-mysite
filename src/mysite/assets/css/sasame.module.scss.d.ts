@@ -19,6 +19,8 @@ export declare const sasameTableHead: string
 export declare const situationImgContainer: string
 export declare const slickSlide: string
 export declare const slider: string
+export declare const swiper: string
+export declare const swiperSlide: string
 export declare const threeTips: string
 export declare const threeTipsHeader: string
 export declare const tripContent: string

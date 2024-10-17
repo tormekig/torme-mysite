@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header } from 'mysite/components/Header'
+import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
 import mysite from '../../assets/css/mysite.module.scss'
@@ -8,7 +8,7 @@ import mysite from '../../assets/css/mysite.module.scss'
 export function Personality() {
   return (
     <div>
-      <Header ja={'ささめはこんな子'} en={'Personality'} />
+      <ContentHeader ja={'ささめはこんな子'} en={'Personality'} />
       <div className={sasame.personalityContent}>
         <div className={sasame.personalityIntro}>
           <p>ささめは、雪国出身の21歳の理系大学生の女の子。</p>

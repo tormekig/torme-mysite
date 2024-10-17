@@ -17,7 +17,7 @@ export function TopContent() {
             transition={{ ease: 'easeInOut', duration: 1.5 }}
             id={mysite.topImgContainer}
           >
-            <img id={mysite.topImg} src="img\221023.jpg" />
+            <img id={mysite.topImg} src="img/221023.jpg" />
           </motion.div>
         </div>
         <div id={mysite.topBox}>

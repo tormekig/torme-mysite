@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 import mysite from 'mysite/assets/css/mysite.module.scss'
 
-export function Header({
+export function ContentHeader({
   color,
   ja,
   en,

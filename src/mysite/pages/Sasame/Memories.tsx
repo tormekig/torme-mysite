@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Header } from 'mysite/components/Header'
+import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
+
+import '../../assets/css/styles.css'
+import '@splidejs/react-splide/css'
+import { Splide, SplideSlide } from '@splidejs/react-splide'
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll'
 
 interface MemoryInfo {
   className: string
@@ -53,21 +58,31 @@ function Memory({ data }: { data: MemoryInfo }) {
         </div>
         <div className={sasame.tripMain}>
           <div className={sasame.tripMainImgContainer}>
-            <ul className={`${sasame.slider}`}>
+            <Splide
+              options={{
+                gap: '1rem',
+                type: 'loop',
+                height: '512px',
+                autoWidth: true,
+                lazyLoad: 'nearby',
+                autoScroll: {
+                  speed: 1,
+                },
+                arrows: false,
+                pagination: false,
+                drag: 'free',
+              }}
+              className="splide"
+              extensions={{ AutoScroll }}
+            >
               {data.imgs.map((img, i) => {
                 return (
-                  <li className={sasame.hoverImgContainer} key={i}>
-                    <a
-                      href={img}
-                      data-lightbox={data.className}
-                      data-title="キャプション"
-                    >
-                      <img src={img} alt="" />
-                    </a>
-                  </li>
+                  <SplideSlide>
+                    <img src={img} alt="" />
+                  </SplideSlide>
                 )
               })}
-            </ul>
+            </Splide>
           </div>
         </div>
       </div>
@@ -78,7 +93,7 @@ function Memory({ data }: { data: MemoryInfo }) {
 export function Memories() {
   return (
     <div>
-      <Header ja={'思い出'} en={'Memories'} />
+      <ContentHeader ja={'思い出'} en={'Memories'} />
       {data.map((d, i) => {
         return <Memory data={d} key={i} />
       })}

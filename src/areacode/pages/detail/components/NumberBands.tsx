@@ -1,6 +1,14 @@
 import React from 'react'
 import MAList from '../../../assets/css/MAList.module.scss'
-import { NumberBandInfo } from '../../list'
+
+export interface NumberBandInfo {
+  id: string
+  MA: string
+  areaCode: string
+  bandStart: string
+  bandEnd: string
+  eliminateCode: string
+}
 
 export function NumberBands({
   areaCode,

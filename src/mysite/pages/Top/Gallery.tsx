@@ -2,15 +2,15 @@ import React from 'react'
 
 import { motion } from 'framer-motion'
 
-import mysite from 'mysite/assets/css/mysite.module.scss'
+import 'mysite/assets/css/mysite.module.scss'
 
-export function Gallery() {
-  interface Img {
-    img: string
-    caption?: string
-  }
+interface Img {
+  img: string
+  caption?: string
+}
 
-  const imgs: Img[] = [
+const imgs: { [key: string]: Img[] } = {
+  sasame: [
     {
       img: 'img/220723.jpg',
     },
@@ -41,11 +41,15 @@ export function Gallery() {
     {
       img: 'img/221107.jpg',
     },
-  ]
+  ],
+}
+
+export function Gallery({ name }: { name: string }) {
+  if (!imgs[name]) return <></>
 
   const galleries: React.JSX.Element[] = []
 
-  imgs.forEach(function (img, i) {
+  imgs[name].forEach(function (img, i) {
     const caption = img.caption ? img.caption : ''
     galleries.push(
       <motion.li
@@ -62,8 +66,8 @@ export function Gallery() {
   })
 
   return (
-    <div id={mysite.galleryContainer}>
-      <ul id={mysite.gallery}>{galleries}</ul>
+    <div id="galleryContainer">
+      <ul id="gallery">{galleries}</ul>
     </div>
   )
 }

@@ -8,8 +8,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { areacodeRoutes } from 'areacode/app'
 import mysiteRoutes from 'mysite/App'
 import NotFound from 'NotFound'
-import Yamanote from 'Yamanote'
-import { RoutePath } from 'myUtil'
+import { RoutePath } from 'utils/tools'
+import Yamanote from 'yamanote/Yamanote'
 
 const App = () => {
   return (

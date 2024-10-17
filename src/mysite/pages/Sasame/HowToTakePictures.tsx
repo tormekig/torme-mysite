@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header } from 'mysite/components/Header'
+import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
 
@@ -11,7 +11,7 @@ export function HowToTakePictures() {
     horizontal?: boolean
   }
 
-  function Img({
+  function Imgs({
     type,
     group,
     imgs,
@@ -40,7 +40,7 @@ export function HowToTakePictures() {
 
   return (
     <div>
-      <Header ja={'ささめの撮影ポイント'} en={'How to Take Pictures'} />
+      <ContentHeader ja={'ささめの撮影ポイント'} en={'How to Take Pictures'} />
       <div className={sasame.howtotakepicturesContent}>
         <div className={sasame.howtotakepicturesIntro}>
           <p>ささめを撮影することになった方へ</p>
@@ -99,7 +99,7 @@ export function HowToTakePictures() {
             </p>
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
@@ -109,7 +109,7 @@ export function HowToTakePictures() {
                     },
                   ]}
                 />
-                <Img
+                <Imgs
                   type={sasame.pointImgGood}
                   group={'pointTips'}
                   imgs={[
@@ -127,7 +127,7 @@ export function HowToTakePictures() {
             </p>
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
@@ -150,7 +150,7 @@ export function HowToTakePictures() {
             </p>
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
@@ -160,7 +160,7 @@ export function HowToTakePictures() {
                     },
                   ]}
                 />
-                <Img
+                <Imgs
                   type={sasame.pointImgGood}
                   group={'pointTips'}
                   imgs={[
@@ -177,7 +177,7 @@ export function HowToTakePictures() {
             </p>
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
@@ -191,7 +191,7 @@ export function HowToTakePictures() {
                     },
                   ]}
                 />
-                <Img
+                <Imgs
                   type={sasame.pointImgGood}
                   group={'pointTips'}
                   imgs={[
@@ -220,7 +220,7 @@ export function HowToTakePictures() {
             </p>
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
@@ -250,7 +250,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     { src: 'img/231104.JPG', alt: 'ラグコス' },
@@ -270,7 +270,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     {
@@ -296,7 +296,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     {
@@ -317,7 +317,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     { src: 'img/230902cp.JPG', alt: 'kig-cp-2309' },
@@ -341,7 +341,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     { src: 'img/221031.jpg', alt: 'ハロウィン' },
@@ -360,7 +360,7 @@ export function HowToTakePictures() {
               className={`${sasame.pointImgContainer} ${sasame.situationImgContainer}`}
             >
               <div className={sasame.pointImgContent}>
-                <Img
+                <Imgs
                   group={'situation-example'}
                   imgs={[
                     { src: 'img/230502cp_train.jpg', alt: '電車' },

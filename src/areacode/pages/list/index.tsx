@@ -1,7 +1,4 @@
 import React from 'react'
-import { cityList } from 'areacode/data/cityList'
-import numberBandList from 'areacode/data/numberBandList'
-import { classifyCities, ClassifiedCities } from '../detail/components/City'
 
 import { useParams, useSearchParams } from 'react-router-dom'
 
@@ -27,69 +24,6 @@ export function convertCompCode(MAComp: MACompInfo) {
   return MAComp.codeSub === ''
     ? MAComp.codeMain
     : MAComp.codeMain + '-' + MAComp.codeSub
-}
-
-export function getNumberBandsfromMAComp(MAComp: MACompInfo) {
-  return numberBandList.filter(function (numberBand) {
-    return (
-      numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode
-    )
-  })
-}
-
-function getCitiesfromMAComp(MAComp: MACompInfo) {
-  return cityList.filter(function (city) {
-    return city.compartmentCode === convertCompCode(MAComp)
-  })
-}
-
-export interface NumberBandInfo {
-  id: string
-  MA: string
-  areaCode: string
-  bandStart: string
-  bandEnd: string
-  eliminateCode: string
-}
-
-export interface NumberDesignation {
-  start: string
-  end: string
-  note: []
-}
-
-interface MAAreaCodeInfo {
-  areaCode: string
-  ma: string
-  maDistinct: string
-  compartmentCode: string
-  pref: string
-  square: string
-  numberBands: NumberBandInfo[]
-  numberDesignations: NumberDesignation[]
-  cities: ClassifiedCities
-  color: string
-}
-
-export function generateMAAreaCodeInfo(MAComp: MACompInfo): MAAreaCodeInfo {
-  return {
-    areaCode: '0' + MAComp.areaCode,
-    ma: MAComp.MAName,
-    maDistinct: MAComp.MAnum,
-    compartmentCode: convertCompCode(MAComp),
-    pref: MAComp.pref,
-    square: MAComp.square,
-    numberBands: getNumberBandsfromMAComp(MAComp),
-    numberDesignations: [
-      {
-        start: 'None',
-        end: 'None',
-        note: [],
-      },
-    ],
-    cities: classifyCities(getCitiesfromMAComp(MAComp)),
-    color: MAComp.color,
-  }
 }
 
 function MAAreaCodeInfoComponents({
@@ -139,9 +73,7 @@ function MAAreaCodeInfoComponents({
 
 function displayCode3digit(type: SearchType, query: string) {
   if (type !== 'code' && type !== 'code_prefix') return <></>
-
-  const code2 = query.charAt(1)
-  return Code3digit(Number(code2))
+  return Code3digit(Number(query.charAt(1)))
 }
 
 function SearchBox({ openFunc }: { openFunc: () => void }) {

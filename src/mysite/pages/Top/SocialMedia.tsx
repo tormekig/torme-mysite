@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header } from '../../components/Header'
+import { ContentHeader } from '../../components/ContentHeader'
 import { Timeline } from 'react-twitter-widgets'
 
 import mysite from 'mysite/assets/css/mysite.module.scss'
@@ -8,7 +8,7 @@ import mysite from 'mysite/assets/css/mysite.module.scss'
 export function SocialMedia() {
   return (
     <div>
-      <Header
+      <ContentHeader
         color={mysite.headlineGreen}
         ja={'ソーシャルメディア'}
         en={'Social Media'}
