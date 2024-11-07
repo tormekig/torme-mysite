@@ -1,0 +1,638 @@
+$color-red-1: #CA6074;
+$color-red-2: #D98A63;
+$color-red-3: #C0688E;
+$color-red-4: #C9726B;
+$color-green-1: #498E4E;
+$color-green-2: #6A9F5B;
+$color-green-3: #86CA5C;
+$color-green-4: #529B78;
+$color-blue-1: #495F8C;
+$color-blue-2: #2C78AE;
+$color-blue-3: #706D97;
+$color-blue-4: #1E748B;
+$color-yellow-1: #B39748;
+$color-yellow-2: #E7E55D;
+$color-yellow-3: #E6CD59;
+$color-yellow-4: #AFAE54;
+
+html {
+	background-color: #fdfcfd;
+}
+
+.areacodeBody {
+	min-width: 100%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "Noto Sans JP", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.MAAreaCodeContainer {
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1rem 1rem 8rem 1rem;
+}
+
+.searchBox {
+	display: flex;
+	align-items: stretch;
+    justify-content: center;
+}
+
+.openSearchDetailContainer {
+	white-space: nowrap;
+	display: flex;
+	margin: 0 0.5rem;
+	padding: 0 0.5rem;
+	border-left: 1px solid #ccc;
+}
+
+.openSearchDetail {
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+	background-color: #498E4E;
+	padding: 0 2rem;
+	color: #fff;
+	cursor: pointer;
+	text-align: center;
+
+	small {
+		font-weight: 400;
+	}
+}
+
+.MAAreaCodeHeader {
+	width: 100%;
+	margin: 2rem auto;
+	padding: 0;
+	border-radius: 1rem;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.mainHeader {
+	font-weight: 700;
+	font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+}
+
+.mainHeaderSub {
+	font-size: 1.5rem;
+}
+
+.mainHeaderMain {
+	font-size: 2.5rem;
+}
+
+.mainHeaderRuby {
+	font-size: 0.8rem;
+	color: #999;
+	padding: 0.5rem 0 1.0rem 0;
+}
+
+.mainHeaderLink {
+	background-color: $color-green-1;
+	font-size: 1rem;
+	font-weight: normal;
+	padding: 4px 1rem;
+	border-radius: 0.5rem;
+	margin: 0 0 0.5rem 0;
+	letter-spacing: -1px;
+	display: inline-block;
+	// filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+	transition: all .3s;
+	color: #fff;
+	text-decoration: none;
+}
+
+.mainHeaderLink:hover {
+	color: $color-green-1;
+	background-color: #fff;
+}
+
+.subHeader {
+	font-size: 0.9rem;
+	color: #777;
+}
+
+.checkBtnContainer {
+	width: 50%;
+	background-color: #f2f4f6;
+	padding: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	color: #555;
+
+	label {
+		margin: 0.25rem 0.5rem;
+		display: block;
+	}
+}
+
+.infoBlock {
+	width: 100%;
+	max-width: 864px;
+	margin: 2rem auto;
+	padding: 2rem 0;
+	border: 1px solid #ccc;
+	border-radius: 1rem;
+	background-color: #fff;
+	filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5));
+
+	.areacode {
+		width: 100%;
+		height: 5rem;
+		font-size: 4rem;
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Roboto', sans-serif;
+	}
+
+	.numberBands {
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 1.3rem;
+		font-family: 'Roboto', sans-serif;
+	}
+
+	.MApref {
+		width: 100%;
+		display: flex;
+		
+		div {
+			width: 50%;
+			padding: 1.5rem 1.0rem;
+			display: flex;
+			align-items: flex-end;
+		}
+	}
+
+	.pref > p,
+	.ma > p {
+		line-height: 1.0;
+	}
+
+	$offset: 2px;
+	$blur: 2px;
+	$shadow-color: rgba(255,255,255,0.8);
+	$text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $shadow-color,(-$offset) $offset $blur $shadow-color,  $offset (-$offset) $blur $shadow-color,$offset 0 $blur $shadow-color, (-$offset)  0 $blur $shadow-color,0 $offset $blur $shadow-color,  0 (-$offset) $blur $shadow-color;
+
+	.pref {
+		color: #fff;
+		text-align: right;
+		font-size: 1.8rem;
+		justify-content: flex-end;
+		// text-shadow: $text-shadow;
+	}
+
+	.ma {
+		color: #fff;
+		text-align: left;
+		font-size: 2.5rem;
+		justify-content: flex-start;
+		// text-shadow: $text-shadow;
+	}
+
+	.citiesContainer {
+		display: flex;
+		justify-content: center;
+		margin: 2rem;
+	}
+
+	.citiesContainer > div {
+		width: 100%;
+		max-width: 512px;
+	}
+
+	.prefList {
+		font-size: 1rem;
+		margin: 1rem 0;
+	}
+
+	@media screen and (max-width: 480px) {
+		.prefList {
+			font-size: 16px;
+		}
+	}
+
+	.prefofCities {
+		display: flex;
+		padding: 0 1em;
+	}
+
+	.prefofCities > a {
+		text-decoration: none;
+		padding: 0.25em 1em;
+		border-radius: 1em 1em 0 0;
+		font-size: 1.1em;
+		color: #fff;
+		border-style: solid;
+		border-top-width: 2px;
+		border-left-width: 2px;
+		border-right-width: 2px;
+		border-bottom-width: 0;
+		transition: .3s;
+	}
+
+	.countyList {
+		border-radius: 0.5em;
+	}
+
+	.cityList {
+		margin: 1em;
+	}
+
+	.cityListwithBorder {
+		margin: 1em;
+		padding: 0.5em;
+		border: 1px solid #ccc;
+		border-radius: 0.5em;
+	}
+
+	.city {
+		padding: 2px 0.7em;
+		border-radius: 1em;
+		margin: 0.25em;
+		font-size: 1em;
+		letter-spacing: -1px;
+		display: inline-block;
+		filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+		transition: all .3s;
+		color: #fff;
+		text-decoration: none;
+	}
+
+	.MAComp-red {
+		.pref {
+			background-color: $color-red-2;
+		}
+		.ma {
+			background-color: $color-red-1;
+		}
+		.prefofCities > a {
+			background: $color-red-4;
+			border-color: $color-red-4;
+		}
+		.prefofCities > a:hover {
+			color: $color-red-4;
+			background-color: #fff;
+		}
+		.countyList {
+			border: 1px solid $color-red-4;
+		}
+		.city {
+			background: $color-red-3;
+		}
+		.city:hover {
+			color: $color-red-3;
+			background-color: #fff;
+		}
+	}
+
+	.MAComp-green {
+		.pref {
+			background-color: $color-green-2;
+		}
+		.ma {
+			background-color: $color-green-1;
+		}
+		.prefofCities > a {
+			background: $color-green-4;
+			border-color: $color-green-4;
+		}
+		.prefofCities > a:hover {
+			color: $color-green-4;
+			background-color: #fff;
+		}
+		.countyList {
+			border: 1px solid $color-green-4;
+		}
+		.city {
+			background: $color-green-3;
+		}
+		.city:hover {
+			color: $color-green-3;
+			background-color: #fff;
+		}
+	}
+
+	.MAComp-blue {
+		.pref {
+			background-color: $color-blue-2;
+		}
+		.ma {
+			background-color: $color-blue-1;
+		}
+		.prefofCities > a {
+			background: $color-blue-4;
+			border-color: $color-blue-4;
+		}
+		.prefofCities > a:hover {
+			color: $color-blue-4;
+			background-color: #fff;
+		}
+		.countyList {
+			border: 1px solid $color-blue-4;
+		}
+		.city {
+			background: $color-blue-3;
+		}
+		.city:hover {
+			color: $color-blue-3;
+			background-color: #fff;
+		}
+	}
+
+	.MAComp-yellow {
+		.pref {
+			background-color: $color-yellow-2;
+			color: #333;
+		}
+		.ma {
+			background-color: $color-yellow-1;
+		}
+		.prefofCities > a {
+			background: $color-yellow-4;
+			border-color: $color-yellow-4;
+		}
+		.prefofCities > a:hover {
+			color: $color-yellow-4;
+			background-color: #fff;
+		}
+		.countyList {
+			border: 1px solid $color-yellow-4;
+		}
+		.city {
+			background: $color-yellow-3;
+			color: #333;
+		}
+		.city:hover {
+			color: $color-yellow-3;
+			background-color: #fff;
+		}
+	}
+
+	.prefListSimple {
+		text-align: left;
+		font-size: 0.8em;
+		font-weight: normal;
+		margin: 0;
+		display: flex;
+	}
+
+	.prefListSimple > .prefofCities {
+		display: block;
+		padding: 0;
+	}
+
+	.prefListSimple > .prefofCities > p {
+		background: none;
+		color: #000;
+		white-space: nowrap;
+		padding: 0.5em;
+		border-radius: 0;
+		font-size: 1em;
+		width: 4em;
+	}
+
+	.prefListSimple .countyList {
+		width: 100%;
+		white-space: collapse;
+		border: 1px solid #ccc;
+		border-radius: 0.5em;
+	}
+
+	.prefListSimple .cityList {
+		margin: 0.5em;
+	}
+
+	.prefListSimple .cityListwithBorder {
+		display: flex;
+		margin: 0.5em;
+		padding: 0;
+		border: none;
+		border-radius: 0;
+	}
+
+	.prefListSimple .city {
+		color: #000;
+		background: none;
+		padding: 0;
+		border-radius: 1em;
+		margin: 0;
+		font-size: 1em;
+		letter-spacing: -1px;
+		display: inline-block;
+		filter: none;
+	}
+
+	.infoTableContainer {
+		display: flex;
+		justify-content: center;
+		font-size: 0.9rem;
+	}
+
+	.infoTableContainer table {
+		border-collapse: collapse;
+	}
+
+	.infoTableContainer td {
+		vertical-align: top;
+		padding: 0.4rem;
+	}
+
+	.infoTableContainer tr td:nth-of-type(1){
+		text-align: right;
+		border-right: 1px solid #333;
+	}
+}
+
+/* .infoTableContainer tr td:nth-of-type(2){
+	font-family: 'Roboto', sans-serif;
+} */
+
+.infoTable {
+	width: 100%;
+	margin: 2rem auto;
+	border-spacing: 0 8px;
+
+
+	thead {
+		th {
+			padding: 0.5rem;
+			white-space: nowrap;
+			text-align: left;
+			font-size: 0.8rem;
+			color: #999;
+			font-weight: 400;
+		}
+	}
+
+	tbody {
+		filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+	}
+}
+
+.infoRow {
+	border: 1px solid #ccc;
+	border-radius: 1rem;
+	background-color: #fff;
+
+	.areacode {
+		color: #fff;
+		margin: 0 1rem;
+		font-size: 1.5rem;
+		min-width: calc(1.5rem * 5);
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Roboto', sans-serif;
+		white-space: nowrap;
+	}
+
+	.numberBands {
+		margin: 0.4rem 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		font-size: 0.8rem;
+		font-family: 'Roboto', sans-serif;
+		white-space: nowrap;
+		text-align: center;
+	}
+
+	$offset: 2px;
+	$blur: 2px;
+	$shadow-color: rgba(255,255,255,0.8);
+	$text-shadow: $offset $offset $blur $shadow-color, (-$offset) (-$offset) $blur $shadow-color,(-$offset) $offset $blur $shadow-color,  $offset (-$offset) $blur $shadow-color,$offset 0 $blur $shadow-color, (-$offset)  0 $blur $shadow-color,0 $offset $blur $shadow-color,  0 (-$offset) $blur $shadow-color;
+
+	.pref {
+		margin: 0 0.2rem;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		font-size: 0.8rem;
+		font-weight: 400;
+		color: #888;
+	}
+
+	.ma {
+		min-width: calc(1.2rem * 5);
+		margin: 0 1rem;
+		font-size: 1.2rem;
+		font-weight: 600;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.citiesContainerTd {
+		width: 100%;
+	}
+
+	.prefList {
+		margin: 0 0.5rem;
+		display: flex;
+	}
+
+	.prefofCities {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+	}
+
+	.prefofCities > a {
+		color: $color-yellow-4;
+		text-decoration: none;
+		font-size: 0.8rem;
+		font-weight: 400;
+		transition: .3s;
+		white-space: nowrap;
+	}
+
+	.prefofCities > a:hover {
+		color: $color-yellow-4;
+		background-color: #fff;
+	}
+
+	.countyList {
+		margin: 0.5rem;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.cityList,
+	.cityListwithBorder {
+		border-left: 1px solid $color-yellow-4;
+		display: flex;
+		align-items: center;
+		margin: 0;
+		padding: 0 0.5rem;
+	}
+
+	.cityList:first-child,
+	.cityListwithBorder:first-child {
+		border: 0;
+	}
+
+	.countyName {
+		font-size: 0.8rem;
+		margin-right: 0.2rem;
+		white-space: nowrap;
+	}
+
+	.city {
+		padding: 2px 0.7em;
+		border-radius: 1em;
+		margin: 0.25em;
+		font-size: 0.9rem;
+		letter-spacing: -1px;
+		display: inline-block;
+		// filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+		transition: all .3s;
+		text-decoration: none;
+		background: $color-yellow-3;
+		color: #333;
+	}
+	
+	.city:hover {
+		color: $color-yellow-3;
+		background-color: #fff;
+	}
+
+	.additionalInfo {
+		padding: 8px;
+		font-size: 0.8rem;
+		white-space: nowrap;
+	}
+}
+
+.codeListMiddle {
+	width: 100%;
+	margin: 1rem auto;
+	filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
+	position: fixed;
+	bottom: 2rem;
+	left: 50%;
+	transform: translate(-50%, 0);
+	z-index: 1;
+}
+
+@media screen and (max-width: 480px) {
+	.codeListMiddle a {
+		padding: 1rem 0.5rem;
+	}
+}

@@ -4,25 +4,39 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^5.3.1",
+    "@splidejs/react-splide": "^0.7.12",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.7",
+    "@types/react-dom": "^18.3.0",
     "aws-amplify": "^5.3.11",
+    "framer-motion": "^11.2.10",
     "jquery": "^3.7.1",
     "react": "^18.2.0",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-quiz-component": "^0.7.0",
     "react-router-dom": "^6.18.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
+    "react-tabs": "^6.0.2",
+    "react-twitter-widgets": "^1.11.0",
     "sass": "^1.69.5",
+    "save": "^2.9.0",
+    "typescript": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev:scss": "typed-scss-modules src --watch",
+    "typegen:scss": "typed-scss-modules src"
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +55,26 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@types/react-modal": "^3.16.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.36.1",
+    "globals": "^15.9.0",
+    "loader-utils": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "nth-check": "^2.0.1",
+    "prettier": "3.3.3",
+    "react-scroll": "^1.9.0",
+    "typed-scss-modules": "^8.0.1",
+    "typescript-eslint": "^8.6.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
   }
 }

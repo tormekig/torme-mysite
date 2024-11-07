@@ -22,7 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-参考
+public/img/unpublish
+lib
+playground
+資料
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
