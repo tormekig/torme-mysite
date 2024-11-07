@@ -21,16 +21,36 @@ export function Content() {
         <div id={mysite.profileContent}>
           <h2 id={mysite.sasameName}>
             <motion.div
-              initial={{ transform: 'translateX(-50%)', opacity: 0 }}
-              whileInView={{ transform: 'translateX(0%)', opacity: 1 }}
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: -100,
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                },
+              }}
+              initial="hidden"
+              whileInView="visible"
               transition={{ ease: 'easeInOut', duration: 0.8 }}
               className="profile-name-main"
             >
               銀花 ささめ
             </motion.div>
             <motion.div
-              initial={{ transform: 'translateX(50%)', opacity: 0 }}
-              whileInView={{ transform: 'translateX(0%)', opacity: 1 }}
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  x: 50,
+                },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                },
+              }}
+              initial="hidden"
+              whileInView="visible"
               transition={{ ease: 'easeInOut', duration: 0.8 }}
               className={mysite.profileNameSmall}
             >

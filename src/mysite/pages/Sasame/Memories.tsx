@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
-
-import '../../assets/css/styles.css'
 import '@splidejs/react-splide/css'
+
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll'
 
@@ -71,13 +70,21 @@ function Memory({ data }: { data: MemoryInfo }) {
                 arrows: false,
                 pagination: false,
                 drag: 'free',
+                breakpoints: {
+                  1024: {
+                    height: '256px',
+                  },
+                  600: {
+                    height: '192px',
+                  },
+                },
               }}
-              className="splide"
               extensions={{ AutoScroll }}
+              className={`${sasame.slider}`}
             >
               {data.imgs.map((img, i) => {
                 return (
-                  <SplideSlide>
+                  <SplideSlide key={i}>
                     <img src={img} alt="" />
                   </SplideSlide>
                 )

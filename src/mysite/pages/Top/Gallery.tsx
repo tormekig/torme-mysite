@@ -2,7 +2,7 @@ import React from 'react'
 
 import { motion } from 'framer-motion'
 
-import 'mysite/assets/css/mysite.module.scss'
+import mysite from 'mysite/assets/css/mysite.module.scss'
 
 interface Img {
   img: string
@@ -66,8 +66,8 @@ export function Gallery({ name }: { name: string }) {
   })
 
   return (
-    <div id="galleryContainer">
-      <ul id="gallery">{galleries}</ul>
+    <div id={mysite.galleryContainer}>
+      <ul id={mysite.gallery}>{galleries}</ul>
     </div>
   )
 }

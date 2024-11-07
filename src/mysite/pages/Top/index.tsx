@@ -1,6 +1,6 @@
 import React from 'react'
 
-import 'mysite/assets/css/mysite.module.scss'
+import mysite from 'mysite/assets/css/mysite.module.scss'
 import { ScrollTop } from '../../../utils/tools'
 import { Content as SasameContent } from '../Sasame/Content'
 import { Content as EmuContent } from '../Emu/Content'
@@ -14,7 +14,7 @@ import { MoreDetailParallax } from './MoreDetailParallax'
 
 const Top = () => {
   return (
-    <div className="mysiteBody">
+    <div className={mysite.mysiteBody}>
       <ScrollTop />
       <main>
         <div id="loading">
