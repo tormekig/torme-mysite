@@ -275,12 +275,40 @@ a {
   }
 }
 
-.kozushima2307 {
+.pink {
+  background-color: #ed7daa;
+}
+
+.red {
+  background-color: #ff9787;
+}
+
+.orange {
+  background-color: #ffb487;
+}
+
+.yellow {
+  background-color: #ffe187;
+}
+
+.green {
+  background-color: #75df95;
+}
+
+.lightgreen {
+  background-color: #b3e77a;
+}
+
+.blue {
   background-color: #7e8fd7;
 }
 
-.inage2306 {
+.lightblue {
   background-color: #71bbd0;
+}
+
+.purple {
+  background-color: #be74d5;
 }
 
 .tripHeaderBottom {
@@ -292,7 +320,7 @@ a {
 .tripHeaderTop {
   -webkit-writing-mode: vertical-rl;
   writing-mode: vertical-rl;
-  text-orientation: upright;
+  // text-orientation: upright;
 }
 
 .tripHeaderTextMain {

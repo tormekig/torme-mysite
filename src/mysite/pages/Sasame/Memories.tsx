@@ -7,39 +7,7 @@ import '@splidejs/react-splide/css'
 
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll'
-
-interface MemoryInfo {
-  className: string
-  textmain: string
-  textsub: string
-  triptime: string
-  triplocation: string
-  imgs: string[]
-}
-
-const data: MemoryInfo[] = [
-  {
-    className: sasame.kozushima2307,
-    textmain: '神津島',
-    textsub: '旅行',
-    triptime: '2023/7/15～17',
-    triplocation: '東京都神津島村',
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
-  },
-  {
-    className: sasame.inage2306,
-    textmain: '稲毛海岸',
-    textsub: 'ロケ撮影',
-    triptime: '2023/6/10',
-    triplocation: '千葉県千葉市',
-    imgs: [
-      'img/230613.jpg',
-      'img/230801.jpg',
-      'img/230613.jpg',
-      'img/230801.jpg',
-    ],
-  },
-]
+import { data, MemoryInfo } from './MemoryData'
 
 function Memory({ data }: { data: MemoryInfo }) {
   return (
@@ -52,7 +20,11 @@ function Memory({ data }: { data: MemoryInfo }) {
           </div>
           <div className={sasame.tripHeaderBottom}>
             <div>{data.triptime}</div>
-            <div>{data.triplocation}</div>
+            <div>
+              {data.tags.map((tag, i) => {
+                return <div key={i}>#{tag}</div>
+              })}
+            </div>
           </div>
         </div>
         <div className={sasame.tripMain}>
