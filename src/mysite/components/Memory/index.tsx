@@ -7,9 +7,16 @@ import '@splidejs/react-splide/css'
 
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll'
-import { data, MemoryInfo } from './MemoryData'
+import { Character, data, MemoryInfo } from './data'
+import { ImgMetaData, ImgModalThumb } from '../imgModal'
 
-function Memory({ data }: { data: MemoryInfo }) {
+function Memory({
+  data,
+  openModal,
+}: {
+  data: MemoryInfo
+  openModal: (imgMetaData: ImgMetaData) => void
+}) {
   return (
     <div className={`${sasame.tripContent} ${data.className}`}>
       <div className={sasame.tripContentInner}>
@@ -41,7 +48,7 @@ function Memory({ data }: { data: MemoryInfo }) {
                 },
                 arrows: false,
                 pagination: false,
-                drag: 'free',
+                drag: false,
                 breakpoints: {
                   1024: {
                     height: '256px',
@@ -57,7 +64,10 @@ function Memory({ data }: { data: MemoryInfo }) {
               {data.imgs.map((img, i) => {
                 return (
                   <SplideSlide key={i}>
-                    <img src={img} alt="" />
+                    <ImgModalThumb
+                      imgMetaData={{ img }}
+                      openModal={openModal}
+                    />
                   </SplideSlide>
                 )
               })}
@@ -69,13 +79,34 @@ function Memory({ data }: { data: MemoryInfo }) {
   )
 }
 
-export function Memories() {
+export function MemoryList({
+  openModal,
+  characters,
+}: {
+  openModal: (imgMetaData: ImgMetaData) => void
+  characters: Character[]
+}) {
+  function isIncludeCharacters(memory: MemoryInfo) {
+    let judge = false
+    memory.characters.forEach((c) => {
+      characters.forEach((c2) => {
+        console.log(c, c2)
+        if (c === c2) judge = true
+      })
+    })
+    return judge
+  }
+
+  const d = data.filter((d) => isIncludeCharacters(d))
+  console.log(d)
   return (
     <div>
       <ContentHeader ja={'思い出'} en={'Memories'} />
-      {data.map((d, i) => {
-        return <Memory data={d} key={i} />
-      })}
+      {data
+        .filter((d) => isIncludeCharacters(d))
+        .map((d, i) => {
+          return <Memory data={d} openModal={openModal} key={i} />
+        })}
     </div>
   )
 }

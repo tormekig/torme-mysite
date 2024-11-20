@@ -1,6 +1,6 @@
 import sasame from '../../assets/css/sasame.module.scss'
 
-type Character = 'emu' | 'sasame'
+export type Character = 'emu' | 'sasame'
 
 export interface MemoryInfo {
   className: string
@@ -18,8 +18,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ひだコス',
     textsub: 'イベント',
     triptime: '2024/10',
-    tags: ['岐阜県高山市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['飛騨高山'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -27,17 +27,17 @@ export const data: MemoryInfo[] = [
     textmain: 'さる小',
     textsub: 'オフ',
     triptime: '2024/9',
-    tags: ['群馬県みなかみ町'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['猿ヶ京温泉'],
+    imgs: [],
     characters: ['emu', 'sasame'],
   },
   {
     className: sasame.lightblue,
-    textmain: '伊豆貸別荘オフ',
+    textmain: '貸別荘オフ',
     textsub: 'オフ',
     triptime: '2024/9',
-    tags: ['静岡県'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['伊豆'],
+    imgs: [],
     characters: ['emu', 'sasame'],
   },
   {
@@ -46,7 +46,7 @@ export const data: MemoryInfo[] = [
     textsub: 'オフ',
     triptime: '2024/9',
     tags: ['Birthday'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['emu', 'sasame'],
   },
   {
@@ -55,7 +55,7 @@ export const data: MemoryInfo[] = [
     textsub: 'イベント',
     triptime: '2024/8',
     tags: ['東京ビッグサイト'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -63,8 +63,8 @@ export const data: MemoryInfo[] = [
     textmain: 'コスサミ',
     textsub: 'イベント',
     triptime: '2024/8',
-    tags: ['愛知県名古屋市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['名古屋'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -72,8 +72,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ワンフェス',
     textsub: 'イベント',
     triptime: '2024/7',
-    tags: ['千葉県千葉市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['幕張メッセ'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -81,8 +81,8 @@ export const data: MemoryInfo[] = [
     textmain: '貸別荘オフ',
     textsub: 'オフ',
     triptime: '2024/7',
-    tags: ['静岡県沼津市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['沼津'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -90,8 +90,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ラグコス',
     textsub: 'イベント',
     triptime: '2024/6',
-    tags: ['愛知県蒲郡市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['ラグーナテンボス'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -100,7 +100,7 @@ export const data: MemoryInfo[] = [
     textsub: 'イベント',
     triptime: '2024/5',
     tags: ['お台場', 'きぐぱ'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -109,16 +109,16 @@ export const data: MemoryInfo[] = [
     textsub: 'ロケ撮影',
     triptime: '2024/5',
     tags: ['バガテル公園'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
     className: sasame.blue,
-    textmain: '横浜撮影会',
+    textmain: '撮影会',
     textsub: 'スタジオ撮影',
     triptime: '2024/5',
     tags: ['神奈川県横浜市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -126,8 +126,8 @@ export const data: MemoryInfo[] = [
     textmain: 'バニーバー',
     textsub: 'イベント',
     triptime: '2024/4',
-    tags: ['東京都台東区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['TOKYOバニーガール'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -135,8 +135,8 @@ export const data: MemoryInfo[] = [
     textmain: '桜',
     textsub: 'イベント',
     triptime: '2024/4',
-    tags: ['群馬県桐生市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['水沼'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -144,8 +144,8 @@ export const data: MemoryInfo[] = [
     textmain: '仮染街',
     textsub: 'イベント',
     triptime: '2024/3',
-    tags: ['埼玉県寄居町'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['寄居'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -153,8 +153,8 @@ export const data: MemoryInfo[] = [
     textmain: 'お迎え撮影',
     textsub: 'スタジオ撮影',
     triptime: '2024/3',
-    tags: ['東京都新宿区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['スタジオ'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -162,8 +162,8 @@ export const data: MemoryInfo[] = [
     textmain: '蘇我',
     textsub: 'イベント',
     triptime: '2024/3',
-    tags: ['千葉県千葉市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['蘇我'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -171,8 +171,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ラグコス',
     textsub: 'イベント',
     triptime: '2024/2',
-    tags: ['愛知県蒲郡市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['ラグーナテンボス'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -180,8 +180,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ワンフェス',
     textsub: 'イベント',
     triptime: '2024/2',
-    tags: ['千葉県千葉市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['幕張メッセ'],
+    imgs: [],
     characters: ['emu'],
   },
   {
@@ -189,8 +189,8 @@ export const data: MemoryInfo[] = [
     textmain: '4696',
     textsub: 'スタジオ撮影',
     triptime: '2024/2',
-    tags: ['東京都目黒区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['目黒'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -199,7 +199,7 @@ export const data: MemoryInfo[] = [
     textsub: 'オフ',
     triptime: '2024/1',
     tags: ['東京都港区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -207,8 +207,8 @@ export const data: MemoryInfo[] = [
     textmain: '名古屋オフ',
     textsub: 'オフ',
     triptime: '2023/12',
-    tags: ['愛知県名古屋市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['名古屋'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -216,8 +216,8 @@ export const data: MemoryInfo[] = [
     textmain: 'ラグコス',
     textsub: 'イベント',
     triptime: '2023/11',
-    tags: ['愛知県蒲郡市'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['ラグーナテンボス'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -225,8 +225,8 @@ export const data: MemoryInfo[] = [
     textmain: 'バニーバー',
     textsub: 'イベント',
     triptime: '2023/10',
-    tags: ['東京都台東区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['TOKYOバニーガール'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -234,8 +234,8 @@ export const data: MemoryInfo[] = [
     textmain: '東京タワー',
     textsub: 'イベント',
     triptime: '2023/9',
-    tags: ['東京都港区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['COSSAN'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -244,7 +244,7 @@ export const data: MemoryInfo[] = [
     textsub: 'イベント',
     triptime: '2023/9',
     tags: ['東京都江東区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    imgs: [],
     characters: ['sasame'],
   },
   {
@@ -252,8 +252,8 @@ export const data: MemoryInfo[] = [
     textmain: '例のプール',
     textsub: 'オフ',
     triptime: '2023/7',
-    tags: ['東京都新宿区'],
-    imgs: ['img/230717.jpg', 'img/230724.jpg', 'img/230727.jpg'],
+    tags: ['新宿'],
+    imgs: [],
     characters: ['sasame'],
   },
   {

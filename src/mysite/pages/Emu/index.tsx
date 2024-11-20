@@ -5,8 +5,6 @@ import 'mysite/assets/css/imgModal.scss'
 
 import { ScrollTop } from '../../../utils/tools'
 import { Content } from './Content'
-import { Personality } from './Personality'
-import { HowToTakePictures } from './HowToTakePictures'
 import { MemoryList } from '../../components/Memory'
 import { Footer } from 'mysite/components/Footer'
 
@@ -16,7 +14,7 @@ import { ImgMetaData, ImgModal } from 'mysite/components/imgModal'
 
 Modal.setAppElement('#root')
 
-export function Sasame() {
+export function Emu() {
   const [modalImgMetaData, setModalImgMetaData] = useState({})
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = (imgMetaData: ImgMetaData) => {
@@ -30,7 +28,7 @@ export function Sasame() {
     <div className={mysite.mysiteBody}>
       <ScrollTop />
       <div id="splash">
-        <div id="splash-logo">Sasame</div>
+        <div id="splash-logo">Emu</div>
       </div>
       <div className="splashbg"></div>
       <div id="container">
@@ -42,9 +40,7 @@ export function Sasame() {
           <ImgModal closeFunc={closeModal} imgMetaData={modalImgMetaData} />
         </Modal>
         <Content />
-        <Personality />
-        <HowToTakePictures openModal={openModal} />
-        <MemoryList openModal={openModal} characters={['sasame']} />
+        <MemoryList openModal={openModal} characters={['emu']} />
         <Footer />
       </div>
     </div>

@@ -8,10 +8,12 @@ export function MoreDetailParallax({
   img,
   name,
   link,
+  className,
 }: {
   img: string
   name: string
   link: string
+  className: string
 }) {
   return (
     <div
@@ -26,7 +28,7 @@ export function MoreDetailParallax({
           transition={{ ease: 'easeInOut', duration: 1.0 }}
         >
           <div>{name}のことをもっと知りたい方はこちら</div>
-          <div className={mysite.dotContentContentAOuter}>
+          <div className={`${className}`}>
             <Link to={link}>{name}の部屋</Link>
           </div>
         </motion.div>

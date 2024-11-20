@@ -30,15 +30,21 @@ const Top = () => {
           <ContentHeader ja={'キャラクター紹介'} en={'Characters'} />
 
           <SasameContent />
-          <Gallery name="sasame" />
+          {/* <Gallery name="sasame" /> */}
           <MoreDetailParallax
             img={'./img/221029.jpg'}
             name={'ささめ'}
             link={'/sasame'}
+            className={mysite.dotContentSasameContentOuter}
           />
 
           <EmuContent />
-          <Gallery name="emu" />
+          <MoreDetailParallax
+            img={'./img/EmuTable.jpg'}
+            name={'えむ'}
+            link={'/emu'}
+            className={mysite.dotContentEmuContentOuter}
+          />
         </div>
 
         <SocialMedia />

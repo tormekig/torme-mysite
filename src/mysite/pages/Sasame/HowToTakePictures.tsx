@@ -3,8 +3,13 @@ import React from 'react'
 import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
+import { ImgMetaData, ImgModalThumb } from 'mysite/components/imgModal'
 
-export function HowToTakePictures() {
+export function HowToTakePictures({
+  openModal,
+}: {
+  openModal: (imgMetaData: ImgMetaData) => void
+}) {
   interface ImgInfo {
     src: string
     alt: string
@@ -27,11 +32,11 @@ export function HowToTakePictures() {
         {imgs.map((img, i) => {
           const horizontalClass = img.horizontal ? sasame.horizontalImg : ''
           return (
-            <div className={sasame.hoverImgContainer} key={i}>
-              <a href={img.src} data-lightbox={group} data-title={img.alt}>
-                <img src={img.src} alt={img.alt} className={horizontalClass} />
-              </a>
-            </div>
+            <ImgModalThumb
+              imgMetaData={{ img: img.src }}
+              openModal={openModal}
+              key={i}
+            />
           )
         })}
       </div>
