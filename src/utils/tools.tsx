@@ -30,3 +30,20 @@ export interface RoutePath {
   path: string
   children: React.JSX.Element
 }
+
+export function convertPathToS3(path: string, isThumb: boolean = false) {
+  let isLocal = false
+  // isLocal = true
+
+  const BUCKET_NAME = 'torme-mysite-bucket'
+  const REGION = 'ap-northeast-1'
+  if (isLocal) {
+    return `sync/${path}`
+  } else {
+    if (isThumb) {
+      return `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/sync/thumb/${path}`
+    } else {
+      return `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/sync/${path}`
+    }
+  }
+}

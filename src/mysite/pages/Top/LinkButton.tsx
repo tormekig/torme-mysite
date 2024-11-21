@@ -1,6 +1,7 @@
 import React from 'react'
 
 import mysite from 'mysite/assets/css/mysite.module.scss'
+import { convertPathToS3 } from 'utils/tools'
 
 export function LinkButton() {
   const buttons: React.JSX.Element[] = []
@@ -33,7 +34,7 @@ export function LinkButton() {
       <li className={mysite.linkButton} key={i}>
         <a href={link.url} target="_blank" rel="noreferrer">
           <div className={mysite.linkIcon}>
-            <img src={link.img} />
+            <img src={convertPathToS3(link.img)} />
           </div>
           <div className={mysite.linkText}>
             <div className={mysite.linkTextSub}>{link.text}</div>

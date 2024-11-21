@@ -40,7 +40,7 @@ function Memory({
               options={{
                 gap: '1rem',
                 type: 'loop',
-                height: '512px',
+                height: '256px',
                 autoWidth: true,
                 lazyLoad: 'nearby',
                 autoScroll: {
@@ -49,10 +49,9 @@ function Memory({
                 arrows: false,
                 pagination: false,
                 drag: false,
+                pauseOnHover: false,
+                pauseOnFocus: false,
                 breakpoints: {
-                  1024: {
-                    height: '256px',
-                  },
                   600: {
                     height: '192px',
                   },
@@ -64,10 +63,7 @@ function Memory({
               {data.imgs.map((img, i) => {
                 return (
                   <SplideSlide key={i}>
-                    <ImgModalThumb
-                      imgMetaData={{ img }}
-                      openModal={openModal}
-                    />
+                    <ImgModalThumb imgMetaData={img} openModal={openModal} />
                   </SplideSlide>
                 )
               })}
@@ -90,15 +86,12 @@ export function MemoryList({
     let judge = false
     memory.characters.forEach((c) => {
       characters.forEach((c2) => {
-        console.log(c, c2)
         if (c === c2) judge = true
       })
     })
     return judge
   }
 
-  const d = data.filter((d) => isIncludeCharacters(d))
-  console.log(d)
   return (
     <div>
       <ContentHeader ja={'思い出'} en={'Memories'} />

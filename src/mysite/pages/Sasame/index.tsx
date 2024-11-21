@@ -17,7 +17,7 @@ import { ImgMetaData, ImgModal } from 'mysite/components/imgModal'
 Modal.setAppElement('#root')
 
 export function Sasame() {
-  const [modalImgMetaData, setModalImgMetaData] = useState({})
+  const [modalImgMetaData, setModalImgMetaData] = useState({ src: '' })
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = (imgMetaData: ImgMetaData) => {
     setModalIsOpen(true)
@@ -39,7 +39,7 @@ export function Sasame() {
           onRequestClose={closeModal}
           closeTimeoutMS={200}
         >
-          <ImgModal closeFunc={closeModal} imgMetaData={modalImgMetaData} />
+          <ImgModal imgMetaData={modalImgMetaData} />
         </Modal>
         <Content />
         <Personality />

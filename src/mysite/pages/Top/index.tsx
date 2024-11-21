@@ -1,13 +1,12 @@
 import React from 'react'
 
 import mysite from 'mysite/assets/css/mysite.module.scss'
-import { ScrollTop } from '../../../utils/tools'
+import { convertPathToS3, ScrollTop } from '../../../utils/tools'
 import { Content as SasameContent } from '../Sasame/Content'
 import { Content as EmuContent } from '../Emu/Content'
 import { ContentHeader } from '../../components/ContentHeader'
 import { TopContent } from './TopContent'
 import { TormeContent } from './Content'
-import { Gallery } from './Gallery'
 import { SocialMedia } from './SocialMedia'
 import { Footer } from 'mysite/components/Footer'
 import { MoreDetailParallax } from './MoreDetailParallax'
@@ -32,7 +31,7 @@ const Top = () => {
           <SasameContent />
           {/* <Gallery name="sasame" /> */}
           <MoreDetailParallax
-            img={'./img/221029.jpg'}
+            img={convertPathToS3('img/221029.jpg')}
             name={'ささめ'}
             link={'/sasame'}
             className={mysite.dotContentSasameContentOuter}
@@ -40,7 +39,7 @@ const Top = () => {
 
           <EmuContent />
           <MoreDetailParallax
-            img={'./img/EmuTable.jpg'}
+            img={convertPathToS3('img/EmuTable.JPG')}
             name={'えむ'}
             link={'/emu'}
             className={mysite.dotContentEmuContentOuter}

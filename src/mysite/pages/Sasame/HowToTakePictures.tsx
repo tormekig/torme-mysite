@@ -32,11 +32,7 @@ export function HowToTakePictures({
         {imgs.map((img, i) => {
           const horizontalClass = img.horizontal ? sasame.horizontalImg : ''
           return (
-            <ImgModalThumb
-              imgMetaData={{ img: img.src }}
-              openModal={openModal}
-              key={i}
-            />
+            <ImgModalThumb imgMetaData={img} openModal={openModal} key={i} />
           )
         })}
       </div>

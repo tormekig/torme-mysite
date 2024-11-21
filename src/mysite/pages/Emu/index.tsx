@@ -15,11 +15,11 @@ import { ImgMetaData, ImgModal } from 'mysite/components/imgModal'
 Modal.setAppElement('#root')
 
 export function Emu() {
-  const [modalImgMetaData, setModalImgMetaData] = useState({})
+  const [modalImgMetaData, setModalImgMetaData] = useState({ src: '' })
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const openModal = (imgMetaData: ImgMetaData) => {
-    setModalIsOpen(true)
     setModalImgMetaData(imgMetaData)
+    setModalIsOpen(true)
   }
   const closeModal = () => {
     setModalIsOpen(false)
@@ -37,7 +37,7 @@ export function Emu() {
           onRequestClose={closeModal}
           closeTimeoutMS={200}
         >
-          <ImgModal closeFunc={closeModal} imgMetaData={modalImgMetaData} />
+          <ImgModal imgMetaData={modalImgMetaData} />
         </Modal>
         <Content />
         <MemoryList openModal={openModal} characters={['emu']} />

@@ -1,32 +1,19 @@
 import React from 'react'
 import mysite from 'mysite/assets/css/mysite.module.scss'
+import { convertPathToS3 } from 'utils/tools'
 
 export interface ImgMetaData {
-  thumbnail?: string
-  img?: string
+  src: string
   alt?: string
 }
 
-export function ImgModal({
-  closeFunc,
-  imgMetaData,
-}: {
-  closeFunc: () => void
-  imgMetaData: ImgMetaData
-}) {
+export function ImgModal({ imgMetaData }: { imgMetaData: ImgMetaData }) {
   return (
     <div className={mysite.imgModal}>
       <div className={mysite.imgContainer}>
-        <img src={imgMetaData.img} />
+        <img src={convertPathToS3(imgMetaData.src)} />
       </div>
-      <p>{imgMetaData.alt}撮影：〇〇〇さん</p>
-      {/* <div
-        onClick={() => {
-          closeFunc()
-        }}
-      >
-        <span>閉じる</span>
-      </div> */}
+      <p>{imgMetaData.alt}</p>
     </div>
   )
 }
@@ -39,14 +26,13 @@ export function ImgModalThumb({
   openModal: (imgMetaData: ImgMetaData) => void
 }) {
   return (
-    <div className={mysite.imgModalThumbContainer}>
-      <img
-        src={imgMetaData.img}
-        alt={imgMetaData.alt}
-        onClick={() => {
-          openModal(imgMetaData)
-        }}
-      />
+    <div
+      className={mysite.imgModalThumbContainer}
+      onClick={() => {
+        openModal(imgMetaData)
+      }}
+    >
+      <img src={convertPathToS3(imgMetaData.src, true)} />
     </div>
   )
 }

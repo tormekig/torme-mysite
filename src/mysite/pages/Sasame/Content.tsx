@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 import mysite from '../../assets/css/mysite.module.scss'
+import { convertPathToS3 } from 'utils/tools'
 
 export function Content() {
   return (
@@ -13,7 +14,7 @@ export function Content() {
             initial={{ scale: 1 }}
             whileInView={{ scale: 1.05 }}
             transition={{ ease: 'easeOut', duration: 10.0 }}
-            src="img\230503.jpg"
+            src={convertPathToS3('img/230503.jpg')}
           />
         </div>
       </div>
