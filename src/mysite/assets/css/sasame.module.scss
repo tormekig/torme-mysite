@@ -368,12 +368,16 @@ a {
     margin-right: 3rem;
     border-left: none;
     border-bottom: 1px solid #fff;
-    padding: 1rem 1rem 0.5rem 1rem;
+    padding: 1rem 1rem 0.5rem 2rem;
     font-size: 2rem;
   }
 
   .tripHeaderTextSub {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .tripHeaderBottom {
+    padding: 1rem 2rem;
   }
 
   .tripMain {
