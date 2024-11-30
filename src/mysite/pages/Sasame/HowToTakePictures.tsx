@@ -3,8 +3,13 @@ import React from 'react'
 import { ContentHeader } from 'mysite/components/ContentHeader'
 
 import sasame from '../../assets/css/sasame.module.scss'
+import { ImgMetaData, ImgModalThumb } from 'mysite/components/imgModal'
 
-export function HowToTakePictures() {
+export function HowToTakePictures({
+  openModal,
+}: {
+  openModal: (imgMetaData: ImgMetaData) => void
+}) {
   interface ImgInfo {
     src: string
     alt: string
@@ -27,11 +32,7 @@ export function HowToTakePictures() {
         {imgs.map((img, i) => {
           const horizontalClass = img.horizontal ? sasame.horizontalImg : ''
           return (
-            <div className={sasame.hoverImgContainer} key={i}>
-              <a href={img.src} data-lightbox={group} data-title={img.alt}>
-                <img src={img.src} alt={img.alt} className={horizontalClass} />
-              </a>
-            </div>
+            <ImgModalThumb imgMetaData={img} openModal={openModal} key={i} />
           )
         })}
       </div>
@@ -253,8 +254,8 @@ export function HowToTakePictures() {
                 <Imgs
                   group={'situation-example'}
                   imgs={[
-                    { src: 'img/231104.JPG', alt: 'ラグコス' },
-                    { src: 'img/230910.jpg', alt: '東京タワー' },
+                    { src: 'img/etc/231104.JPG', alt: 'ラグコス' },
+                    { src: 'img/etc/230910.jpg', alt: '東京タワー' },
                   ]}
                 />
               </div>
@@ -274,12 +275,12 @@ export function HowToTakePictures() {
                   group={'situation-example'}
                   imgs={[
                     {
-                      src: 'img/230504cp.jpg',
+                      src: 'img/etc/230504cp.jpg',
                       alt: 'kig-cp-2305',
                       horizontal: true,
                     },
                     {
-                      src: 'img/230527.jpg',
+                      src: 'img/etc/230527.jpg',
                       alt: 'アパートにて',
                       horizontal: true,
                     },
@@ -300,7 +301,7 @@ export function HowToTakePictures() {
                   group={'situation-example'}
                   imgs={[
                     {
-                      src: 'img/230717_group.jpg',
+                      src: 'img/etc/230717_group.jpg',
                       alt: '神津島集合写真',
                       horizontal: true,
                     },
@@ -320,9 +321,9 @@ export function HowToTakePictures() {
                 <Imgs
                   group={'situation-example'}
                   imgs={[
-                    { src: 'img/230902cp.JPG', alt: 'kig-cp-2309' },
+                    { src: 'img/etc/230902cp.JPG', alt: 'kig-cp-2309' },
                     {
-                      src: 'img/230701.jpg',
+                      src: 'img/etc/230701.JPG',
                       alt: 'kig-cp-2307名古屋',
                       horizontal: true,
                     },
@@ -344,8 +345,8 @@ export function HowToTakePictures() {
                 <Imgs
                   group={'situation-example'}
                   imgs={[
-                    { src: 'img/221031.jpg', alt: 'ハロウィン' },
-                    { src: 'img/231225.jpg', alt: 'クリスマス' },
+                    { src: 'img/etc/221031.jpg', alt: 'ハロウィン' },
+                    { src: 'img/etc/231225.jpg', alt: 'クリスマス' },
                   ]}
                 />
               </div>
@@ -363,8 +364,8 @@ export function HowToTakePictures() {
                 <Imgs
                   group={'situation-example'}
                   imgs={[
-                    { src: 'img/230502cp_train.jpg', alt: '電車' },
-                    { src: 'img/230730.jpg', alt: 'プール' },
+                    { src: 'img/etc/230502cp_train.jpg', alt: '電車' },
+                    { src: 'img/etc/230730.jpg', alt: 'プール' },
                   ]}
                 />
               </div>

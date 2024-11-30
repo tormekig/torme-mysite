@@ -275,12 +275,44 @@ a {
   }
 }
 
-.kozushima2307 {
+.pink {
+  background-color: #ed7daa;
+}
+
+.red {
+  background-color: #ff9787;
+}
+
+.orange {
+  background-color: #ffb487;
+}
+
+.yellow {
+  background-color: #ffe187;
+}
+
+.green {
+  background-color: #75df95;
+}
+
+.lightgreen {
+  background-color: #b3e77a;
+}
+
+.blue {
   background-color: #7e8fd7;
 }
 
-.inage2306 {
+.lightblue {
   background-color: #71bbd0;
+}
+
+.purple {
+  background-color: #be74d5;
+}
+
+.tripHeader {
+  margin-bottom: 3rem;
 }
 
 .tripHeaderBottom {
@@ -292,7 +324,7 @@ a {
 .tripHeaderTop {
   -webkit-writing-mode: vertical-rl;
   writing-mode: vertical-rl;
-  text-orientation: upright;
+  // text-orientation: upright;
 }
 
 .tripHeaderTextMain {
@@ -321,11 +353,31 @@ a {
 @media screen and (max-width: 864px) {
   .tripContentInner {
     display: block;
-    padding: 0 1rem;
+    padding: 0;
   }
 
   .tripHeader {
     margin: 0 auto;
+  }
+
+  .tripHeaderTop {
+    writing-mode: horizontal-tb;
+  }
+
+  .tripHeaderTextMain {
+    margin-right: 3rem;
+    border-left: none;
+    border-bottom: 1px solid #fff;
+    padding: 1rem 1rem 0.5rem 2rem;
+    font-size: 2rem;
+  }
+
+  .tripHeaderTextSub {
+    padding: 0.5rem 2rem;
+  }
+
+  .tripHeaderBottom {
+    padding: 1rem 2rem;
   }
 
   .tripMain {
@@ -335,7 +387,8 @@ a {
 
 .slider {
   width: 100%;
-  aspect-ratio: 5/3;
+  // aspect-ratio: 5/3;
+  margin-bottom: 3rem;
   max-width: 1024px;
   -webkit-mask-image: linear-gradient(
     90deg,

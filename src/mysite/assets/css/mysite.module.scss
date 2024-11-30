@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@100..900&display=swap');
 
 html {
   font-size: 16px;
@@ -219,6 +220,10 @@ a {
     width: 100%;
   }
 
+  .linkButton > a {
+    padding-left: 1rem;
+  }
+
   .linkIcon img {
     height: 100%;
     width: auto;
@@ -231,6 +236,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 864px) {
+  #tormeContent {
+    padding: 4rem 1rem;
+  }
 }
 
 #profileContent {
@@ -321,7 +333,8 @@ a {
   }
 }
 
-#sasameContent {
+#sasameContent,
+#emuContent {
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -334,6 +347,20 @@ a {
 
   small {
     font-family: 'Dancing Script', cursive;
+    /* color: #94A4E3; */
+    font-weight: 400;
+  }
+
+  overflow: hidden;
+}
+
+#emuName {
+  color: #ff66bb;
+  font-family: 'M PLUS 1', sans-serif !important;
+  font-weight: 600 !important;
+
+  small {
+    font-family: 'M PLUS 1', sans-serif;
     /* color: #94A4E3; */
     font-weight: 400;
   }
@@ -369,8 +396,9 @@ a {
 }
 
 @media screen and (max-width: 864px) {
-  #sasameContent {
-    display: block;
+  #sasameContent,
+  #emuContent {
+    flex-direction: column;
   }
 
   .introPhoto,
@@ -431,6 +459,45 @@ a {
   }
 }
 
+.imgModalThumbContainer {
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+
+  img {
+    transition: 0.2s;
+  }
+
+  &:hover > img {
+    transform: scale(1.02);
+  }
+}
+
+.imgModal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .imgContainer {
+    display: block;
+    width: 100%;
+    height: calc(100% - 2rem);
+    flex: 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  p {
+    padding: 0.5rem 0;
+    flex: 0;
+  }
+}
+
 .dotContent {
   margin: 0;
   width: 100%;
@@ -440,6 +507,7 @@ a {
   background-repeat: repeat;
   background-position: center;
   background-attachment: fixed;
+  overflow: hidden;
 }
 
 .dotContentInner {
@@ -470,7 +538,13 @@ a {
   padding: 4rem;
 }
 
-.dotContentContentAOuter {
+@media only screen and (max-width: 900px) {
+  .dotContentContent {
+    padding: 2rem 1rem;
+  }
+}
+
+.dotContentSasameContentOuter {
   margin-top: 2rem;
   a {
     padding: 1rem 3rem;
@@ -483,6 +557,22 @@ a {
     text-decoration: none;
     transition: all 0.3s;
     font-family: 'Shippori Mincho', serif !important;
+  }
+}
+
+.dotContentEmuContentOuter {
+  margin-top: 2rem;
+  a {
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    color: #fff;
+    font-weight: normal;
+    background-color: #ff66bb;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-family: 'M PLUS 1', sans-serif !important;
   }
 }
 
@@ -596,24 +686,23 @@ a {
   background-color: #b962a6;
 }
 
-.socialMediaFooter.instagram,
-.socialMediaFooter.X {
+.socialMediaFooter {
   margin-top: 1rem;
 }
 
-.socialMediaContent.X {
+.socialMediaContent.xtwitter {
   max-width: 1024px;
 }
 
-.X .socialMediaHeaderMain {
+.xtwitter .socialMediaHeaderMain {
   color: #5f80a7;
 }
 
-.socialMediaButton.X {
+.socialMediaButton.xtwitter {
   background-color: #5f80a7;
 }
 
-.X .socialMediaHeader {
+.xtwitter .socialMediaHeader {
   margin-bottom: 1rem;
 }
 
@@ -652,6 +741,12 @@ a {
   width: 100%;
   margin: 0 auto;
   padding: 2rem 4rem;
+}
+
+@media screen and (max-width: 864px) {
+  .footer {
+    padding: 1rem;
+  }
 }
 
 /* ---------------------- */

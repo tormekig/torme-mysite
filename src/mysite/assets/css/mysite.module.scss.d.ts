@@ -8,8 +8,11 @@ export declare const bgLRextendAnime: string
 export declare const centerBox: string
 export declare const dotContent: string
 export declare const dotContentContent: string
-export declare const dotContentContentAOuter: string
+export declare const dotContentEmuContentOuter: string
 export declare const dotContentInner: string
+export declare const dotContentSasameContentOuter: string
+export declare const emuContent: string
+export declare const emuName: string
 export declare const footer: string
 export declare const footerContainer: string
 export declare const gallery: string
@@ -18,6 +21,9 @@ export declare const headline: string
 export declare const headlineGreen: string
 export declare const headlineMain: string
 export declare const headlineSub: string
+export declare const imgContainer: string
+export declare const imgModal: string
+export declare const imgModalThumbContainer: string
 export declare const instagram: string
 export declare const instagramIframe: string
 export declare const introPhoto: string
@@ -61,6 +67,6 @@ export declare const topLeftContent: string
 export declare const topName: string
 export declare const topNameBlue: string
 export declare const tormeContent: string
-export declare const x: string
+export declare const xtwitter: string
 export declare const youtube: string
 export declare const youtubeIframe: string

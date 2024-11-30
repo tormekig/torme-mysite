@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^5.3.1",
+    "@aws-sdk/client-s3": "^3.697.0",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +15,7 @@
     "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
     "aws-amplify": "^5.3.11",
+    "aws-sdk": "^2.1692.0",
     "framer-motion": "^11.2.10",
     "jquery": "^3.7.1",
     "react": "^18.2.0",
@@ -27,6 +29,7 @@
     "react-twitter-widgets": "^1.11.0",
     "sass": "^1.69.5",
     "save": "^2.9.0",
+    "sharp": "^0.33.5",
     "typescript": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
