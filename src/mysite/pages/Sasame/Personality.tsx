@@ -40,11 +40,11 @@ export function Personality() {
             <tbody>
               <tr>
                 <th>好きな食べ物</th>
-                <td>パスタ、オムライス</td>
+                <td>オムライス</td>
               </tr>
               <tr>
                 <th>好きなお酒</th>
-                <td>日本酒、果実酒、クラフトビール</td>
+                <td>日本酒、クラフトビール</td>
               </tr>
               <tr>
                 <th>嫌いな食べ物</th>
@@ -68,7 +68,7 @@ export function Personality() {
               </tr>
               <tr>
                 <th>バイト</th>
-                <td>家庭教師</td>
+                <td>レストランのホール</td>
               </tr>
               <tr>
                 <th>サークル</th>
