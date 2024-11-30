@@ -14,7 +14,7 @@ export function Content() {
             initial={{ scale: 1 }}
             whileInView={{ scale: 1.05 }}
             transition={{ ease: 'easeOut', duration: 10.0 }}
-            src={convertPathToS3('img/230503.jpg')}
+            src={convertPathToS3('img/etc/230503.jpg')}
           />
         </div>
       </div>

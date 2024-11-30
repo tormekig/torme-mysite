@@ -353,11 +353,27 @@ a {
 @media screen and (max-width: 864px) {
   .tripContentInner {
     display: block;
-    padding: 0 1rem;
+    padding: 0;
   }
 
   .tripHeader {
     margin: 0 auto;
+  }
+
+  .tripHeaderTop {
+    writing-mode: horizontal-tb;
+  }
+
+  .tripHeaderTextMain {
+    margin-right: 3rem;
+    border-left: none;
+    border-bottom: 1px solid #fff;
+    padding: 1rem 1rem 0.5rem 1rem;
+    font-size: 2rem;
+  }
+
+  .tripHeaderTextSub {
+    padding: 0.5rem 1rem;
   }
 
   .tripMain {

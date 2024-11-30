@@ -16,11 +16,11 @@ const Top = () => {
     <div className={mysite.mysiteBody}>
       <ScrollTop />
       <main>
-        <div id="loading">
+        {/* <div id="loading">
           <div id="loading-logo">
             <div className="fadeUp">Torme kig</div>
           </div>
-        </div>
+        </div> */}
 
         <TopContent />
         <TormeContent />
@@ -29,9 +29,8 @@ const Top = () => {
           <ContentHeader ja={'キャラクター紹介'} en={'Characters'} />
 
           <SasameContent />
-          {/* <Gallery name="sasame" /> */}
           <MoreDetailParallax
-            img={convertPathToS3('img/221029.jpg')}
+            img={convertPathToS3('img/etc/221029.jpg')}
             name={'ささめ'}
             link={'/sasame'}
             className={mysite.dotContentSasameContentOuter}
@@ -39,7 +38,7 @@ const Top = () => {
 
           <EmuContent />
           <MoreDetailParallax
-            img={convertPathToS3('img/EmuTable.JPG')}
+            img={convertPathToS3('img/etc/EmuTable.JPG')}
             name={'えむ'}
             link={'/emu'}
             className={mysite.dotContentEmuContentOuter}

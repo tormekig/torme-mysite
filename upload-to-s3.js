@@ -12,7 +12,7 @@ const thumbDir = path.join(__dirname, 'public', 'sync', 'thumb')
 
 const resizeImage = async (inputPath, outputPath) => {
   try {
-    await sharp(inputPath).resize(longSideLength).toFile(outputPath)
+    await sharp(inputPath).rotate().resize(longSideLength).toFile(outputPath)
     console.log(`Image resized: ${inputPath}`)
   } catch (error) {
     console.error(`Error resizing image: ${inputPath}`, error)

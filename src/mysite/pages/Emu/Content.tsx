@@ -13,7 +13,7 @@ export function Content() {
             initial={{ scale: 1 }}
             whileInView={{ scale: 1.05 }}
             transition={{ ease: 'easeOut', duration: 10.0 }}
-            src={convertPathToS3('img/Emu240424.JPG')}
+            src={convertPathToS3('img/etc/Emu240424.JPG')}
           />
         </div>
       </div>
@@ -44,6 +44,7 @@ export function Content() {
               ゲームキャラクターです。
             </p>
             <p>底抜けに明るい、天真爛漫な性格。</p>
+            <p>「うわわーっ☆それってとっても わんだほーいだね！」</p>
           </div>
           <div className={mysite.tableContainer}>
             <table className={mysite.profileTable}>

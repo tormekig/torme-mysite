@@ -27,10 +27,10 @@ export function Emu() {
   return (
     <div className={mysite.mysiteBody}>
       <ScrollTop />
-      <div id="splash">
+      {/* <div id="splash">
         <div id="splash-logo">Emu</div>
       </div>
-      <div className="splashbg"></div>
+      <div className="splashbg"></div> */}
       <div id="container">
         <Modal
           isOpen={modalIsOpen}

@@ -29,10 +29,10 @@ export function Sasame() {
   return (
     <div className={mysite.mysiteBody}>
       <ScrollTop />
-      <div id="splash">
+      {/* <div id="splash">
         <div id="splash-logo">Sasame</div>
       </div>
-      <div className="splashbg"></div>
+      <div className="splashbg"></div> */}
       <div id="container">
         <Modal
           isOpen={modalIsOpen}

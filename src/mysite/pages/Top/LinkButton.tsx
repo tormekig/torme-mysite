@@ -9,12 +9,12 @@ export function LinkButton() {
   const links = [
     {
       url: 'https://twitter.com/torme_kig',
-      img: 'img/logo/logo.svg',
+      img: 'img/logo/logo.png',
       text: '@torme_kig',
     },
     {
       url: 'https://twitter.com/torme_etc',
-      img: 'img/logo/logo.svg',
+      img: 'img/logo/logo.png',
       text: '@torme_etc',
     },
     {
@@ -24,7 +24,7 @@ export function LinkButton() {
     },
     {
       url: 'https://www.instagram.com/sasame0123/',
-      img: 'img/logo/Instagram_Glyph_White.svg',
+      img: 'img/logo/Instagram_Glyph_White.png',
       text: '@sasame0123',
     },
   ]

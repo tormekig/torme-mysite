@@ -220,6 +220,10 @@ a {
     width: 100%;
   }
 
+  .linkButton > a {
+    padding-left: 1rem;
+  }
+
   .linkIcon img {
     height: 100%;
     width: auto;
@@ -232,6 +236,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 864px) {
+  #tormeContent {
+    padding: 4rem 1rem;
+  }
 }
 
 #profileContent {
@@ -385,8 +396,9 @@ a {
 }
 
 @media screen and (max-width: 864px) {
-  #sasameContent {
-    display: block;
+  #sasameContent,
+  #emuContent {
+    flex-direction: column;
   }
 
   .introPhoto,
@@ -495,6 +507,7 @@ a {
   background-repeat: repeat;
   background-position: center;
   background-attachment: fixed;
+  overflow: hidden;
 }
 
 .dotContentInner {
@@ -523,6 +536,12 @@ a {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 4rem;
+}
+
+@media only screen and (max-width: 900px) {
+  .dotContentContent {
+    padding: 2rem 1rem;
+  }
 }
 
 .dotContentSasameContentOuter {
@@ -667,24 +686,23 @@ a {
   background-color: #b962a6;
 }
 
-.socialMediaFooter.instagram,
-.socialMediaFooter.X {
+.socialMediaFooter {
   margin-top: 1rem;
 }
 
-.socialMediaContent.X {
+.socialMediaContent.xtwitter {
   max-width: 1024px;
 }
 
-.X .socialMediaHeaderMain {
+.xtwitter .socialMediaHeaderMain {
   color: #5f80a7;
 }
 
-.socialMediaButton.X {
+.socialMediaButton.xtwitter {
   background-color: #5f80a7;
 }
 
-.X .socialMediaHeader {
+.xtwitter .socialMediaHeader {
   margin-bottom: 1rem;
 }
 
@@ -723,6 +741,12 @@ a {
   width: 100%;
   margin: 0 auto;
   padding: 2rem 4rem;
+}
+
+@media screen and (max-width: 864px) {
+  .footer {
+    padding: 1rem;
+  }
 }
 
 /* ---------------------- */

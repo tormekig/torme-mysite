@@ -4,6 +4,7 @@ import { ContentHeader } from '../../components/ContentHeader'
 import { Timeline } from 'react-twitter-widgets'
 
 import mysite from 'mysite/assets/css/mysite.module.scss'
+import { convertPathToS3 } from 'utils/tools'
 
 export function SocialMedia() {
   return (
@@ -84,7 +85,7 @@ export function SocialMedia() {
               <div
                 className={`${mysite.socialMediaIconContainer} ${mysite.instagram}`}
               >
-                <img src="./img/instagram-icon.jpg" />
+                <img src={convertPathToS3('img/logo/instagram-icon.jpg')} />
               </div>
               <div>sasame0123</div>
             </a>
@@ -100,7 +101,7 @@ export function SocialMedia() {
         </div>
       </div>
       <div className={mysite.socialMediaContentContainer}>
-        <div className={`${mysite.socialMediaContent} ${mysite.x}`}>
+        <div className={`${mysite.socialMediaContent} ${mysite.xtwitter}`}>
           <div className={mysite.socialMediaHeader}>
             <div className={mysite.socialMediaHeaderMain}>
               X<small> (Twitter)</small>
@@ -123,7 +124,9 @@ export function SocialMedia() {
                     }}
                   />
                 </div>
-                <div className={`${mysite.socialMediaFooter} ${mysite.x}`}>
+                <div
+                  className={`${mysite.socialMediaFooter} ${mysite.xtwitter}`}
+                >
                   <a
                     href="https://twitter.com/torme_kig"
                     className={mysite.socialMediaAuthor}
@@ -131,7 +134,7 @@ export function SocialMedia() {
                     rel="noreferrer"
                   >
                     <div
-                      className={`${mysite.socialMediaIconContainer} ${mysite.x}`}
+                      className={`${mysite.socialMediaIconContainer} ${mysite.xtwitter}`}
                     >
                       <img src="https://pbs.twimg.com/profile_images/1773969111179202560/FVE4EqPI_400x400.jpg" />
                     </div>
@@ -139,7 +142,7 @@ export function SocialMedia() {
                   </a>
                   <a
                     href="https://twitter.com/torme_kig"
-                    className={`${mysite.socialMediaButton} ${mysite.x}`}
+                    className={`${mysite.socialMediaButton} ${mysite.xtwitter}`}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -163,7 +166,9 @@ export function SocialMedia() {
                       height: '1500',
                     }}
                   />
-                  <div className={`${mysite.socialMediaFooter} ${mysite.x}`}>
+                  <div
+                    className={`${mysite.socialMediaFooter} ${mysite.xtwitter}`}
+                  >
                     <a
                       href="https://twitter.com/torme_etc"
                       className={mysite.socialMediaAuthor}
@@ -171,7 +176,7 @@ export function SocialMedia() {
                       rel="noreferrer"
                     >
                       <div
-                        className={`${mysite.socialMediaIconContainer} ${mysite.x}`}
+                        className={`${mysite.socialMediaIconContainer} ${mysite.xtwitter}`}
                       >
                         <img src="https://pbs.twimg.com/profile_images/1550079970617487362/cNeFJAF5_400x400.jpg" />
                       </div>
@@ -179,7 +184,7 @@ export function SocialMedia() {
                     </a>
                     <a
                       href="https://twitter.com/torme_etc"
-                      className={`${mysite.socialMediaButton} ${mysite.x}`}
+                      className={`${mysite.socialMediaButton} ${mysite.xtwitter}`}
                       target="_blank"
                       rel="noreferrer"
                     >

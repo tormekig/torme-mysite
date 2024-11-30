@@ -67,6 +67,6 @@ export declare const topLeftContent: string
 export declare const topName: string
 export declare const topNameBlue: string
 export declare const tormeContent: string
-export declare const x: string
+export declare const xtwitter: string
 export declare const youtube: string
 export declare const youtubeIframe: string
