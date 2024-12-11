@@ -731,6 +731,47 @@ a {
   font-size: 1.2rem;
 }
 
+#tipsContent {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 3rem auto;
+    border-bottom: 1px solid #333;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 auto 3rem auto;
+  }
+
+  p {
+    line-height: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    text-align: left;
+    margin: 0 auto 1rem auto;
+  }
+
+  li {
+    list-style: inside;
+  }
+
+  .tipsBar {
+    margin: 2rem auto;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
 #footerContainer {
   background-color: #98a7e5;
 }

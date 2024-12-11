@@ -24,7 +24,7 @@ export function SocialMedia() {
             <div className={mysite.youtubeIframe}>
               <iframe
                 width="100%"
-                src="https://www.youtube.com/embed/mdYZVuJvwKg?si=keNIQPgkj67DzlKG"
+                src="https://www.youtube.com/embed/f0hRv5hR7sE"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -33,8 +33,8 @@ export function SocialMedia() {
             </div>
           </div>
           <div className={mysite.socialMediaTitle}>
-            <a href="https://www.youtube.com/watch?v=mdYZVuJvwKg">
-              【着ぐるみ】ささめのGeoGuessr実況【日本版 #1】
+            <a href="https://www.youtube.com/watch?v=f0hRv5hR7sE">
+              【kigurumi】鳳えむ - Seaside Walk
             </a>
           </div>
           <div className={mysite.socialMediaFooter}>

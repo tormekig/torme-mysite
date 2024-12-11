@@ -10,6 +10,7 @@ import { TormeContent } from './Content'
 import { SocialMedia } from './SocialMedia'
 import { Footer } from 'mysite/components/Footer'
 import { MoreDetailParallax } from './MoreDetailParallax'
+import { Tips } from './tips'
 
 const Top = () => {
   return (
@@ -46,6 +47,7 @@ const Top = () => {
         </div>
 
         <SocialMedia />
+        <Tips />
 
         <Footer />
       </main>

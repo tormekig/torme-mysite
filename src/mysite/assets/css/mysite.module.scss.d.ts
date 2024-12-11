@@ -58,6 +58,8 @@ export declare const socialMediaMainColumn: string
 export declare const socialMediaMainHeader: string
 export declare const socialMediaTitle: string
 export declare const tableContainer: string
+export declare const tipsBar: string
+export declare const tipsContent: string
 export declare const topBox: string
 export declare const topContent: string
 export declare const topImg: string

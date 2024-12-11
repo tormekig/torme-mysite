@@ -222,7 +222,6 @@ export function HowToTakePictures({
             <div className={sasame.pointImgContainer}>
               <div className={sasame.pointImgContent}>
                 <Imgs
-                  type={sasame.pointImgBad}
                   group={'pointTips'}
                   imgs={[
                     {

@@ -38,7 +38,7 @@ export function convertPathToS3(path: string, isThumb: boolean = false) {
   const BUCKET_NAME = 'torme-mysite-bucket'
   const REGION = 'ap-northeast-1'
   if (isLocal) {
-    return `sync/${path}`
+    return `/sync/${path}`
   } else {
     if (isThumb) {
       return `https://${BUCKET_NAME}.s3.${REGION}.amazonaws.com/sync/thumb/${path}`
