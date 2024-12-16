@@ -39,9 +39,9 @@ export function Tips() {
           </p>
           <div className={mysite.tipsBar}></div>
           <p>
-            ご自身で撮影された写真でない場合は、撮影者に許可を取り、
+            ご自身で撮影された写真でない場合は、撮影者に掲載許可を取り、
             <br />
-            撮影者が必要とした場合は撮影者などを明記してください。
+            撮影者の意向に応じて撮影者などを明記してください。
           </p>
         </motion.div>
         <motion.div
