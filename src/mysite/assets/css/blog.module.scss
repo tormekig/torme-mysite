@@ -39,7 +39,7 @@ a {
   height: 80vh;
   background-size: cover;
   background-repeat: repeat;
-  background-position: left;
+  background-position: center;
   background-attachment: fixed;
   overflow: hidden;
   position: relative;
@@ -215,4 +215,22 @@ a {
   li {
     list-style: inside;
   }
+}
+
+@media screen and (max-width: 864px) {
+  #blogTopContainer {
+    height: 800px;
+  }
+
+  #blogNameContainer {
+    width: 100%;
+  }
+
+  #blogContentArticleInner {
+    padding: 1rem;
+  }
+
+  // .articleListItemLink {
+  //   flex-direction: column;
+  // }
 }
