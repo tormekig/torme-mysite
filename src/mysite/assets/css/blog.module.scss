@@ -219,7 +219,8 @@ a {
 
 @media screen and (max-width: 864px) {
   #blogTopContainer {
-    height: 800px;
+    height: 500px;
+    background-attachment: local;
   }
 
   #blogNameContainer {

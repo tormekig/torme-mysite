@@ -11,6 +11,7 @@ import { Footer } from 'mysite/components/Footer'
 import Modal from 'react-modal'
 import { useState } from 'react'
 import { ImgMetaData, ImgModal } from 'mysite/components/imgModal'
+import { Helmet } from 'react-helmet-async'
 
 Modal.setAppElement('#root')
 
@@ -25,24 +26,29 @@ export function Emu() {
     setModalIsOpen(false)
   }
   return (
-    <div className={mysite.mysiteBody}>
-      <ScrollTop />
-      {/* <div id="splash">
+    <>
+      <Helmet>
+        <title>Emu | Torme's Homepage</title>
+      </Helmet>
+      <div className={mysite.mysiteBody}>
+        <ScrollTop />
+        {/* <div id="splash">
         <div id="splash-logo">Emu</div>
       </div>
       <div className="splashbg"></div> */}
-      <div id="container">
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          closeTimeoutMS={200}
-        >
-          <ImgModal imgMetaData={modalImgMetaData} />
-        </Modal>
-        <Content />
-        <MemoryList openModal={openModal} characters={['emu']} />
-        <Footer />
+        <div id="container">
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            closeTimeoutMS={200}
+          >
+            <ImgModal imgMetaData={modalImgMetaData} />
+          </Modal>
+          <Content />
+          <MemoryList openModal={openModal} characters={['emu']} />
+          <Footer />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

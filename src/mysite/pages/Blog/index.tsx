@@ -7,40 +7,46 @@ import { Footer } from 'mysite/components/Footer'
 import { Link } from 'react-router-dom'
 import { BlogArticle, blogArticles } from './data'
 import ReactDOMServer from 'react-dom/server'
+import { Helmet } from 'react-helmet-async'
 
 export function Blog() {
   return (
-    <div className={blog.mysiteBody}>
-      <ScrollTop />
-      <div id="container">
-        <div
-          id={blog.blogTopContainer}
-          style={{
-            backgroundImage: `url("${convertPathToS3('img/memory/2405バガテル公園/IMG_0682.jpeg')}")`,
-          }}
-        >
-          <div id={blog.blogNameContainer}>
-            <h1>Torme's Blog</h1>
-          </div>
-        </div>
-        <div id={blog.blogContent}>
-          <div id={blog.blogContentInner}>
-            <div className={blog.breadcrumb}>
-              <li>
-                <Link to={'/'}>トップ</Link>
-              </li>
-              <li>ブログ</li>
+    <>
+      <Helmet>
+        <title>Blog | Torme's Homepage</title>
+      </Helmet>
+      <div className={blog.mysiteBody}>
+        <ScrollTop />
+        <div id="container">
+          <div
+            id={blog.blogTopContainer}
+            style={{
+              backgroundImage: `url("${convertPathToS3('img/memory/2405バガテル公園/IMG_0682.jpeg')}")`,
+            }}
+          >
+            <div id={blog.blogNameContainer}>
+              <h1>Torme's Blog</h1>
             </div>
-            <ul className={blog.blogContentList}>
-              {blogArticles.map((art, i) => {
-                return <BlogArticleListItem art={art} i={i} key={i} />
-              })}
-            </ul>
           </div>
+          <div id={blog.blogContent}>
+            <div id={blog.blogContentInner}>
+              <div className={blog.breadcrumb}>
+                <li>
+                  <Link to={'/'}>トップ</Link>
+                </li>
+                <li>ブログ</li>
+              </div>
+              <ul className={blog.blogContentList}>
+                {blogArticles.map((art, i) => {
+                  return <BlogArticleListItem art={art} i={i} key={i} />
+                })}
+              </ul>
+            </div>
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
-    </div>
+    </>
   )
 }
 
