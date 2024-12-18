@@ -5,6 +5,10 @@ export declare const bgextendAnimeBase: string
 export declare const bgextendAnimeSecond: string
 export declare const bgLRextend: string
 export declare const bgLRextendAnime: string
+export declare const blogLink: string
+export declare const blogLinkContainer: string
+export declare const blogLinkCover: string
+export declare const blogLinkTitle: string
 export declare const centerBox: string
 export declare const dotContent: string
 export declare const dotContentContent: string

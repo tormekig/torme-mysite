@@ -734,13 +734,59 @@ a {
   font-size: 1.2rem;
 }
 
+.blogLink {
+  height: 50vh;
+  margin: 4rem 0;
+  padding: 1rem;
+}
+
+.blogLinkContainer {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  transition: 1s;
+
+  &:hover {
+    transform: scale(0.95);
+
+    .blogLinkTitle {
+      transform: scale(1.15);
+    }
+  }
+}
+
+.blogLinkCover {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blogLinkTitle {
+  font-family: 'Dancing Script', cursive;
+  font-size: 4rem;
+  font-weight: 400;
+  color: #fff;
+  transition: 1s;
+}
+
 #tipsContent {
   margin: 0 auto;
+  padding: 1rem;
   text-align: center;
   font-size: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  overflow: hidden;
 
   h2 {
     font-size: 1.2rem;

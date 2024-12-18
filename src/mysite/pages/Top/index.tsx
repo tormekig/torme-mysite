@@ -11,6 +11,7 @@ import { SocialMedia } from './SocialMedia'
 import { Footer } from 'mysite/components/Footer'
 import { MoreDetailParallax } from './MoreDetailParallax'
 import { Tips } from './tips'
+import { Link } from 'react-router-dom'
 
 const Top = () => {
   return (
@@ -47,6 +48,21 @@ const Top = () => {
         </div>
 
         <SocialMedia />
+
+        <div className={mysite.blogLink}>
+          <Link
+            to={'/blog'}
+            style={{
+              backgroundImage: `url("${convertPathToS3('img/memory/2405バガテル公園/IMG_0682.jpeg')}")`,
+            }}
+            className={mysite.blogLinkContainer}
+          >
+            <div className={mysite.blogLinkCover}>
+              <p className={mysite.blogLinkTitle}>Torme's Blog</p>
+            </div>
+          </Link>
+        </div>
+
         <Tips />
 
         <Footer />

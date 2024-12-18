@@ -25,9 +25,17 @@ export function Blog() {
         </div>
         <div id={blog.blogContent}>
           <div id={blog.blogContentInner}>
-            {blogArticles.map((art, i) => {
-              return <BlogArticleListItem art={art} i={i} key={i} />
-            })}
+            <div className={blog.breadcrumb}>
+              <li>
+                <Link to={'/'}>トップ</Link>
+              </li>
+              <li>ブログ</li>
+            </div>
+            <ul className={blog.blogContentList}>
+              {blogArticles.map((art, i) => {
+                return <BlogArticleListItem art={art} i={i} key={i} />
+              })}
+            </ul>
           </div>
         </div>
         <Footer />
@@ -45,7 +53,7 @@ const removalTag = (elem: React.JSX.Element) => {
 
 function BlogArticleListItem({ art, i }: { art: BlogArticle; i: number }) {
   return (
-    <div className={blog.articleListItem}>
+    <li className={blog.articleListItem}>
       <Link className={blog.articleListItemLink} to={`/blog/article/${i}`}>
         <div className={blog.articleListItemLeft}>
           <div
@@ -63,6 +71,6 @@ function BlogArticleListItem({ art, i }: { art: BlogArticle; i: number }) {
           </p>
         </div>
       </Link>
-    </div>
+    </li>
   )
 }

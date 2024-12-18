@@ -13,6 +13,8 @@ export declare const articleTitle: string
 export declare const blogContent: string
 export declare const blogContentArticleInner: string
 export declare const blogContentInner: string
+export declare const blogContentList: string
 export declare const blogNameContainer: string
 export declare const blogTopContainer: string
+export declare const breadcrumb: string
 export declare const mysiteBody: string
