@@ -12,62 +12,68 @@ import { Footer } from 'mysite/components/Footer'
 import { MoreDetailParallax } from './MoreDetailParallax'
 import { Tips } from './tips'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 
 const Top = () => {
   return (
-    <div className={mysite.mysiteBody}>
-      <ScrollTop />
-      <main>
-        {/* <div id="loading">
+    <>
+      <Helmet>
+        <title>Torme's Homepage</title>
+      </Helmet>
+      <div className={mysite.mysiteBody}>
+        <ScrollTop />
+        <main>
+          {/* <div id="loading">
           <div id="loading-logo">
             <div className="fadeUp">Torme kig</div>
           </div>
         </div> */}
 
-        <TopContent />
-        <TormeContent />
+          <TopContent />
+          <TormeContent />
 
-        <div>
-          <ContentHeader ja={'キャラクター紹介'} en={'Characters'} />
+          <div>
+            <ContentHeader ja={'キャラクター紹介'} en={'Characters'} />
 
-          <SasameContent />
-          <MoreDetailParallax
-            img={convertPathToS3('img/etc/221029.jpg')}
-            name={'ささめ'}
-            link={'/sasame'}
-            className={mysite.dotContentSasameContentOuter}
-          />
+            <SasameContent />
+            <MoreDetailParallax
+              img={convertPathToS3('img/etc/221029.jpg')}
+              name={'ささめ'}
+              link={'/sasame'}
+              className={mysite.dotContentSasameContentOuter}
+            />
 
-          <EmuContent />
-          <MoreDetailParallax
-            img={convertPathToS3('img/etc/EmuTable.JPG')}
-            name={'えむ'}
-            link={'/emu'}
-            className={mysite.dotContentEmuContentOuter}
-          />
-        </div>
+            <EmuContent />
+            <MoreDetailParallax
+              img={convertPathToS3('img/etc/EmuTable.JPG')}
+              name={'えむ'}
+              link={'/emu'}
+              className={mysite.dotContentEmuContentOuter}
+            />
+          </div>
 
-        <SocialMedia />
+          <SocialMedia />
 
-        <div className={mysite.blogLink}>
-          <Link
-            to={'/blog'}
-            style={{
-              backgroundImage: `url("${convertPathToS3('img/memory/2405バガテル公園/IMG_0682.jpeg')}")`,
-            }}
-            className={mysite.blogLinkContainer}
-          >
-            <div className={mysite.blogLinkCover}>
-              <p className={mysite.blogLinkTitle}>Torme's Blog</p>
-            </div>
-          </Link>
-        </div>
+          <div className={mysite.blogLink}>
+            <Link
+              to={'/blog'}
+              style={{
+                backgroundImage: `url("${convertPathToS3('img/memory/2405バガテル公園/IMG_0682.jpeg')}")`,
+              }}
+              className={mysite.blogLinkContainer}
+            >
+              <div className={mysite.blogLinkCover}>
+                <p className={mysite.blogLinkTitle}>Torme's Blog</p>
+              </div>
+            </Link>
+          </div>
 
-        <Tips />
+          <Tips />
 
-        <Footer />
-      </main>
-    </div>
+          <Footer />
+        </main>
+      </div>
+    </>
   )
 }
 
