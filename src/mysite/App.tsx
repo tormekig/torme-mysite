@@ -9,6 +9,8 @@ import { Sasame } from './pages/Sasame'
 import Top from './pages/Top'
 import { RoutePath } from 'utils/tools'
 import { Emu } from './pages/Emu'
+import { Blog } from './pages/Blog'
+import { Article } from './pages/Blog/Article'
 
 export const mysiteRoutes: RoutePath[] = [
   {
@@ -22,6 +24,14 @@ export const mysiteRoutes: RoutePath[] = [
   {
     path: `emu`,
     children: <Emu />,
+  },
+  {
+    path: `blog`,
+    children: <Blog />,
+  },
+  {
+    path: `blog/article/:query`,
+    children: <Article />,
   },
 ]
 

@@ -1,0 +1,236 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: calc(33em / 1000);
+}
+
+.mysiteBody {
+  font-family: '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', YuGothic,
+    'Noto Sans Japanese', Meiryo, メイリオ, 'Hiragino Kaku Gothic ProN',
+    'ヒラギノ角ゴ ProN W3', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #000;
+}
+
+* {
+  box-sizing: border-box;
+  word-wrap: break-word;
+  line-height: 1.5em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+#blogTopContainer {
+  margin: 0;
+  width: 100%;
+  height: 80vh;
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+  position: relative;
+}
+
+#blogNameContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  color: #fff;
+  text-align: center;
+
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    font-weight: 400;
+  }
+
+  h2 {
+    border-top: 1px solid #fff;
+    margin: 1rem 0 0 0;
+    padding: 1rem 0 0 0;
+    font-size: 1.5rem;
+  }
+}
+
+#blogContent {
+  background-color: #eef0f9;
+  padding: 4rem 0 0 0;
+}
+
+#blogContentInner {
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+#blogContentArticleInner {
+  padding: 3rem;
+  margin: 0 auto;
+  max-width: 864px;
+}
+
+.articleListItem {
+  padding: 0;
+  margin: 5rem 0;
+  transition: 0.3s all;
+}
+
+.articleListItem:hover {
+  .articleListItemImg {
+    box-shadow: 0px 0px 16px 2px rgba(0, 0, 0, 0.2);
+  }
+  transform: scale(0.98);
+}
+
+.articleListItemLink {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #000;
+}
+
+.articleListItemLeft {
+  flex-basis: 60%;
+}
+
+.articleListItemImg {
+  position: relative;
+  width: 100%;
+  padding-bottom: 48%;
+  background: 50% 50% / cover no-repeat;
+  z-index: 1;
+  transition: 0.3s all;
+}
+
+.articleListItemRight {
+  flex-basis: 40%;
+  padding: 0 0 0 2rem;
+}
+
+.articleListItemDate {
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.articleListItemTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.articleListItemContent {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.articleListItemCategory {
+  font-size: 0.9rem;
+  font-weight: 300;
+  text-align: right;
+}
+
+.blogContentList > li:nth-child(even) > .articleListItemLink {
+  flex-direction: row-reverse;
+
+  .articleListItemRight {
+    flex-basis: 40%;
+    padding: 0 2rem 0 0;
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 3rem 0;
+  font-size: 0.9rem;
+
+  li:not(:last-of-type)::after {
+    content: '＞';
+    margin: 0 0.6em;
+    color: #777;
+  }
+
+  a {
+    color: #5b6ebd;
+    text-decoration: none;
+  }
+}
+
+.articleDate {
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.4rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin: 0.6rem 0 0 0;
+}
+
+.articleTitle {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+
+.articleContent {
+  font-size: 1rem;
+
+  h3 {
+    padding: 4px;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    border-bottom: 1px solid #333;
+  }
+
+  p {
+    margin: 2rem 0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  ul {
+    margin: 2rem 0;
+  }
+
+  li {
+    list-style: inside;
+  }
+}
+
+@media screen and (max-width: 864px) {
+  #blogTopContainer {
+    height: 800px;
+  }
+
+  #blogNameContainer {
+    width: 100%;
+  }
+
+  #blogContentArticleInner {
+    padding: 1rem;
+  }
+
+  // .articleListItemLink {
+  //   flex-direction: column;
+  // }
+}
