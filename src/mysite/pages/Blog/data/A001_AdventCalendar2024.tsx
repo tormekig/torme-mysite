@@ -217,7 +217,9 @@ function article() {
         ってなった時に、絵を自動生成してくれないかなと思って見つけたのが以下のサイトです。
       </p>
       <p>
-        <a href="https://waifulabs.com/">https://waifulabs.com/</a>
+        <a href="https://waifulabs.com/" target="blank">
+          https://waifulabs.com/
+        </a>
       </p>
       <p>
         いくつかキャラクターの絵が表示されて、その中から好みの絵を選んでいくと、
