@@ -12,12 +12,13 @@ export function Article() {
   const { query: _query } = useParams()
   const query: number = _query ? parseInt(_query) : 0
 
-  if (!blogArticles[query]) return <></>
+  const article = blogArticles.get(query)
+  if (!article) return <></>
 
   return (
     <>
       <Helmet>
-        <title>{blogArticles[query].title} | Blog | Torme's Homepage</title>
+        <title>{article.title} | Blog | Torme's Homepage</title>
       </Helmet>
       <div className={blog.mysiteBody}>
         <ScrollTop />
@@ -25,13 +26,13 @@ export function Article() {
           <div
             id={blog.blogTopContainer}
             style={{
-              backgroundImage: `url("${convertPathToS3(blogArticles[query].thumbnail)}")`,
+              backgroundImage: `url("${convertPathToS3(article.thumbnail)}")`,
             }}
           >
             <div id={blog.blogNameContainer}>
               <h1>Torme's Blog</h1>
-              <h2 className={blog.articleTitle}>{blogArticles[query].title}</h2>
-              <p className={blog.articleDate}>{blogArticles[query].date}</p>
+              <h2 className={blog.articleTitle}>{article.title}</h2>
+              <p className={blog.articleDate}>{article.date}</p>
             </div>
           </div>
           <div id={blog.blogContent}>
@@ -44,10 +45,10 @@ export function Article() {
                   <Link to={'/blog'}>ブログ</Link>
                 </li>
                 <li>
-                  <span>{blogArticles[query].title}</span>
+                  <span>{article.title}</span>
                 </li>
               </div>
-              {blogArticles[query].article}
+              {article.article}
             </div>
           </div>
           <Footer />
