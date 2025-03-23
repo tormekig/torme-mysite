@@ -84,7 +84,7 @@ export function Code3digit({
                         <td
                           key={colIndex}
                           style={{
-                            backgroundColor: '#eee',
+                            backgroundColor: '#ccc',
                             color: '#fff',
                             padding: '0.8rem 0.5rem',
                           }}
