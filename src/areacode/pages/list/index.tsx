@@ -76,7 +76,7 @@ const MAAreaCodeInfoComponents = ({
 
 function displayCode3digit(type: SearchType, query: string) {
   if (type !== 'code' && type !== 'code_prefix') return <></>
-  return Code3digit(Number(query.charAt(1)))
+  return <Code3digit rowsToShow={[Number(query.charAt(1))]} />
 }
 
 function SearchBox({ openFunc }: { openFunc: () => void }) {

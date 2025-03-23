@@ -2,74 +2,99 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { getColorStyleByAreaCode } from './color'
 import areacode from 'areacode/assets/css/areacode.module.scss'
-import codeColors from 'areacode/data/codeColor'
 
 export function Code2digit() {
-  const codes = []
+  const cols = 9
 
-  for (let i = 1; i <= 9; i++) {
-    const middleAreaCode = '0' + String(i * 10 + 5)
-    const colorStyle = getColorStyleByAreaCode(middleAreaCode)
-
-    codes.push(
-      <li key={i}>
-        <Link
-          to={`/areacode/code/prefix/0${i}`}
-          // className={areacode[`code-list-${first}`]}
-          style={colorStyle.background}
-        >
-          0{i}
-        </Link>
-      </li>,
-    )
-  }
+  const numbers = Array.from({ length: cols }, (_, row) =>
+    (row + 1).toString().padStart(2, '0'),
+  )
 
   return (
     <div className={areacode.codeListContainer}>
-      <ul className={areacode.codeList}>{codes}</ul>
+      <table
+        style={{ borderCollapse: 'collapse', textAlign: 'center' }}
+        className={areacode.codeList}
+      >
+        <tbody>
+          <tr>
+            {numbers.map((col, colIndex) => {
+              return (
+                <td
+                  key={colIndex}
+                  style={getColorStyleByAreaCode(col).background}
+                >
+                  <Link to={`/areacode/code/prefix/${col}`}>{col}</Link>
+                </td>
+              )
+            })}
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
 
-export function Code3digit(areacodeSecondDigit: number) {
-  const codes: React.JSX.Element[] = []
+export function Code3digit({
+  rowsToShow,
+  closeFunc,
+}: {
+  rowsToShow?: number[]
+  closeFunc?: () => void
+}) {
+  const rows = 9
+  const cols = 9
 
-  if (!codeColors[areacodeSecondDigit - 1]) return <></>
+  rowsToShow = rowsToShow ? rowsToShow : [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-  codeColors[areacodeSecondDigit - 1].forEach(function (elem, i) {
-    const areacodeSecondAndThirdDigits =
-      '0' + String(areacodeSecondDigit * 10 + i)
-    const colorStyle = getColorStyleByAreaCode(areacodeSecondAndThirdDigits)
-
-    codes.push(
-      <li key={i}>
-        <Link
-          to={`/areacode/code/prefix/${elem.code}`}
-          style={colorStyle.background}
-        >
-          {elem.code}
-        </Link>
-      </li>,
+  const numbers = Array.from({ length: rows }, (_, row) => {
+    if (row === 2) return ['03']
+    if (row === 5) return ['06']
+    return Array.from({ length: cols }, (_, col) =>
+      ((row + 1) * 10 + (col + 1)).toString().padStart(3, '0'),
     )
   })
 
   return (
     <div className={areacode.codeListContainer}>
-      <ul className={areacode.codeList}>{codes}</ul>
+      <table
+        style={{ borderCollapse: 'collapse', textAlign: 'center' }}
+        className={areacode.codeList}
+      >
+        <tbody onClick={closeFunc}>
+          {numbers.map((row, rowIndex) => {
+            if (rowsToShow && !rowsToShow.includes(rowIndex + 1)) return <></>
+            const num2digits = '0' + (rowIndex + 1).toString()
+            return (
+              <tr key={rowIndex}>
+                {rowIndex + 1 === 3 || rowIndex + 1 === 6 ? (
+                  <td
+                    key={rowIndex}
+                    colSpan={cols}
+                    style={getColorStyleByAreaCode(num2digits).background}
+                  >
+                    <Link to={`/areacode/code/prefix/${num2digits}`}>
+                      {num2digits}
+                    </Link>
+                  </td>
+                ) : (
+                  row.map((num, colIndex) => {
+                    if (colIndex == 0 && rowIndex != 0) return <td></td>
+                    return (
+                      <td
+                        key={colIndex}
+                        style={getColorStyleByAreaCode(num).background}
+                      >
+                        <Link to={`/areacode/code/prefix/${num}`}>{num}</Link>
+                      </td>
+                    )
+                  })
+                )}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
-}
-
-export function AllCode3digit({ closeFunc }: { closeFunc?: () => void }) {
-  const codeLists = []
-
-  for (let i = 1; i <= 9; i++) {
-    codeLists.push(
-      <li key={i} onClick={closeFunc}>
-        {Code3digit(i)}
-      </li>,
-    )
-  }
-
-  return <ul className={areacode.allCodeListContainer}>{codeLists}</ul>
 }
