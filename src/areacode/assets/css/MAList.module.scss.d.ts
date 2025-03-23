@@ -1,6 +1,7 @@
 export declare const additionalInfo: string
 export declare const areacode: string
 export declare const areacodeBody: string
+export declare const areacodeNumberband: string
 export declare const checkBtnContainer: string
 export declare const citiesContainer: string
 export declare const citiesContainerTd: string
@@ -10,6 +11,7 @@ export declare const cityListwithBorder: string
 export declare const codeListMiddle: string
 export declare const countyList: string
 export declare const countyName: string
+export declare const headerContainer: string
 export declare const infoBlock: string
 export declare const infoRow: string
 export declare const infoTable: string

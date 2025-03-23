@@ -19,6 +19,7 @@ import {
 } from '../../components'
 import { MAAreaCodeHeader } from './header'
 import { MAAreaCodeInfoCards, MAAreaCodeInfoTable } from './components'
+import { mediaQuery, useMediaQuery } from 'areacode/utils/responsive'
 
 export function convertCompCode(MAComp: MACompInfo) {
   return MAComp.codeSub === ''
@@ -26,7 +27,7 @@ export function convertCompCode(MAComp: MACompInfo) {
     : MAComp.codeMain + '-' + MAComp.codeSub
 }
 
-function MAAreaCodeInfoComponents({
+const MAAreaCodeInfoComponents = ({
   type,
   query,
   style,
@@ -34,7 +35,7 @@ function MAAreaCodeInfoComponents({
   type: SearchType
   query: string
   style: string
-}) {
+}) => {
   const [displayParam, setDisplayParam] = useState([
     '市外局番',
     '番号領域',
@@ -47,9 +48,11 @@ function MAAreaCodeInfoComponents({
   const isExpanded = type === 'random' ? '' : 'item'
   let MAAreaCodeInfos: React.JSX.Element
 
-  if (style === 'card') {
+  const isMobile = useMediaQuery(mediaQuery.mobile)
+
+  if (style === 'card' || isMobile) {
     MAAreaCodeInfos = (
-      <MAAreaCodeInfoCards MAComps={MAComps} isExpanded={isExpanded} />
+      <MAAreaCodeInfoCards MAComps={MAComps} displayParam={displayParam} />
     )
   } else {
     MAAreaCodeInfos = (
