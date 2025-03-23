@@ -34,7 +34,7 @@ export function LinkButton() {
       <li className={mysite.linkButton} key={i}>
         <a href={link.url} target="_blank" rel="noreferrer">
           <div className={mysite.linkIcon}>
-            <img src={convertPathToS3(link.img)} />
+            <img src={convertPathToS3(link.img)} alt={link.text} />
           </div>
           <div className={mysite.linkText}>
             <div className={mysite.linkTextSub}>{link.text}</div>

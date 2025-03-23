@@ -39,6 +39,7 @@ export function Sasame() {
       </div>
       <div className="splashbg"></div> */}
         <div id="container">
+          {/* @ts-expect-error Server Component */}
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}

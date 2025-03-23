@@ -79,7 +79,7 @@ export function Code3digit({
                   </td>
                 ) : (
                   row.map((num, colIndex) => {
-                    if (colIndex == 0 && rowIndex != 0)
+                    if (colIndex === 0 && rowIndex !== 0)
                       return (
                         <td
                           key={colIndex}
