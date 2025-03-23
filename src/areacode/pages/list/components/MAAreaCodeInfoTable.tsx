@@ -18,7 +18,7 @@ function MAAreaCodeInfoRow({
 
   return (
     <motion.tr
-      // className={`${MAList.infoRow} ${MAList["MAComp-" + info.color]}`} // TODO: fix
+      // className={`${MAList.infoRow} ${MAList['MAComp-' + info.color]}`} // TODO: fix
       className={`${MAList.infoRow}`}
     >
       {displayParam.includes('市外局番') && (

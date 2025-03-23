@@ -50,9 +50,5 @@ export function NumberBands({
     )
   })
 
-  return (
-    <div>
-      <ul className={MAList.numberBands}>{lis}</ul>
-    </div>
-  )
+  return <ul className={MAList.numberBands}>{lis}</ul>
 }

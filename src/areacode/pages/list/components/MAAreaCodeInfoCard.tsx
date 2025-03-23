@@ -7,13 +7,6 @@ import {
   NumberBands,
   Pref,
 } from 'areacode/pages/detail'
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemButton,
-  AccordionItemHeading,
-  AccordionItemPanel,
-} from 'react-accessible-accordion'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
@@ -21,49 +14,69 @@ import { MAInfoDetail } from './MAInfoDetail'
 
 function MAAreaCodeInfoCard({
   MAComp,
-  isExpanded = 'item',
+  displayParam,
 }: {
   MAComp: MACompInfo
-  isExpanded: string
+  displayParam: string[]
 }) {
   const info = new MAInfoDetail(MAComp)
   const colorStyle = getColorStyleByAreaCode(info.areaCode)
 
   return (
     <div className={`${MAList.infoBlock}`}>
-      {/* <div className={`${MAList["MAComp-" + info.color]}`}> // TODO: fix  */}
       <div>
-        <AreaCode areaCode={info.areaCode} colorStyle={colorStyle} />
-        <NumberBands areaCode={info.areaCode} numberBands={info.numberBands} />
+        <div className={MAList.areacodeNumberband}>
+          {displayParam.includes('市外局番') && (
+            <AreaCode areaCode={info.areaCode} colorStyle={colorStyle} />
+          )}
 
-        <Accordion allowZeroExpanded preExpanded={[isExpanded]}>
-          <AccordionItem uuid="item">
-            <AccordionItemHeading>
-              <AccordionItemButton>詳細</AccordionItemButton>
-            </AccordionItemHeading>
+          {displayParam.includes('番号領域') && (
+            <NumberBands
+              areaCode={info.areaCode}
+              numberBands={info.numberBands}
+            />
+          )}
+        </div>
 
-            <AccordionItemPanel>
-              <div className={MAList.mApref}>
-                <Pref pref={info.pref} />
-                <MA ma={info.ma} />
-              </div>
+        <div className={MAList.mApref}>
+          {displayParam.includes('都道府県') && <Pref pref={info.pref} />}
+          {displayParam.includes('MA名') && <MA ma={info.ma} />}
+        </div>
 
-              <div className={MAList.citiesContainer}>
-                <Cities
-                  classifiedCities={info.cities}
-                  colorStyle={colorStyle}
-                />
-              </div>
+        {displayParam.includes('市区町村') && (
+          <div className={MAList.citiesContainer}>
+            <Cities
+              classifiedCities={info.cities}
+              areaDisplayFull={displayParam.includes('一部地域詳細表示')}
+              colorStyle={colorStyle}
+            />
+          </div>
+        )}
 
-              <div className={MAList.infoTableContainer}>
-                <InfoTable
-                  compartmentCode={info.compartmentCode}
-                  square={info.square}
-                />
-              </div>
-            </AccordionItemPanel>
-          </AccordionItem>
-        </Accordion>
+        <div className={MAList.infoTableContainer}>
+          <table>
+            <tbody>
+              {displayParam.includes('MA独立番号') && (
+                <tr>
+                  <td>MA独立番号</td>
+                  <td>{info.maDistinct}</td>
+                </tr>
+              )}
+              {displayParam.includes('番号区画コード') && (
+                <tr>
+                  <td>番号区画コード</td>
+                  <td>{info.compartmentCode}</td>
+                </tr>
+              )}
+              {displayParam.includes('方形区画') && (
+                <tr>
+                  <td>方形区画</td>
+                  <td>{info.square}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
@@ -71,18 +84,22 @@ function MAAreaCodeInfoCard({
 
 export function MAAreaCodeInfoCards({
   MAComps,
-  isExpanded = 'item',
+  displayParam,
 }: {
   MAComps: MACompInfo[]
-  isExpanded: string
+  displayParam: string[]
 }) {
-  const MAAreaCodeInfos: React.JSX.Element[] = []
-
-  MAComps.forEach(function (MAComp, i) {
-    MAAreaCodeInfos.push(
-      <MAAreaCodeInfoCard key={i} MAComp={MAComp} isExpanded={isExpanded} />,
-    )
-  })
-
-  return <>{MAAreaCodeInfos}</>
+  return (
+    <>
+      {MAComps.map((MAComp, i) => {
+        return (
+          <MAAreaCodeInfoCard
+            key={i}
+            MAComp={MAComp}
+            displayParam={displayParam}
+          />
+        )
+      })}
+    </>
+  )
 }

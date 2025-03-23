@@ -5,12 +5,13 @@ import MAList from '../../../assets/css/MAList.module.scss'
 
 export function AreaCode({
   areaCode,
+  colorStyle,
 }: {
   areaCode: string
   colorStyle?: ColorStyle
 }) {
   return (
-    <div className={MAList.areacode}>
+    <div style={colorStyle?.background} className={MAList.areacode}>
       <p>{areaCode}</p>
     </div>
   )
