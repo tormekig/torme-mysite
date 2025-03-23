@@ -86,6 +86,7 @@ export function Code3digit({
                           style={{
                             backgroundColor: '#eee',
                             color: '#fff',
+                            padding: '0.8rem 0.5rem',
                           }}
                         >
                           {num}
