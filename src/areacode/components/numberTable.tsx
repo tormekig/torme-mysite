@@ -79,7 +79,18 @@ export function Code3digit({
                   </td>
                 ) : (
                   row.map((num, colIndex) => {
-                    if (colIndex == 0 && rowIndex != 0) return <td></td>
+                    if (colIndex == 0 && rowIndex != 0)
+                      return (
+                        <td
+                          key={colIndex}
+                          style={{
+                            backgroundColor: '#eee',
+                            color: '#fff',
+                          }}
+                        >
+                          {num}
+                        </td>
+                      )
                     return (
                       <td
                         key={colIndex}
