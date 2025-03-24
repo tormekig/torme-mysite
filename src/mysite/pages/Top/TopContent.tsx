@@ -21,6 +21,7 @@ export function TopContent() {
             <img
               id={mysite.topImg}
               src={convertPathToS3('img/etc/221023.jpg')}
+              alt={'top'}
             />
           </motion.div>
         </div>

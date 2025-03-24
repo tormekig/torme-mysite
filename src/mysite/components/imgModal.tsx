@@ -11,7 +11,7 @@ export function ImgModal({ imgMetaData }: { imgMetaData: ImgMetaData }) {
   return (
     <div className={mysite.imgModal}>
       <div className={mysite.imgContainer}>
-        <img src={convertPathToS3(imgMetaData.src)} />
+        <img src={convertPathToS3(imgMetaData.src)} alt={imgMetaData.alt} />
       </div>
       <p>{imgMetaData.alt}</p>
     </div>
@@ -32,7 +32,7 @@ export function ImgModalThumb({
         openModal(imgMetaData)
       }}
     >
-      <img src={convertPathToS3(imgMetaData.src, true)} />
+      <img src={convertPathToS3(imgMetaData.src, true)} alt={imgMetaData.alt} />
     </div>
   )
 }

@@ -1,173 +1,170 @@
-import { shuffleArray } from "../../../utils/tools";
-import { convertCompCode } from ".";
-import MACompList, { MACompInfo } from "../../data/MACompList";
-import cityList, { getCityListByPref, getCityName, getPrefCountyCityName, getPrefCountyCityNameKanaWithSlash, getPrefCountyName } from "../../data/cityList";
-import { HeaderInfo } from "./header";
+import { shuffleArray } from '../../../utils/tools'
+import { convertCompCode } from '.'
+import MACompList, { MACompInfo } from '../../data/MACompList'
+import cityList, {
+  getCityListByPref,
+  getCityName,
+  getPrefCountyCityName,
+  getPrefCountyCityNameKanaWithSlash,
+  getPrefCountyName,
+} from '../../data/cityList'
+import { HeaderInfo } from './header'
 
-export type SearchType = "MA" | "pref" | "city" | "code" | "code_prefix" | "all" | "random";
-type areacodeFilterWithQuery = (q: string) => MACompListContent;
-type areacodeFilter = () => MACompListContent;
+export type SearchType =
+  | 'MA'
+  | 'pref'
+  | 'city'
+  | 'code'
+  | 'code_prefix'
+  | 'all'
+  | 'random'
+type areacodeFilterWithQuery = (q: string) => MACompListContent
+type areacodeFilter = () => MACompListContent
 
 export class MACompListContent {
-	headerInfo: HeaderInfo = new HeaderInfo;
-	MAComps: MACompInfo[] = [];
+  headerInfo: HeaderInfo = new HeaderInfo()
+  MAComps: MACompInfo[] = []
 
-	public init(query?: string) {
-		this.headerInfo.init(query);
-		return this;
-	}
+  public init(query?: string) {
+    this.headerInfo.init(query)
+    return this
+  }
 
-	public setQueryAndSub(query: string, sub: string) {
-		this.headerInfo.mainHeader = query;
-		this.headerInfo.subHeader = sub;
-		return this;
-	}
+  public setQueryAndSub(query: string, sub: string) {
+    this.headerInfo.mainHeader = query
+    this.headerInfo.subHeader = sub
+    return this
+  }
 
-	private filterByMA: areacodeFilterWithQuery = (query: string) => {
+  private filterByMA: areacodeFilterWithQuery = (query: string) => {
+    this.setQueryAndSub(query, 'MA名検索')
 
-		this.setQueryAndSub(query, "MA名検索");
+    this.MAComps = MACompList.concat().filter(function (MAComp) {
+      return MAComp.MAName === query
+    })
 
-		this.MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.MAName === query;
-		})
+    return this
+  }
 
-		return this;
+  private filterByPref: areacodeFilterWithQuery = (query: string) => {
+    this.setQueryAndSub(query, '都道府県名検索')
 
-	}
-	
-	private filterByPref: areacodeFilterWithQuery = (query: string) => {
-	
-		this.setQueryAndSub(query, "都道府県名検索");
+    let MAComps: MACompInfo[] = []
 
-		let MAComps: MACompInfo[] = [];
+    const cityListByPref = getCityListByPref(query)
 
-		const cityListByPref = getCityListByPref(query);
-		
-		cityListByPref.forEach(function(city) {
-			const MAtemp = MACompList.concat().filter((m) => {
-				return convertCompCode(m) === city.compartmentCode;
-			})
-			MAComps = MAComps.concat(MAtemp)
-		})
+    cityListByPref.forEach(function (city) {
+      const MAtemp = MACompList.concat().filter((m) => {
+        return convertCompCode(m) === city.compartmentCode
+      })
+      MAComps = MAComps.concat(MAtemp)
+    })
 
-		MAComps = [...new Set(MAComps)];
+    MAComps = [...new Set(MAComps)]
 
-		MAComps.sort((a, b) =>
-			+a.MAnum > +b.MAnum ? 1 : -1
-		);
+    MAComps.sort((a, b) => (+a.MAnum > +b.MAnum ? 1 : -1))
 
-		this.MAComps = MAComps;
-		
-		return this;
+    this.MAComps = MAComps
 
-	}
-	
-	private filterByCity: areacodeFilterWithQuery = (query: string) => {
-	
-		this.setQueryAndSub(query, "市町村名検索");
+    return this
+  }
 
-		let MAComps: MACompInfo[] = [];
+  private filterByCity: areacodeFilterWithQuery = (query: string) => {
+    this.setQueryAndSub(query, '市町村名検索')
 
-		const cities = cityList.filter(function(city) {
-			return getPrefCountyCityName(city) === query;
-		})
+    let MAComps: MACompInfo[] = []
 
-		cities.forEach(function(city) {
-			const MAtemp = MACompList.concat().filter((m) => {
-				return convertCompCode(m) === city.compartmentCode;
-			})
-			MAComps = MAComps.concat(MAtemp)
-		})
+    const cities = cityList.filter(function (city) {
+      return getPrefCountyCityName(city) === query
+    })
 
-		this.MAComps = MAComps;
+    cities.forEach(function (city) {
+      const MAtemp = MACompList.concat().filter((m) => {
+        return convertCompCode(m) === city.compartmentCode
+      })
+      MAComps = MAComps.concat(MAtemp)
+    })
 
-		this.headerInfo.mainHeaderSub = getPrefCountyName(cities[0]);
-		this.headerInfo.mainHeader = getCityName(cities[0]);
-		this.headerInfo.mainHeaderRuby = getPrefCountyCityNameKanaWithSlash(cities[0]);
-		this.headerInfo.mainHeaderLink = "https://www.google.com/maps/place/" + query;
+    this.MAComps = MAComps
 
-		return this;
+    this.headerInfo.mainHeaderSub = getPrefCountyName(cities[0])
+    this.headerInfo.mainHeader = getCityName(cities[0])
+    this.headerInfo.mainHeaderRuby = getPrefCountyCityNameKanaWithSlash(
+      cities[0],
+    )
+    this.headerInfo.mainHeaderLink =
+      'https://www.google.com/maps/place/' + query
 
-	}
-	
-	private filterByExactAreacode: areacodeFilterWithQuery = (query: string) => {
-	
-		this.setQueryAndSub(query, "市外局番検索（完全一致）");
+    return this
+  }
 
-		query = query.slice(1, query.length)
-		this.MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.areaCode === query;
-		})
+  private filterByExactAreacode: areacodeFilterWithQuery = (query: string) => {
+    this.setQueryAndSub(query, '市外局番検索（完全一致）')
 
-		return this;
-		
-	}
-	
-	private filterByPrefixAreacode: areacodeFilterWithQuery = (query: string) => {
-	
-		this.setQueryAndSub(query, "市外局番検索（前方一致）");
+    query = query.slice(1, query.length)
+    this.MAComps = MACompList.concat().filter(function (MAComp) {
+      return MAComp.areaCode === query
+    })
 
-		query = query.slice(1, query.length)
-		this.MAComps = MACompList.concat().filter(function(MAComp) {
-			return MAComp.areaCode.slice(0, query.length) === query;
-		})
+    return this
+  }
 
-		return this;
-		
-	}
+  private filterByPrefixAreacode: areacodeFilterWithQuery = (query: string) => {
+    this.setQueryAndSub(query, '市外局番検索（前方一致）')
 
-	private all: areacodeFilter = () => {
-	
-		this.init("全て");
-		
-		this.MAComps = MACompList.concat();
+    query = query.slice(1, query.length)
+    this.MAComps = MACompList.concat().filter(function (MAComp) {
+      return MAComp.areaCode.slice(0, query.length) === query
+    })
 
-		return this;
-		
-	}
+    return this
+  }
 
-	private random: areacodeFilter = () => {
-	
-		this.init("ランダム表示");
+  private all: areacodeFilter = () => {
+    this.init('全て')
 
-		this.MAComps = shuffleArray(MACompList.concat()).slice(0, 1);
-	
-		return this;
-		
-	}
-	
-	public filter(type: SearchType, query: string): MACompListContent {
+    this.MAComps = MACompList.concat()
 
-		switch (type) {
+    return this
+  }
 
-			case "MA" : // MA name
-				return this.filterByMA(query);
+  private random: areacodeFilter = () => {
+    this.init('ランダム表示')
 
-			case "pref":
-				return this.filterByPref(query);
+    this.MAComps = shuffleArray(MACompList.concat()).slice(0, 1)
 
-			case "city":
-				return this.filterByCity(query);
+    return this
+  }
 
-			case "code": // areacode complete digit
-				return this.filterByExactAreacode(query);
+  public filter(type: SearchType, query: string): MACompListContent {
+    switch (type) {
+      case 'MA': // MA name
+        return this.filterByMA(query)
 
-			case "code_prefix": // areacode start digit
-				return this.filterByPrefixAreacode(query);
+      case 'pref':
+        return this.filterByPref(query)
 
-			case "all":
-				return this.all();
+      case 'city':
+        return this.filterByCity(query)
 
-			case "random":
-				return this.random();
+      case 'code': // areacode complete digit
+        return this.filterByExactAreacode(query)
 
-		}
-	}
+      case 'code_prefix': // areacode start digit
+        return this.filterByPrefixAreacode(query)
 
-	public shuffle(): MACompListContent {
-		this.headerInfo.subHeader += "（シャッフル）"
-		this.MAComps = shuffleArray(this.MAComps)
+      case 'all':
+        return this.all()
 
-		return this;
-	}
+      case 'random':
+        return this.random()
+    }
+  }
+
+  public shuffle(): MACompListContent {
+    this.headerInfo.subHeader += '（シャッフル）'
+    this.MAComps = shuffleArray(this.MAComps)
+
+    return this
+  }
 }

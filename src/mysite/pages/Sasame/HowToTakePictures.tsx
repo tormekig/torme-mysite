@@ -30,7 +30,6 @@ export function HowToTakePictures({
       <div className={sasame.pointImgInner}>
         {mark}
         {imgs.map((img, i) => {
-          const horizontalClass = img.horizontal ? sasame.horizontalImg : ''
           return (
             <ImgModalThumb imgMetaData={img} openModal={openModal} key={i} />
           )

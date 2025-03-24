@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  AreaCode,
-  Cities,
-  InfoTable,
-  MA,
-  NumberBands,
-  Pref,
-} from 'areacode/pages/detail'
+import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
@@ -62,12 +55,14 @@ function MAAreaCodeInfoCard({
                   <td>{info.maDistinct}</td>
                 </tr>
               )}
+
               {displayParam.includes('番号区画コード') && (
                 <tr>
                   <td>番号区画コード</td>
                   <td>{info.compartmentCode}</td>
                 </tr>
               )}
+
               {displayParam.includes('方形区画') && (
                 <tr>
                   <td>方形区画</td>
