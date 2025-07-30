@@ -106,16 +106,16 @@ function Main({
   }
 
   const renderAnswers = (question: Question, answerButtons: AnswerButton) => {
-    const { answers, correctAnswer } = question
+    const { choices, correctAnswer } = question
 
-    if (answers === undefined || correctAnswer === undefined)
+    if (choices === undefined || correctAnswer === undefined)
       throw Error('answers are undefined')
 
     const onClickAnswer = (index: number) => {
       checkAnswer(index + 1, correctAnswer)
     }
 
-    return answers.map((answer, i: number) => (
+    return choices.map((choice, i: number) => (
       <div key={i} className="answerBtn-container">
         {answerButtons[i] !== undefined ? (
           <button
@@ -124,7 +124,7 @@ function Main({
             className={`${answerButtons[i].className} answerBtn btn`}
             onClick={() => onClickAnswer(i)}
           >
-            <AnswerChoiceContent answer={answer} />
+            <AnswerChoiceContent answer={choice} />
           </button>
         ) : (
           <button
@@ -132,14 +132,18 @@ function Main({
             className={`answerBtn btn`}
             onClick={() => onClickAnswer(i)}
           >
-            <AnswerChoiceContent answer={answer} />
+            <AnswerChoiceContent answer={choice} />
           </button>
         )}
       </div>
     ))
   }
 
-  function AnswerChoiceContent({ answer: answerMAComp }: { answer: number }) {
+  function AnswerChoiceContent({
+    answer: answerMAComp,
+  }: {
+    answer: MACompInfo
+  }) {
     const displayParam = [
       '市外局番',
       '番号領域',
@@ -147,13 +151,13 @@ function Main({
       'MA名',
       '市区町村',
     ]
-    const info = new MACompListContent().filter('MA', `${answerMAComp}`)
+    const info = new MAInfoDetail(answerMAComp)
     return (
       <>
         <div className="answer-text">
-          {/* {answerMAComp.MAName} ({answerMAComp.pref}) */}
+          {answerMAComp.MAName} ({answerMAComp.pref})
         </div>
-        {/* {isVisibleCities && <CitiesSimple classifiedCities={info.cities} />} */}
+        {isVisibleCities && <CitiesSimple classifiedCities={info.cities} />}
       </>
     )
   }
@@ -193,10 +197,10 @@ function Main({
   )
 
   const renderAnswerInResult = (question: Question, userInputIndex: number) => {
-    const { answers, correctAnswer } = question
-    if (answers === undefined || correctAnswer === undefined)
+    const { choices, correctAnswer } = question
+    if (choices === undefined || correctAnswer === undefined)
       throw Error('answers are undefined')
-    return answers.map((answer, i) => {
+    return choices.map((choice, i) => {
       let answerBtnCorrectClassName =
         `${i + 1}` === correctAnswer ? 'correct' : ''
       let answerBtnIncorrectClassName =
@@ -211,7 +215,7 @@ function Main({
             disabled
             className={`answerBtn btn ${answerBtnCorrectClassName}${answerBtnIncorrectClassName}`}
           >
-            <AnswerChoiceContent answer={answer} />
+            <AnswerChoiceContent answer={choice} />
           </button>
         </div>
       )
@@ -219,6 +223,7 @@ function Main({
   }
 
   function renderQuestion(question: Question, i: number = 0) {
+    console.log(question, buttons)
     return (
       <div className="question">
         <InstantFeedback

@@ -3,38 +3,13 @@ import Main from './QuizMain'
 import './styles.css'
 import generateQuizSet from './generateQuiz'
 import { MACompInfo } from 'areacode/data/MACompList'
-
-const CORRECT_ANSWER = '1'
+import QuizGenerate from './generateQuiz'
 
 export type Question = {
   correctAnswer?: string
-  answers?: number[]
   subject: MACompInfo
   choices: MACompInfo[]
-}
-
-const shuffleAnswer = (oldQuestions: Question[]) => {
-  const newQuestions: Question[] = oldQuestions.map((question) => {
-    if (question.answers === undefined) question.answers = []
-    const answerWithIndex = question.answers.map((ans, i) => [ans, i])
-    const shuffledAnswersWithIndex = answerWithIndex.sort(
-      () => Math.random() - 0.5,
-    )
-    const shuffledAnswers = shuffledAnswersWithIndex.map((ans) => ans[0])
-
-    const newCorrectAnswer =
-      shuffledAnswersWithIndex.findIndex(
-        (ans) => `${ans[1] + 1}` === `${CORRECT_ANSWER}`,
-      ) + 1
-
-    return {
-      ...question,
-      correctAnswer: `${newCorrectAnswer}`,
-      answers: shuffledAnswers,
-    }
-  })
-
-  return newQuestions
+  questionIndex?: number
 }
 
 function Quiz() {
@@ -45,17 +20,14 @@ function Quiz() {
   const [choiceRange, setChoiceRange] = useState('-1')
 
   function startQuiz() {
-    let newQuestions: Question[] = generateQuizSet(
-      'areacodeToMAName',
-      choiceRange,
-    )
+    const newQuestions: Question[] = new QuizGenerate()
+      .generateQuizSet('areacodeToMAName', choiceRange)
+      .map((question, index) => ({
+        ...question,
+        questionIndex: index + 1,
+      }))
 
-    newQuestions = shuffleAnswer(newQuestions)
-
-    newQuestions = newQuestions.map((question, index) => ({
-      ...question,
-      questionIndex: index + 1,
-    }))
+    console.log(newQuestions)
 
     setQuestions(newQuestions)
     setIsGameInProgress(true)
