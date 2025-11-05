@@ -6,7 +6,7 @@ import MAList from 'areacode/assets/css/MAList.module.scss'
 import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
 import { MAInfoDetail } from './MAInfoDetail'
 
-function MAAreaCodeInfoRow({
+export function MAAreaCodeInfoRow({
   MAComp,
   displayParam,
 }: {
