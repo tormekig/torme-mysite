@@ -22,22 +22,33 @@ export class HeaderInfo {
   }
 }
 
-const items = [
-  '市外局番',
-  '番号領域',
-  '都道府県',
-  'MA名',
-  '市区町村',
-  '一部地域詳細表示',
-  'MA独立番号',
-  '番号区画コード',
-  '方形区画',
-]
-
-function CheckBtnItems(props: {
+export function CheckBtnItems(props: {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   displayParam: string[]
+  isQuiz?: boolean
 }) {
+  const items = props.isQuiz
+    ? [
+        '都道府県',
+        'MA名',
+        '市区町村',
+        '一部地域詳細表示',
+        'MA独立番号',
+        '番号区画コード',
+        '方形区画',
+      ]
+    : [
+        '市外局番',
+        '番号領域',
+        '都道府県',
+        'MA名',
+        '市区町村',
+        '一部地域詳細表示',
+        'MA独立番号',
+        '番号区画コード',
+        '方形区画',
+      ]
+
   const ts: React.JSX.Element[] = items.map((item) => {
     return (
       <label key={item}>

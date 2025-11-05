@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Main from './QuizMain'
-import './styles.css'
-import generateQuizSet from './generateQuiz'
+import quiz from 'areacode/assets/css/quiz.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
 import QuizGenerate from './generateQuiz'
+import { CheckBtnItems } from 'areacode/pages/list/header'
 
 export type Question = {
   correctAnswer?: string
@@ -16,8 +16,22 @@ function Quiz() {
   const [isGameInProgress, setIsGameInProgress] = useState(false)
   const [questions, setQuestions] = useState<Question[]>([])
 
-  const [isVisibleCities, setIsVisibleCities] = useState(true)
   const [choiceRange, setChoiceRange] = useState('-1')
+
+  const [displayParam, setDisplayParam] = useState([
+    '市区町村',
+    '一部地域詳細表示',
+  ])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (displayParam.includes(e.target.value)) {
+      setDisplayParam(
+        displayParam.filter((checkedValue) => checkedValue !== e.target.value),
+      )
+    } else {
+      setDisplayParam([...displayParam, e.target.value])
+    }
+  }
 
   function startQuiz() {
     const newQuestions: Question[] = new QuizGenerate()
@@ -31,10 +45,6 @@ function Quiz() {
 
     setQuestions(newQuestions)
     setIsGameInProgress(true)
-  }
-
-  const changeIsVisibleCities = () => {
-    setIsVisibleCities(!isVisibleCities)
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,18 +75,17 @@ function Quiz() {
     },
   ]
   return (
-    <div className="MAAreaCode-container quiz-container">
+    <div className={quiz.quizContainer}>
       {!isGameInProgress && (
         <div>
-          <div className="start-choice">
-            <input
-              type="checkbox"
-              checked={isVisibleCities}
-              onChange={() => changeIsVisibleCities()}
-            />{' '}
-            市町村名を表示
+          <div className={'MAList.checkBtnContainer'}>
+            <CheckBtnItems
+              handleChange={handleChange}
+              displayParam={displayParam}
+              isQuiz={true}
+            />
           </div>
-          <div className="choice-container">
+          <div className={quiz.choiceContainer}>
             <h3>出題範囲</h3>
             {radioButtons.map((radio, i) => {
               return (
@@ -95,11 +104,11 @@ function Quiz() {
               )
             })}
           </div>
-          <div className="startQuizBtn-container">
+          <div className={quiz.startQuizBtnContainer}>
             <button
               type="button"
               onClick={() => startQuiz()}
-              className="startQuizBtn btn"
+              className={quiz.btn}
             >
               Start
             </button>
@@ -108,11 +117,7 @@ function Quiz() {
       )}
 
       {isGameInProgress && (
-        <Main
-          questions={questions}
-          isVisibleCities={isVisibleCities}
-          choiceRange={choiceRange}
-        />
+        <Main questions={questions} displayParam={displayParam} />
       )}
     </div>
   )

@@ -1,26 +1,25 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import './styles.css'
+import quiz from 'areacode/assets/css/quiz.module.scss'
+
 import MAAreaCodeQuestion from './MAAreaCodeQuizComponent'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { MAInfoDetail } from 'areacode/pages/list/components/MAInfoDetail'
-import { CitiesSimple } from 'areacode/pages/detail'
 import { Question } from './Quiz'
-import { MACompListContent } from 'areacode/pages/list/MACompListContent'
+import { MAAreaCodeInfoCard } from 'areacode/pages/list/components'
 
-type AnswerButton = {
-  disabled?: boolean
-  className?: string
-}[]
+type AnswerButtons = {
+  [key: number]: {
+    disabled?: boolean
+    className?: string
+  }
+}
 
 function Main({
   questions,
-  isVisibleCities,
-  choiceRange,
+  displayParam,
 }: {
   questions: Question[]
-  isVisibleCities: boolean
-  choiceRange: string
+  displayParam: string[]
 }) {
   const [isCorrect, setIsCorrect] = useState(false)
   const [isIncorrect, setIsIncorrect] = useState(false)
@@ -39,7 +38,7 @@ function Main({
 
   useEffect(() => {
     setActiveQuestion(questions[currentQuestionIndex])
-  }, [currentQuestionIndex])
+  }, [currentQuestionIndex, questions])
 
   const nextQuestion = (currentQuestionIndex: number) => {
     setIsIncorrect(false)
@@ -75,7 +74,7 @@ function Main({
         ...prevState,
         ...disabledAll,
         [index - 1]: {
-          className: 'correct',
+          className: `${quiz.correct}`,
         },
       }))
 
@@ -90,10 +89,10 @@ function Main({
         ...prevState,
         ...disabledAll,
         [index - 1]: {
-          className: 'incorrect',
+          className: `${quiz.incorrect}`,
         },
         [parseInt(correctAnswer) - 1]: {
-          className: 'correct',
+          className: `${quiz.correct}`,
         },
       }))
 
@@ -105,7 +104,7 @@ function Main({
     setUserInput(userInputCopy)
   }
 
-  const renderAnswers = (question: Question, answerButtons: AnswerButton) => {
+  const renderAnswers = (question: Question, answerButtons: AnswerButtons) => {
     const { choices, correctAnswer } = question
 
     if (choices === undefined || correctAnswer === undefined)
@@ -115,51 +114,36 @@ function Main({
       checkAnswer(index + 1, correctAnswer)
     }
 
-    return choices.map((choice, i: number) => (
-      <div key={i} className="answerBtn-container">
+    return choices.map((choiceMAComp: MACompInfo, i: number) => (
+      <div key={i} className={quiz.answerBtnContainer}>
         {answerButtons[i] !== undefined ? (
           <button
             type="button"
             disabled={answerButtons[i].disabled || false}
-            className={`${answerButtons[i].className} answerBtn btn`}
+            className={`${answerButtons[i].className} ${quiz.answerBtn} ${quiz.btn}`}
             onClick={() => onClickAnswer(i)}
           >
-            <AnswerChoiceContent answer={choice} />
+            <MAAreaCodeInfoCard
+              MAComp={choiceMAComp}
+              displayParam={displayParam}
+              isQuiz={true}
+            />
           </button>
         ) : (
           <button
             type="button"
-            className={`answerBtn btn`}
+            className={`${quiz.answerBtn} ${quiz.btn}`}
             onClick={() => onClickAnswer(i)}
           >
-            <AnswerChoiceContent answer={choice} />
+            <MAAreaCodeInfoCard
+              MAComp={choiceMAComp}
+              displayParam={displayParam}
+              isQuiz={true}
+            />
           </button>
         )}
       </div>
     ))
-  }
-
-  function AnswerChoiceContent({
-    answer: answerMAComp,
-  }: {
-    answer: MACompInfo
-  }) {
-    const displayParam = [
-      '市外局番',
-      '番号領域',
-      '都道府県',
-      'MA名',
-      '市区町村',
-    ]
-    const info = new MAInfoDetail(answerMAComp)
-    return (
-      <>
-        <div className="answer-text">
-          {answerMAComp.MAName} ({answerMAComp.pref})
-        </div>
-        {isVisibleCities && <CitiesSimple classifiedCities={info.cities} />}
-      </>
-    )
   }
 
   function InstantFeedback({
@@ -180,13 +164,13 @@ function Main({
   }
 
   const renderResult = () => (
-    <div className="result-container">
-      <h2 className="result-header">結果発表</h2>
-      <div className="result-number">
+    <div className={quiz.resultContainer}>
+      <h2>結果発表</h2>
+      <div className={quiz.resultNumber}>
         {questions.length} 問中 {correctList.length} 問正解
       </div>
       <div>
-        <button className="btn" onClick={() => window.location.reload()}>
+        <button className={quiz.btn} onClick={() => window.location.reload()}>
           もう一度遊ぶ
         </button>
       </div>
@@ -200,22 +184,26 @@ function Main({
     const { choices, correctAnswer } = question
     if (choices === undefined || correctAnswer === undefined)
       throw Error('answers are undefined')
-    return choices.map((choice, i) => {
+    return choices.map((choiceMAComp, i) => {
       let answerBtnCorrectClassName =
-        `${i + 1}` === correctAnswer ? 'correct' : ''
+        `${i + 1}` === correctAnswer ? quiz.correct : ''
       let answerBtnIncorrectClassName =
         `${userInputIndex}` !== correctAnswer &&
         `${i + 1}` === `${userInputIndex}`
-          ? 'incorrect'
+          ? quiz.incorrect
           : ''
       return (
-        <div key={i} className="answerBtn-container">
+        <div key={i} className={quiz.answerBtnContainer}>
           <button
             type="button"
             disabled
-            className={`answerBtn btn ${answerBtnCorrectClassName}${answerBtnIncorrectClassName}`}
+            className={`${quiz.answerBtn} ${quiz.btn} ${answerBtnCorrectClassName}${answerBtnIncorrectClassName}`}
           >
-            <AnswerChoiceContent answer={choice} />
+            <MAAreaCodeInfoCard
+              MAComp={choiceMAComp}
+              displayParam={displayParam}
+              isQuiz={true}
+            />
           </button>
         </div>
       )
@@ -223,40 +211,41 @@ function Main({
   }
 
   function renderQuestion(question: Question, i: number = 0) {
-    console.log(question, buttons)
     return (
-      <div className="question">
-        <InstantFeedback
-          question={question}
-          isCorrect={isCorrect}
-          isIncorrect={isIncorrect}
-        />
+      <div className={quiz.question}>
         <div>
           {!isFinishedQuiz &&
-            `${currentQuestionIndex + 1} / ${questions.length}:`}
+            `${currentQuestionIndex + 1} 問目 / 全 ${questions.length} 問`}
         </div>
         {question && <MAAreaCodeQuestion MAComp={question.subject} />}
-        <div className="answers">
-          {question && !isFinishedQuiz && renderAnswers(question, [buttons])}
+        <div className={quiz.answers}>
+          {question && !isFinishedQuiz && renderAnswers(question, buttons)}
           {isFinishedQuiz && renderAnswerInResult(question, userInput[i])}
         </div>
         {showNextQuestionButton && (
-          <button
-            onClick={() => nextQuestion(currentQuestionIndex)}
-            className="nextQuestionBtn btn"
-          >
-            次へ
-          </button>
+          <>
+            <InstantFeedback
+              question={question}
+              isCorrect={isCorrect}
+              isIncorrect={isIncorrect}
+            />
+            <button
+              onClick={() => nextQuestion(currentQuestionIndex)}
+              className={`${quiz.btn}`}
+            >
+              次へ
+            </button>
+          </>
         )}
       </div>
     )
   }
 
   return (
-    <div className="question-container">
+    <>
       {!isFinishedQuiz && renderQuestion(activeQuestion)}
       {isFinishedQuiz && renderResult()}
-    </div>
+    </>
   )
 }
 

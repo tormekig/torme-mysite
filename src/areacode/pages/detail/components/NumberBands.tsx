@@ -1,5 +1,6 @@
 import React from 'react'
 import MAList from '../../../assets/css/MAList.module.scss'
+import quiz from 'areacode/assets/css/quiz.module.scss'
 
 export interface NumberBandInfo {
   id: string
@@ -13,11 +14,15 @@ export interface NumberBandInfo {
 export function NumberBands({
   areaCode,
   numberBands,
+  isQuiz = false,
 }: {
   areaCode: string
   numberBands: NumberBandInfo[]
   className?: string
+  isQuiz?: boolean
 }) {
+  const className = isQuiz ? quiz.numberBands : MAList.numberBands
+
   function insertStr(str: string, id: number, val: string): string {
     const res = str.slice(0, id) + val + str.slice(id)
     return res
@@ -50,5 +55,5 @@ export function NumberBands({
     )
   })
 
-  return <ul className={MAList.numberBands}>{lis}</ul>
+  return <ul className={className}>{lis}</ul>
 }
