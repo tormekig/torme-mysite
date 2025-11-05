@@ -2,25 +2,37 @@ import React from 'react'
 import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
-import {
-  getColorStyleByAreaCode,
-  getColorStyleForQuiz,
-} from 'areacode/components'
+import { getColorStyleByAreaCode } from 'areacode/components'
 import { MAInfoDetail } from './MAInfoDetail'
 
-export function MAAreaCodeInfoCard({
+export function MAAreaCodeInfoForQuiz({
   MAComp,
   displayParam,
-  isQuiz = false,
 }: {
   MAComp: MACompInfo
   displayParam: string[]
-  isQuiz?: boolean
 }) {
+  displayParam = [
+    // '市外局番',
+    // '番号領域',
+    // '都道府県',
+    // 'MA名',
+    '市区町村',
+    '一部地域詳細表示',
+    // 'MA独立番号',
+    // '番号区画コード',
+    // '方形区画',
+  ]
   const info = new MAInfoDetail(MAComp)
-  const colorStyle = isQuiz
-    ? getColorStyleForQuiz()
-    : getColorStyleByAreaCode(info.areaCode)
+  const colorStyle = {
+    background: {
+      backgroundColor: '#666',
+      color: '#fff',
+    },
+    text: {
+      color: '#666',
+    },
+  }
 
   return (
     <div className={`${MAList.infoBlock}`}>
@@ -49,7 +61,6 @@ export function MAAreaCodeInfoCard({
               classifiedCities={info.cities}
               areaDisplayFull={displayParam.includes('一部地域詳細表示')}
               colorStyle={colorStyle}
-              isCityClickable={!isQuiz}
             />
           </div>
         )}
@@ -86,29 +97,5 @@ export function MAAreaCodeInfoCard({
         )}
       </div>
     </div>
-  )
-}
-
-export function MAAreaCodeInfoCards({
-  MAComps,
-  displayParam,
-}: {
-  MAComps: MACompInfo[]
-  displayParam: string[]
-}) {
-  return (
-    <>
-      {MAComps.map((MAComp, i) => {
-        return (
-          <div className={MAList.infoBlockContainer}>
-            <MAAreaCodeInfoCard
-              key={i}
-              MAComp={MAComp}
-              displayParam={displayParam}
-            />
-          </div>
-        )
-      })}
-    </>
   )
 }

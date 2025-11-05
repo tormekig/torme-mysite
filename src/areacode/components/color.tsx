@@ -35,3 +35,15 @@ export function getColorStyleByAreaCode(areaCode: string): ColorStyle {
   const areacodeSecondAndThirdDigits = extractSecondAndThirdDigits(areaCode)
   return getColorStyle(areacodeSecondAndThirdDigits)
 }
+
+export function getColorStyleForQuiz(): ColorStyle {
+  return {
+    background: {
+      backgroundColor: '#666',
+      color: '#fff',
+    },
+    text: {
+      color: '#666',
+    },
+  }
+}

@@ -66,7 +66,6 @@ const MAAreaCodeInfoComponents = ({
         displayParam={displayParam}
         setDisplayParam={setDisplayParam}
       />
-      {/* @ts-expect-error Server Component */}
       <AnimatePresence mode="wait">
         <div key="content">{MAAreaCodeInfos}</div>
       </AnimatePresence>
@@ -136,7 +135,6 @@ export default function MAAreaCodeList({ type }: { type: SearchType }) {
       <div>
         <div className={MAList.maAreaCodeContainer}>
           <SearchBox openFunc={openModal} />
-          {/* @ts-expect-error Server Component */}
           <Modal isOpen={modalIsOpen} style={customStyles} closeTimeoutMS={200}>
             <SearchModal closeFunc={closeModal} />
           </Modal>

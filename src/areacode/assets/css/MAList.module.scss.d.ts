@@ -13,6 +13,7 @@ export declare const countyList: string
 export declare const countyName: string
 export declare const headerContainer: string
 export declare const infoBlock: string
+export declare const infoBlockContainer: string
 export declare const infoRow: string
 export declare const infoTable: string
 export declare const infoTableContainer: string

@@ -10,7 +10,7 @@ export interface ClassifiedCities {
   }
 }
 
-export function classifyCities(cities: CityInfo[]) {
+export function classifyCities(cities: CityInfo[]): ClassifiedCities {
   const classifiedCities: ClassifiedCities = {}
 
   for (const city of cities) {
@@ -37,11 +37,13 @@ export function Cities({
   classifiedCities,
   areaDisplayFull,
   colorStyle,
+  isCityClickable = true,
 }: {
   classifiedCities: ClassifiedCities
   areaDisplayFull?: boolean
   colorStyle: ColorStyle
-}) {
+  isCityClickable?: boolean
+}): JSX.Element {
   const displayCities = (pref: string, county: string) => {
     const cities: React.JSX.Element[] = []
 
@@ -59,7 +61,7 @@ export function Cities({
         }
       }
 
-      cities.push(
+      const elem = isCityClickable ? (
         <Link
           to={`/areacode/city/${cityFullTxt}`}
           className={MAList.city}
@@ -69,8 +71,16 @@ export function Cities({
           {city.name}
           {city.type}
           {zone}
-        </Link>,
+        </Link>
+      ) : (
+        <span className={MAList.city} style={colorStyle.background} key={i}>
+          {city.name}
+          {city.type}
+          {zone}
+        </span>
       )
+
+      cities.push(elem)
     })
 
     return <ul>{cities}</ul>
@@ -124,11 +134,11 @@ export function Cities({
   return <div>{displayPref()}</div>
 }
 
-export function CitiesSimple({
+export function CitiesForQuiz({
   classifiedCities,
 }: {
   classifiedCities: ClassifiedCities
-}) {
+}): JSX.Element {
   const displayCities = (pref: string, county: string) => {
     const cities: React.JSX.Element[] = []
 

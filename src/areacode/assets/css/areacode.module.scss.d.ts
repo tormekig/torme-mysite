@@ -2,12 +2,7 @@ export declare const allCodeListContainer: string
 export declare const appendix: string
 export declare const areacodeBody: string
 export declare const codeList: string
-export declare const codeListBlue: string
 export declare const codeListContainer: string
-export declare const codeListGreen: string
-export declare const codeListNone: string
-export declare const codeListRed: string
-export declare const codeListYellow: string
 export declare const copyrightContainer: string
 export declare const headerContainer: string
 export declare const headerContent: string
