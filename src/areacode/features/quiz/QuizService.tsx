@@ -1,18 +1,11 @@
 import React, { useState } from 'react'
-import Main from './QuizMain'
+import QuizStrategy from './QuizStrategy'
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import { MACompInfo } from 'areacode/data/MACompList'
-import QuizGenerate from './generateQuiz'
 import { CheckBtnItems } from 'areacode/pages/list/header'
+import { Question } from 'areacode/models/Question'
+import { QuizFactory } from 'areacode/factories/QuizFactory'
 
-export type Question = {
-  correctAnswer?: string
-  subject: MACompInfo
-  choices: MACompInfo[]
-  questionIndex?: number
-}
-
-function Quiz() {
+function QuizService() {
   const [isGameInProgress, setIsGameInProgress] = useState(false)
   const [questions, setQuestions] = useState<Question[]>([])
 
@@ -34,7 +27,7 @@ function Quiz() {
   }
 
   function startQuiz() {
-    const newQuestions: Question[] = new QuizGenerate()
+    const newQuestions: Question[] = new QuizFactory()
       .generateQuizSet('areacodeToMAName', choiceRange)
       .map((question, index) => ({
         ...question,
@@ -117,10 +110,10 @@ function Quiz() {
       )}
 
       {isGameInProgress && (
-        <Main questions={questions} displayParam={displayParam} />
+        <QuizStrategy questions={questions} displayParam={displayParam} />
       )}
     </div>
   )
 }
 
-export default Quiz
+export default QuizService

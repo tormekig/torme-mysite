@@ -4,8 +4,8 @@ import quiz from 'areacode/assets/css/quiz.module.scss'
 
 import MAAreaCodeQuestion from './MAAreaCodeQuizComponent'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { Question } from './Quiz'
 import { MAAreaCodeInfoCard } from 'areacode/pages/list/components'
+import { Question } from 'areacode/models/Question'
 
 type AnswerButtons = {
   [key: number]: {
@@ -14,34 +14,28 @@ type AnswerButtons = {
   }
 }
 
-function Main({
+function QuizStrategy({
   questions,
   displayParam,
 }: {
   questions: Question[]
   displayParam: string[]
-}) {
-  const [isCorrect, setIsCorrect] = useState(false)
-  const [isIncorrect, setIsIncorrect] = useState(false)
+}): JSX.Element {
+  const [isCorrect, setIsCorrect] = useState(true)
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false)
 
   const [isFinishedQuiz, setIsFinishedQuiz] = useState(false)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [buttons, setButtons] = useState({})
   const [correctList, setCorrectList] = useState<number[]>([])
-  const [incorrectList, setIncorrectList] = useState<number[]>([])
-  const [userInput, setUserInput] = useState<number[]>([])
 
-  const [activeQuestion, setActiveQuestion] = useState(
-    questions[currentQuestionIndex],
-  )
+  let userInput: number[] = []
 
-  useEffect(() => {
-    setActiveQuestion(questions[currentQuestionIndex])
-  }, [currentQuestionIndex, questions])
+  function getCurrentQuestion(): Question {
+    return questions[currentQuestionIndex]
+  }
 
-  const nextQuestion = (currentQuestionIndex: number) => {
-    setIsIncorrect(false)
+  function nextQuestion(currentQuestionIndex: number): void {
     setIsCorrect(false)
     setShowNextQuestionButton(false)
     setButtons({})
@@ -53,7 +47,7 @@ function Main({
     }
   }
 
-  const checkAnswer = (index: number, correctAnswer: string) => {
+  function checkAnswer(index: number, correctAnswer: string): void {
     const indexStr = `${index}`
     const disabledAll = {
       0: { disabled: true },
@@ -79,12 +73,8 @@ function Main({
       }))
 
       setIsCorrect(true)
-      setIsIncorrect(false)
       setCorrectList(correctList)
-      setShowNextQuestionButton(true)
     } else {
-      incorrectList.push(currentQuestionIndex)
-
       setButtons((prevState) => ({
         ...prevState,
         ...disabledAll,
@@ -97,14 +87,15 @@ function Main({
       }))
 
       setIsCorrect(false)
-      setIsIncorrect(true)
-      setIncorrectList(incorrectList)
-      setShowNextQuestionButton(true)
     }
-    setUserInput(userInputCopy)
+    setShowNextQuestionButton(true)
+    userInput = userInputCopy
   }
 
-  const renderAnswers = (question: Question, answerButtons: AnswerButtons) => {
+  function renderAnswers(
+    question: Question,
+    answerButtons: AnswerButtons,
+  ): JSX.Element[] {
     const { choices, correctAnswer } = question
 
     if (choices === undefined || correctAnswer === undefined)
@@ -146,41 +137,41 @@ function Main({
     ))
   }
 
-  function InstantFeedback({
-    isIncorrect,
-    isCorrect,
-    question,
-  }: {
-    isIncorrect: boolean
-    isCorrect: boolean
-    question: Question
-  }) {
+  function InstantFeedback({ isCorrect }: { isCorrect: boolean }): JSX.Element {
     return (
       <>
-        {isIncorrect && <div className="feedback">不正解…</div>}
-        {isCorrect && <div className="feedback">正解！</div>}
+        {isCorrect ? (
+          <div className="feedback">正解！</div>
+        ) : (
+          <div className="feedback">不正解…</div>
+        )}
       </>
     )
   }
 
-  const renderResult = () => (
-    <div className={quiz.resultContainer}>
-      <h2>結果発表</h2>
-      <div className={quiz.resultNumber}>
-        {questions.length} 問中 {correctList.length} 問正解
+  function renderResult(): JSX.Element {
+    return (
+      <div className={quiz.resultContainer}>
+        <h2>結果発表</h2>
+        <div className={quiz.resultNumber}>
+          {questions.length} 問中 {correctList.length} 問正解
+        </div>
+        <div>
+          <button className={quiz.btn} onClick={() => window.location.reload()}>
+            もう一度遊ぶ
+          </button>
+        </div>
+        {questions.map((question, i) => {
+          return <div key={i}>{renderQuestion(question, i)}</div>
+        })}
       </div>
-      <div>
-        <button className={quiz.btn} onClick={() => window.location.reload()}>
-          もう一度遊ぶ
-        </button>
-      </div>
-      {questions.map((question, i) => {
-        return <div key={i}>{renderQuestion(question, i)}</div>
-      })}
-    </div>
-  )
+    )
+  }
 
-  const renderAnswerInResult = (question: Question, userInputIndex: number) => {
+  function renderAnswerInResult(
+    question: Question,
+    userInputIndex: number,
+  ): JSX.Element[] {
     const { choices, correctAnswer } = question
     if (choices === undefined || correctAnswer === undefined)
       throw Error('answers are undefined')
@@ -210,7 +201,7 @@ function Main({
     })
   }
 
-  function renderQuestion(question: Question, i: number = 0) {
+  function renderQuestion(question: Question, i: number = 0): JSX.Element {
     return (
       <div className={quiz.question}>
         <div>
@@ -224,11 +215,7 @@ function Main({
         </div>
         {showNextQuestionButton && (
           <>
-            <InstantFeedback
-              question={question}
-              isCorrect={isCorrect}
-              isIncorrect={isIncorrect}
-            />
+            <InstantFeedback isCorrect={isCorrect} />
             <button
               onClick={() => nextQuestion(currentQuestionIndex)}
               className={`${quiz.btn}`}
@@ -243,10 +230,10 @@ function Main({
 
   return (
     <>
-      {!isFinishedQuiz && renderQuestion(activeQuestion)}
+      {!isFinishedQuiz && renderQuestion(getCurrentQuestion())}
       {isFinishedQuiz && renderResult()}
     </>
   )
 }
 
-export default Main
+export default QuizStrategy

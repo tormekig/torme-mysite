@@ -1,14 +1,14 @@
 // import '../css/quiz.css'
-import { shuffleArray } from '../../../utils/tools'
+import { shuffleArray } from '../../utils/tools'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { Question } from './Quiz'
+import { Question } from 'areacode/models/Question'
 
 const NUM_OF_CHOICES = 3
 // const NUM_OF_DIGIT_IN_AREACODE = -1; // -1: all
 const NUM_OF_QUESTIONS = 5
 
-class QuizGenerate {
+export class QuizFactory {
   CORRECT_ANSWER = '1'
 
   private generateEliminatedUniqueMAs(
@@ -111,5 +111,3 @@ class QuizGenerate {
     return []
   }
 }
-
-export default QuizGenerate
