@@ -2,7 +2,7 @@
 import { shuffleArray } from '../../utils/tools'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { Question } from 'areacode/models/Question'
+import { QuestionData } from 'areacode/models/Question'
 
 const NUM_OF_CHOICES = 3
 // const NUM_OF_DIGIT_IN_AREACODE = -1; // -1: all
@@ -59,7 +59,7 @@ export class QuizFactory {
   private generateQuestionData(
     MAComp: MACompInfo,
     numOfDigit: string,
-  ): Question {
+  ): QuestionData {
     const MAChoices = this.generateMAChoices(MAComp, parseInt(numOfDigit))
 
     return {
@@ -68,8 +68,8 @@ export class QuizFactory {
     }
   }
 
-  private shuffleAnswer(oldQuestions: Question[]): Question[] {
-    const newQuestions: Question[] = oldQuestions.map((question) => {
+  private shuffleAnswer(oldQuestions: QuestionData[]): QuestionData[] {
+    const newQuestions: QuestionData[] = oldQuestions.map((question) => {
       const answerWithIndex = question.choices.map((choice, i) => ({
         choice: choice,
         index: i,
@@ -86,7 +86,7 @@ export class QuizFactory {
 
       return {
         ...question,
-        correctAnswer: `${newCorrectAnswer}`,
+        correctAnswerIndex: newCorrectAnswer,
         choices: shuffledAnswers,
       }
     })
@@ -97,12 +97,12 @@ export class QuizFactory {
   public generateQuizSet(
     quizMode: string = 'areacodeToMAName',
     numOfDigit: string = '-1',
-  ): Question[] {
+  ): QuestionData[] {
     if (quizMode === 'areacodeToMAName') {
       const MAComps = new MACompListContent().filter('all', '').MAComps
       const subjectMAComps = shuffleArray(MAComps).slice(0, NUM_OF_QUESTIONS)
 
-      const questions: Question[] = subjectMAComps.map((MAComp) => {
+      const questions: QuestionData[] = subjectMAComps.map((MAComp) => {
         return this.generateQuestionData(MAComp, numOfDigit)
       })
 

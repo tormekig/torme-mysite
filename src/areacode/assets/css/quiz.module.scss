@@ -86,9 +86,15 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: 100%;
 
-    :disabled {
+    &:disabled {
       cursor: default;
+    }
+
+    .answerText {
+      font-size: 1.2rem;
+      margin: 0 0 0.5rem 0;
     }
   }
 
@@ -98,15 +104,6 @@
 
   .incorrect {
     border: 3px solid red;
-  }
-
-  .answerBtn {
-    width: 100%;
-
-    .answerText {
-      font-size: 1.2rem;
-      margin: 0 0 0.5rem 0;
-    }
   }
 }
 

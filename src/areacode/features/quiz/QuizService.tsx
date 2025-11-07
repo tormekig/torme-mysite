@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import QuizStrategy from './QuizStrategy'
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import { CheckBtnItems } from 'areacode/pages/list/header'
 import { Question } from 'areacode/models/Question'
 import { QuizFactory } from 'areacode/factories/QuizFactory'
+import { QuizComponent } from './QuizComponent'
 
 function QuizService() {
   const [isGameInProgress, setIsGameInProgress] = useState(false)
@@ -34,18 +34,15 @@ function QuizService() {
         questionIndex: index + 1,
       }))
 
-    console.log(newQuestions)
-
     setQuestions(newQuestions)
     setIsGameInProgress(true)
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value, choiceRange)
     setChoiceRange(event.target.value)
   }
 
-  const radioButtons = [
+  const radioButtons: { label: string; value: string }[] = [
     {
       label: '全て',
       value: '-1',
@@ -67,6 +64,7 @@ function QuizService() {
       value: '3',
     },
   ]
+
   return (
     <div className={quiz.quizContainer}>
       {!isGameInProgress && (
@@ -110,7 +108,7 @@ function QuizService() {
       )}
 
       {isGameInProgress && (
-        <QuizStrategy questions={questions} displayParam={displayParam} />
+        <QuizComponent questions={questions} displayParam={displayParam} />
       )}
     </div>
   )
