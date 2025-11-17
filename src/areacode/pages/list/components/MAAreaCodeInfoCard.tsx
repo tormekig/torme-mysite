@@ -1,5 +1,12 @@
 import React from 'react'
-import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
+import {
+  AreaCode,
+  Cities,
+  limitedCitiesOption,
+  MA,
+  NumberBands,
+  Pref,
+} from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
 import {
@@ -12,10 +19,12 @@ export function MAAreaCodeInfoCard({
   MAComp,
   displayParam,
   isQuiz = false,
+  limitedCitiesOption,
 }: {
   MAComp: MACompInfo
   displayParam: string[]
   isQuiz?: boolean
+  limitedCitiesOption?: limitedCitiesOption
 }) {
   const info = new MAInfoDetail(MAComp)
   const colorStyle = isQuiz
@@ -46,10 +55,11 @@ export function MAAreaCodeInfoCard({
         {displayParam.includes('市区町村') && (
           <div className={MAList.citiesContainer}>
             <Cities
-              classifiedCities={info.cities}
+              cities={info.cities}
               areaDisplayFull={displayParam.includes('一部地域詳細表示')}
               colorStyle={colorStyle}
               isCityClickable={!isQuiz}
+              limitedCitiesOption={limitedCitiesOption}
             />
           </div>
         )}

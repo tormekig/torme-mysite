@@ -3,11 +3,21 @@ import { Link } from 'react-router-dom'
 import MAList from '../../../assets/css/MAList.module.scss'
 import { CityInfo } from '../../../data/cityList'
 import { ColorStyle } from '../../../components'
+import { getDuplication } from 'utils/tools'
 
 export interface ClassifiedCities {
   [key: string]: {
     [key: string]: CityInfo[]
   }
+}
+
+export interface limitedCitiesOption {
+  cities: CityInfo[]
+  isDisplayElse: boolean
+}
+
+function getDuplicationCities(cities1: CityInfo[], cities2: CityInfo[]) {
+  return getDuplication(cities1, cities2, 'code')
 }
 
 export function classifyCities(cities: CityInfo[]): ClassifiedCities {
@@ -34,16 +44,22 @@ export function classifyCities(cities: CityInfo[]): ClassifiedCities {
 }
 
 export function Cities({
-  classifiedCities,
+  cities,
   areaDisplayFull,
   colorStyle,
   isCityClickable = true,
+  limitedCitiesOption,
 }: {
-  classifiedCities: ClassifiedCities
+  cities: CityInfo[]
   areaDisplayFull?: boolean
   colorStyle: ColorStyle
   isCityClickable?: boolean
+  limitedCitiesOption?: limitedCitiesOption
 }): JSX.Element {
+  if (!limitedCitiesOption?.isDisplayElse && limitedCitiesOption?.cities) {
+    cities = getDuplicationCities(cities, limitedCitiesOption.cities)
+  }
+  const classifiedCities = classifyCities(cities)
   const displayCities = (pref: string, county: string) => {
     const cities: React.JSX.Element[] = []
 

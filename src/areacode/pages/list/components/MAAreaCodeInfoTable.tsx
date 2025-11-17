@@ -51,7 +51,7 @@ export function MAAreaCodeInfoRow({
       {displayParam.includes('市区町村') && (
         <td className={MAList.citiesContainerTd}>
           <Cities
-            classifiedCities={info.cities}
+            cities={info.cities}
             areaDisplayFull={displayParam.includes('一部地域詳細表示')}
             colorStyle={colorStyle}
           />

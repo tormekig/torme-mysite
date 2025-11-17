@@ -9,6 +9,7 @@ import cityList, {
   getPrefCountyName,
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
+import { MAInfoDetail } from './components/MAInfoDetail'
 
 export type SearchType =
   | 'MA'
@@ -112,10 +113,7 @@ export class MACompListContent {
   private filterByPrefixAreacode: areacodeFilterWithQuery = (query: string) => {
     this.setQueryAndSub(query, '市外局番検索（前方一致）')
 
-    query = query.slice(1, query.length)
-    this.MAComps = MACompList.concat().filter(function (MAComp) {
-      return MAComp.areaCode.slice(0, query.length) === query
-    })
+    this.MAComps = MACompListContent.filterMACompListByPrefixAreaCode(query)
 
     return this
   }
@@ -166,5 +164,15 @@ export class MACompListContent {
     this.MAComps = shuffleArray(this.MAComps)
 
     return this
+  }
+
+  static filterMACompListByPrefixAreaCode(query: string): MACompInfo[] {
+    query = query.slice(1, query.length)
+    return MACompList.concat().filter(
+      (MAComp) =>
+        MAInfoDetail.getNumberBands(MAComp).filter(
+          (band) => band.bandStart.slice(1, query.length + 1) === query,
+        ).length > 0,
+    )
   }
 }

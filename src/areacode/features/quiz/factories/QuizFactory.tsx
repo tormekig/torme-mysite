@@ -1,8 +1,10 @@
 // import '../css/quiz.css'
-import { shuffleArray } from '../../utils/tools'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { QuestionData } from 'areacode/models/Question'
+import { shuffleArray } from 'utils/tools'
+import { quizMode } from '../QuizService'
+import { getAvailableThreeDigitNumbers } from 'areacode/components'
 
 const NUM_OF_CHOICES = 3
 // const NUM_OF_DIGIT_IN_AREACODE = -1; // -1: all
@@ -29,7 +31,6 @@ export class QuizFactory {
   }
 
   private generateMAChoices(answerMAComp: MACompInfo, numOfDigit: number = 0) {
-    console.log(numOfDigit)
     let codeFilteredMAs = new MACompListContent().filter('all', '').MAComps
 
     for (let i = numOfDigit; i >= 0; i--) {
@@ -95,10 +96,12 @@ export class QuizFactory {
   }
 
   public generateQuizSet(
-    quizMode: string = 'areacodeToMAName',
+    quizMode: quizMode,
     numOfDigit: string = '-1',
   ): QuestionData[] {
-    if (quizMode === 'areacodeToMAName') {
+    console.log(getAvailableThreeDigitNumbers())
+    if (quizMode === 'numToMAChoice' || 'numToCityName') {
+      // 仮
       const MAComps = new MACompListContent().filter('all', '').MAComps
       const subjectMAComps = shuffleArray(MAComps).slice(0, NUM_OF_QUESTIONS)
 

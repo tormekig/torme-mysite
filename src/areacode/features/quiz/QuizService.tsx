@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import { CheckBtnItems } from 'areacode/pages/list/header'
 import { Question } from 'areacode/models/Question'
-import { QuizFactory } from 'areacode/factories/QuizFactory'
 import { QuizComponent } from './QuizComponent'
+import { QuizFactory } from './factories/QuizFactory'
+
+export type quizMode = 'stop' | 'numToMAChoice' | 'numToCityName'
 
 function QuizService() {
-  const [isGameInProgress, setIsGameInProgress] = useState(false)
+  const [quizMode, setQuizMode] = useState<quizMode>('stop')
   const [questions, setQuestions] = useState<Question[]>([])
 
   const [choiceRange, setChoiceRange] = useState('-1')
@@ -26,16 +28,16 @@ function QuizService() {
     }
   }
 
-  function startQuiz() {
+  function startQuiz(mode: quizMode) {
     const newQuestions: Question[] = new QuizFactory()
-      .generateQuizSet('areacodeToMAName', choiceRange)
+      .generateQuizSet(mode, choiceRange)
       .map((question, index) => ({
         ...question,
         questionIndex: index + 1,
       }))
 
     setQuestions(newQuestions)
-    setIsGameInProgress(true)
+    setQuizMode(mode)
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +69,7 @@ function QuizService() {
 
   return (
     <div className={quiz.quizContainer}>
-      {!isGameInProgress && (
+      {quizMode === 'stop' && (
         <div>
           <div className={'MAList.checkBtnContainer'}>
             <CheckBtnItems
@@ -98,17 +100,30 @@ function QuizService() {
           <div className={quiz.startQuizBtnContainer}>
             <button
               type="button"
-              onClick={() => startQuiz()}
+              onClick={() => startQuiz('numToMAChoice')}
               className={quiz.btn}
             >
-              Start
+              番号 → MA 3択クイズ Start
+            </button>
+          </div>
+          <div className={quiz.startQuizBtnContainer}>
+            <button
+              type="button"
+              onClick={() => startQuiz('numToCityName')}
+              className={quiz.btn}
+            >
+              番号 → 市町村 入力クイズ Start
             </button>
           </div>
         </div>
       )}
 
-      {isGameInProgress && (
-        <QuizComponent questions={questions} displayParam={displayParam} />
+      {quizMode !== 'stop' && (
+        <QuizComponent
+          mode={quizMode}
+          questions={questions}
+          displayParam={displayParam}
+        />
       )}
     </div>
   )

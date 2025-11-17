@@ -18,6 +18,14 @@ export function shuffleArray<T>(array: T[]) {
   })
 }
 
+export function getDuplication<T, K extends keyof T>(
+  array1: T[],
+  array2: T[],
+  key: K,
+) {
+  return array1.filter((d1) => array2.some((d2) => Object.is(d1[key], d2[key])))
+}
+
 export function isWithinRange(
   value: number,
   min: number,
