@@ -115,6 +115,12 @@ export function QuizComponent({
       setInputValue('')
     }
 
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key !== 'Enter') return
+      e.preventDefault()
+      onClickAnswer()
+    }
+
     const limitedCitiesOption = {
       cities: correctInputs[currentQuestionIndex],
       isDisplayElse: isResult,
@@ -129,6 +135,7 @@ export function QuizComponent({
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleInputKeyDown}
                 disabled={isResult}
               />
             </div>

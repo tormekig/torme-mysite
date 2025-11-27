@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import MAList from '../../../assets/css/MAList.module.scss'
 import { CityInfo } from '../../../data/cityList'
-import { ColorStyle } from '../../../components'
+import { ColorStyle, getColorStyleForQuiz } from '../../../components'
 import { getDuplication } from 'utils/tools'
 
 export interface ClassifiedCities {
@@ -47,19 +47,22 @@ export function Cities({
   cities,
   areaDisplayFull,
   colorStyle,
-  isCityClickable = true,
+  isQuiz = false,
   limitedCitiesOption,
 }: {
   cities: CityInfo[]
   areaDisplayFull?: boolean
   colorStyle: ColorStyle
-  isCityClickable?: boolean
+  isQuiz?: boolean
   limitedCitiesOption?: limitedCitiesOption
 }): JSX.Element {
+  const isCityClickable = !isQuiz
+
   if (!limitedCitiesOption?.isDisplayElse && limitedCitiesOption?.cities) {
     cities = getDuplicationCities(cities, limitedCitiesOption.cities)
   }
   const classifiedCities = classifyCities(cities)
+
   const displayCities = (pref: string, county: string) => {
     const cities: React.JSX.Element[] = []
 
@@ -77,11 +80,16 @@ export function Cities({
         }
       }
 
+      const color =
+        limitedCitiesOption?.cities.includes(city) || !isQuiz
+          ? colorStyle
+          : getColorStyleForQuiz()
+
       const elem = isCityClickable ? (
         <Link
           to={`/areacode/city/${cityFullTxt}`}
           className={MAList.city}
-          style={colorStyle.background}
+          style={color.background}
           key={i}
         >
           {city.name}
@@ -89,7 +97,7 @@ export function Cities({
           {zone}
         </Link>
       ) : (
-        <span className={MAList.city} style={colorStyle.background} key={i}>
+        <span className={MAList.city} style={color.background} key={i}>
           {city.name}
           {city.type}
           {zone}
