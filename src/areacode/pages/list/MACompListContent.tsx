@@ -10,6 +10,8 @@ import cityList, {
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
 import { MAInfoDetail } from './components/MAInfoDetail'
+import NumberBandList from 'areacode/data/numberBandList'
+import { pref } from 'areacode/assets/css/MAList.module.scss'
 
 export type SearchType =
   | 'MA'
@@ -17,6 +19,7 @@ export type SearchType =
   | 'city'
   | 'code'
   | 'code_prefix'
+  | 'dojinshi'
   | 'all'
   | 'random'
 type areacodeFilterWithQuery = (q: string) => MACompListContent
@@ -151,6 +154,9 @@ export class MACompListContent {
       case 'code_prefix': // areacode start digit
         return this.filterByPrefixAreacode(query)
 
+      case 'dojinshi':
+        return this.init('dojinshi')
+
       case 'all':
         return this.all()
 
@@ -167,12 +173,46 @@ export class MACompListContent {
   }
 
   static filterMACompListByPrefixAreaCode(query: string): MACompInfo[] {
-    query = query.slice(1, query.length)
-    return MACompList.concat().filter(
-      (MAComp) =>
-        MAInfoDetail.getNumberBands(MAComp).filter(
-          (band) => band.bandStart.slice(1, query.length + 1) === query,
-        ).length > 0,
+    const prefix = query.slice(1)
+
+    const specificMAComp = this.getSpecificMAComp(prefix)
+    if (specificMAComp !== undefined) return specificMAComp
+
+    const bands = NumberBandList.filter(
+      (band) => band.bandStart.slice(1, prefix.length + 1) === prefix,
     )
+
+    const MACompsResult: MACompInfo[] = []
+
+    for (let i = 0; i < bands.length; i++) {
+      const MAComps = MACompList.filter(
+        (MAComp) =>
+          `${bands[i].MA}${bands[i].areaCode}` ===
+          `${MAComp.MAName}${MAComp.areaCode}`,
+      )
+
+      for (let j = 0; j < MAComps.length; j++) {
+        MACompsResult.push(MAComps[j])
+      }
+    }
+
+    return [...new Set(MACompsResult)]
+  }
+
+  static getSpecificMAComp(prefix: string): MACompInfo[] | undefined {
+    if (prefix === '310') {
+      return MACompList.filter((MAComp) => {
+        return MAComp.MAName === '東京'
+      })
+    } else if (prefix === '441') {
+      return MACompList.filter((MAComp) => {
+        return MAComp.MAName === '川崎'
+      })
+    } else if (prefix === '610') {
+      return MACompList.filter((MAComp) => {
+        return MAComp.MAName === '大阪'
+      })
+    }
+    return undefined
   }
 }

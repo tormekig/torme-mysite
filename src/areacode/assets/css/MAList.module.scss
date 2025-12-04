@@ -630,6 +630,190 @@ html {
   }
 }
 
+.infoDojinshi {
+  display: flex;
+  border: 1px solid #ccc;
+  background-color: #fff;
+
+  .areacode {
+    color: #fff;
+    margin: 0;
+    font-size: 1.5rem;
+    width: calc(1.5rem * 5);
+    font-weight: bold;
+    align-items: stretch;
+    display: flex;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    white-space: nowrap;
+
+    p {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .mApref {
+    flex: 1;
+  }
+
+  .words {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .maInfo {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .maNumberBands {
+    padding: 0.5rem;
+    width: calc(0.8rem * 16);
+    display: flex;
+    align-items: center;
+  }
+
+  .maNumberBandsInner {
+    width: 100%;
+    align-items: center;
+  }
+
+  .ma {
+    margin: 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .numberBands {
+    margin: 0.4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .citiesContainerOuter {
+    margin: 0.5rem 0;
+    border-left: 1px solid #eee;
+  }
+
+  $offset: 2px;
+  $blur: 2px;
+  $shadow-color: rgba(255, 255, 255, 0.8);
+  $text-shadow:
+    $offset $offset $blur $shadow-color,
+    (-$offset) (-$offset) $blur $shadow-color,
+    (-$offset) $offset $blur $shadow-color,
+    $offset (-$offset) $blur $shadow-color,
+    $offset 0 $blur $shadow-color,
+    (-$offset) 0 $blur $shadow-color,
+    0 $offset $blur $shadow-color,
+    0 (-$offset) $blur $shadow-color;
+
+  .pref {
+    margin: 0 0.2rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #888;
+  }
+
+  .citiesContainerTd {
+    width: 100%;
+  }
+
+  .prefList {
+    margin: 0 0.5rem;
+    display: flex;
+  }
+
+  .prefofCities {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .prefofCities > a {
+    color: $color-yellow-4;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    transition: 0.3s;
+    white-space: nowrap;
+  }
+
+  .prefofCities > a:hover {
+    color: $color-yellow-4;
+    background-color: #fff;
+  }
+
+  .countyList {
+    margin: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .cityList,
+  .cityListwithBorder {
+    border-left: 1px solid $color-yellow-4;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+
+  .cityList:first-child,
+  .cityListwithBorder:first-child {
+    border: 0;
+  }
+
+  .countyName {
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+    white-space: nowrap;
+  }
+
+  .city {
+    padding: 2px 0.7em;
+    border-radius: 1em;
+    margin: 0.25em;
+    font-size: 0.9rem;
+    letter-spacing: -1px;
+    display: inline-block;
+    // filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
+    transition: all 0.3s;
+    text-decoration: none;
+    background: $color-yellow-3;
+    color: #333;
+  }
+
+  .city:hover {
+    color: $color-yellow-3;
+    background-color: #fff;
+  }
+
+  .additionalInfo {
+    padding: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
 .codeListMiddle {
   width: 100%;
   margin: 1rem auto;

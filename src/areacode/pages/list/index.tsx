@@ -20,6 +20,7 @@ import {
 import { MAAreaCodeHeader } from './header'
 import { MAAreaCodeInfoCards, MAAreaCodeInfoTable } from './components'
 import { mediaQuery, useMediaQuery } from 'areacode/utils/responsive'
+import { MAAreaCodeInfoDojinshis } from './components/MAAreaCodeInfoDojinshi'
 
 export function convertCompCode(MAComp: MACompInfo) {
   return MAComp.codeSub === ''
@@ -49,7 +50,9 @@ const MAAreaCodeInfoComponents = ({
 
   const isMobile = useMediaQuery(mediaQuery.mobile)
 
-  if (style === 'card' || isMobile) {
+  if (type == 'dojinshi') {
+    MAAreaCodeInfos = <MAAreaCodeInfoDojinshis />
+  } else if (style === 'card' || isMobile) {
     MAAreaCodeInfos = (
       <MAAreaCodeInfoCards MAComps={MAComps} displayParam={displayParam} />
     )
