@@ -98,20 +98,12 @@ function QuizService() {
             })}
           </div>
           <div className={quiz.startQuizBtnContainer}>
-            <button
-              type="button"
-              onClick={() => startQuiz('numToMAChoice')}
-              className={quiz.btn}
-            >
+            <button type="button" onClick={() => startQuiz('numToMAChoice')}>
               番号 → MA 3択クイズ Start
             </button>
           </div>
           <div className={quiz.startQuizBtnContainer}>
-            <button
-              type="button"
-              onClick={() => startQuiz('numToCityName')}
-              className={quiz.btn}
-            >
+            <button type="button" onClick={() => startQuiz('numToCityName')}>
               番号 → 市町村 入力クイズ Start
             </button>
           </div>

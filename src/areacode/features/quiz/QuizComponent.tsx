@@ -55,9 +55,7 @@ export function QuizComponent({
             {isCorrect != null && (
               <div className="feedback">{isCorrect ? '正解！' : '不正解…'}</div>
             )}
-            <button onClick={() => nextQuestion()} className={`${quiz.btn}`}>
-              次へ
-            </button>
+            <button onClick={() => nextQuestion()}>次へ</button>
           </>
         )}
       </div>
@@ -177,9 +175,7 @@ export function QuizComponent({
           {questions.length} 問中 {state.correctList.length} 問正解
         </div>
         <div>
-          <button className={quiz.btn} onClick={() => window.location.reload()}>
-            もう一度遊ぶ
-          </button>
+          <button onClick={() => window.location.reload()}>もう一度遊ぶ</button>
         </div>
         {questions.map((question, i) => {
           return <div key={i}>{renderQuestion(question)}</div>
