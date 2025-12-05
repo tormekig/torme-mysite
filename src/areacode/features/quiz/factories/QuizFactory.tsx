@@ -1,14 +1,16 @@
 // import '../css/quiz.css'
-import { shuffleArray } from '../../../utils/tools'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { Question } from './Quiz'
+import { QuestionData } from 'areacode/models/Question'
+import { shuffleArray } from 'utils/tools'
+import { quizMode } from '../QuizService'
+import { getAvailableThreeDigitNumbers } from 'areacode/components'
 
 const NUM_OF_CHOICES = 3
 // const NUM_OF_DIGIT_IN_AREACODE = -1; // -1: all
 const NUM_OF_QUESTIONS = 5
 
-class QuizGenerate {
+export class QuizFactory {
   CORRECT_ANSWER = '1'
 
   private generateEliminatedUniqueMAs(
@@ -29,7 +31,6 @@ class QuizGenerate {
   }
 
   private generateMAChoices(answerMAComp: MACompInfo, numOfDigit: number = 0) {
-    console.log(numOfDigit)
     let codeFilteredMAs = new MACompListContent().filter('all', '').MAComps
 
     for (let i = numOfDigit; i >= 0; i--) {
@@ -59,7 +60,7 @@ class QuizGenerate {
   private generateQuestionData(
     MAComp: MACompInfo,
     numOfDigit: string,
-  ): Question {
+  ): QuestionData {
     const MAChoices = this.generateMAChoices(MAComp, parseInt(numOfDigit))
 
     return {
@@ -68,8 +69,8 @@ class QuizGenerate {
     }
   }
 
-  private shuffleAnswer(oldQuestions: Question[]): Question[] {
-    const newQuestions: Question[] = oldQuestions.map((question) => {
+  private shuffleAnswer(oldQuestions: QuestionData[]): QuestionData[] {
+    const newQuestions: QuestionData[] = oldQuestions.map((question) => {
       const answerWithIndex = question.choices.map((choice, i) => ({
         choice: choice,
         index: i,
@@ -86,7 +87,7 @@ class QuizGenerate {
 
       return {
         ...question,
-        correctAnswer: `${newCorrectAnswer}`,
+        correctAnswerIndex: newCorrectAnswer,
         choices: shuffledAnswers,
       }
     })
@@ -95,14 +96,16 @@ class QuizGenerate {
   }
 
   public generateQuizSet(
-    quizMode: string = 'areacodeToMAName',
+    quizMode: quizMode,
     numOfDigit: string = '-1',
-  ): Question[] {
-    if (quizMode === 'areacodeToMAName') {
+  ): QuestionData[] {
+    console.log(getAvailableThreeDigitNumbers())
+    if (quizMode === 'numToMAChoice' || 'numToCityName') {
+      // 仮
       const MAComps = new MACompListContent().filter('all', '').MAComps
       const subjectMAComps = shuffleArray(MAComps).slice(0, NUM_OF_QUESTIONS)
 
-      const questions: Question[] = subjectMAComps.map((MAComp) => {
+      const questions: QuestionData[] = subjectMAComps.map((MAComp) => {
         return this.generateQuestionData(MAComp, numOfDigit)
       })
 
@@ -111,5 +114,3 @@ class QuizGenerate {
     return []
   }
 }
-
-export default QuizGenerate

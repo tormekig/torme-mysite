@@ -1,19 +1,14 @@
 import React, { useState } from 'react'
-import Main from './QuizMain'
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import { MACompInfo } from 'areacode/data/MACompList'
-import QuizGenerate from './generateQuiz'
 import { CheckBtnItems } from 'areacode/pages/list/header'
+import { Question } from 'areacode/models/Question'
+import { QuizComponent } from './QuizComponent'
+import { QuizFactory } from './factories/QuizFactory'
 
-export type Question = {
-  correctAnswer?: string
-  subject: MACompInfo
-  choices: MACompInfo[]
-  questionIndex?: number
-}
+export type quizMode = 'stop' | 'numToMAChoice' | 'numToCityName'
 
-function Quiz() {
-  const [isGameInProgress, setIsGameInProgress] = useState(false)
+function QuizService() {
+  const [quizMode, setQuizMode] = useState<quizMode>('stop')
   const [questions, setQuestions] = useState<Question[]>([])
 
   const [choiceRange, setChoiceRange] = useState('-1')
@@ -33,26 +28,23 @@ function Quiz() {
     }
   }
 
-  function startQuiz() {
-    const newQuestions: Question[] = new QuizGenerate()
-      .generateQuizSet('areacodeToMAName', choiceRange)
+  function startQuiz(mode: quizMode) {
+    const newQuestions: Question[] = new QuizFactory()
+      .generateQuizSet(mode, choiceRange)
       .map((question, index) => ({
         ...question,
         questionIndex: index + 1,
       }))
 
-    console.log(newQuestions)
-
     setQuestions(newQuestions)
-    setIsGameInProgress(true)
+    setQuizMode(mode)
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value, choiceRange)
     setChoiceRange(event.target.value)
   }
 
-  const radioButtons = [
+  const radioButtons: { label: string; value: string }[] = [
     {
       label: '全て',
       value: '-1',
@@ -74,9 +66,10 @@ function Quiz() {
       value: '3',
     },
   ]
+
   return (
     <div className={quiz.quizContainer}>
-      {!isGameInProgress && (
+      {quizMode === 'stop' && (
         <div>
           <div className={'MAList.checkBtnContainer'}>
             <CheckBtnItems
@@ -105,22 +98,27 @@ function Quiz() {
             })}
           </div>
           <div className={quiz.startQuizBtnContainer}>
-            <button
-              type="button"
-              onClick={() => startQuiz()}
-              className={quiz.btn}
-            >
-              Start
+            <button type="button" onClick={() => startQuiz('numToMAChoice')}>
+              番号 → MA 3択クイズ Start
+            </button>
+          </div>
+          <div className={quiz.startQuizBtnContainer}>
+            <button type="button" onClick={() => startQuiz('numToCityName')}>
+              番号 → 市町村 入力クイズ Start
             </button>
           </div>
         </div>
       )}
 
-      {isGameInProgress && (
-        <Main questions={questions} displayParam={displayParam} />
+      {quizMode !== 'stop' && (
+        <QuizComponent
+          mode={quizMode}
+          questions={questions}
+          displayParam={displayParam}
+        />
       )}
     </div>
   )
 }
 
-export default Quiz
+export default QuizService

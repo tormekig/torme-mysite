@@ -35,6 +35,10 @@ export const areacodeRoutes: RoutePath[] = [
     children: <MAAreaCodeList type={'code_prefix'} />,
   },
   {
+    path: `dojinshi`,
+    children: <MAAreaCodeList type={'dojinshi'} />,
+  },
+  {
     path: `all`,
     children: <MAAreaCodeList type={'all'} />,
   },

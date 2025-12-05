@@ -630,6 +630,108 @@ html {
   }
 }
 
+.infoDojinshi {
+  display: flex;
+  border: 1px solid #ccc;
+  background-color: #fff;
+
+  .areacode {
+    color: #fff;
+    margin: 0;
+    font-size: 1.5rem;
+    width: calc(1.5rem * 5);
+    font-weight: bold;
+    align-items: stretch;
+    display: flex;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    white-space: nowrap;
+
+    p {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .mApref {
+    flex: 1;
+  }
+
+  .words {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .maInfo {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #ddd;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .maNumberBands {
+    padding: 0.5rem;
+    width: calc(0.8rem * 16);
+    display: flex;
+    align-items: center;
+  }
+
+  .maNumberBandsInner {
+    width: 100%;
+    align-items: center;
+  }
+
+  .ma {
+    margin: 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .numberBands {
+    margin: 0.4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    font-family: 'Roboto', sans-serif;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .citiesContainerOuter {
+    flex: 1;
+    margin: 0.5rem 0;
+    padding: 0 0.5rem;
+    border-left: 1px solid #eee;
+  }
+
+  $offset: 2px;
+  $blur: 2px;
+  $shadow-color: rgba(255, 255, 255, 0.8);
+  $text-shadow:
+    $offset $offset $blur $shadow-color,
+    (-$offset) (-$offset) $blur $shadow-color,
+    (-$offset) $offset $blur $shadow-color,
+    $offset (-$offset) $blur $shadow-color,
+    $offset 0 $blur $shadow-color,
+    (-$offset) 0 $blur $shadow-color,
+    0 $offset $blur $shadow-color,
+    0 (-$offset) $blur $shadow-color;
+
+  .citiesContainer {
+    font-size: 0.9rem;
+  }
+}
+
 .codeListMiddle {
   width: 100%;
   margin: 1rem auto;

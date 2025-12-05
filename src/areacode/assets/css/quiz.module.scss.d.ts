@@ -3,8 +3,6 @@ export declare const answerBtnContainer: string
 export declare const answers: string
 export declare const answerText: string
 export declare const areacode: string
-export declare const areacodeNumberband: string
-export declare const btn: string
 export declare const choiceContainer: string
 export declare const correct: string
 export declare const incorrect: string
