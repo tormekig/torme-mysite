@@ -1,5 +1,12 @@
-import React from 'react'
-import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
+import React, { useEffect, useState } from 'react'
+import {
+  AreaCode,
+  Cities,
+  CitiesForDojinshi,
+  MA,
+  NumberBands,
+  Pref,
+} from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import MACompList, { MACompInfo } from 'areacode/data/MACompList'
 import {
@@ -8,12 +15,16 @@ import {
 } from 'areacode/components'
 import { MAInfoDetail } from './MAInfoDetail'
 import { MACompListContent } from '../MACompListContent'
+import CsvLoader, { RememberWord } from './getCSV'
+import RememberWordCsvLoader from './getCSV'
 
 export function MAAreaCodeInfoDojinshi({
   areacode,
+  word,
   MAComps,
 }: {
   areacode: string
+  word: string
   MAComps: MACompInfo[]
 }) {
   const colorStyle = getColorStyleByAreaCode(areacode)
@@ -24,7 +35,7 @@ export function MAAreaCodeInfoDojinshi({
       </div>
 
       <div className={MAList.mApref}>
-        <div className={MAList.words}>覚え方</div>
+        <div className={MAList.words}>{word}</div>
         {MAComps.map((MAComp) => {
           const info = new MAInfoDetail(MAComp)
           const colorStyle = getColorStyleByAreaCode(info.areaCode)
@@ -44,11 +55,7 @@ export function MAAreaCodeInfoDojinshi({
               <div className={MAList.citiesContainerOuter}>
                 {
                   <div className={MAList.citiesContainer}>
-                    <Cities
-                      cities={info.cities}
-                      areaDisplayFull={false}
-                      colorStyle={colorStyle}
-                    />
+                    <CitiesForDojinshi cities={info.cities} />
                   </div>
                 }
               </div>
@@ -60,36 +67,50 @@ export function MAAreaCodeInfoDojinshi({
   )
 }
 
+function searchRememberWordData(data: RememberWord[], query: string) {
+  return data.filter((row) => {
+    return row.areacode === query
+  })
+}
+
 export function MAAreaCodeInfoDojinshis() {
-  const elem = []
-  const all = []
-  for (let i = 100; i < 1000; i++) {
-    const query = `0${i.toString()}`
+  const rememberWordData: RememberWord[] | null = CsvLoader()
+
+  if (!rememberWordData) return <div>Loading...</div>
+
+  const elems = []
+
+  for (let i = 111; i < 1000; i++) {
+    const query = `0${i}`
     const MAComps = MACompListContent.filterMACompListByPrefixAreaCode(query)
-    all.push(...MAComps)
-    // console.log(query, MAComps.length)
+
+    const rememberWord = searchRememberWordData(rememberWordData, query)
+    if (rememberWord.length > 1) console.log(query, rememberWord)
+    const word = rememberWord[0]?.word ?? ''
+
     if (MAComps.length === 0) {
       const colorStyle = getColorStyleByAreaCode(query)
-      elem.push(
+      elems.push(
         <div className={MAList.infoBlockContainer} key={i}>
           <div className={`${MAList.infoDojinshi}`}>
             <div className={MAList.areacode}>
               {<AreaCode areaCode={query} colorStyle={colorStyle} />}
             </div>
-
-            <div className={MAList.mApref}></div>
+            <div className={MAList.mApref}>{word}</div>
           </div>
         </div>,
       )
     } else {
-      elem.push(
+      elems.push(
         <div className={MAList.infoBlockContainer} key={i}>
-          <MAAreaCodeInfoDojinshi areacode={`${query}`} MAComps={MAComps} />
+          <MAAreaCodeInfoDojinshi
+            areacode={`${query}`}
+            word={word}
+            MAComps={MAComps}
+          />
         </div>,
       )
     }
   }
-  const a = [...new Set(all)]
-  console.log(all ,a, a.length)
-  return <>{elem}</>
+  return <>{elems}</>
 }

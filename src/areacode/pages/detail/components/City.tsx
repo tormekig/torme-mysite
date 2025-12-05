@@ -227,3 +227,86 @@ export function CitiesForQuiz({
 
   return <div>{displayPref()}</div>
 }
+
+export function CitiesForDojinshi({
+  cities,
+}: {
+  cities: CityInfo[]
+}): JSX.Element {
+  const classifiedCities = classifyCities(cities)
+  const zones = []
+
+  const displayCities = (pref: string, county: string) => {
+    const cities: React.JSX.Element[] = []
+
+    const citiesByCounty = classifiedCities[pref][county]
+
+    citiesByCounty.forEach(function (city, i) {
+      if (city.name === '') return false
+
+      let zone = null
+      if (city.zone.name) {
+        zone = <>{`※${zones.length + 1}`}</>
+        zones.push(zone)
+      }
+
+      const elem = (
+        <span key={i}>
+          {city.name}
+          {city.type}
+          {zone}
+          {i + 1 !== citiesByCounty.length && <> / </>}
+        </span>
+      )
+
+      cities.push(elem)
+    })
+
+    return <>{cities}</>
+  }
+
+  const displayCounties = (pref: string) => {
+    const counties: React.JSX.Element[] = []
+
+    const countiesByPref = Object.keys(classifiedCities[pref])
+    countiesByPref.forEach(function (county, i) {
+      let li = null
+      if (county) {
+        li = (
+          <span key={i}>
+            {county}（{displayCities(pref, county)}）
+            {i + 1 !== countiesByPref.length && <> / </>}
+          </span>
+        )
+      } else {
+        li = (
+          <span key={i}>
+            {displayCities(pref, county)}
+            {i + 1 !== countiesByPref.length && <> / </>}
+          </span>
+        )
+      }
+      counties.push(li)
+    })
+
+    return <>{counties}</>
+  }
+
+  const displayPref = () => {
+    const prefs: React.JSX.Element[] = []
+
+    const cities = Object.keys(classifiedCities)
+    Object.keys(classifiedCities).forEach(function (pref, i) {
+      prefs.push(
+        <span key={i}>
+          【{pref}】{displayCounties(pref)}
+          {i + 1 !== cities.length && <>/</>}
+        </span>,
+      )
+    })
+
+    return <>{prefs}</>
+  }
+
+  return <>{displayPref()}</>
+}

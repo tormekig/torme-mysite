@@ -670,6 +670,10 @@ html {
     display: flex;
     align-items: stretch;
     border-bottom: 1px solid #ddd;
+
+    &:last-child {
+      border-bottom: none;
+    }
   }
 
   .maNumberBands {
@@ -704,7 +708,9 @@ html {
   }
 
   .citiesContainerOuter {
+    flex: 1;
     margin: 0.5rem 0;
+    padding: 0 0.5rem;
     border-left: 1px solid #eee;
   }
 
@@ -721,96 +727,8 @@ html {
     0 $offset $blur $shadow-color,
     0 (-$offset) $blur $shadow-color;
 
-  .pref {
-    margin: 0 0.2rem;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #888;
-  }
-
-  .citiesContainerTd {
-    width: 100%;
-  }
-
-  .prefList {
-    margin: 0 0.5rem;
-    display: flex;
-  }
-
-  .prefofCities {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .prefofCities > a {
-    color: $color-yellow-4;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 400;
-    transition: 0.3s;
-    white-space: nowrap;
-  }
-
-  .prefofCities > a:hover {
-    color: $color-yellow-4;
-    background-color: #fff;
-  }
-
-  .countyList {
-    margin: 0.5rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .cityList,
-  .cityListwithBorder {
-    border-left: 1px solid $color-yellow-4;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0 0.5rem;
-  }
-
-  .cityList:first-child,
-  .cityListwithBorder:first-child {
-    border: 0;
-  }
-
-  .countyName {
-    font-size: 0.8rem;
-    margin-right: 0.2rem;
-    white-space: nowrap;
-  }
-
-  .city {
-    padding: 2px 0.7em;
-    border-radius: 1em;
-    margin: 0.25em;
+  .citiesContainer {
     font-size: 0.9rem;
-    letter-spacing: -1px;
-    display: inline-block;
-    // filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.5));
-    transition: all 0.3s;
-    text-decoration: none;
-    background: $color-yellow-3;
-    color: #333;
-  }
-
-  .city:hover {
-    color: $color-yellow-3;
-    background-color: #fff;
-  }
-
-  .additionalInfo {
-    padding: 8px;
-    font-size: 0.8rem;
-    white-space: nowrap;
   }
 }
 
