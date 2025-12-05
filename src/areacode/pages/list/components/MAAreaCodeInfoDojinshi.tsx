@@ -17,6 +17,7 @@ import { MAInfoDetail } from './MAInfoDetail'
 import { MACompListContent } from '../MACompListContent'
 import CsvLoader, { RememberWord } from './getCSV'
 import RememberWordCsvLoader from './getCSV'
+import { rememberWordData } from './rememberWords'
 
 export function MAAreaCodeInfoDojinshi({
   areacode,
@@ -36,11 +37,10 @@ export function MAAreaCodeInfoDojinshi({
 
       <div className={MAList.mApref}>
         <div className={MAList.words}>{word}</div>
-        {MAComps.map((MAComp) => {
+        {MAComps.map((MAComp, i) => {
           const info = new MAInfoDetail(MAComp)
-          const colorStyle = getColorStyleByAreaCode(info.areaCode)
           return (
-            <div className={MAList.maInfo}>
+            <div className={MAList.maInfo} key={i}>
               <div className={MAList.maNumberBands}>
                 <div className={MAList.maNumberBandsInner}>
                   {<MA ma={info.ma} />}
@@ -74,10 +74,6 @@ function searchRememberWordData(data: RememberWord[], query: string) {
 }
 
 export function MAAreaCodeInfoDojinshis() {
-  const rememberWordData: RememberWord[] | null = CsvLoader()
-
-  if (!rememberWordData) return <div>Loading...</div>
-
   const elems = []
 
   for (let i = 111; i < 1000; i++) {
