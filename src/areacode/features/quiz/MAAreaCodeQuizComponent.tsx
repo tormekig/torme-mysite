@@ -11,7 +11,7 @@ function MAAreaCodeQuestion({ MAComp }: { MAComp: MACompInfo }) {
     <div className={quiz.maQuestion}>
       <AreaCode areaCode={info.areaCode} isQuiz={true} />
       <NumberBands
-        areaCode={info.areaCode}
+        areacode={info.areaCode}
         numberBands={info.numberBands}
         isQuiz={true}
       />

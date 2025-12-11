@@ -666,45 +666,44 @@ html {
     border-bottom: 1px solid #ddd;
   }
 
-  .maInfo {
+  .maCompContainer {
     display: flex;
-    align-items: stretch;
-    border-bottom: 1px solid #ddd;
+    width: 100%;
+  }
+
+  .maInfo {
+    padding: 0.5rem;
+    border-right: 1px solid #ddd;
 
     &:last-child {
-      border-bottom: none;
+      border-right: none;
     }
   }
 
   .maNumberBands {
-    padding: 0.5rem;
-    width: calc(0.8rem * 16);
     display: flex;
     align-items: center;
   }
 
-  .maNumberBandsInner {
-    width: 100%;
-    align-items: center;
-  }
-
   .ma {
-    margin: 0 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
+    margin: 0 0.5rem 0 0;
+    font-size: 0.8rem;
     white-space: nowrap;
     text-align: center;
   }
 
   .numberBands {
-    margin: 0.4rem 1rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    flex: 1;
+    margin: 0;
+    padding: 0;
     font-size: 0.8rem;
     font-family: 'Roboto', sans-serif;
-    white-space: nowrap;
-    text-align: center;
+
+    span {
+      white-space: nowrap;
+    }
   }
 
   .citiesContainerOuter {
@@ -728,7 +727,7 @@ html {
     0 (-$offset) $blur $shadow-color;
 
   .citiesContainer {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 

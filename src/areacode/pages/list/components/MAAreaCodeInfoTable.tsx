@@ -30,7 +30,7 @@ export function MAAreaCodeInfoRow({
       {displayParam.includes('番号領域') && (
         <td>
           <NumberBands
-            areaCode={info.areaCode}
+            areacode={info.areaCode}
             numberBands={info.numberBands}
           />
         </td>
