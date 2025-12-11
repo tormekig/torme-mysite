@@ -228,85 +228,56 @@ export function CitiesForQuiz({
   return <div>{displayPref()}</div>
 }
 
-export function CitiesForDojinshi({
-  cities,
-}: {
-  cities: CityInfo[]
-}): JSX.Element {
-  const classifiedCities = classifyCities(cities)
-  const zones = []
+export function formatCitiesForDojinshi(cities: CityInfo[]): {
+  main: string
+  sub: string
+} {
+  const classified = classifyCities(cities)
+  const zones: string[] = []
+  const results: string[] = []
 
-  const displayCities = (pref: string, county: string) => {
-    const cities: React.JSX.Element[] = []
+  for (const pref of Object.keys(classified)) {
+    const counties = classified[pref]
+    const countyTexts: string[] = []
 
-    const citiesByCounty = classifiedCities[pref][county]
+    for (const county of Object.keys(counties)) {
+      const cityTexts: string[] = []
 
-    citiesByCounty.forEach(function (city, i) {
-      if (city.name === '') return false
+      counties[county].forEach((city) => {
+        if (!city.name) return
 
-      let zone = null
-      if (city.zone.name) {
-        zone = <>{`※${zones.length + 1}`}</>
-        zones.push(zone)
-      }
+        let zoneMark = ''
+        if (city.zone.name) {
+          const zoneName = city.zone.name
+          const numbering = zones.length + 1
+          let mark = ''
+          if (
+            zoneName.endsWith('を除く。') ||
+            zoneName.endsWith('を除く｡ ') ||
+            zoneName.endsWith('を除く｡')
+          ) {
+            mark = '△'
+          } else {
+            mark = '◎'
+          }
+          zoneMark = `${mark}${numbering}`
+          zones.push(`${zoneMark}${zoneName}`)
+        }
 
-      const elem = (
-        <span key={i}>
-          {city.name}
-          {city.type}
-          {zone}
-          {i + 1 !== citiesByCounty.length && <> / </>}
-        </span>
-      )
+        cityTexts.push(`${city.name}${city.type}${zoneMark}`)
+      })
 
-      cities.push(elem)
-    })
+      countyTexts.push(cityTexts.join(' / '))
+    }
 
-    return <>{cities}</>
+    results.push(`[${pref}] ${countyTexts.join(' / ')}`)
   }
 
-  const displayCounties = (pref: string) => {
-    const counties: React.JSX.Element[] = []
+  return { main: results.join(' '), sub: zones.join(', ') }
+}
 
-    const countiesByPref = Object.keys(classifiedCities[pref])
-    countiesByPref.forEach(function (county, i) {
-      let li = null
-      if (county) {
-        li = (
-          <span key={i}>
-            {county}（{displayCities(pref, county)}）
-            {i + 1 !== countiesByPref.length && <> / </>}
-          </span>
-        )
-      } else {
-        li = (
-          <span key={i}>
-            {displayCities(pref, county)}
-            {i + 1 !== countiesByPref.length && <> / </>}
-          </span>
-        )
-      }
-      counties.push(li)
-    })
+export function CitiesForDojinshi({ cities }: { cities: CityInfo[] }) {
+  const text = formatCitiesForDojinshi(cities)
 
-    return <>{counties}</>
-  }
-
-  const displayPref = () => {
-    const prefs: React.JSX.Element[] = []
-
-    const cities = Object.keys(classifiedCities)
-    Object.keys(classifiedCities).forEach(function (pref, i) {
-      prefs.push(
-        <span key={i}>
-          【{pref}】{displayCounties(pref)}
-          {i + 1 !== cities.length && <>/</>}
-        </span>,
-      )
-    })
-
-    return <>{prefs}</>
-  }
-
-  return <>{displayPref()}</>
+  return <>{text}</>
 }

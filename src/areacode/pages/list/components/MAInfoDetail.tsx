@@ -20,7 +20,6 @@ export class MAInfoDetail {
   numberBands: NumberBandInfo[]
   numberDesignations: NumberDesignation[]
   cities: CityInfo[]
-  color: string
 
   constructor(MAComp: MACompInfo) {
     this.areaCode = `0${MAComp.areaCode}`
@@ -38,7 +37,6 @@ export class MAInfoDetail {
       },
     ]
     this.cities = MAInfoDetail.getCities(MAComp)
-    this.color = MAComp.color
   }
 
   static getNumberBands(MAComp: MACompInfo) {
