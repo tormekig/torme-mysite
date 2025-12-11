@@ -23,6 +23,7 @@ export declare const ma: string
 export declare const maAreaCodeContainer: string
 export declare const maAreaCodeHeader: string
 export declare const maCompBlue: string
+export declare const maCompContainer: string
 export declare const maCompGreen: string
 export declare const maCompRed: string
 export declare const maCompYellow: string
@@ -33,7 +34,6 @@ export declare const mainHeaderMain: string
 export declare const mainHeaderRuby: string
 export declare const mainHeaderSub: string
 export declare const maNumberBands: string
-export declare const maNumberBandsInner: string
 export declare const mApref: string
 export declare const numberBands: string
 export declare const openSearchDetail: string

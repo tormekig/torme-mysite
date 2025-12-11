@@ -40,7 +40,7 @@ export function MAAreaCodeInfoCard({
 
           {displayParam.includes('番号領域') && (
             <NumberBands
-              areaCode={info.areaCode}
+              areacode={info.areaCode}
               numberBands={info.numberBands}
             />
           )}

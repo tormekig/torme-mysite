@@ -1,4 +1,13 @@
-const NumberBandList = [
+type numberBand = {
+  id: string
+  MA: string
+  areaCode: string
+  bandStart: string
+  bandEnd: string
+  eliminateCode: string
+}
+
+const NumberBandList: numberBand[] = [
   {
     id: '1',
     MA: '札幌',
@@ -6608,5 +6617,15 @@ const NumberBandList = [
     eliminateCode: '0',
   },
 ]
+
+export function paddingStartToEnd(numberBand: numberBand): string[] {
+  const start = parseInt(numberBand.bandStart)
+  const end = parseInt(numberBand.bandEnd)
+  const numberStrings: string[] = []
+  for (let i = start; i < end + 1; i++) {
+    numberStrings.push(`0${i}`)
+  }
+  return numberStrings
+}
 
 export default NumberBandList

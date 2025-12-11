@@ -10,7 +10,7 @@ import cityList, {
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
 import { MAInfoDetail } from './components/MAInfoDetail'
-import NumberBandList from 'areacode/data/numberBandList'
+import NumberBandList, { paddingStartToEnd } from 'areacode/data/numberBandList'
 import { pref } from 'areacode/assets/css/MAList.module.scss'
 
 export type SearchType =
@@ -175,11 +175,10 @@ export class MACompListContent {
   static filterMACompListByPrefixAreaCode(query: string): MACompInfo[] {
     const prefix = query.slice(1)
 
-    const specificMAComp = this.getSpecificMAComp(prefix)
-    if (specificMAComp !== undefined) return specificMAComp
-
-    const bands = NumberBandList.filter(
-      (band) => band.bandStart.slice(1, prefix.length + 1) === prefix,
+    const bands = NumberBandList.filter((band) =>
+      paddingStartToEnd(band).some(
+        (num) => num.toString().slice(1, prefix.length + 1) === prefix,
+      ),
     )
 
     const MACompsResult: MACompInfo[] = []
@@ -195,24 +194,6 @@ export class MACompListContent {
         MACompsResult.push(MAComps[j])
       }
     }
-
     return [...new Set(MACompsResult)]
-  }
-
-  static getSpecificMAComp(prefix: string): MACompInfo[] | undefined {
-    if (prefix === '310') {
-      return MACompList.filter((MAComp) => {
-        return MAComp.MAName === '東京'
-      })
-    } else if (prefix === '441') {
-      return MACompList.filter((MAComp) => {
-        return MAComp.MAName === '川崎'
-      })
-    } else if (prefix === '610') {
-      return MACompList.filter((MAComp) => {
-        return MAComp.MAName === '大阪'
-      })
-    }
-    return undefined
   }
 }
