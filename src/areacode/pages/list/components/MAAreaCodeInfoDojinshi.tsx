@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {
   AreaCode,
-  Cities,
-  CitiesForDojinshi,
   formatCitiesForDojinshi,
   formatNumberBands,
   MA,
-  NumberBands,
-  Pref,
 } from 'areacode/pages/detail'
-import MAList, { numberBands } from 'areacode/assets/css/MAList.module.scss'
-import MACompList, { MACompInfo } from 'areacode/data/MACompList'
+import MAList from 'areacode/assets/css/MAList.module.scss'
+import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
 import { MAInfoDetail } from './MAInfoDetail'
 import { MACompListContent } from '../MACompListContent'
-import CsvLoader, { RememberWord } from './getCSV'
+import { RememberWord } from './getCSV'
 import { rememberWordData } from './rememberWords'
 import RememberWordCsvLoader from './getCSV'
 
@@ -31,7 +27,7 @@ type formattedData = {
     | {
         ma: string
         numberBands: string
-        cities: { main: string; sub: string }
+        cities: { main: string[]; sub: string }
         refText?: undefined
       }
   )[]
@@ -67,7 +63,7 @@ export function MAAreaCodeInfoDojinshi({ data }: { data: formattedData }) {
                   <ul className={MAList.numberBands}>{maComp.numberBands}</ul>
                 </div>
                 <div className={MAList.citiesContainer}>
-                  <>{maComp.cities?.main}</>
+                  <>{maComp.cities?.main.map((s) => <div>{s}</div>)}</>
                 </div>
               </div>
             )
@@ -145,8 +141,6 @@ export function MAAreaCodeInfoDojinshis() {
     if (!isAllowed(i)) continue
     const areacode = `0${i}`
     const transformedAreacode = transformAreaCode(`0${i}`)
-    // if (areacode != transformedAreacode)
-    //   console.log(areacode, transformedAreacode)
     const MAComps =
       MACompListContent.filterMACompListByPrefixAreaCode(transformedAreacode)
 
@@ -154,7 +148,6 @@ export function MAAreaCodeInfoDojinshis() {
       rememberWordData,
       transformedAreacode,
     )
-    // if (rememberWord.length > 1) console.log(areacode, rememberWord)
     const word = rememberWord[0]?.word ?? ''
 
     const { formatted, text } = getTextData(
@@ -207,7 +200,7 @@ function getTextData(
   const maCompsText = formatted.maComps
     .map((maComp) => {
       return maComp.cities
-        ? `${maComp.ma} ${maComp.numberBands}<br>${maComp.cities.main};${maComp.cities.sub}`
+        ? `${maComp.ma} ${maComp.numberBands}<br>${maComp.cities.main.join('<br>')};${maComp.cities.sub}`
         : `${maComp.refText};`
     })
     .join(';')
@@ -229,13 +222,11 @@ function getFormatData(
     word,
     maComps: MAComps.map((MAComp) => {
       const info = new MAInfoDetail(MAComp)
-      if (MAComp.head4digits != areacode)
-        if (MAComp.head4digits !== areacode)
-          // console.log(MAComp.head4digits, areacode)
-          return {
-            ma: info.ma,
-            refText: `${info.ma}（${MAComp.head4digits}を参照）`,
-          }
+      if (MAComp.head4digits !== areacode)
+        return {
+          ma: info.ma,
+          refText: `${info.ma}(${MAComp.head4digits}を参照)`,
+        }
       return {
         ma: info.ma,
         numberBands: formatNumberBands(info.areaCode, info.numberBands)

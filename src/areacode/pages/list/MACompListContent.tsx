@@ -179,7 +179,7 @@ export class MACompListContent {
       paddingStartToEnd(band).some(
         (num) => num.toString().slice(1, prefix.length + 1) === prefix,
       ),
-    )
+    ).sort((a, b) => parseInt(a.bandStart) - parseInt(b.bandStart))
 
     const MACompsResult: MACompInfo[] = []
 
