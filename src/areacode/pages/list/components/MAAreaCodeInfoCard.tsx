@@ -2,7 +2,7 @@ import React from 'react'
 import {
   AreaCode,
   Cities,
-  limitedCitiesOption,
+  LimitedCitiesOption,
   MA,
   NumberBands,
   Pref,
@@ -21,7 +21,7 @@ export function MAAreaCodeInfoCard({
   MAComp: MACompInfo
   displayParam: string[]
   isQuiz?: boolean
-  limitedCitiesOption?: limitedCitiesOption
+  limitedCitiesOption?: LimitedCitiesOption
 }) {
   const info = new MAInfoDetail(MAComp)
   const colorStyle = getColorStyleByAreaCode(info.areaCode)
