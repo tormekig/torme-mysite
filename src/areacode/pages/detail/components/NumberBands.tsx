@@ -30,7 +30,7 @@ export function formatNumberBands(
     }
 
     const elim =
-      band.eliminateCode !== '0' ? `（${band.eliminateCode}を除く）` : ''
+      band.eliminateCode !== '0' ? `(${band.eliminateCode}を除く)` : ''
 
     return { txt, elim }
   })

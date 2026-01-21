@@ -9,9 +9,7 @@ import cityList, {
   getPrefCountyName,
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
-import { MAInfoDetail } from './components/MAInfoDetail'
 import NumberBandList, { paddingStartToEnd } from 'areacode/data/numberBandList'
-import { pref } from 'areacode/assets/css/MAList.module.scss'
 
 export type SearchType =
   | 'MA'
@@ -179,7 +177,7 @@ export class MACompListContent {
       paddingStartToEnd(band).some(
         (num) => num.toString().slice(1, prefix.length + 1) === prefix,
       ),
-    )
+    ).sort((a, b) => parseInt(a.bandStart) - parseInt(b.bandStart))
 
     const MACompsResult: MACompInfo[] = []
 
