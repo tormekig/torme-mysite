@@ -4,8 +4,6 @@ import { ScrollTop } from 'utils/tools'
 import QuizService from './QuizService'
 
 function displayQuiz() {
-  const quizMode = 'areacodeToMAName'
-
   return (
     <div>
       <ScrollTop />

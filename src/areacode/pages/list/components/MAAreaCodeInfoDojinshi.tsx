@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   AreaCode,
   formatCitiesForDojinshi,
@@ -6,7 +6,7 @@ import {
   isCityLimitedZone,
   MA,
 } from 'areacode/pages/detail'
-import MAList, { ma } from 'areacode/assets/css/MAList.module.scss'
+import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
 import { MAInfoDetail } from './MAInfoDetail'
@@ -14,13 +14,12 @@ import { MACompListContent } from '../MACompListContent'
 import { RememberWord } from './getCSV'
 import { rememberWordData } from './rememberWords'
 import RememberWordCsvLoader from './getCSV'
-import { text } from 'stream/consumers'
 import { CityInfo } from 'areacode/data/cityList'
 
 type formattedData = {
-  areacode: string
-  transformedAreacode: string
-  word: string
+  // areacode: string
+  // transformedAreacode: string
+  // word: string
   maComps: {
     ma: string
     head4digits: string
@@ -30,24 +29,29 @@ type formattedData = {
   }[]
 }
 
-export function MAAreaCodeInfoDojinshi({ data }: { data: formattedData }) {
-  const colorStyle = getColorStyleByAreaCode(data.transformedAreacode)
+export function MAAreaCodeInfoDojinshi({
+  areacode,
+  word,
+  transformedAreacode,
+  data,
+}: {
+  areacode: string
+  word: string
+  transformedAreacode: string
+  data: formattedData
+}) {
+  const colorStyle = getColorStyleByAreaCode(transformedAreacode)
   return (
     <div className={`${MAList.infoDojinshi}`}>
       <div className={MAList.areacode}>
-        {
-          <AreaCode
-            areaCode={data.transformedAreacode}
-            colorStyle={colorStyle}
-          />
-        }
+        {<AreaCode areaCode={transformedAreacode} colorStyle={colorStyle} />}
       </div>
 
       <div className={MAList.mApref}>
-        <div className={MAList.words}>{data.word}</div>
+        <div className={MAList.words}>{word}</div>
         <div className={MAList.maCompContainer}>
           {data.maComps.map((maComp, i) => {
-            return maComp.head4digits !== data.areacode ? (
+            return maComp.head4digits !== areacode ? (
               <div className={MAList.maInfo} key={i}>
                 <div className={MAList.maNumberBands}>
                   <MA ma={`${maComp.ma}(${maComp.head4digits}を参照)`} />
@@ -185,7 +189,12 @@ export function MAAreaCodeInfoDojinshis() {
     } else {
       elems.push(
         <div className={MAList.infoBlockContainer} key={i}>
-          <MAAreaCodeInfoDojinshi data={formatted} />
+          <MAAreaCodeInfoDojinshi
+            areacode={areacode}
+            word={word}
+            transformedAreacode={transformedAreacode}
+            data={formatted}
+          />
         </div>,
       )
     }
@@ -200,7 +209,7 @@ function getTextData(
   word: string,
   MAComps: MACompInfo[],
 ) {
-  const formatted = getFormatData(areacode, transformedAreacode, word, MAComps)
+  const formatted = getFormatData(MAComps)
   const maCompsText = formatted.maComps
     .map((maComp) => {
       return maComp.head4digits === areacode
@@ -213,8 +222,8 @@ function getTextData(
 
   return {
     formatted,
-    text: `${formatted.transformedAreacode};${formatted.word};${maCompsText}`,
-    multiMACombinedCities: `${formatted.transformedAreacode};${formatted.word};${multiMACombinedCities}`,
+    text: `${transformedAreacode};${word};${maCompsText}`,
+    multiMACombinedCities: `${transformedAreacode};${word};${multiMACombinedCities}`,
   }
 }
 
@@ -269,16 +278,8 @@ function getTextWithMultiMACombinedCities(formatted: formattedData) {
   return `${mas};${multiOrSingle};${multiMACombinedCitiesText.join('、')}`
 }
 
-function getFormatData(
-  areacode: string,
-  transformedAreacode: string,
-  word: string,
-  MAComps: MACompInfo[],
-) {
+function getFormatData(MAComps: MACompInfo[]) {
   return {
-    areacode,
-    transformedAreacode,
-    word,
     maComps: MAComps.map((MAComp) => {
       const info = new MAInfoDetail(MAComp)
       return {
