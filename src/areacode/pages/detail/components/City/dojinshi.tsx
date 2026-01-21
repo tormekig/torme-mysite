@@ -1,46 +1,41 @@
 import { CityInfo } from 'areacode/data/cityList'
-import { classifyCities } from './tools'
+import { classifyCities, isCityLimitedZone } from './tools'
 
 export function formatCitiesForDojinshi(cities: CityInfo[]): {
   main: string[]
   sub: string
+  mainWithoutPref: string[]
 } {
   const classified = classifyCities(cities)
   const zones: string[] = []
   const results: string[] = []
+  const resultsWithoutPref: string[] = []
 
   for (const pref of Object.keys(classified)) {
     const counties = classified[pref]
     const countyTexts: string[] = []
 
     for (const county of Object.keys(counties)) {
-      const cityTexts: string[] = []
+      const cities: { name: string; zoneMark: string }[] = []
 
       counties[county].forEach((city) => {
         if (!city.name) return
 
         let zoneMark = ''
         if (city.zone.name) {
-          const zoneName = city.zone.name
-          const numbering = zones.length + 1
-          let mark = ''
-          if (
-            zoneName.endsWith('を除く。') ||
-            zoneName.endsWith('を除く｡ ') ||
-            zoneName.endsWith('を除く｡')
-          ) {
-            mark = '◎'
-          } else {
-            mark = '△'
-          }
-          zoneMark = `${mark}${numbering}`
-          zones.push(`${zoneMark}${zoneName}`)
+          const mark =
+            isCityLimitedZone(city.zone.name) === 'excluded' ? '◎' : '△'
+          zoneMark = `(${mark})`
+          zones.push(`${zoneMark}${city.zone.name}`)
         }
 
-        cityTexts.push(`${city.name}${city.type}${zoneMark}`)
+        cities.push({
+          name: `${city.name}${city.type}`,
+          zoneMark,
+        })
       })
 
-      const cityText = cityTexts.join(' / ')
+      const cityText = cities.map((c) => `${c.name}${c.zoneMark}`).join(' / ')
       const countyResult = county.endsWith('市')
         ? `${county}(${cityText})`
         : cityText
@@ -50,7 +45,11 @@ export function formatCitiesForDojinshi(cities: CityInfo[]): {
     results.push(`[${pref}] ${countyTexts.join(' / ')}`)
   }
 
-  return { main: results, sub: zones.join(',') }
+  return {
+    main: results,
+    sub: zones.join(','),
+    mainWithoutPref: resultsWithoutPref,
+  }
 }
 
 export function CitiesForDojinshi({ cities }: { cities: CityInfo[] }) {
