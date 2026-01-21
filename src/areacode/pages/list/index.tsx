@@ -50,7 +50,7 @@ const MAAreaCodeInfoComponents = ({
 
   const isMobile = useMediaQuery(mediaQuery.mobile)
 
-  if (type == 'dojinshi') {
+  if (type === 'dojinshi') {
     MAAreaCodeInfos = <MAAreaCodeInfoDojinshis />
   } else if (style === 'card' || isMobile) {
     MAAreaCodeInfos = (
