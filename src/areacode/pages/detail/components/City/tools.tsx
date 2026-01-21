@@ -5,6 +5,19 @@ import { CityInfo } from '../../../../data/cityList'
 import { ColorStyle, getColorStyleForQuiz } from '../../../../components'
 import { getDuplication } from 'utils/tools'
 
+export function isCityLimitedZone(
+  zoneName: string,
+): 'limited' | 'excluded' | 'none' {
+  if (!zoneName) return 'none'
+  if (
+    zoneName.endsWith('を除く。') ||
+    zoneName.endsWith('を除く｡ ') ||
+    zoneName.endsWith('を除く｡')
+  )
+    return 'excluded'
+  return 'limited'
+}
+
 export interface LimitedCitiesOption {
   cities: CityInfo[]
   isDisplayElse: boolean
