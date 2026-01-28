@@ -64,7 +64,7 @@ function searchRememberWordData(query: string) {
   return TextExportService.searchRememberWordData(rememberWordData, query)
 }
 
-function transformAreaCode(code: string) {
+export function transformAreaCode(code: string) {
   return AreaCodeFormatter.transform(code)
 }
 

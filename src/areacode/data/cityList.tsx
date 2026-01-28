@@ -1,69 +1,83 @@
-import { getPrefName, getPrefNameKana } from "areacode/data/prefList"
+import { getPrefName, getPrefNameKana } from 'areacode/data/prefList'
 
 export function getCityName(city: CityInfo) {
-  return city.name + city.type;
+  return city.name
 }
 
-export function getPrefCityName(city: CityInfo) {
-  return getPrefName(city) + getCityName(city);
+export function getCityNameType(city: CityInfo) {
+  return city.name + city.type
 }
 
-export function getPrefCountyName(city: CityInfo) {
-  return getPrefName(city) + city.county.name + city.county.type;
+export function getPrefCityNameType(city: CityInfo) {
+  return getPrefName(city) + getCityNameType(city)
 }
 
-export function getPrefCountyCityName(city: CityInfo) {
-  return getPrefName(city) + city.county.name + city.county.type + getCityName(city);
+export function getPrefCountyNameType(city: CityInfo) {
+  return getPrefName(city) + city.county.name + city.county.type
 }
 
-export function getCityNameKana(city: CityInfo) {
-  return city.kana + city.typeKana;
+export function getPrefCountyCityNameType(city: CityInfo) {
+  return (
+    getPrefName(city) +
+    city.county.name +
+    city.county.type +
+    getCityNameType(city)
+  )
 }
 
-export function getPrefCityNameKana(city: CityInfo) {
-  return getPrefNameKana(city) + getCityNameKana(city);
+export function getCityNameTypeKana(city: CityInfo) {
+  return city.kana + city.typeKana
 }
 
-export function getPrefCountyCityNameKana(city: CityInfo) {
-  return getPrefNameKana(city) + city.county.kana + city.county.typeKana + getCityNameKana(city);
+export function getPrefCityNameTypeKana(city: CityInfo) {
+  return getPrefNameKana(city) + getCityNameTypeKana(city)
 }
 
-export function getPrefCountyCityNameKanaWithSlash(city: CityInfo) {
+export function getPrefCountyCityNameTypeKana(city: CityInfo) {
+  return (
+    getPrefNameKana(city) +
+    city.county.kana +
+    city.county.typeKana +
+    getCityNameTypeKana(city)
+  )
+}
+
+export function getPrefCountyCityNameTypeKanaWithSlash(city: CityInfo) {
   if (!city.county.kana) {
-    return `${getPrefNameKana(city)} / ${getCityNameKana(city)}`;
-  } else if (!getCityNameKana(city)) {
-    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana}`;
+    return `${getPrefNameKana(city)} / ${getCityNameTypeKana(city)}`
+  } else if (!getCityNameTypeKana(city)) {
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana}`
   } else {
-    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameKana(city)}`;
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameTypeKana(city)}`
   }
 }
 
 export function getCityListByPref(pref: string) {
-  return cityList.filter(function(city) {
-    return getPrefName(city) === pref;
+  return cityList.filter(function (city) {
+    return getPrefName(city) === pref
   })
 }
 
 export interface CityInfo {
-  code: string;
-  distinct: string;
-  pref: string;
+  code: string
+  distinct: string
+  pref: string
   county: {
-    name: string;
-    type: string;
-    kana: string;
-    typeKana: string;
-    note: string;
-  },
-  name: string;
-  type: string;
-  kana: string;
-  typeKana: string;
-  compartmentCode: string;
+    name: string
+    type: string
+    kana: string
+    typeKana: string
+    note: string
+  }
+  name: string
+  type: string
+  kana: string
+  typeKana: string
+  compartmentCode: string
   zone: {
-    name: string;
-    scale: string;
-  },
+    name: string
+    scale: string
+  }
 }
 
 export const cityList: CityInfo[] = [
@@ -45261,4 +45275,4 @@ export const cityList: CityInfo[] = [
   },
 ]
 
-export default cityList;
+export default cityList

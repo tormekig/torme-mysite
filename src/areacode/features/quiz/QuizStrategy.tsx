@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { Question } from 'areacode/models/Question'
+import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { MAInfoDetail } from 'areacode/pages/list/components/MAInfoDetail'
 import {
   CityInfo,
   getCityName,
-  getPrefCityName,
-  getPrefCountyCityName,
+  getCityNameType,
+  getPrefCityNameType,
+  getPrefCountyCityNameType,
 } from 'areacode/data/cityList'
+import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
 export type QuizState = {
   currentQuestionIndex: number
@@ -17,7 +19,9 @@ export type QuizState = {
   correctInputs: CityInfo[][]
 }
 
-export function QuizStrategy(questions: Question[]) {
+export function QuizStrategy(
+  questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[],
+) {
   const [state, setState] = useState<QuizState>({
     currentQuestionIndex: 0,
     isFinished: false,
@@ -49,7 +53,10 @@ export function QuizStrategy(questions: Question[]) {
   }
 
   function checkChoiceAnswer(selectedIndex: number) {
-    const isCorrect = selectedIndex === currentQuestion().correctAnswerIndex
+    const question = currentQuestion()
+    if (!(question instanceof MAChoiceMAQuestion)) return
+
+    const isCorrect = selectedIndex === question.correctAnswerIndex
     currentQuestion().userInput = selectedIndex
 
     const updatedCorrectList = isCorrect
@@ -72,18 +79,22 @@ export function QuizStrategy(questions: Question[]) {
   }
 
   function checkInputAnswer(inputName: string) {
+    const question = currentQuestion()
+    if (!(question instanceof Digit4NumInputCityQuestion)) return
+
     if (inputName === '') return
 
     const currentCorrectInputList =
       state.correctInputs[state.currentQuestionIndex]
 
-    const cities = MAInfoDetail.getCities(currentQuestion().subject)
+    const cities = MAInfoDetail.getCitiesByMultipleMAComps(question.subject)
 
     const searchedCities = cities.filter(function (city) {
       return (
-        getCityName(city).indexOf(inputName) === 0 ||
-        getPrefCityName(city).indexOf(inputName) === 0 ||
-        getPrefCountyCityName(city).indexOf(inputName) === 0
+        getCityName(city) === inputName ||
+        getCityNameType(city) === inputName ||
+        getPrefCityNameType(city) === inputName ||
+        getPrefCountyCityNameType(city) === inputName
       )
     })
 
