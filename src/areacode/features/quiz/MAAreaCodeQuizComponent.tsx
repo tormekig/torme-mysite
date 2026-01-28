@@ -4,8 +4,16 @@ import { MAInfoDetail } from 'areacode/pages/list/components/MAInfoDetail'
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import React from 'react'
 
-function MAAreaCodeQuestion({ MAComp }: { MAComp: MACompInfo }) {
-  const info = new MAInfoDetail(MAComp)
+function QuestionArg({ arg }: { arg: MACompInfo | string }) {
+  if (typeof arg === 'string') {
+    return (
+      <div className={quiz.maQuestion}>
+        <AreaCode areaCode={arg} isQuiz={true} />
+      </div>
+    )
+  }
+
+  const info = new MAInfoDetail(arg)
 
   return (
     <div className={quiz.maQuestion}>
@@ -19,4 +27,4 @@ function MAAreaCodeQuestion({ MAComp }: { MAComp: MACompInfo }) {
   )
 }
 
-export default MAAreaCodeQuestion
+export default QuestionArg

@@ -1,15 +1,33 @@
 import React, { useState } from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import { CheckBtnItems } from 'areacode/pages/list/header'
-import { Question } from 'areacode/models/Question'
+import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { QuizComponent } from './QuizComponent'
 import { QuizFactory } from './factories/QuizFactory'
+import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
-export type quizMode = 'stop' | 'numToMAChoice' | 'numToCityName'
+export type quizStatus = 'stop' | 'inProgress'
+
+type questionType = 'MANumRange' | '4DigitsNum'
+type inputType = 'choice' | 'input'
+type answerType = 'MA' | 'city'
+
+export type quizMode = {
+  questionType: questionType
+  inputType: inputType
+  answerType: answerType
+}
 
 function QuizService() {
-  const [quizMode, setQuizMode] = useState<quizMode>('stop')
-  const [questions, setQuestions] = useState<Question[]>([])
+  const [quizStatus, setQuizStatus] = useState<quizStatus>('stop')
+  const [quizMode, setQuizMode] = useState<quizMode>({
+    questionType: 'MANumRange',
+    inputType: 'choice',
+    answerType: 'MA',
+  })
+  const [questions, setQuestions] = useState<
+    (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
+  >([])
 
   const [choiceRange, setChoiceRange] = useState('-1')
 
@@ -29,15 +47,14 @@ function QuizService() {
   }
 
   function startQuiz(mode: quizMode) {
-    const newQuestions: Question[] = new QuizFactory()
-      .generateQuizSet(mode, choiceRange)
-      .map((question, index) => ({
-        ...question,
-        questionIndex: index + 1,
-      }))
+    const newQuestions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[] =
+      new QuizFactory()
+        .generateQuizSet(mode, choiceRange)
+        .map((question, index) => question.setQuestionIndex(index + 1))
 
     setQuestions(newQuestions)
     setQuizMode(mode)
+    setQuizStatus('inProgress')
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +86,7 @@ function QuizService() {
 
   return (
     <div className={quiz.quizContainer}>
-      {quizMode === 'stop' && (
+      {quizStatus === 'stop' && (
         <div>
           <div className={'MAList.checkBtnContainer'}>
             <CheckBtnItems
@@ -98,19 +115,51 @@ function QuizService() {
             })}
           </div>
           <div className={quiz.startQuizBtnContainer}>
-            <button type="button" onClick={() => startQuiz('numToMAChoice')}>
+            <button
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: 'MANumRange',
+                  inputType: 'choice',
+                  answerType: 'MA',
+                })
+              }
+            >
               番号 → MA 3択クイズ Start
             </button>
           </div>
           <div className={quiz.startQuizBtnContainer}>
-            <button type="button" onClick={() => startQuiz('numToCityName')}>
+            <button
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: 'MANumRange',
+                  inputType: 'input',
+                  answerType: 'city',
+                })
+              }
+            >
               番号 → 市町村 入力クイズ Start
+            </button>
+          </div>
+          <div className={quiz.startQuizBtnContainer}>
+            <button
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: '4DigitsNum',
+                  inputType: 'input',
+                  answerType: 'city',
+                })
+              }
+            >
+              番号4桁 → 市町村 入力クイズ Start
             </button>
           </div>
         </div>
       )}
 
-      {quizMode !== 'stop' && (
+      {quizStatus !== 'stop' && (
         <QuizComponent
           mode={quizMode}
           questions={questions}

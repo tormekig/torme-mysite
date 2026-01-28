@@ -1,12 +1,13 @@
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import { Question } from 'areacode/models/Question'
+import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 
-import MAAreaCodeQuestion from './MAAreaCodeQuizComponent'
+import QuestionArg from './MAAreaCodeQuizComponent'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { MAAreaCodeInfoCard } from 'areacode/pages/list/components'
 import { QuizStrategy } from './QuizStrategy'
 import { quizMode } from './QuizService'
 import { useState } from 'react'
+import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
 export function QuizComponent({
   mode,
@@ -14,7 +15,7 @@ export function QuizComponent({
   displayParam,
 }: {
   mode: quizMode
-  questions: Question[]
+  questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
   displayParam: string[]
 }) {
   const [inputValue, setInputValue] = useState('')
@@ -36,19 +37,27 @@ export function QuizComponent({
     correctInputs,
   } = state
 
-  function renderQuestion(question: Question): JSX.Element {
+  function renderQuestion(
+    question: MAChoiceMAQuestion | Digit4NumInputCityQuestion,
+  ): JSX.Element {
     const isResult = isFinished || showNext
 
+    const subject =
+      question instanceof Digit4NumInputCityQuestion
+        ? question.areacode
+        : question.subject
     return (
       <div className={quiz.question}>
         <div>
           {!isFinished &&
             `${currentQuestionIndex + 1} 問目 / 全 ${questions.length} 問`}
         </div>
-        <MAAreaCodeQuestion MAComp={question.subject} />
+        <QuestionArg arg={subject} />
         <div className={quiz.answers}>
-          {mode === 'numToMAChoice' && renderChoices(question, isResult)}
-          {mode === 'numToCityName' && renderInput(question, isResult)}
+          {question instanceof MAChoiceMAQuestion &&
+            renderMAChoices(question, isResult)}
+          {question instanceof Digit4NumInputCityQuestion &&
+            renderCityInput(question, isResult)}
         </div>
         {showNext && (
           <>
@@ -62,8 +71,8 @@ export function QuizComponent({
     )
   }
 
-  function renderChoices(
-    question: Question,
+  function renderMAChoices(
+    question: MAChoiceMAQuestion,
     isResult: boolean = false,
   ): JSX.Element[] {
     const { choices, correctAnswerIndex } = question
@@ -104,8 +113,8 @@ export function QuizComponent({
     })
   }
 
-  function renderInput(
-    question: Question,
+  function renderCityInput(
+    question: Digit4NumInputCityQuestion,
     isResult: boolean = false,
   ): JSX.Element {
     const onClickAnswer = () => {
@@ -157,12 +166,17 @@ export function QuizComponent({
             </div>
           </div>
         )}
-        <MAAreaCodeInfoCard
-          MAComp={question.subject}
-          displayParam={displayParam}
-          isQuiz={true}
-          limitedCitiesOption={limitedCitiesOption}
-        />
+        {question.subject.map((comp, i) => {
+          return (
+            <MAAreaCodeInfoCard
+              MAComp={comp}
+              key={i}
+              displayParam={displayParam}
+              isQuiz={true}
+              limitedCitiesOption={limitedCitiesOption}
+            />
+          )
+        })}
       </div>
     )
   }
