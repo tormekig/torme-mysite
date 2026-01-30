@@ -7,14 +7,12 @@ import { MAAreaCodeInfoCard } from 'areacode/pages/list/components'
 import { quizMode } from './QuizService'
 import { useState } from 'react'
 import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
-import { QuizController } from './QuizController'
+import { QuizController, QuizState } from './QuizController'
 
 export function QuizComponent({
-  mode,
   questions,
   displayParam,
 }: {
-  mode: quizMode
   questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
   displayParam: string[]
 }) {
@@ -22,58 +20,102 @@ export function QuizComponent({
   const [controller] = useState(() => new QuizController(questions))
   const [state, setState] = useState(controller.getState())
 
-  const {
-    currentQuestionIndex,
-    isFinished,
-    showNext,
-    isCorrect,
-    correctInputs,
-  } = state
+  const handleStateChange = () => setState({ ...controller.getState() })
 
-  const handleStateChange = () => {
-    setState({ ...controller.getState() })
-  }
+  const ctx = {
+    controller,
+    state,
+    inputValue,
+    setInputValue,
+    handleStateChange,
+    displayParam,
+    questions,
+  } as const
 
-  function renderQuestion(
-    question: MAChoiceMAQuestion | Digit4NumInputCityQuestion,
-  ): JSX.Element {
-    const isResult = isFinished || showNext
+  return (
+    <>
+      {!state.isFinished ? (
+        <QuestionComponent question={controller.currentQuestion()} ctx={ctx} />
+      ) : (
+        <ResultComponent ctx={ctx} />
+      )}
+    </>
+  )
+}
 
-    const subject =
-      question instanceof Digit4NumInputCityQuestion
-        ? question.areacode
-        : question.subject
-    return (
-      <div className={quiz.question}>
-        <div>
-          {!isFinished &&
-            `${currentQuestionIndex + 1} 問目 / 全 ${questions.length} 問`}
-        </div>
-        <QuestionArg arg={subject} />
-        <div className={quiz.answers}>
-          {question instanceof MAChoiceMAQuestion &&
-            renderMAChoices(question, isResult)}
-          {question instanceof Digit4NumInputCityQuestion &&
-            renderCityInput(question, isResult)}
-        </div>
-        {showNext && (
-          <>
-            {isCorrect != null && (
-              <div className="feedback">{isCorrect ? '正解！' : '不正解…'}</div>
-            )}
-            <button
-              onClick={() => {
-                controller.nextQuestion()
-                handleStateChange()
-              }}
-            >
-              次へ
-            </button>
-          </>
-        )}
+type QuizCtx = {
+  controller: QuizController
+  state: QuizState
+  inputValue: string
+  setInputValue: (v: string) => void
+  handleStateChange: () => void
+  displayParam: string[]
+  questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
+}
+
+function QuestionComponent({
+  question,
+  ctx,
+}: {
+  question: MAChoiceMAQuestion | Digit4NumInputCityQuestion
+  ctx: QuizCtx
+}): JSX.Element {
+  const { state, controller, handleStateChange, questions } = ctx
+  const subject =
+    question instanceof Digit4NumInputCityQuestion
+      ? question.areacode
+      : question.subject
+
+  return (
+    <div className={quiz.question}>
+      <div>
+        {!state.isFinished &&
+          `${state.currentQuestionIndex + 1} 問目 / 全 ${questions.length} 問`}
       </div>
-    )
-  }
+      <QuestionArg arg={subject} />
+      <div className={quiz.answers}>
+        <QuestionInteractionComponent question={question} ctx={ctx} />
+      </div>
+      {state.showNext && (
+        <>
+          {state.isCorrect != null && (
+            <div className="feedback">
+              {state.isCorrect ? '正解！' : '不正解…'}
+            </div>
+          )}
+          <button
+            onClick={() => {
+              controller.nextQuestion()
+              handleStateChange()
+            }}
+          >
+            次へ
+          </button>
+        </>
+      )}
+    </div>
+  )
+}
+
+function QuestionInteractionComponent({
+  question,
+  ctx,
+}: {
+  question: MAChoiceMAQuestion | Digit4NumInputCityQuestion
+  ctx: QuizCtx
+}): JSX.Element {
+  const {
+    state,
+    controller,
+    inputValue,
+    setInputValue,
+    handleStateChange,
+    displayParam,
+  } = ctx
+  const isResult = state.isFinished || state.showNext
+  const currentQuestionIndex = state.currentQuestionIndex
+  const correctInputs = state.correctInputs
+  const isFinished = state.isFinished
 
   function renderMAChoices(
     question: MAChoiceMAQuestion,
@@ -190,28 +232,34 @@ export function QuizComponent({
     )
   }
 
-  function renderResult(): JSX.Element {
-    return (
-      <div className={quiz.resultContainer}>
-        <h2>結果発表</h2>
-        <div className={quiz.resultNumber}>
-          {questions.length} 問中 {state.correctList.length} 問正解
-        </div>
-        <div>
-          <button onClick={() => window.location.reload()}>もう一度遊ぶ</button>
-        </div>
-        {questions.map((question, i) => {
-          return <div key={i}>{renderQuestion(question)}</div>
-        })}
-      </div>
-    )
-  }
-
   return (
     <>
-      {!isFinished
-        ? renderQuestion(controller.currentQuestion())
-        : renderResult()}
+      {question instanceof MAChoiceMAQuestion &&
+        renderMAChoices(question, isResult)}
+      {question instanceof Digit4NumInputCityQuestion &&
+        renderCityInput(question, isResult)}
     </>
+  )
+}
+
+function ResultComponent({ ctx }: { ctx: QuizCtx }): JSX.Element {
+  const { questions, state } = ctx
+  return (
+    <div className={quiz.resultContainer}>
+      <h2>結果発表</h2>
+      <div className={quiz.resultNumber}>
+        {questions.length} 問中 {state.correctList.length} 問正解
+      </div>
+      <div>
+        <button onClick={() => window.location.reload()}>もう一度遊ぶ</button>
+      </div>
+      {questions.map((question, i) => {
+        return (
+          <div key={i}>
+            <QuestionComponent question={question} ctx={ctx} />
+          </div>
+        )
+      })}
+    </div>
   )
 }
