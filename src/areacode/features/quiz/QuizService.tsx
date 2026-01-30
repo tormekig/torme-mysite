@@ -160,11 +160,7 @@ function QuizService() {
       )}
 
       {quizStatus !== 'stop' && (
-        <QuizComponent
-          mode={quizMode}
-          questions={questions}
-          displayParam={displayParam}
-        />
+        <QuizComponent questions={questions} displayParam={displayParam} />
       )}
     </div>
   )
