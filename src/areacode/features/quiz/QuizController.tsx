@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { MAInfoDetail } from 'areacode/pages/list/components/MAInfoDetail'
 import {
@@ -19,73 +18,81 @@ export type QuizState = {
   correctInputs: CityInfo[][]
 }
 
-export function QuizStrategy(
-  questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[],
-) {
-  const [state, setState] = useState<QuizState>({
-    currentQuestionIndex: 0,
-    isFinished: false,
-    isCorrect: null,
-    showNext: false,
-    correctList: [],
-    correctInputs: [[], [], [], [], []],
-  })
+export class QuizController {
+  private state: QuizState
+  private questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
 
-  function currentQuestion() {
-    return questions[state.currentQuestionIndex]
-  }
-
-  function nextQuestion(): void {
-    if (state.currentQuestionIndex + 1 === questions.length) {
-      setState({
-        ...state,
-        showNext: false,
-        isFinished: true,
-      })
-    } else {
-      setState({
-        ...state,
-        isCorrect: null,
-        showNext: false,
-        currentQuestionIndex: state.currentQuestionIndex + 1,
-      })
+  constructor(questions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]) {
+    this.questions = questions
+    this.state = {
+      currentQuestionIndex: 0,
+      isFinished: false,
+      isCorrect: null,
+      showNext: false,
+      correctList: [],
+      correctInputs: [[], [], [], [], []],
     }
   }
 
-  function checkChoiceAnswer(selectedIndex: number) {
-    const question = currentQuestion()
+  getState() {
+    return this.state
+  }
+
+  currentQuestion() {
+    return this.questions[this.state.currentQuestionIndex]
+  }
+
+  nextQuestion(): void {
+    if (this.state.currentQuestionIndex + 1 === this.questions.length) {
+      this.state = {
+        ...this.state,
+        showNext: false,
+        isFinished: true,
+      }
+    } else {
+      this.state = {
+        ...this.state,
+        isCorrect: null,
+        showNext: false,
+        currentQuestionIndex: this.state.currentQuestionIndex + 1,
+      }
+    }
+  }
+
+  checkChoiceAnswer(selectedIndex: number) {
+    const question = this.currentQuestion()
     if (!(question instanceof MAChoiceMAQuestion)) return
 
     const isCorrect = selectedIndex === question.correctAnswerIndex
-    currentQuestion().userInput = selectedIndex
+    this.currentQuestion().userInput = selectedIndex
 
     const updatedCorrectList = isCorrect
-      ? [...state.correctList, state.currentQuestionIndex]
-      : [...state.correctList]
+      ? [...this.state.correctList, this.state.currentQuestionIndex]
+      : [...this.state.correctList]
 
-    setState({
-      ...state,
+    this.state = {
+      ...this.state,
       isCorrect,
       showNext: true,
       correctList: updatedCorrectList,
-    })
+    }
   }
 
-  function decideIsCorrectForInputAnswer() {
-    setState({
-      ...state,
+  decideIsCorrectForInputAnswer() {
+    this.state = {
+      ...this.state,
       showNext: true,
-    })
+    }
   }
 
-  function checkInputAnswer(inputName: string) {
-    const question = currentQuestion()
+  checkInputAnswer(inputName: string) {
+    const question = this.currentQuestion()
     if (!(question instanceof Digit4NumInputCityQuestion)) return
 
     if (inputName === '') return
 
     const currentCorrectInputList =
-      state.correctInputs[state.currentQuestionIndex]
+      this.state.correctInputs[this.state.currentQuestionIndex]
 
     const cities = MAInfoDetail.getCitiesByMultipleMAComps(question.subject)
 
@@ -99,14 +106,5 @@ export function QuizStrategy(
     })
 
     currentCorrectInputList.push(...searchedCities)
-  }
-
-  return {
-    state,
-    currentQuestion,
-    checkChoiceAnswer,
-    checkInputAnswer,
-    decideIsCorrectForInputAnswer,
-    nextQuestion,
   }
 }
