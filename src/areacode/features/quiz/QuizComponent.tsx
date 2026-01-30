@@ -4,10 +4,10 @@ import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import QuestionArg from './MAAreaCodeQuizComponent'
 import { MACompInfo } from 'areacode/data/MACompList'
 import { MAAreaCodeInfoCard } from 'areacode/pages/list/components'
-import { QuizStrategy } from './QuizStrategy'
 import { quizMode } from './QuizService'
 import { useState } from 'react'
 import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
+import { QuizController } from './QuizController'
 
 export function QuizComponent({
   mode,
@@ -19,23 +19,20 @@ export function QuizComponent({
   displayParam: string[]
 }) {
   const [inputValue, setInputValue] = useState('')
+  const [controller] = useState(() => new QuizController(questions))
+  const [state, setState] = useState(controller.getState())
 
   const {
-    state,
-    currentQuestion,
-    checkChoiceAnswer,
-    checkInputAnswer,
-    decideIsCorrectForInputAnswer,
-    nextQuestion,
-  } = QuizStrategy(questions)
-
-  const {
-    isFinished,
-    isCorrect,
-    showNext,
     currentQuestionIndex,
+    isFinished,
+    showNext,
+    isCorrect,
     correctInputs,
   } = state
+
+  const handleStateChange = () => {
+    setState({ ...controller.getState() })
+  }
 
   function renderQuestion(
     question: MAChoiceMAQuestion | Digit4NumInputCityQuestion,
@@ -64,7 +61,14 @@ export function QuizComponent({
             {isCorrect != null && (
               <div className="feedback">{isCorrect ? '正解！' : '不正解…'}</div>
             )}
-            <button onClick={() => nextQuestion()}>次へ</button>
+            <button
+              onClick={() => {
+                controller.nextQuestion()
+                handleStateChange()
+              }}
+            >
+              次へ
+            </button>
           </>
         )}
       </div>
@@ -81,7 +85,8 @@ export function QuizComponent({
       throw Error('answers are undefined')
 
     const onClickAnswer = (index: number) => {
-      checkChoiceAnswer(index + 1)
+      controller.checkChoiceAnswer(index + 1)
+      handleStateChange()
     }
 
     return choices.map((choiceMAComp: MACompInfo, i: number) => {
@@ -118,8 +123,9 @@ export function QuizComponent({
     isResult: boolean = false,
   ): JSX.Element {
     const onClickAnswer = () => {
-      checkInputAnswer(inputValue)
+      controller.checkInputAnswer(inputValue)
       setInputValue('')
+      handleStateChange()
     }
 
     const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -159,7 +165,10 @@ export function QuizComponent({
                 type="button"
                 disabled={isResult}
                 className={`${quiz.answerBtn}`}
-                onClick={() => decideIsCorrectForInputAnswer()}
+                onClick={() => {
+                  controller.decideIsCorrectForInputAnswer()
+                  handleStateChange()
+                }}
               >
                 答えを見る
               </button>
@@ -198,5 +207,11 @@ export function QuizComponent({
     )
   }
 
-  return <>{!isFinished ? renderQuestion(currentQuestion()) : renderResult()}</>
+  return (
+    <>
+      {!isFinished
+        ? renderQuestion(controller.currentQuestion())
+        : renderResult()}
+    </>
+  )
 }
