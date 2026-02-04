@@ -1,9 +1,8 @@
 import { MACompInfo } from 'areacode/data/MACompList'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { shuffleArray } from 'utils/tools'
-import { ChoiceQuestion } from './Question'
 
-export class MAChoiceMAQuestion implements ChoiceQuestion<MACompInfo, MACompInfo> {
+export class MAChoiceMAQuestion {
   CORRECT_ANSWER = '1'
 
   subject: MACompInfo
@@ -21,7 +20,7 @@ export class MAChoiceMAQuestion implements ChoiceQuestion<MACompInfo, MACompInfo
     return this
   }
 
-  generate(numOfDigit: string, numOfChoices: number) {
+  generateChoices(numOfDigit: string, numOfChoices: number) {
     const MAChoices = this.generateMAChoices(
       this.subject,
       parseInt(numOfDigit),

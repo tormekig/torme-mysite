@@ -3,28 +3,13 @@ import quiz from 'areacode/assets/css/quiz.module.scss'
 import { CheckBtnItems } from 'areacode/pages/list/header'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { QuizComponent } from './QuizComponent'
-import { QuizFactory } from './factories/QuizFactory'
+import { QuizGenerator, quizMode } from './factories/QuizGenerator'
 import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
 export type quizStatus = 'stop' | 'inProgress'
 
-type questionType = 'MANumRange' | '4DigitsNum'
-type inputType = 'choice' | 'input'
-type answerType = 'MA' | 'city'
-
-export type quizMode = {
-  questionType: questionType
-  inputType: inputType
-  answerType: answerType
-}
-
 function QuizService() {
   const [quizStatus, setQuizStatus] = useState<quizStatus>('stop')
-  const [quizMode, setQuizMode] = useState<quizMode>({
-    questionType: 'MANumRange',
-    inputType: 'choice',
-    answerType: 'MA',
-  })
   const [questions, setQuestions] = useState<
     (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
   >([])
@@ -48,12 +33,11 @@ function QuizService() {
 
   function startQuiz(mode: quizMode) {
     const newQuestions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[] =
-      new QuizFactory()
+      new QuizGenerator()
         .generateQuizSet(mode, choiceRange)
         .map((question, index) => question.setQuestionIndex(index + 1))
 
     setQuestions(newQuestions)
-    setQuizMode(mode)
     setQuizStatus('inProgress')
   }
 
