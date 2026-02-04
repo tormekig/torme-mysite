@@ -2,15 +2,24 @@ import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 import { shuffleArray } from 'utils/tools'
-import { quizMode } from '../QuizService'
 import { allowed4DigitsNumbersByExcludedZeroMA } from 'areacode/pages/list/components/constants/areaCodeConstants'
+
+type questionType = 'MANumRange' | '4DigitsNum'
+type inputType = 'choice' | 'input'
+type answerType = 'MA' | 'city'
+
+export type quizMode = {
+  questionType: questionType
+  inputType: inputType
+  answerType: answerType
+}
 
 const QUIZ_CONFIG = {
   NUM_OF_CHOICES: 3,
   NUM_OF_QUESTIONS: 5,
 }
 
-export class QuizFactory {
+export class QuizGenerator {
   public generateQuizSet(
     quizMode: quizMode,
     numOfDigit: string = '-1',
@@ -35,7 +44,7 @@ export class QuizFactory {
 
     return selectedMAComps.map((maComp) =>
       new MAChoiceMAQuestion(maComp)
-        .generate(numOfDigit, QUIZ_CONFIG.NUM_OF_CHOICES)
+        .generateChoices(numOfDigit, QUIZ_CONFIG.NUM_OF_CHOICES)
         .shuffleAnswer(),
     )
   }
