@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import { CheckBtnItems } from 'areacode/pages/list/header'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
-import { QuizComponent } from './QuizComponent'
-import { QuizGenerator, quizMode } from './factories/QuizGenerator'
-import { Digit4NumInputCityQuestion } from 'areacode/models/Digit4NumQuestion'
+import { QuizComponent } from './components/QuizComponent'
+import { QuizGenerator, quizMode } from './QuizGenerator'
+import { InputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
 export type quizStatus = 'stop' | 'inProgress'
 
 function QuizService() {
   const [quizStatus, setQuizStatus] = useState<quizStatus>('stop')
   const [questions, setQuestions] = useState<
-    (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[]
+    (MAChoiceMAQuestion | InputCityQuestion)[]
   >([])
 
   const [choiceRange, setChoiceRange] = useState('-1')
@@ -32,10 +32,8 @@ function QuizService() {
   }
 
   function startQuiz(mode: quizMode) {
-    const newQuestions: (MAChoiceMAQuestion | Digit4NumInputCityQuestion)[] =
-      new QuizGenerator()
-        .generateQuizSet(mode, choiceRange)
-        .map((question, index) => question.setQuestionIndex(index + 1))
+    const newQuestions: (MAChoiceMAQuestion | InputCityQuestion)[] =
+      new QuizGenerator(mode).generateQuizSet(choiceRange)
 
     setQuestions(newQuestions)
     setQuizStatus('inProgress')
