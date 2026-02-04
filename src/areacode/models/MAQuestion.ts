@@ -5,30 +5,37 @@ import { shuffleArray } from 'utils/tools'
 export class MAChoiceMAQuestion {
   CORRECT_ANSWER = '1'
 
-  subject: MACompInfo
-  choices?: MACompInfo[]
-  questionIndex?: number
+  private MA: MACompInfo
+  private MAchoices: MACompInfo[] = []
+  private isCollect?: boolean
+  
   correctAnswerIndex?: number
   userInput?: number
 
-  constructor(subject: MACompInfo) {
-    this.subject = subject
+  constructor(MA: MACompInfo, numOfDigit: string, numOfChoices: number) {
+    this.MA = MA
+    this.generateChoices(numOfDigit, numOfChoices)
+    return this
   }
 
-  setQuestionIndex(index: number) {
-    this.questionIndex = index
-    return this
+  getMA() {
+    return this.MA
+  }
+
+  getMAChoices() {
+    return this.MAchoices
   }
 
   generateChoices(numOfDigit: string, numOfChoices: number) {
     const MAChoices = this.generateMAChoices(
-      this.subject,
+      this.MA,
       parseInt(numOfDigit),
       numOfChoices,
     )
 
-    this.choices = [this.subject, ...MAChoices.slice(0, numOfChoices - 1)]
-    return this
+    this.MAchoices = [this.MA, ...MAChoices.slice(0, numOfChoices - 1)]
+    
+    return this.shuffleAnswer()
   }
 
   private generateMAChoices(
@@ -62,9 +69,19 @@ export class MAChoiceMAQuestion {
     return shuffleArray(codeFilteredMAs)
   }
 
-  shuffleAnswer() {
-    if (!this.choices) return this
-    const answerWithIndex = this.choices.map((choice, i) => ({
+  judgeAndSetIsAnswer(selectedIndex: number) {
+    this.userInput = selectedIndex
+    this.isCollect = this.userInput === this.correctAnswerIndex
+    return this.isCollect
+  }
+
+  getIsAnswerCorrect() {
+    return this.isCollect
+  }
+
+  private shuffleAnswer() {
+    if (!this.MAchoices) return this
+    const answerWithIndex = this.MAchoices.map((choice, i) => ({
       choice: choice,
       index: i,
     }))
@@ -79,7 +96,7 @@ export class MAChoiceMAQuestion {
       ) + 1
 
     this.correctAnswerIndex = newCorrectAnswer
-    this.choices = shuffledAnswers
+    this.MAchoices = shuffledAnswers
 
     return this
   }

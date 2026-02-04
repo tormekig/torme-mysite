@@ -1,23 +1,42 @@
-import { MACompListContent } from 'areacode/pages/list/MACompListContent'
+import { CityInfo } from 'areacode/data/cityList'
 import { MACompInfo } from 'areacode/data/MACompList'
-import { transformAreaCode } from 'areacode/pages/list/components/MAAreaCodeInfoDojinshi'
 
-export class Digit4NumInputCityQuestion {
-  areacode: string
-  transformedAreacode: string
-  subject: MACompInfo[]
+export abstract class InputCityQuestion {
+  abstract MAs: MACompInfo[]
   questionIndex?: number
-  userInput?: string[]
+  userInputCities: CityInfo[]
 
-  constructor(code: string) {
-    this.areacode = code
-    this.transformedAreacode = transformAreaCode(code)
-    this.subject = MACompListContent.filterMACompListByPrefixAreaCode(this.transformedAreacode)
-    return this
+  constructor() {
+    this.userInputCities = []
   }
 
   setQuestionIndex(index: number) {
     this.questionIndex = index
     return this
+  }
+
+  pushCityInputs(city: CityInfo[]) {
+    this.userInputCities.push(...city)
+  }
+}
+
+export class MAInputCityQuestion extends InputCityQuestion {
+  MAs: MACompInfo[]
+
+  constructor(subject: MACompInfo[]) {
+    super()
+    this.MAs = subject
+  }
+}
+export class Digit4NumInputCityQuestion extends InputCityQuestion {
+  MAs: MACompInfo[]
+  areacode: string
+  transformedAreacode: string
+
+  constructor(areacode: string, transformedAreacode: string, subject: MACompInfo[]) {
+    super()
+    this.areacode = areacode
+    this.transformedAreacode = transformedAreacode
+    this.MAs = subject
   }
 }
