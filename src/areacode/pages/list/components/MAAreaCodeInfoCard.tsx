@@ -2,7 +2,7 @@ import React from 'react'
 import {
   AreaCode,
   Cities,
-  LimitedCitiesOption,
+  cityOptions,
   MA,
   NumberBands,
   Pref,
@@ -15,14 +15,13 @@ import { MAInfoDetail } from './MAInfoDetail'
 export function MAAreaCodeInfoCard({
   MAComp,
   displayParam,
-  isQuiz = false,
-  limitedCitiesOption,
+  cityOptions,
 }: {
   MAComp: MACompInfo
   displayParam: string[]
-  isQuiz?: boolean
-  limitedCitiesOption?: LimitedCitiesOption
+  cityOptions: cityOptions
 }) {
+  const isQuiz = cityOptions?.isQuiz || false
   const info = new MAInfoDetail(MAComp)
   const colorStyle = getColorStyleByAreaCode(info.areaCode)
 
@@ -55,10 +54,8 @@ export function MAAreaCodeInfoCard({
           <div className={MAList.citiesContainer}>
             <Cities
               cities={info.cities}
-              areaDisplayFull={displayParam.includes('一部地域詳細表示')}
               colorStyle={colorStyle}
-              isQuiz={isQuiz}
-              limitedCitiesOption={limitedCitiesOption}
+              options={cityOptions}
             />
           </div>
         )}
@@ -101,9 +98,11 @@ export function MAAreaCodeInfoCard({
 export function MAAreaCodeInfoCards({
   MAComps,
   displayParam,
+  cityOptions,
 }: {
   MAComps: MACompInfo[]
   displayParam: string[]
+  cityOptions: cityOptions
 }) {
   return (
     <>
@@ -114,6 +113,7 @@ export function MAAreaCodeInfoCards({
               key={i}
               MAComp={MAComp}
               displayParam={displayParam}
+              cityOptions={cityOptions}
             />
           </div>
         )

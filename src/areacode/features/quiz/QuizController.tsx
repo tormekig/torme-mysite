@@ -1,11 +1,6 @@
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { MAInfoDetail } from 'areacode/pages/list/components/MAInfoDetail'
-import {
-  getCityName,
-  getCityNameType,
-  getPrefCityNameType,
-  getPrefCountyCityNameType,
-} from 'areacode/data/cityList'
+import { checkMatchingCityName } from 'areacode/data/cityList'
 import { InputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
 export type QuizState = {
@@ -89,13 +84,10 @@ export class QuizController {
     const cities = MAInfoDetail.getCitiesByMultipleMAComps(question.MAs)
 
     const searchedCities = cities.filter(function (city) {
-      return (
-        getCityName(city) === inputName ||
-        getCityNameType(city) === inputName ||
-        getPrefCityNameType(city) === inputName ||
-        getPrefCountyCityNameType(city) === inputName
-      )
+      return checkMatchingCityName(city, inputName)
     })
+
+    console.log(question, inputName, searchedCities)
 
     question.pushCityInputs(searchedCities)
   }

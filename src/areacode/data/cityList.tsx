@@ -8,6 +8,18 @@ export function getCityNameType(city: CityInfo) {
   return city.name + city.type
 }
 
+export function getCountyName(city: CityInfo) {
+  return city.county.name
+}
+
+export function getCountyNameType(city: CityInfo) {
+  return city.county.name + city.county.type
+}
+
+export function getCountyCityNameType(city: CityInfo) {
+  return getCountyNameType(city) + getCityNameType(city)
+}
+
 export function getPrefCityNameType(city: CityInfo) {
   return getPrefName(city) + getCityNameType(city)
 }
@@ -56,6 +68,41 @@ export function getCityListByPref(pref: string) {
   return cityList.filter(function (city) {
     return getPrefName(city) === pref
   })
+}
+
+export function checkMatchingCityName(
+  city: CityInfo,
+  inputName: string,
+): boolean {
+  if (city.county.type === '市') {
+    return (
+      // 中央、青葉
+      getCityName(city) === inputName ||
+      // 中央区、青葉区
+      getCityNameType(city) === inputName ||
+      // 札幌市中央区、仙台市青葉区
+      getCountyCityNameType(city) === inputName ||
+      // 札幌、仙台
+      getCountyName(city) === inputName ||
+      // 札幌市、仙台市
+      getCountyNameType(city) === inputName ||
+      // 北海道札幌市、宮城県仙台市
+      getPrefCountyNameType(city) === inputName ||
+      // 北海道札幌市中央区、宮城県仙台市青葉区
+      getPrefCountyCityNameType(city) === inputName
+    )
+  }
+
+  return (
+    // 八王子、軽井沢
+    getCityName(city) === inputName ||
+    // 八王子市、軽井沢町
+    getCityNameType(city) === inputName ||
+    // 東京都八王子市、長野県軽井沢町
+    getPrefCityNameType(city) === inputName ||
+    // 長野県北佐久郡軽井沢町
+    getPrefCountyCityNameType(city) === inputName
+  )
 }
 
 export interface CityInfo {
