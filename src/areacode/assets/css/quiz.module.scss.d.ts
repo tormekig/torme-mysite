@@ -12,6 +12,7 @@ export declare const question: string
 export declare const quizContainer: string
 export declare const resultContainer: string
 export declare const resultNumber: string
+export declare const searchCityTextContainer: string
 export declare const startChoice: string
-export declare const startQuizBtnContainer: string
-export declare const startQuizWrapper: string
+export declare const startQuizContainer: string
+export declare const textInputContainer: string

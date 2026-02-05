@@ -11,8 +11,10 @@ export function Header() {
           <Link to={`/areacode`} className={areacode.linkTitle}>
             市外局番手帳
           </Link>
-          {/* <Link to={`/areacode/quiz`} className={areacode.linkQuiz}>クイズ</Link>
-                    <Link to={`/areacode/random`} className={areacode.linkRandom}>ランダム</Link> */}
+          <Link to={`/areacode/quiz`} className={areacode.linkQuiz}>
+            クイズ
+          </Link>
+          {/* <Link to={`/areacode/random`} className={areacode.linkRandom}>ランダム</Link> */}
         </div>
         <div>
           <Code2digit />

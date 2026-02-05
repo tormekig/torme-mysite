@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import { CheckBtnItems } from 'areacode/pages/list/header'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { QuizComponent } from './components/QuizComponent'
 import { QuizGenerator, quizMode } from './QuizGenerator'
@@ -21,15 +20,15 @@ function QuizService() {
     '一部地域詳細表示',
   ])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (displayParam.includes(e.target.value)) {
-      setDisplayParam(
-        displayParam.filter((checkedValue) => checkedValue !== e.target.value),
-      )
-    } else {
-      setDisplayParam([...displayParam, e.target.value])
-    }
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (displayParam.includes(e.target.value)) {
+  //     setDisplayParam(
+  //       displayParam.filter((checkedValue) => checkedValue !== e.target.value),
+  //     )
+  //   } else {
+  //     setDisplayParam([...displayParam, e.target.value])
+  //   }
+  // }
 
   function startQuiz(mode: quizMode) {
     const newQuestions: (MAChoiceMAQuestion | InputCityQuestion)[] =
@@ -45,6 +44,11 @@ function QuizService() {
 
     setQuestions(newQuestions)
     setQuizStatus('inProgress')
+  }
+
+  function stopQuiz() {
+    setQuestions([])
+    setQuizStatus('stop')
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,34 +82,36 @@ function QuizService() {
     <div className={quiz.quizContainer}>
       {quizStatus === 'stop' && (
         <div>
-          <div className={'MAList.checkBtnContainer'}>
+          {/* <div className={'MAList.checkBtnContainer'}>
             <CheckBtnItems
               handleChange={handleChange}
               displayParam={displayParam}
               isQuiz={true}
             />
-          </div>
-          <div className={quiz.choiceContainer}>
-            <h3>出題範囲</h3>
-            {radioButtons.map((radio, i) => {
-              return (
-                <div key={i} className="start-choice">
-                  <label>
-                    <input
-                      type="radio"
-                      name="choiceRange"
-                      value={radio.value}
-                      checked={radio.value === choiceRange}
-                      onChange={changeChoiceRange}
-                    />
-                    {radio.label}
-                  </label>
-                </div>
-              )
-            })}
-          </div>
-          <div className={quiz.startQuizBtnContainer}>
+          </div> */}
+          <div className={quiz.startQuizContainer}>
+            <h2>番号領域 → MA 3択クイズ</h2>
+            <div className={quiz.choiceContainer}>
+              <h3>3択の範囲</h3>
+              {radioButtons.map((radio, i) => {
+                return (
+                  <div key={i} className="start-choice">
+                    <label>
+                      <input
+                        type="radio"
+                        name="choiceRange"
+                        value={radio.value}
+                        checked={radio.value === choiceRange}
+                        onChange={changeChoiceRange}
+                      />
+                      {radio.label}
+                    </label>
+                  </div>
+                )
+              })}
+            </div>
             <button
+              style={{ backgroundColor: '#C35579' }}
               type="button"
               onClick={() =>
                 startQuiz({
@@ -115,11 +121,13 @@ function QuizService() {
                 })
               }
             >
-              番号 → MA 3択クイズ Start
+              Start
             </button>
           </div>
-          <div className={quiz.startQuizBtnContainer}>
+          <div className={quiz.startQuizContainer}>
+            <h2>番号領域 → 市町村 入力クイズ</h2>
             <button
+              style={{ backgroundColor: '#C35579' }}
               type="button"
               onClick={() =>
                 startQuiz({
@@ -129,11 +137,13 @@ function QuizService() {
                 })
               }
             >
-              番号 → 市町村 入力クイズ Start
+              Start
             </button>
           </div>
-          <div className={quiz.startQuizBtnContainer}>
+          <div className={quiz.startQuizContainer}>
+            <h2>番号4桁 → 市町村 入力クイズ</h2>
             <button
+              style={{ backgroundColor: '#C35579' }}
               type="button"
               onClick={() =>
                 startQuiz({
@@ -143,14 +153,19 @@ function QuizService() {
                 })
               }
             >
-              番号4桁 → 市町村 入力クイズ Start
+              Start
             </button>
           </div>
         </div>
       )}
 
       {quizStatus !== 'stop' && (
-        <QuizComponent questions={questions} displayParam={displayParam} />
+        <div>
+          <button type="button" onClick={() => stopQuiz()}>
+            最初から遊ぶ
+          </button>
+          <QuizComponent questions={questions} displayParam={displayParam} />
+        </div>
       )}
     </div>
   )
