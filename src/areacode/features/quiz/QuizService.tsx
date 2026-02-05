@@ -35,6 +35,14 @@ function QuizService() {
     const newQuestions: (MAChoiceMAQuestion | InputCityQuestion)[] =
       new QuizGenerator(mode).generateQuizSet(choiceRange)
 
+    if (
+      mode.questionType === '4DigitsNum' &&
+      mode.inputType === 'input' &&
+      mode.answerType === 'city'
+    ) {
+      setDisplayParam(['番号領域', ...displayParam])
+    }
+
     setQuestions(newQuestions)
     setQuizStatus('inProgress')
   }
