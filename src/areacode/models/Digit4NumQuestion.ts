@@ -25,9 +25,19 @@ export class MAInputCityQuestion extends InputCityQuestion {
 
   constructor(subject: MACompInfo[]) {
     super()
+    if (subject.length !== 1) {
+      console.error("The Length of MAs must be 1 in MAInputCityQuestion")
+      this.MAs = []
+      return
+    }
     this.MAs = subject
   }
+
+  getMA(): MACompInfo {
+    return this.MAs[0]
+  }
 }
+
 export class Digit4NumInputCityQuestion extends InputCityQuestion {
   MAs: MACompInfo[]
   areacode: string

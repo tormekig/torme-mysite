@@ -9,26 +9,34 @@ import {
   LimitedCitiesOption,
 } from './tools'
 
-export function Cities({
-  cities,
-  areaDisplayFull,
-  colorStyle,
-  isQuiz = false,
-  limitedCitiesOption,
-}: {
-  cities: CityInfo[]
+export type cityOptions = {
   areaDisplayFull?: boolean
-  colorStyle: ColorStyle
   isQuiz?: boolean
   limitedCitiesOption?: LimitedCitiesOption
+}
+
+export function Cities({
+  cities,
+  colorStyle,
+  options,
+}: {
+  cities: CityInfo[]
+  colorStyle: ColorStyle
+  options: cityOptions
 }): JSX.Element {
+  const {
+    areaDisplayFull = undefined,
+    isQuiz = false,
+    limitedCitiesOption = undefined,
+  } = options
+
   const isCityClickable = !isQuiz
 
   if (!limitedCitiesOption?.isDisplayElse && limitedCitiesOption?.cities) {
     cities = getDuplicationCities(cities, limitedCitiesOption.cities)
   }
 
-  const classifiedCities = classifyCities(cities)
+  let classifiedCities = classifyCities(cities)
 
   const displayCities = (pref: string, county: string) => {
     const elems: React.JSX.Element[] = []

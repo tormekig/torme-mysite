@@ -33,6 +33,13 @@ export function getDuplicationCities(cities1: CityInfo[], cities2: CityInfo[]) {
   return getDuplication(cities1, cities2, 'code')
 }
 
+export function compressWards(
+  classifiedCities: ClassifiedCities,
+): ClassifiedCities {
+  console.log(classifiedCities)
+  return classifiedCities
+}
+
 export function classifyCities(cities: CityInfo[]): ClassifiedCities {
   const classifiedCities: ClassifiedCities = {}
 

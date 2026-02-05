@@ -22,6 +22,7 @@ export function QuestionInteractionComponent({
     handleStateChange,
     displayParam,
   } = ctx
+
   const isResult = state.isFinished || state.showNext
   const isFinished = state.isFinished
 
@@ -88,8 +89,10 @@ export function QuestionInteractionComponent({
               MAComp={comp}
               key={i}
               displayParam={displayParam}
-              isQuiz={true}
-              limitedCitiesOption={limitedCitiesOption}
+              cityOptions={{
+                isQuiz: true,
+                limitedCitiesOption: limitedCitiesOption,
+              }}
             />
           )
         })}
@@ -130,7 +133,9 @@ export function QuestionInteractionComponent({
             <MAAreaCodeInfoCard
               MAComp={choiceMAComp}
               displayParam={displayParam}
-              isQuiz={true}
+              cityOptions={{
+                isQuiz: true,
+              }}
             />
           </button>
         </div>
