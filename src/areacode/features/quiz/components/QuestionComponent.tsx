@@ -1,7 +1,7 @@
 import quiz from 'areacode/assets/css/quiz.module.scss'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { InputCityQuestion } from 'areacode/models/Digit4NumQuestion'
-import QuestionArg from './MAAreaCodeQuizComponent'
+import QuestionArg from './QuestionArgComponent'
 import { QuizCtx } from '../quizTypes'
 import { QuestionInteractionComponent } from './QuestionInteractionComponent'
 

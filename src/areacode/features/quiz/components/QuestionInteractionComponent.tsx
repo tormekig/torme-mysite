@@ -1,6 +1,5 @@
 import React from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import areacode from 'areacode/assets/css/areacode.module.scss'
 import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
 import { InputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 import { MACompInfo } from 'areacode/data/MACompList'
@@ -31,7 +30,7 @@ export function QuestionInteractionComponent({
     isResult: boolean = false,
   ): JSX.Element {
     const onClickAnswer = () => {
-      controller.checkInputAnswer(question, inputValue)
+      question.checkInputAnswer(inputValue)
       setInputValue('')
       handleStateChange()
     }
@@ -51,17 +50,18 @@ export function QuestionInteractionComponent({
       <div className={quiz.answerBtnContainer}>
         {!isFinished && (
           <div>
-            <div className={areacode.searchCityTextContainer}>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleInputKeyDown}
-                disabled={isResult}
-              />
-            </div>
-            <div>
+            <div className={quiz.textInputContainer}>
+              <div className={quiz.searchCityTextContainer}>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleInputKeyDown}
+                  disabled={isResult}
+                />
+              </div>
               <button
+                style={{ fontSize: '20px', width: '5rem' }}
                 type="button"
                 disabled={isResult}
                 className={`${quiz.answerBtn}`}
@@ -69,6 +69,8 @@ export function QuestionInteractionComponent({
               >
                 回答
               </button>
+            </div>
+            <div>
               <button
                 type="button"
                 disabled={isResult}
@@ -80,6 +82,10 @@ export function QuestionInteractionComponent({
               >
                 答えを見る
               </button>
+            </div>
+            <div>
+              回答自治体数：{question.userInputCities.length}/
+              {question.answerCities?.length}
             </div>
           </div>
         )}
