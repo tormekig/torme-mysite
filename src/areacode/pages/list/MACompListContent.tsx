@@ -3,10 +3,10 @@ import { convertCompCode } from '.'
 import MACompList, { MACompInfo } from '../../data/MACompList'
 import cityList, {
   getCityListByPref,
-  getCityName,
-  getPrefCountyCityName,
-  getPrefCountyCityNameKanaWithSlash,
-  getPrefCountyName,
+  getCityNameType,
+  getPrefCountyCityNameType,
+  getPrefCountyCityNameTypeKanaWithSlash,
+  getPrefCountyNameType,
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
 import NumberBandList, { paddingStartToEnd } from 'areacode/data/numberBandList'
@@ -77,7 +77,7 @@ export class MACompListContent {
     let MAComps: MACompInfo[] = []
 
     const cities = cityList.filter(function (city) {
-      return getPrefCountyCityName(city) === query
+      return getPrefCountyCityNameType(city) === query
     })
 
     cities.forEach(function (city) {
@@ -89,9 +89,9 @@ export class MACompListContent {
 
     this.MAComps = MAComps
 
-    this.headerInfo.mainHeaderSub = getPrefCountyName(cities[0])
-    this.headerInfo.mainHeader = getCityName(cities[0])
-    this.headerInfo.mainHeaderRuby = getPrefCountyCityNameKanaWithSlash(
+    this.headerInfo.mainHeaderSub = getPrefCountyNameType(cities[0])
+    this.headerInfo.mainHeader = getCityNameType(cities[0])
+    this.headerInfo.mainHeaderRuby = getPrefCountyCityNameTypeKanaWithSlash(
       cities[0],
     )
     this.headerInfo.mainHeaderLink =
@@ -177,7 +177,20 @@ export class MACompListContent {
       paddingStartToEnd(band).some(
         (num) => num.toString().slice(1, prefix.length + 1) === prefix,
       ),
-    ).sort((a, b) => parseInt(a.bandStart) - parseInt(b.bandStart))
+    )
+    //
+
+    let bandMaxLength = 0
+    bands.forEach((band) => {
+      const length = band.bandStart.length
+      if (length > bandMaxLength) bandMaxLength = length
+    })
+
+    bands.sort(
+      (a, b) =>
+        parseInt(a.bandStart.padEnd(bandMaxLength, '0')) -
+        parseInt(b.bandStart.padEnd(bandMaxLength, '0')),
+    )
 
     const MACompsResult: MACompInfo[] = []
 

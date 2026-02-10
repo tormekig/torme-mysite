@@ -1,33 +1,14 @@
 import React from 'react'
-import {
-  AreaCode,
-  formatCitiesForDojinshi,
-  formatNumberBands,
-  isCityLimitedZone,
-  MA,
-} from 'areacode/pages/detail'
+import { AreaCode, MA } from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
-import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
-import { MAInfoDetail } from './MAInfoDetail'
 import { MACompListContent } from '../MACompListContent'
-import { RememberWord } from './getCSV'
 import { rememberWordData } from './rememberWords'
 import RememberWordCsvLoader from './getCSV'
-import { CityInfo } from 'areacode/data/cityList'
-
-type formattedData = {
-  // areacode: string
-  // transformedAreacode: string
-  // word: string
-  maComps: {
-    ma: string
-    head4digits: string
-    numberBands: string
-    formattedCities: { main: string[]; sub: string }
-    cities: CityInfo[]
-  }[]
-}
+import { AreaCodeFormatter } from './services/AreaCodeFormatter'
+import { TextExportService } from './services/TextExportService'
+import { allowed4DigitsNumbersForDojinshi } from './constants/areaCodeConstants'
+import { FormattedData } from './types/dojinshiTypes'
 
 export function MAAreaCodeInfoDojinshi({
   areacode,
@@ -38,7 +19,7 @@ export function MAAreaCodeInfoDojinshi({
   areacode: string
   word: string
   transformedAreacode: string
-  data: formattedData
+  data: FormattedData
 }) {
   const colorStyle = getColorStyleByAreaCode(transformedAreacode)
   return (
@@ -79,105 +60,51 @@ export function MAAreaCodeInfoDojinshi({
   )
 }
 
-function searchRememberWordData(data: RememberWord[], query: string) {
-  return data.filter((row) => {
-    return row.areacode === query
-  })
+function searchRememberWordData(query: string) {
+  return TextExportService.searchRememberWordData(rememberWordData, query)
 }
 
-function isAllowed(n: number) {
-  const excludeRanges = [
-    { start: 111, end: 119, only: [112] },
-    { start: 200, end: 219 },
-    { start: 300, end: 399, only: [331] },
-    { start: 400, end: 419 },
-    { start: 440, end: 449, only: [442] },
-    { start: 450, end: 459, only: [452] },
-    { start: 500, end: 519 },
-    { start: 520, end: 529, only: [522] },
-    { start: 600, end: 699, only: [641] },
-    { start: 700, end: 719 },
-    { start: 750, end: 759, only: [752] },
-    { start: 780, end: 789, only: [782] },
-    { start: 800, end: 819 },
-    { start: 900, end: 919 },
-    { start: 920, end: 929, only: [920, 922, 923] },
-    { start: 930, end: 939, only: [930, 932] },
-  ]
-
-  for (const range of excludeRanges) {
-    const inRange = n >= range.start && n <= range.end
-
-    if (!inRange) continue
-    if (range.only) {
-      return range.only.includes(n)
-    }
-
-    return false
-  }
-
-  return true
-}
-
-function transformAreaCode(code: string) {
-  if (code === '0112') return '011'
-  if (code === '0331') return '03'
-  if (code === '0442') return '044'
-  if (code === '0452') return '045'
-  if (code === '0522') return '052'
-  if (code === '0641') return '06'
-  if (code === '0752') return '075'
-  if (code === '0782') return '078'
-  return code
+export function transformAreaCode(code: string) {
+  return AreaCodeFormatter.transform(code)
 }
 
 export function MAAreaCodeInfoDojinshis() {
   RememberWordCsvLoader()
   const elems = []
-  const exports = {
-    noMA: '4桁;覚え方\n',
-    oneMA: '4桁;覚え方;MA1;MA1地域詳細\n',
-    twoMA: '4桁;覚え方;MA1;MA1地域詳細;MA2;MA2地域詳細\n',
-    multiMA:
-      '4桁;覚え方;MA1;MA1地域詳細;MA2;MA2地域詳細;MA3;MA3地域詳細;MA4;MA4地域詳細;MA5;MA5地域詳細\n',
-    allMA: '4桁;覚え方;MA;MA複数/単一;市町村;\n',
-  }
+  const exports = TextExportService.createEmptyExports()
 
-  for (let i = 111; i < 1000; i++) {
-    if (!isAllowed(i)) continue
-    const areacode = `0${i}`
-    const transformedAreacode = transformAreaCode(`0${i}`)
+  const flattenAllowedNumbers = allowed4DigitsNumbersForDojinshi.flat(2)
+
+  for (let i = 0; i < flattenAllowedNumbers.length; i++) {
+    const num = flattenAllowedNumbers[i]
+    const areacode = `0${num}`
+    const transformedAreacode = transformAreaCode(areacode)
     const MAComps =
       MACompListContent.filterMACompListByPrefixAreaCode(transformedAreacode)
 
-    const rememberWord = searchRememberWordData(
-      rememberWordData,
-      transformedAreacode,
-    )
+    const rememberWord = searchRememberWordData(transformedAreacode)
     const word = rememberWord[0]?.word ?? ''
 
-    const { formatted, text, multiMACombinedCities } = getTextData(
+    const textData = AreaCodeFormatter.formatToTextData(
       areacode,
       transformedAreacode,
       word,
       MAComps,
     )
 
-    exports.allMA += multiMACombinedCities + '\n'
-    if (MAComps.length === 0) {
-      exports.noMA += text + '\n'
-    } else if (MAComps.length === 1) {
-      exports.oneMA += text + '\n'
-    } else if (MAComps.length === 2) {
-      exports.twoMA += text + '\n'
-    } else {
-      exports.multiMA += text + '\n'
-    }
+    TextExportService.addToExports(
+      exports,
+      'allMA',
+      textData.multiMACombinedCities,
+    )
+
+    const key = TextExportService.determineExportKey(MAComps.length)
+    TextExportService.addToExports(exports, key, textData.text)
 
     if (MAComps.length === 0) {
       const colorStyle = getColorStyleByAreaCode(areacode)
       elems.push(
-        <div className={MAList.infoBlockContainer} key={i}>
+        <div className={MAList.infoBlockContainer} key={num}>
           <div className={`${MAList.infoDojinshi}`}>
             <div className={MAList.areacode}>
               {<AreaCode areaCode={areacode} colorStyle={colorStyle} />}
@@ -188,109 +115,18 @@ export function MAAreaCodeInfoDojinshis() {
       )
     } else {
       elems.push(
-        <div className={MAList.infoBlockContainer} key={i}>
+        <div className={MAList.infoBlockContainer} key={num}>
           <MAAreaCodeInfoDojinshi
             areacode={areacode}
             word={word}
             transformedAreacode={transformedAreacode}
-            data={formatted}
+            data={textData.formatted}
           />
         </div>,
       )
     }
   }
+
   console.log(exports)
   return <>{elems}</>
-}
-
-function getTextData(
-  areacode: string,
-  transformedAreacode: string,
-  word: string,
-  MAComps: MACompInfo[],
-) {
-  const formatted = getFormatData(MAComps)
-  const maCompsText = formatted.maComps
-    .map((maComp) => {
-      return maComp.head4digits === areacode
-        ? `${maComp.ma} ${maComp.numberBands}<br>${maComp.formattedCities.main.join('<br>')};${maComp.formattedCities.sub}`
-        : `${maComp.ma}(${maComp.head4digits}を参照);`
-    })
-    .join(';')
-
-  const multiMACombinedCities = getTextWithMultiMACombinedCities(formatted)
-
-  return {
-    formatted,
-    text: `${transformedAreacode};${word};${maCompsText}`,
-    multiMACombinedCities: `${transformedAreacode};${word};${multiMACombinedCities}`,
-  }
-}
-
-function getTextWithMultiMACombinedCities(formatted: formattedData) {
-  const allCitiesBy4digits: CityInfo[] = []
-  formatted.maComps.forEach((maComp) => {
-    if (maComp.cities) allCitiesBy4digits.push(...maComp.cities)
-  })
-
-  const uniqueCityCodes = Array.from(
-    new Set(allCitiesBy4digits.map((c) => c.code)),
-  )
-  const mas = formatted.maComps.map((maComp) => maComp.ma).join('、')
-  let multiOrSingle = formatted.maComps.length > 1 ? '複' : '単'
-  if (formatted.maComps.length === 0) multiOrSingle = ''
-  const multiMACombinedCities = uniqueCityCodes.map((code) => {
-    const f = allCitiesBy4digits.filter((c) => c.code === code)
-    return f.filter(
-      (c) =>
-        isCityLimitedZone(c.zone.name) === 'excluded' ||
-        isCityLimitedZone(c.zone.name) === 'none',
-    ).length !== 0
-      ? {
-          county: `${f[0].county.name}${f[0].county.type}`,
-          city: `${f[0].name}${f[0].type}`,
-        }
-      : {
-          county: `${f[0].county.name}${f[0].county.type}`,
-          city: `${f[0].name}${f[0].type}(一部)`,
-        }
-  })
-  const classifiedCities: { [key: string]: string[] } = {}
-  multiMACombinedCities.forEach((city, i) => {
-    if (city.city === '' || city.city === '特別区部') return
-
-    const county = `${city.county}`
-
-    if (!(county in classifiedCities)) {
-      classifiedCities[county] = []
-    }
-
-    classifiedCities[county].push(city.city)
-  })
-  const multiMACombinedCitiesText = Object.keys(classifiedCities).map(
-    (county) => {
-      return county.endsWith('市')
-        ? `${county}（${classifiedCities[county].join('、')}）`
-        : classifiedCities[county].join('、')
-    },
-  )
-
-  return `${mas};${multiOrSingle};${multiMACombinedCitiesText.join('、')}`
-}
-
-function getFormatData(MAComps: MACompInfo[]) {
-  return {
-    maComps: MAComps.map((MAComp) => {
-      const info = new MAInfoDetail(MAComp)
-      return {
-        ma: info.ma,
-        numberBands: formatNumberBands(info.areaCode, info.numberBands)
-          .map((numberBand) => numberBand.txt + numberBand.elim)
-          .join(', '),
-        head4digits: MAComp.head4digits,
-        cities: info.cities,
-        formattedCities: formatCitiesForDojinshi(info.cities),
-      }
-    }),
-  }
 }

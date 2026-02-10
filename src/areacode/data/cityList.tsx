@@ -1,72 +1,133 @@
-import { getPrefName, getPrefNameKana } from "areacode/data/prefList"
+import { getPrefName, getPrefNameKana } from 'areacode/data/prefList'
 
 export function getCityName(city: CityInfo) {
-  return city.name + city.type;
+  return city.name
 }
 
-export function getPrefCityName(city: CityInfo) {
-  return getPrefName(city) + getCityName(city);
+export function getCityNameType(city: CityInfo) {
+  return city.name + city.type
 }
 
-export function getPrefCountyName(city: CityInfo) {
-  return getPrefName(city) + city.county.name + city.county.type;
+export function getCountyName(city: CityInfo) {
+  return city.county.name
 }
 
-export function getPrefCountyCityName(city: CityInfo) {
-  return getPrefName(city) + city.county.name + city.county.type + getCityName(city);
+export function getCountyNameType(city: CityInfo) {
+  return city.county.name + city.county.type
 }
 
-export function getCityNameKana(city: CityInfo) {
-  return city.kana + city.typeKana;
+export function getCountyCityNameType(city: CityInfo) {
+  return getCountyNameType(city) + getCityNameType(city)
 }
 
-export function getPrefCityNameKana(city: CityInfo) {
-  return getPrefNameKana(city) + getCityNameKana(city);
+export function getPrefCityNameType(city: CityInfo) {
+  return getPrefName(city) + getCityNameType(city)
 }
 
-export function getPrefCountyCityNameKana(city: CityInfo) {
-  return getPrefNameKana(city) + city.county.kana + city.county.typeKana + getCityNameKana(city);
+export function getPrefCountyNameType(city: CityInfo) {
+  return getPrefName(city) + city.county.name + city.county.type
 }
 
-export function getPrefCountyCityNameKanaWithSlash(city: CityInfo) {
+export function getPrefCountyCityNameType(city: CityInfo) {
+  return (
+    getPrefName(city) +
+    city.county.name +
+    city.county.type +
+    getCityNameType(city)
+  )
+}
+
+export function getCityNameTypeKana(city: CityInfo) {
+  return city.kana + city.typeKana
+}
+
+export function getPrefCityNameTypeKana(city: CityInfo) {
+  return getPrefNameKana(city) + getCityNameTypeKana(city)
+}
+
+export function getPrefCountyCityNameTypeKana(city: CityInfo) {
+  return (
+    getPrefNameKana(city) +
+    city.county.kana +
+    city.county.typeKana +
+    getCityNameTypeKana(city)
+  )
+}
+
+export function getPrefCountyCityNameTypeKanaWithSlash(city: CityInfo) {
   if (!city.county.kana) {
-    return `${getPrefNameKana(city)} / ${getCityNameKana(city)}`;
-  } else if (!getCityNameKana(city)) {
-    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana}`;
+    return `${getPrefNameKana(city)} / ${getCityNameTypeKana(city)}`
+  } else if (!getCityNameTypeKana(city)) {
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana}`
   } else {
-    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameKana(city)}`;
+    return `${getPrefNameKana(city)} / ${city.county.kana}${city.county.typeKana} / ${getCityNameTypeKana(city)}`
   }
 }
 
 export function getCityListByPref(pref: string) {
-  return cityList.filter(function(city) {
-    return getPrefName(city) === pref;
+  return cityList.filter(function (city) {
+    return getPrefName(city) === pref
   })
 }
 
-export interface CityInfo {
-  code: string;
-  distinct: string;
-  pref: string;
-  county: {
-    name: string;
-    type: string;
-    kana: string;
-    typeKana: string;
-    note: string;
-  },
-  name: string;
-  type: string;
-  kana: string;
-  typeKana: string;
-  compartmentCode: string;
-  zone: {
-    name: string;
-    scale: string;
-  },
+export function checkMatchingCityName(
+  city: CityInfo,
+  inputName: string,
+): boolean {
+  if (city.county.type === '市') {
+    return (
+      // 中央、青葉
+      getCityName(city) === inputName ||
+      // 中央区、青葉区
+      getCityNameType(city) === inputName ||
+      // 札幌市中央区、仙台市青葉区
+      getCountyCityNameType(city) === inputName ||
+      // 札幌、仙台
+      getCountyName(city) === inputName ||
+      // 札幌市、仙台市
+      getCountyNameType(city) === inputName ||
+      // 北海道札幌市、宮城県仙台市
+      getPrefCountyNameType(city) === inputName ||
+      // 北海道札幌市中央区、宮城県仙台市青葉区
+      getPrefCountyCityNameType(city) === inputName
+    )
+  }
+
+  return (
+    // 八王子、軽井沢
+    getCityName(city) === inputName ||
+    // 八王子市、軽井沢町
+    getCityNameType(city) === inputName ||
+    // 東京都八王子市、長野県軽井沢町
+    getPrefCityNameType(city) === inputName ||
+    // 長野県北佐久郡軽井沢町
+    getPrefCountyCityNameType(city) === inputName
+  )
 }
 
-export const cityList: CityInfo[] = [
+export interface CityInfo {
+  code: string
+  distinct: string
+  pref: string
+  county: {
+    name: string
+    type: string
+    kana: string
+    typeKana: string
+    note: string
+  }
+  name: string
+  type: string
+  kana: string
+  typeKana: string
+  compartmentCode: string
+  zone: {
+    name: string
+    scale: string
+  }
+}
+
+const originalCityList: CityInfo[] = [
   {
     code: '01100',
     distinct: '1',
@@ -45261,4 +45322,6 @@ export const cityList: CityInfo[] = [
   },
 ]
 
-export default cityList;
+export const cityList = originalCityList.filter((c) => c.name !== '特別区')
+
+export default cityList

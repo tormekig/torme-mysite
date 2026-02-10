@@ -51,4 +51,12 @@ export class MAInfoDetail {
       (city) => city.compartmentCode === convertCompCode(MAComp),
     )
   }
+
+  static getCitiesByMultipleMAComps(MAComps: MACompInfo[]) {
+    let cities: CityInfo[] = []
+    MAComps.forEach((MAComp) => {
+      cities = cities.concat(this.getCities(MAComp))
+    })
+    return cities
+  }
 }

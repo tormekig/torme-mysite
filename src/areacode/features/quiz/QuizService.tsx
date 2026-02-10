@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import quiz from 'areacode/assets/css/quiz.module.scss'
-import { CheckBtnItems } from 'areacode/pages/list/header'
-import { Question } from 'areacode/models/Question'
-import { QuizComponent } from './QuizComponent'
-import { QuizFactory } from './factories/QuizFactory'
+import { MAChoiceMAQuestion } from 'areacode/models/MAQuestion'
+import { QuizComponent } from './components/QuizComponent'
+import { QuizGenerator, quizMode } from './QuizGenerator'
+import { InputCityQuestion } from 'areacode/models/Digit4NumQuestion'
 
-export type quizMode = 'stop' | 'numToMAChoice' | 'numToCityName'
+export type quizStatus = 'stop' | 'inProgress'
 
 function QuizService() {
-  const [quizMode, setQuizMode] = useState<quizMode>('stop')
-  const [questions, setQuestions] = useState<Question[]>([])
+  const [quizStatus, setQuizStatus] = useState<quizStatus>('stop')
+  const [questions, setQuestions] = useState<
+    (MAChoiceMAQuestion | InputCityQuestion)[]
+  >([])
 
   const [choiceRange, setChoiceRange] = useState('-1')
 
@@ -18,26 +20,35 @@ function QuizService() {
     '一部地域詳細表示',
   ])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (displayParam.includes(e.target.value)) {
-      setDisplayParam(
-        displayParam.filter((checkedValue) => checkedValue !== e.target.value),
-      )
-    } else {
-      setDisplayParam([...displayParam, e.target.value])
-    }
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (displayParam.includes(e.target.value)) {
+  //     setDisplayParam(
+  //       displayParam.filter((checkedValue) => checkedValue !== e.target.value),
+  //     )
+  //   } else {
+  //     setDisplayParam([...displayParam, e.target.value])
+  //   }
+  // }
 
   function startQuiz(mode: quizMode) {
-    const newQuestions: Question[] = new QuizFactory()
-      .generateQuizSet(mode, choiceRange)
-      .map((question, index) => ({
-        ...question,
-        questionIndex: index + 1,
-      }))
+    const newQuestions: (MAChoiceMAQuestion | InputCityQuestion)[] =
+      new QuizGenerator(mode).generateQuizSet(choiceRange)
+
+    if (
+      mode.questionType === '4DigitsNum' &&
+      mode.inputType === 'input' &&
+      mode.answerType === 'city'
+    ) {
+      setDisplayParam(['番号領域', ...displayParam])
+    }
 
     setQuestions(newQuestions)
-    setQuizMode(mode)
+    setQuizStatus('inProgress')
+  }
+
+  function stopQuiz() {
+    setQuestions([])
+    setQuizStatus('stop')
   }
 
   const changeChoiceRange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,53 +80,92 @@ function QuizService() {
 
   return (
     <div className={quiz.quizContainer}>
-      {quizMode === 'stop' && (
+      {quizStatus === 'stop' && (
         <div>
-          <div className={'MAList.checkBtnContainer'}>
+          {/* <div className={'MAList.checkBtnContainer'}>
             <CheckBtnItems
               handleChange={handleChange}
               displayParam={displayParam}
               isQuiz={true}
             />
-          </div>
-          <div className={quiz.choiceContainer}>
-            <h3>出題範囲</h3>
-            {radioButtons.map((radio, i) => {
-              return (
-                <div key={i} className="start-choice">
-                  <label>
-                    <input
-                      type="radio"
-                      name="choiceRange"
-                      value={radio.value}
-                      checked={radio.value === choiceRange}
-                      onChange={changeChoiceRange}
-                    />
-                    {radio.label}
-                  </label>
-                </div>
-              )
-            })}
-          </div>
-          <div className={quiz.startQuizBtnContainer}>
-            <button type="button" onClick={() => startQuiz('numToMAChoice')}>
-              番号 → MA 3択クイズ Start
+          </div> */}
+          <div className={quiz.startQuizContainer}>
+            <h2>番号領域 → MA 3択クイズ</h2>
+            <div className={quiz.choiceContainer}>
+              <h3>3択の範囲</h3>
+              {radioButtons.map((radio, i) => {
+                return (
+                  <div key={i} className="start-choice">
+                    <label>
+                      <input
+                        type="radio"
+                        name="choiceRange"
+                        value={radio.value}
+                        checked={radio.value === choiceRange}
+                        onChange={changeChoiceRange}
+                      />
+                      {radio.label}
+                    </label>
+                  </div>
+                )
+              })}
+            </div>
+            <button
+              style={{ backgroundColor: '#C35579' }}
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: 'MANumRange',
+                  inputType: 'choice',
+                  answerType: 'MA',
+                })
+              }
+            >
+              Start
             </button>
           </div>
-          <div className={quiz.startQuizBtnContainer}>
-            <button type="button" onClick={() => startQuiz('numToCityName')}>
-              番号 → 市町村 入力クイズ Start
+          <div className={quiz.startQuizContainer}>
+            <h2>番号領域 → 市町村 入力クイズ</h2>
+            <button
+              style={{ backgroundColor: '#C35579' }}
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: 'MANumRange',
+                  inputType: 'input',
+                  answerType: 'city',
+                })
+              }
+            >
+              Start
+            </button>
+          </div>
+          <div className={quiz.startQuizContainer}>
+            <h2>番号4桁 → 市町村 入力クイズ</h2>
+            <button
+              style={{ backgroundColor: '#C35579' }}
+              type="button"
+              onClick={() =>
+                startQuiz({
+                  questionType: '4DigitsNum',
+                  inputType: 'input',
+                  answerType: 'city',
+                })
+              }
+            >
+              Start
             </button>
           </div>
         </div>
       )}
 
-      {quizMode !== 'stop' && (
-        <QuizComponent
-          mode={quizMode}
-          questions={questions}
-          displayParam={displayParam}
-        />
+      {quizStatus !== 'stop' && (
+        <div>
+          <button type="button" onClick={() => stopQuiz()}>
+            最初から遊ぶ
+          </button>
+          <QuizComponent questions={questions} displayParam={displayParam} />
+        </div>
       )}
     </div>
   )

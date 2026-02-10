@@ -53,12 +53,27 @@ const MAAreaCodeInfoComponents = ({
   if (type === 'dojinshi') {
     MAAreaCodeInfos = <MAAreaCodeInfoDojinshis />
   } else if (style === 'card' || isMobile) {
+    const cityOptions = {
+      areaDisplayFull: displayParam.includes('一部地域詳細表示'),
+      isQuiz: false,
+    }
     MAAreaCodeInfos = (
-      <MAAreaCodeInfoCards MAComps={MAComps} displayParam={displayParam} />
+      <MAAreaCodeInfoCards
+        MAComps={MAComps}
+        displayParam={displayParam}
+        cityOptions={cityOptions}
+      />
     )
   } else {
+    const cityOptions = {
+      areaDisplayFull: displayParam.includes('一部地域詳細表示'),
+    }
     MAAreaCodeInfos = (
-      <MAAreaCodeInfoTable MAComps={MAComps} displayParam={displayParam} />
+      <MAAreaCodeInfoTable
+        MAComps={MAComps}
+        displayParam={displayParam}
+        cityOptions={cityOptions}
+      />
     )
   }
 
