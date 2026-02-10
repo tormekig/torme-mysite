@@ -32,6 +32,8 @@ export function QuestionInteractionComponent({
     const onClickAnswer = () => {
       question.checkInputAnswer(inputValue)
       setInputValue('')
+      if (question.userInputCities.length === question.getCityCount())
+        showAnswers()
       handleStateChange()
     }
 
@@ -41,12 +43,15 @@ export function QuestionInteractionComponent({
       onClickAnswer()
     }
 
+    const showAnswers = () => {
+      controller.decideIsCorrectForInputAnswer()
+      handleStateChange()
+    }
+
     const limitedCitiesOption = {
       cities: question.userInputCities,
       isDisplayElse: isResult,
     }
-
-    console.log(question.answerCities)
 
     return (
       <div className={quiz.answerBtnContainer}>
@@ -96,10 +101,7 @@ export function QuestionInteractionComponent({
             type="button"
             disabled={isResult}
             className={`${quiz.button}`}
-            onClick={() => {
-              controller.decideIsCorrectForInputAnswer()
-              handleStateChange()
-            }}
+            onClick={showAnswers}
           >
             答えを見る
           </button>
