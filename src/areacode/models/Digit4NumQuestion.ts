@@ -14,7 +14,7 @@ export abstract class InputCityQuestion {
 
   getCityCount() {
     return this.answerCities?.filter((c) => {
-      return c.type !== ""
+      return c.type !== "" || c.county.type !== "市"
     }).length
   }
 
