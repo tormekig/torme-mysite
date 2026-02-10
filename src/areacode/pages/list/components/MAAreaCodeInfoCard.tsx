@@ -1,38 +1,45 @@
 import React from 'react'
-import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
+import {
+  AreaCode,
+  Cities,
+  cityOptions,
+  MA,
+  NumberBands,
+  Pref,
+} from 'areacode/pages/detail'
 import MAList from 'areacode/assets/css/MAList.module.scss'
 import { MACompInfo } from 'areacode/data/MACompList'
-import {
-  getColorStyleByAreaCode,
-  getColorStyleForQuiz,
-} from 'areacode/components'
+import { getColorStyleByAreaCode } from 'areacode/components'
 import { MAInfoDetail } from './MAInfoDetail'
 
 export function MAAreaCodeInfoCard({
   MAComp,
   displayParam,
-  isQuiz = false,
+  cityOptions,
 }: {
   MAComp: MACompInfo
   displayParam: string[]
-  isQuiz?: boolean
+  cityOptions: cityOptions
 }) {
+  const isQuiz = cityOptions?.isQuiz || false
   const info = new MAInfoDetail(MAComp)
-  const colorStyle = isQuiz
-    ? getColorStyleForQuiz()
-    : getColorStyleByAreaCode(info.areaCode)
+  const colorStyle = getColorStyleByAreaCode(info.areaCode)
 
   return (
     <div className={`${MAList.infoBlock}`}>
       <div>
         <div className={MAList.areacodeNumberband}>
           {displayParam.includes('市外局番') && (
-            <AreaCode areaCode={info.areaCode} colorStyle={colorStyle} />
+            <AreaCode
+              areaCode={info.areaCode}
+              colorStyle={colorStyle}
+              isQuiz={isQuiz}
+            />
           )}
 
           {displayParam.includes('番号領域') && (
             <NumberBands
-              areaCode={info.areaCode}
+              areacode={info.areaCode}
               numberBands={info.numberBands}
             />
           )}
@@ -46,10 +53,9 @@ export function MAAreaCodeInfoCard({
         {displayParam.includes('市区町村') && (
           <div className={MAList.citiesContainer}>
             <Cities
-              classifiedCities={info.cities}
-              areaDisplayFull={displayParam.includes('一部地域詳細表示')}
+              cities={info.cities}
               colorStyle={colorStyle}
-              isCityClickable={!isQuiz}
+              options={cityOptions}
             />
           </div>
         )}
@@ -92,9 +98,11 @@ export function MAAreaCodeInfoCard({
 export function MAAreaCodeInfoCards({
   MAComps,
   displayParam,
+  cityOptions,
 }: {
   MAComps: MACompInfo[]
   displayParam: string[]
+  cityOptions: cityOptions
 }) {
   return (
     <>
@@ -105,6 +113,7 @@ export function MAAreaCodeInfoCards({
               key={i}
               MAComp={MAComp}
               displayParam={displayParam}
+              cityOptions={cityOptions}
             />
           </div>
         )

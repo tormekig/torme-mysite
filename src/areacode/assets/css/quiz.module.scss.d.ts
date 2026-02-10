@@ -1,12 +1,11 @@
-export declare const answerBtn: string
 export declare const answerBtnContainer: string
 export declare const answers: string
 export declare const answerText: string
 export declare const areacode: string
-export declare const areacodeNumberband: string
-export declare const btn: string
+export declare const button: string
 export declare const choiceContainer: string
 export declare const correct: string
+export declare const digit4Question: string
 export declare const incorrect: string
 export declare const maQuestion: string
 export declare const numberBands: string
@@ -14,6 +13,7 @@ export declare const question: string
 export declare const quizContainer: string
 export declare const resultContainer: string
 export declare const resultNumber: string
+export declare const searchCityTextContainer: string
 export declare const startChoice: string
-export declare const startQuizBtnContainer: string
-export declare const startQuizWrapper: string
+export declare const startQuizContainer: string
+export declare const textInputContainer: string

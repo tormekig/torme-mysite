@@ -3,12 +3,13 @@ import { convertCompCode } from '.'
 import MACompList, { MACompInfo } from '../../data/MACompList'
 import cityList, {
   getCityListByPref,
-  getCityName,
-  getPrefCountyCityName,
-  getPrefCountyCityNameKanaWithSlash,
-  getPrefCountyName,
+  getCityNameType,
+  getPrefCountyCityNameType,
+  getPrefCountyCityNameTypeKanaWithSlash,
+  getPrefCountyNameType,
 } from '../../data/cityList'
 import { HeaderInfo } from './header'
+import NumberBandList, { paddingStartToEnd } from 'areacode/data/numberBandList'
 
 export type SearchType =
   | 'MA'
@@ -16,6 +17,7 @@ export type SearchType =
   | 'city'
   | 'code'
   | 'code_prefix'
+  | 'dojinshi'
   | 'all'
   | 'random'
 type areacodeFilterWithQuery = (q: string) => MACompListContent
@@ -75,7 +77,7 @@ export class MACompListContent {
     let MAComps: MACompInfo[] = []
 
     const cities = cityList.filter(function (city) {
-      return getPrefCountyCityName(city) === query
+      return getPrefCountyCityNameType(city) === query
     })
 
     cities.forEach(function (city) {
@@ -87,9 +89,9 @@ export class MACompListContent {
 
     this.MAComps = MAComps
 
-    this.headerInfo.mainHeaderSub = getPrefCountyName(cities[0])
-    this.headerInfo.mainHeader = getCityName(cities[0])
-    this.headerInfo.mainHeaderRuby = getPrefCountyCityNameKanaWithSlash(
+    this.headerInfo.mainHeaderSub = getPrefCountyNameType(cities[0])
+    this.headerInfo.mainHeader = getCityNameType(cities[0])
+    this.headerInfo.mainHeaderRuby = getPrefCountyCityNameTypeKanaWithSlash(
       cities[0],
     )
     this.headerInfo.mainHeaderLink =
@@ -112,10 +114,7 @@ export class MACompListContent {
   private filterByPrefixAreacode: areacodeFilterWithQuery = (query: string) => {
     this.setQueryAndSub(query, '市外局番検索（前方一致）')
 
-    query = query.slice(1, query.length)
-    this.MAComps = MACompList.concat().filter(function (MAComp) {
-      return MAComp.areaCode.slice(0, query.length) === query
-    })
+    this.MAComps = MACompListContent.filterMACompListByPrefixAreaCode(query)
 
     return this
   }
@@ -153,6 +152,9 @@ export class MACompListContent {
       case 'code_prefix': // areacode start digit
         return this.filterByPrefixAreacode(query)
 
+      case 'dojinshi':
+        return this.init('dojinshi')
+
       case 'all':
         return this.all()
 
@@ -166,5 +168,43 @@ export class MACompListContent {
     this.MAComps = shuffleArray(this.MAComps)
 
     return this
+  }
+
+  static filterMACompListByPrefixAreaCode(query: string): MACompInfo[] {
+    const prefix = query.slice(1)
+
+    const bands = NumberBandList.filter((band) =>
+      paddingStartToEnd(band).some(
+        (num) => num.toString().slice(1, prefix.length + 1) === prefix,
+      ),
+    )
+    //
+
+    let bandMaxLength = 0
+    bands.forEach((band) => {
+      const length = band.bandStart.length
+      if (length > bandMaxLength) bandMaxLength = length
+    })
+
+    bands.sort(
+      (a, b) =>
+        parseInt(a.bandStart.padEnd(bandMaxLength, '0')) -
+        parseInt(b.bandStart.padEnd(bandMaxLength, '0')),
+    )
+
+    const MACompsResult: MACompInfo[] = []
+
+    for (let i = 0; i < bands.length; i++) {
+      const MAComps = MACompList.filter(
+        (MAComp) =>
+          `${bands[i].MA}${bands[i].areaCode}` ===
+          `${MAComp.MAName}${MAComp.areaCode}`,
+      )
+
+      for (let j = 0; j < MAComps.length; j++) {
+        MACompsResult.push(MAComps[j])
+      }
+    }
+    return [...new Set(MACompsResult)]
   }
 }

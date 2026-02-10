@@ -1,11 +1,7 @@
-import cityList from 'areacode/data/cityList'
+import cityList, { CityInfo } from 'areacode/data/cityList'
 import { MACompInfo } from 'areacode/data/MACompList'
 import NumberBandList from 'areacode/data/numberBandList'
-import {
-  ClassifiedCities,
-  classifyCities,
-  NumberBandInfo,
-} from 'areacode/pages/detail'
+import { NumberBandInfo } from 'areacode/pages/detail'
 import { convertCompCode } from '..'
 
 interface NumberDesignation {
@@ -23,17 +19,16 @@ export class MAInfoDetail {
   square: string
   numberBands: NumberBandInfo[]
   numberDesignations: NumberDesignation[]
-  cities: ClassifiedCities
-  color: string
+  cities: CityInfo[]
 
   constructor(MAComp: MACompInfo) {
-    this.areaCode = '0' + MAComp.areaCode
+    this.areaCode = `0${MAComp.areaCode}`
     this.ma = MAComp.MAName
     this.maDistinct = MAComp.MAnum
     this.compartmentCode = convertCompCode(MAComp)
     this.pref = MAComp.pref
     this.square = MAComp.square
-    this.numberBands = this.getNumberBandsfromMAComp(MAComp)
+    this.numberBands = MAInfoDetail.getNumberBands(MAComp)
     this.numberDesignations = [
       {
         start: 'None',
@@ -41,23 +36,27 @@ export class MAInfoDetail {
         note: [],
       },
     ]
-    this.cities = classifyCities(this.getCitiesfromMAComp(MAComp))
-    this.color = MAComp.color
-
-    return this
+    this.cities = MAInfoDetail.getCities(MAComp)
   }
 
-  getNumberBandsfromMAComp(MAComp: MACompInfo) {
-    return NumberBandList.filter(function (numberBand) {
-      return (
-        numberBand.MA + numberBand.areaCode === MAComp.MAName + MAComp.areaCode
-      )
-    })
+  static getNumberBands(MAComp: MACompInfo) {
+    return NumberBandList.filter(
+      (band) =>
+        `${band.MA}${band.areaCode}` === `${MAComp.MAName}${MAComp.areaCode}`,
+    )
   }
 
-  getCitiesfromMAComp(MAComp: MACompInfo) {
-    return cityList.filter(function (city) {
-      return city.compartmentCode === convertCompCode(MAComp)
+  static getCities(MAComp: MACompInfo) {
+    return cityList.filter(
+      (city) => city.compartmentCode === convertCompCode(MAComp),
+    )
+  }
+
+  static getCitiesByMultipleMAComps(MAComps: MACompInfo[]) {
+    let cities: CityInfo[] = []
+    MAComps.forEach((MAComp) => {
+      cities = cities.concat(this.getCities(MAComp))
     })
+    return cities
   }
 }

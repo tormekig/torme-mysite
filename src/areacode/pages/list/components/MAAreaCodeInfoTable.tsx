@@ -3,15 +3,24 @@ import { MACompInfo } from 'areacode/data/MACompList'
 import { getColorStyleByAreaCode } from 'areacode/components'
 import { motion } from 'framer-motion'
 import MAList from 'areacode/assets/css/MAList.module.scss'
-import { AreaCode, Cities, MA, NumberBands, Pref } from 'areacode/pages/detail'
+import {
+  AreaCode,
+  Cities,
+  cityOptions,
+  MA,
+  NumberBands,
+  Pref,
+} from 'areacode/pages/detail'
 import { MAInfoDetail } from './MAInfoDetail'
 
 export function MAAreaCodeInfoRow({
   MAComp,
   displayParam,
+  cityOptions,
 }: {
   MAComp: MACompInfo
   displayParam: string[]
+  cityOptions: cityOptions
 }) {
   const info = new MAInfoDetail(MAComp)
   const colorStyle = getColorStyleByAreaCode(info.areaCode)
@@ -30,7 +39,7 @@ export function MAAreaCodeInfoRow({
       {displayParam.includes('番号領域') && (
         <td>
           <NumberBands
-            areaCode={info.areaCode}
+            areacode={info.areaCode}
             numberBands={info.numberBands}
           />
         </td>
@@ -51,9 +60,9 @@ export function MAAreaCodeInfoRow({
       {displayParam.includes('市区町村') && (
         <td className={MAList.citiesContainerTd}>
           <Cities
-            classifiedCities={info.cities}
-            areaDisplayFull={displayParam.includes('一部地域詳細表示')}
+            cities={info.cities}
             colorStyle={colorStyle}
+            options={cityOptions}
           />
         </td>
       )}
@@ -88,9 +97,11 @@ export function MAAreaCodeInfoRow({
 export function MAAreaCodeInfoTable({
   MAComps,
   displayParam,
+  cityOptions,
 }: {
   MAComps: MACompInfo[]
   displayParam: string[]
+  cityOptions: cityOptions
 }) {
   return (
     <table className={MAList.infoTable}>
@@ -125,6 +136,7 @@ export function MAAreaCodeInfoTable({
               key={i}
               MAComp={MAComp}
               displayParam={displayParam}
+              cityOptions={cityOptions}
             />
           )
         })}

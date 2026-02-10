@@ -11,49 +11,60 @@ export interface NumberBandInfo {
   eliminateCode: string
 }
 
+export function formatNumberBands(
+  areacode: string,
+  numberBands: NumberBandInfo[],
+) {
+  function insertStr(str: string, id: number, val: string): string {
+    return str.slice(0, id) + val + str.slice(id)
+  }
+
+  return numberBands.map((band) => {
+    const bandStart = insertStr(band.bandStart, areacode.length, '-')
+    const bandEnd = insertStr(band.bandEnd, areacode.length, '-')
+
+    let txt = bandStart
+
+    if (bandStart !== bandEnd) {
+      txt += `～${bandEnd}`
+    }
+
+    const elim =
+      band.eliminateCode !== '0' ? `(${band.eliminateCode}を除く)` : ''
+
+    return { txt, elim }
+  })
+}
+
 export function NumberBands({
-  areaCode,
+  areacode: areaCode,
   numberBands,
   isQuiz = false,
+  isTxt = false,
 }: {
-  areaCode: string
+  areacode: string
   numberBands: NumberBandInfo[]
-  className?: string
   isQuiz?: boolean
+  isTxt?: boolean
 }) {
   const className = isQuiz ? quiz.numberBands : MAList.numberBands
 
-  function insertStr(str: string, id: number, val: string): string {
-    const res = str.slice(0, id) + val + str.slice(id)
-    return res
-  }
+  const numberBandList = formatNumberBands(areaCode, numberBands)
 
-  const lis: React.JSX.Element[] = []
-
-  numberBands.forEach(function (numberBand, i) {
-    const bandStart = insertStr(numberBand.bandStart, areaCode.length, '-')
-    const bandEnd = insertStr(numberBand.bandEnd, areaCode.length, '-')
-
-    let txt: string | React.JSX.Element = `${bandStart}`
-    if (bandStart !== bandEnd) {
-      txt = `${txt} ～ ${bandEnd}`
-    }
-    if (numberBand.eliminateCode !== '0') {
-      const elim = '（' + numberBand.eliminateCode + 'を除く）'
-      txt = (
-        <div>
-          {txt}
-          <br />
-          <small>{elim}</small>
-        </div>
-      )
-    }
-    lis.push(
-      <li key={i}>
-        <div>{txt}</div>
-      </li>,
-    )
-  })
-
-  return <ul className={className}>{lis}</ul>
+  return isTxt ? (
+    <ul className={className}>
+      {numberBandList
+        .map((numberBand) => numberBand.txt + numberBand.elim)
+        .join(', ')}
+    </ul>
+  ) : (
+    <ul className={className}>
+      {numberBandList.map((numberBand, i) => (
+        <li key={i}>
+          {numberBand.txt}
+          <small>{numberBand.elim}</small>
+        </li>
+      ))}
+    </ul>
+  )
 }

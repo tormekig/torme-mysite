@@ -1,5 +1,5 @@
 import React from 'react'
-import { ColorStyle } from 'areacode/components'
+import { ColorStyle, getColorStyleForQuiz } from 'areacode/components'
 
 import MAList from '../../../assets/css/MAList.module.scss'
 import quiz from 'areacode/assets/css/quiz.module.scss'
@@ -14,6 +14,7 @@ export function AreaCode({
   isQuiz?: boolean
 }) {
   const className = isQuiz ? quiz.areacode : MAList.areacode
+  colorStyle = isQuiz ? getColorStyleForQuiz() : colorStyle
   return (
     <div style={colorStyle?.background} className={className}>
       <p>{areaCode}</p>

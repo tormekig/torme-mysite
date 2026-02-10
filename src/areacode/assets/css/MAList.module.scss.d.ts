@@ -4,6 +4,7 @@ export declare const areacodeBody: string
 export declare const areacodeNumberband: string
 export declare const checkBtnContainer: string
 export declare const citiesContainer: string
+export declare const citiesContainerOuter: string
 export declare const citiesContainerTd: string
 export declare const city: string
 export declare const cityList: string
@@ -14,6 +15,7 @@ export declare const countyName: string
 export declare const headerContainer: string
 export declare const infoBlock: string
 export declare const infoBlockContainer: string
+export declare const infoDojinshi: string
 export declare const infoRow: string
 export declare const infoTable: string
 export declare const infoTableContainer: string
@@ -21,14 +23,17 @@ export declare const ma: string
 export declare const maAreaCodeContainer: string
 export declare const maAreaCodeHeader: string
 export declare const maCompBlue: string
+export declare const maCompContainer: string
 export declare const maCompGreen: string
 export declare const maCompRed: string
 export declare const maCompYellow: string
+export declare const maInfo: string
 export declare const mainHeader: string
 export declare const mainHeaderLink: string
 export declare const mainHeaderMain: string
 export declare const mainHeaderRuby: string
 export declare const mainHeaderSub: string
+export declare const maNumberBands: string
 export declare const mApref: string
 export declare const numberBands: string
 export declare const openSearchDetail: string
@@ -39,3 +44,4 @@ export declare const prefListSimple: string
 export declare const prefofCities: string
 export declare const searchBox: string
 export declare const subHeader: string
+export declare const words: string
