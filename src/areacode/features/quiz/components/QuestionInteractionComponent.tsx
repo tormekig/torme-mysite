@@ -46,6 +46,8 @@ export function QuestionInteractionComponent({
       isDisplayElse: isResult,
     }
 
+    console.log(question.answerCities)
+
     return (
       <div className={quiz.answerBtnContainer}>
         {!isFinished && (
@@ -64,28 +66,15 @@ export function QuestionInteractionComponent({
                 style={{ fontSize: '20px', width: '5rem' }}
                 type="button"
                 disabled={isResult}
-                className={`${quiz.answerBtn}`}
+                className={`${quiz.button}`}
                 onClick={() => onClickAnswer()}
               >
                 回答
               </button>
             </div>
             <div>
-              <button
-                type="button"
-                disabled={isResult}
-                className={`${quiz.answerBtn}`}
-                onClick={() => {
-                  controller.decideIsCorrectForInputAnswer()
-                  handleStateChange()
-                }}
-              >
-                答えを見る
-              </button>
-            </div>
-            <div>
               回答自治体数：{question.userInputCities.length}/
-              {question.answerCities?.length}
+              {question.getCityCount()}
             </div>
           </div>
         )}
@@ -102,6 +91,19 @@ export function QuestionInteractionComponent({
             />
           )
         })}
+        {!isFinished && (
+          <button
+            type="button"
+            disabled={isResult}
+            className={`${quiz.button}`}
+            onClick={() => {
+              controller.decideIsCorrectForInputAnswer()
+              handleStateChange()
+            }}
+          >
+            答えを見る
+          </button>
+        )}
       </div>
     )
   }
@@ -133,7 +135,7 @@ export function QuestionInteractionComponent({
           <button
             type="button"
             disabled={isResult}
-            className={`${quiz.answerBtn} ${answerBtnCorrectClassName}${answerBtnIncorrectClassName}`}
+            className={`${quiz.button} ${answerBtnCorrectClassName}${answerBtnIncorrectClassName}`}
             onClick={() => onClickAnswer(i)}
           >
             <MAAreaCodeInfoCard

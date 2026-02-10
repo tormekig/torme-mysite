@@ -39,6 +39,18 @@ export function getColorStyleByAreaCode(areaCode: string): ColorStyle {
 export function getColorStyleForQuiz(): ColorStyle {
   return {
     background: {
+      backgroundColor: 'transparent',
+      color: '#333',
+    },
+    text: {
+      color: '#333',
+    },
+  }
+}
+
+export function getCityColorStyleForQuiz(): ColorStyle {
+  return {
+    background: {
       backgroundColor: '#666',
       color: '#fff',
     },

@@ -127,7 +127,7 @@ export interface CityInfo {
   }
 }
 
-export const cityList: CityInfo[] = [
+const originalCityList: CityInfo[] = [
   {
     code: '01100',
     distinct: '1',
@@ -45321,5 +45321,7 @@ export const cityList: CityInfo[] = [
     },
   },
 ]
+
+export const cityList = originalCityList.filter((c) => c.name !== '特別区')
 
 export default cityList
