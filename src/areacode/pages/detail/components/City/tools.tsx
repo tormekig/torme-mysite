@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import MAList from '../../../../assets/css/MAList.module.scss'
 import { CityInfo } from '../../../../data/cityList'
-import { ColorStyle, getColorStyleForQuiz } from '../../../../components'
+import { ColorStyle, getCityColorStyleForQuiz } from '../../../../components'
 import { getDuplication } from 'utils/tools'
 
 export function isCityLimitedZone(
@@ -88,7 +88,7 @@ export function createCityElement(
   const color =
     limitedCitiesOption?.cities?.includes(city) || !isQuiz
       ? colorStyle
-      : getColorStyleForQuiz()
+      : getCityColorStyleForQuiz()
 
   const zone = getZoneElement(city.zone.name, areaDisplayFull, isQuiz)
 

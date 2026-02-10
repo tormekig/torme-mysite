@@ -12,6 +12,12 @@ export abstract class InputCityQuestion {
     this.userInputCities = []
   }
 
+  getCityCount() {
+    return this.answerCities?.filter((c) => {
+      return c.type !== ""
+    }).length
+  }
+
   setQuestionIndex(index: number) {
     this.questionIndex = index
     return this

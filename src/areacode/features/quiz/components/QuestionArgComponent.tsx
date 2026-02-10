@@ -17,7 +17,7 @@ function QuestionArg({
   if (question instanceof InputCityQuestion) {
     if (question instanceof Digit4NumInputCityQuestion) {
       return (
-        <div className={quiz.maQuestion}>
+        <div className={quiz.digit4Question}>
           <AreaCode areaCode={question.transformedAreacode} isQuiz={true} />
         </div>
       )
