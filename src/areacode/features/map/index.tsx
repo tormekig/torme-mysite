@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Map, {
   Source,
   Layer,
   Popup,
   FillLayerSpecification,
 } from 'react-map-gl/maplibre'
+import type {
+  LineLayerSpecification,
+  MapLayerMouseEvent,
+  Map as MapLibreMap,
+  SymbolLayerSpecification,
+} from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as topojson from 'topojson-client'
-import type { FeatureCollection, Geometry } from 'geojson'
+import type { Feature, FeatureCollection, Geometry } from 'geojson'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MAAreaCodeInfoCards } from 'areacode/pages/list/components'
 import { getColorStyleByAreaCode } from 'areacode/components'
@@ -18,12 +24,15 @@ const MA_MAP_STYLE =
 type PopupInfoType = {
   longitude: number
   latitude: number
-  properties: any
+  properties: Record<string, string>
 }
 function App() {
-  const [geoData, setGeoData] = useState<any>(null)
-  const [hoverId, setHoverId] = useState<string | number | null>(null)
+  const [geoData, setGeoData] = useState<FeatureCollection<Geometry> | null>(
+    null,
+  )
   const [popupInfo, setPopupInfo] = useState<PopupInfoType | null>(null)
+  const mapRef = useRef<MapLibreMap | null>(null)
+  const hoverIdRef = useRef<string | number | null>(null)
 
   useEffect(() => {
     fetch('/map/areacode.json')
@@ -34,19 +43,34 @@ function App() {
           topoData,
           topoData.objects.areacode,
         ) as unknown as FeatureCollection<Geometry>
-        geojson.features = geojson.features.map((f: any) => ({
-          ...f,
-          properties: {
-            ...f.properties,
-            fillColor: getColorStyleByAreaCode(`0${f.properties['_市外局番']}`)
-              .background.backgroundColor,
-          },
-        }))
+        geojson.features = geojson.features.map((f: Feature<Geometry>) => {
+          const properties = (f.properties ?? {}) as Record<string, string>
+          return {
+            ...f,
+            properties: {
+              ...properties,
+              fillColor: getColorStyleByAreaCode(`0${properties['_市外局番']}`)
+                .background.backgroundColor,
+            },
+          }
+        })
         setGeoData(geojson)
       })
   }, [])
 
-  const onClick = (event: any) => {
+  const clearHoverState = useCallback(() => {
+    if (!mapRef.current || hoverIdRef.current === null) {
+      return
+    }
+
+    mapRef.current.setFeatureState(
+      { source: 'ma-source', id: hoverIdRef.current },
+      { hover: false },
+    )
+    hoverIdRef.current = null
+  }, [])
+
+  const onClick = (event: MapLayerMouseEvent) => {
     const feature = event.features && event.features[0]
     if (feature) {
       setPopupInfo({
@@ -57,24 +81,65 @@ function App() {
     }
   }
 
-  const onHover = (event: any) => {
-    const { features, target } = event
-    if (features && features.length > 0) {
-      const nextHoverId = features[0].id
-      if (hoverId !== null) {
-        target.setFeatureState(
-          { source: 'ma-source', id: hoverId },
-          { hover: false },
-        )
+  const onHover = useCallback(
+    (event: MapLayerMouseEvent) => {
+      mapRef.current = event.target
+      const feature = event.features?.[0]
+      const nextHoverId = feature?.id
+
+      if (nextHoverId === undefined) {
+        clearHoverState()
+        return
       }
-      if (nextHoverId !== undefined) {
-        target.setFeatureState(
-          { source: 'ma-source', id: nextHoverId },
-          { hover: true },
-        )
-        setHoverId(nextHoverId)
+
+      if (hoverIdRef.current === nextHoverId) {
+        return
       }
+
+      clearHoverState()
+      event.target.setFeatureState(
+        { source: 'ma-source', id: nextHoverId },
+        { hover: true },
+      )
+      hoverIdRef.current = nextHoverId
+    },
+    [clearHoverState],
+  )
+
+  useEffect(() => {
+    return () => {
+      clearHoverState()
     }
+  }, [clearHoverState])
+
+  const borderStyle: LineLayerSpecification = {
+    source: 'ma-source',
+    id: 'ma-borders',
+    type: 'line',
+    paint: {
+      'line-color': '#1a1a1a',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 8, 1.2],
+      'line-opacity': 0.8,
+    },
+  }
+
+  const labelStyle: SymbolLayerSpecification = {
+    source: 'ma-source',
+    id: 'ma-labels',
+    type: 'symbol',
+    layout: {
+      'text-field': ['coalesce', ['get', '_MA名']],
+      'text-size': ['interpolate', ['linear'], ['zoom'], 5, 9, 8, 12],
+      'text-font': ['Noto Sans Regular'],
+      'text-allow-overlap': false,
+      'text-ignore-placement': false,
+    },
+    paint: {
+      'text-color': '#111827',
+      'text-halo-color': '#ffffff',
+      'text-halo-width': 1.2,
+      'text-halo-blur': 0.2,
+    },
   }
 
   const fillStyle: FillLayerSpecification = {
@@ -83,6 +148,7 @@ function App() {
     type: 'fill',
     paint: {
       'fill-color': ['get', 'fillColor'],
+      'fill-outline-color': ['get', 'fillColor'],
       'fill-opacity': [
         'case',
         ['boolean', ['feature-state', 'hover'], false],
@@ -100,19 +166,17 @@ function App() {
         zoom: 6,
       }}
       style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}
-      mapStyle={MA_MAP_STYLE}
+      // mapStyle={MA_MAP_STYLE}
       onClick={onClick}
       onMouseMove={onHover}
-      onMouseLeave={() => {
-        if (hoverId !== null) {
-          setHoverId(null)
-        }
-      }}
+      onMouseLeave={clearHoverState}
       interactiveLayerIds={['ma-fills']}
     >
       {geoData && (
         <Source id="ma-source" type="geojson" data={geoData} generateId={true}>
           <Layer {...fillStyle}></Layer>
+          <Layer {...borderStyle}></Layer>
+          <Layer {...labelStyle}></Layer>
         </Source>
       )}
       {popupInfo && (
