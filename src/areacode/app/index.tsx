@@ -8,7 +8,7 @@ import MAAreaCodeList from 'areacode/pages/list'
 import Top from 'areacode/pages/top'
 import { RoutePath } from 'utils/tools'
 import DisplayQuiz from 'areacode/features/quiz'
-import MapApp from 'areacode/features/map'
+import MapApp from 'areacode/features/map/digits2'
 
 export const areacodeRoutes: RoutePath[] = [
   {
