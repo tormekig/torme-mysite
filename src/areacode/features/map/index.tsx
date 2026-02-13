@@ -370,6 +370,7 @@ function App() {
         </div>
 
         <MapView
+          mapLib={import('maplibre-gl')}
           initialViewState={{
             longitude: 139.76711,
             latitude: 35.68074,
