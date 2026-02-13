@@ -47,12 +47,22 @@ function App() {
     }
 
     const featureId = feature.id
-    const properties = feature.properties as Record<string, string>
+    const sourceFeature =
+      typeof featureId === 'number' ? maGeoData.features[featureId] : undefined
+
+    const properties =
+      (sourceFeature?.properties as Record<string, string> | undefined) ??
+      (feature.properties as Record<string, string>)
+
+    const geometry =
+      (sourceFeature?.geometry as Geometry | undefined) ??
+      (feature.geometry as Geometry)
+
     const activeFeature: Feature<Geometry> = {
       type: 'Feature',
       id: featureId,
       properties,
-      geometry: feature.geometry as Geometry,
+      geometry,
     }
 
     setActiveMAs((prev) => {
@@ -62,7 +72,7 @@ function App() {
       }
       return [{ featureId, properties, feature: activeFeature }]
     })
-  }, [])
+  }, [maGeoData.features])
 
   const onHover = useCallback(
     (event: MapLayerMouseEvent) => {
