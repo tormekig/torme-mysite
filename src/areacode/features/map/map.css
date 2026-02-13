@@ -61,6 +61,40 @@
   margin: 0 auto;
 }
 
+.map-search-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.map-search-panel-title {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.map-search-panel-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.map-search-panel-label:last-child {
+  margin-bottom: 0;
+}
+
+.map-search-panel-label select {
+  margin-top: 4px;
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
 @media (max-width: 767px) {
   .map-app-layout {
     display: block;
@@ -110,8 +144,6 @@
     );
   }
 }
-
-
 
 .digits2-map-label-marker {
   font-family: 'Roboto', sans-serif;
