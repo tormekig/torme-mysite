@@ -38,11 +38,9 @@ export function ActiveMAPanel({
           className="active-ma-panel-toggle"
           onClick={onToggleExpand}
           aria-expanded={isExpanded}
+          aria-label={isExpanded ? '情報パネルを縮小' : '情報パネルを拡大'}
         >
           <div className="active-ma-panel-grabber" />
-          <h2 style={{ margin: '4px 0 12px', fontSize: 18 }}>
-            アクティブなMA {isExpanded ? '（タップで縮小）' : '（タップで拡大）'}
-          </h2>
         </button>
       </div>
       {activeMAs.length === 0 && (
