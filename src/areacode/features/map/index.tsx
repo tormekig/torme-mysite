@@ -16,7 +16,6 @@ function App() {
   const [showDigits2, setShowDigits2] = useState(true)
   const [activeMAs, setActiveMAs] = useState<ActiveMAInfo[]>([])
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
-  const [mapZoom, setMapZoom] = useState(6)
 
   const mapRef = useRef<MapLibreMap | null>(null)
   const hoverRef = useRef<HoverState | null>(null)
@@ -150,7 +149,6 @@ function App() {
           onClick={onClick}
           onMouseMove={onHover}
           onMouseLeave={clearHoverState}
-          onMove={(event) => setMapZoom(event.viewState.zoom)}
           interactiveLayerIds={interactiveLayerIds}
         >
           <MapLayers
@@ -159,7 +157,6 @@ function App() {
             activeMAFeatureCollection={activeMAFeatureCollection}
             showMA={showMA}
             showDigits2={showDigits2}
-            zoom={mapZoom}
           />
         </Map>
       </div>
