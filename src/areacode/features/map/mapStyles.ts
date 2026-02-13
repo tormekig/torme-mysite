@@ -7,6 +7,8 @@ import type {
 export const MA_MAP_STYLE =
   'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json'
 
+const JAPANESE_LABEL_FONT_STACK = ['Roboto', 'Noto Sans JP', 'sans-serif'] as const
+
 export const maFillStyle: FillLayerSpecification = {
   source: 'ma-source',
   id: 'ma-fills',
@@ -74,7 +76,7 @@ export const maLabelStyle: SymbolLayerSpecification = {
       },
     ],
     'text-size': ['interpolate', ['linear'], ['zoom'], 5, 11, 8, 14],
-    'text-font': ['Roboto', 'Noto Sans JP', 'sans-serif'],
+    'text-font': [...JAPANESE_LABEL_FONT_STACK],
     'text-anchor': 'center',
     'text-justify': 'center',
     'text-line-height': 1.15,
@@ -107,7 +109,7 @@ export const digits2LabelStyle: SymbolLayerSpecification = {
   layout: {
     'text-field': ['coalesce', ['get', '市外局番2桁']],
     'text-size': ['interpolate', ['linear'], ['zoom'], 5, 20, 8, 30],
-    'text-font': ['Roboto', 'sans-serif'],
+    'text-font': [...JAPANESE_LABEL_FONT_STACK],
     'text-allow-overlap': false,
     'text-ignore-placement': false,
   },

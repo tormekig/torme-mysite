@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 .map-app-layout {
   width: 100vw;
   height: 100vh;
@@ -107,4 +109,24 @@
       rgba(249, 250, 251, 0.94)
     );
   }
+}
+
+
+
+.digits2-map-label-marker {
+  font-family: 'Roboto', sans-serif;
+  color: #111827;
+  text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  transform: translateZ(0);
+  transition: font-size 0.1s linear;
+  font-weight: 700;
+  line-height: 1;
 }
