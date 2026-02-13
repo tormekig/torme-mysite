@@ -155,11 +155,6 @@ function App() {
         activeMAs={activeMAs}
         isExpanded={isPanelExpanded}
         onToggleExpand={() => setIsPanelExpanded((prev) => !prev)}
-        onRemove={(featureId) => {
-          setActiveMAs((prev) =>
-            prev.filter((ma) => ma.featureId !== featureId),
-          )
-        }}
       />
     </div>
   )
