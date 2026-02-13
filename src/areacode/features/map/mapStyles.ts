@@ -7,15 +7,7 @@ import type {
 export const MA_MAP_STYLE =
   'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json'
 
-// NOTE:
-// MapLibre symbol labels are rendered from the map style's glyph server,
-// so CSS/web fonts (e.g. Google Fonts Roboto) are not used directly.
-// The OSM Bright JA style exposes Noto Sans based font stacks, therefore
-// we use those stack names here so label typography is applied reliably.
-const JAPANESE_LABEL_FONT_STACK = [
-  'Noto Sans CJK JP Regular',
-  'Noto Sans Regular',
-] as const
+const JAPANESE_LABEL_FONT_STACK = ['Roboto', 'Noto Sans JP', 'sans-serif'] as const
 
 export const maFillStyle: FillLayerSpecification = {
   source: 'ma-source',

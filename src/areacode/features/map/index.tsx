@@ -146,6 +146,9 @@ function App() {
           }}
           style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}
           mapStyle={MA_MAP_STYLE}
+          // Prefer local browser fonts for symbol labels so Roboto/Noto Sans JP
+          // can be reflected even when the base OSM style defines another stack.
+          localFontFamily="Roboto, 'Noto Sans JP', sans-serif"
           onClick={onClick}
           onMouseMove={onHover}
           onMouseLeave={clearHoverState}
