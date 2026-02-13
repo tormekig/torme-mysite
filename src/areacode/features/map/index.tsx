@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import Map from 'react-map-gl/maplibre'
+import MapView from 'react-map-gl/maplibre'
 import type {
   Feature,
   FeatureCollection,
@@ -131,15 +131,19 @@ function App() {
       )
 
       if (orderedMAKeys.length > 0) {
-        const keyOrder = new globalThis.Map<string, number>(
-          orderedMAKeys.map((key, index) => [key, index]),
+        const keyOrder = orderedMAKeys.reduce<Record<string, number>>(
+          (order, key, index) => {
+            order[key] = index
+            return order
+          },
+          {},
         )
         nextActiveMAs.sort((a, b) => {
           const aIndex =
-            keyOrder.get(toMAKey(a.properties['_市外局番'], a.properties['_MA名'])) ??
+            keyOrder[toMAKey(a.properties['_市外局番'], a.properties['_MA名'])] ??
             Number.MAX_SAFE_INTEGER
           const bIndex =
-            keyOrder.get(toMAKey(b.properties['_市外局番'], b.properties['_MA名'])) ??
+            keyOrder[toMAKey(b.properties['_市外局番'], b.properties['_MA名'])] ??
             Number.MAX_SAFE_INTEGER
 
           if (aIndex !== bIndex) {
@@ -365,7 +369,7 @@ function App() {
           </label>
         </div>
 
-        <Map
+        <MapView
           initialViewState={{
             longitude: 139.76711,
             latitude: 35.68074,
@@ -390,7 +394,7 @@ function App() {
             showDigits2={showDigits2}
             zoom={mapZoom}
           />
-        </Map>
+        </MapView>
       </div>
 
       <ActiveMAPanel
