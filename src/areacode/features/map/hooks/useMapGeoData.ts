@@ -15,6 +15,21 @@ function getFillColor(properties: Record<string, string>): string {
   return getColorStyleByAreaCode(`0${areaCode}`).background.backgroundColor
 }
 
+function normalizeMAPProperties(
+  properties: Record<string, string>,
+): Record<string, string> {
+  const areaCode = properties['_市外局番'] ?? ''
+  const maName = properties['_MA名'] ?? ''
+
+  return {
+    ...properties,
+    areaCode,
+    maName,
+    maLabel: areaCode ? `0${areaCode}\n${maName}` : maName,
+    fillColor: getFillColor(properties),
+  }
+}
+
 function getMapAssetUrl(filename: string): string {
   const base = (process.env.PUBLIC_URL ?? '').replace(/\/$/, '')
   return `${base}/map/${filename}`
@@ -64,10 +79,7 @@ export function useMapGeoData() {
           const properties = (f.properties ?? {}) as Record<string, string>
           return {
             ...f,
-            properties: {
-              ...properties,
-              fillColor: getFillColor(properties),
-            },
+            properties: normalizeMAPProperties(properties),
           }
         })
         setMaGeoData(geojson)
@@ -90,10 +102,7 @@ export function useMapGeoData() {
           const properties = (f.properties ?? {}) as Record<string, string>
           return {
             ...f,
-            properties: {
-              ...properties,
-              fillColor: getFillColor(properties),
-            },
+            properties: normalizeMAPProperties(properties),
           }
         })
         setDigits2GeoData(geojson)

@@ -62,13 +62,7 @@ export const maLabelStyle: SymbolLayerSpecification = {
   id: 'ma-labels',
   type: 'symbol',
   layout: {
-    'text-field': [
-      'concat',
-      '0',
-      ['coalesce', ['get', '_市外局番'], ''],
-      '\n',
-      ['coalesce', ['get', '_MA名'], ''],
-    ],
+    'text-field': ['coalesce', ['get', 'maLabel'], ''],
     'text-size': ['interpolate', ['linear'], ['zoom'], 5, 11, 8, 14],
     'text-font': [...JAPANESE_LABEL_FONT_STACK],
     'text-anchor': 'center',
