@@ -37,6 +37,30 @@
   overflow-y: auto;
 }
 
+
+.active-ma-panel-header {
+  margin: -12px -12px 10px;
+  padding: 8px 12px;
+}
+
+.active-ma-panel-toggle {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.active-ma-panel-grabber {
+  width: 40px;
+  height: 4px;
+  border-radius: 9999px;
+  background: #9ca3af;
+  margin: 0 auto;
+}
+
 @media (max-width: 767px) {
   .map-app-layout {
     display: block;
@@ -75,31 +99,10 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    margin: -12px -12px 10px;
-    padding: 8px 12px 10px;
     background: linear-gradient(
       to bottom,
       rgba(249, 250, 251, 0.98),
       rgba(249, 250, 251, 0.92)
     );
-  }
-
-  .active-ma-panel-toggle {
-    width: 100%;
-    border: none;
-    background: transparent;
-    padding: 0;
-    text-align: left;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-  }
-
-  .active-ma-panel-grabber {
-    width: 40px;
-    height: 4px;
-    border-radius: 9999px;
-    background: #9ca3af;
-    margin: 0 auto 8px;
   }
 }
