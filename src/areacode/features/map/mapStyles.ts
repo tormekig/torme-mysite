@@ -63,17 +63,11 @@ export const maLabelStyle: SymbolLayerSpecification = {
   type: 'symbol',
   layout: {
     'text-field': [
-      'format',
-      ['concat', '0', ['coalesce', ['get', '_市外局番'], '']],
-      {
-        'font-scale': 1.2,
-      },
+      'concat',
+      '0',
+      ['coalesce', ['get', '_市外局番'], ''],
       '\n',
-      {},
       ['coalesce', ['get', '_MA名'], ''],
-      {
-        'font-scale': 0.82,
-      },
     ],
     'text-size': ['interpolate', ['linear'], ['zoom'], 5, 11, 8, 14],
     'text-font': [...JAPANESE_LABEL_FONT_STACK],
@@ -107,7 +101,7 @@ export const digits2LabelStyle: SymbolLayerSpecification = {
   id: 'digits2-labels',
   type: 'symbol',
   layout: {
-    'text-field': ['coalesce', ['get', '市外局番2桁']],
+    'text-field': ['coalesce', ['get', '市外局番2桁'], ''],
     'text-size': ['interpolate', ['linear'], ['zoom'], 5, 20, 8, 30],
     'text-font': [...JAPANESE_LABEL_FONT_STACK],
     'text-allow-overlap': false,
