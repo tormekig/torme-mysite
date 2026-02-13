@@ -107,7 +107,6 @@ export function MapLayers({
           id="ma-source"
           type="geojson"
           data={maGeoData}
-          generateId={true}
         >
           <Layer
             {...maFillStyle}
@@ -132,7 +131,6 @@ export function MapLayers({
           id="digits2-source"
           type="geojson"
           data={digits2GeoData}
-          generateId={true}
         >
           <Layer
             {...digits2BorderStyle}

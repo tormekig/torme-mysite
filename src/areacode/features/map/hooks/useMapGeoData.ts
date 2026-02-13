@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as topojson from 'topojson-client'
-import type { Feature, FeatureCollection, Geometry } from 'geojson'
+import type { FeatureCollection, Geometry } from 'geojson'
 import { getColorStyleByAreaCode } from 'areacode/components'
 import { EMPTY_FEATURE_COLLECTION } from '../types'
 
@@ -43,6 +43,26 @@ async function fetchTopoJson(url: string, objectKey: string) {
   return topoData
 }
 
+function normalizeGeoJsonFeatures(
+  geojson: FeatureCollection<Geometry>,
+): FeatureCollection<Geometry> {
+  return {
+    ...geojson,
+    features: geojson.features.map((feature, index) => {
+      const properties = (feature.properties ?? {}) as Record<string, string>
+
+      return {
+        ...feature,
+        id: feature.id ?? index,
+        properties: {
+          ...properties,
+          fillColor: getFillColor(properties),
+        },
+      }
+    }),
+  }
+}
+
 export function useMapGeoData() {
   const [maGeoData, setMaGeoData] = useState<FeatureCollection<Geometry>>(
     EMPTY_FEATURE_COLLECTION,
@@ -56,20 +76,11 @@ export function useMapGeoData() {
 
     fetchTopoJson(url, 'areacode')
       .then((topoData) => {
-        const geojson = topojson.feature(
+        const rawGeojson = topojson.feature(
           topoData,
           topoData.objects.areacode,
         ) as unknown as FeatureCollection<Geometry>
-        geojson.features = geojson.features.map((f: Feature<Geometry>) => {
-          const properties = (f.properties ?? {}) as Record<string, string>
-          return {
-            ...f,
-            properties: {
-              ...properties,
-              fillColor: getFillColor(properties),
-            },
-          }
-        })
+        const geojson = normalizeGeoJsonFeatures(rawGeojson)
         setMaGeoData(geojson)
       })
       .catch((error) => {
@@ -82,20 +93,11 @@ export function useMapGeoData() {
 
     fetchTopoJson(url, '2digits')
       .then((topoData) => {
-        const geojson = topojson.feature(
+        const rawGeojson = topojson.feature(
           topoData,
           topoData.objects['2digits'],
         ) as unknown as FeatureCollection<Geometry>
-        geojson.features = geojson.features.map((f: Feature<Geometry>) => {
-          const properties = (f.properties ?? {}) as Record<string, string>
-          return {
-            ...f,
-            properties: {
-              ...properties,
-              fillColor: getFillColor(properties),
-            },
-          }
-        })
+        const geojson = normalizeGeoJsonFeatures(rawGeojson)
         setDigits2GeoData(geojson)
       })
       .catch((error) => {
