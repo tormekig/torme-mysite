@@ -3,6 +3,7 @@ import Map from 'react-map-gl/maplibre'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
 import type { MapLayerMouseEvent, Map as MapLibreMap } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import './map.css'
 import { MA_MAP_STYLE } from './mapStyles'
 import { useMapGeoData } from './hooks/useMapGeoData'
 import type { ActiveMAInfo, HoverState } from './types'
@@ -14,6 +15,7 @@ function App() {
   const [showMA, setShowMA] = useState(true)
   const [showDigits2, setShowDigits2] = useState(true)
   const [activeMAs, setActiveMAs] = useState<ActiveMAInfo[]>([])
+  const [isPanelExpanded, setIsPanelExpanded] = useState(false)
 
   const mapRef = useRef<MapLibreMap | null>(null)
   const hoverRef = useRef<HoverState | null>(null)
@@ -105,29 +107,10 @@ function App() {
   ]
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 420px',
-        width: '100vw',
-        height: '100vh',
-      }}
-    >
-      <div style={{ position: 'relative', minWidth: 0 }}>
-        <div
-          style={{
-            position: 'absolute',
-            zIndex: 1,
-            top: 12,
-            left: 12,
-            padding: '8px 12px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            borderRadius: 8,
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-            fontSize: 14,
-          }}
-        >
-          <label style={{ display: 'block', marginBottom: 4 }}>
+    <div className="map-app-layout">
+      <div className="map-canvas-wrap">
+        <div className="map-layer-toggle">
+          <label className="map-layer-toggle-item with-margin">
             <input
               type="checkbox"
               checked={showMA}
@@ -135,7 +118,7 @@ function App() {
             />{' '}
             MA地図
           </label>
-          <label style={{ display: 'block' }}>
+          <label className="map-layer-toggle-item">
             <input
               type="checkbox"
               checked={showDigits2}
@@ -170,6 +153,8 @@ function App() {
 
       <ActiveMAPanel
         activeMAs={activeMAs}
+        isExpanded={isPanelExpanded}
+        onToggleExpand={() => setIsPanelExpanded((prev) => !prev)}
         onRemove={(featureId) => {
           setActiveMAs((prev) =>
             prev.filter((ma) => ma.featureId !== featureId),
