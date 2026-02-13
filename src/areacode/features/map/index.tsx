@@ -1,103 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Map, {
-  Source,
-  Layer,
-  FillLayerSpecification,
-} from 'react-map-gl/maplibre'
-import type {
-  LineLayerSpecification,
-  MapLayerMouseEvent,
-  Map as MapLibreMap,
-  SymbolLayerSpecification,
-} from 'maplibre-gl'
-import 'maplibre-gl/dist/maplibre-gl.css'
-import * as topojson from 'topojson-client'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
+import Map from 'react-map-gl/maplibre'
 import type { Feature, FeatureCollection, Geometry } from 'geojson'
-import { MACompListContent } from 'areacode/pages/list/MACompListContent'
-import { MAAreaCodeInfoCards } from 'areacode/pages/list/components'
-import { getColorStyleByAreaCode } from 'areacode/components'
-
-const MA_MAP_STYLE =
-  'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json'
-
-type HoverState = {
-  sourceId: 'ma-source' | 'digits2-source'
-  featureId: string | number
-}
-
-type ActiveMAInfo = {
-  featureId: string | number
-  properties: Record<string, string>
-  feature: Feature<Geometry>
-}
-
-const EMPTY_FEATURE_COLLECTION: FeatureCollection<Geometry> = {
-  type: 'FeatureCollection',
-  features: [],
-}
+import type { MapLayerMouseEvent, Map as MapLibreMap } from 'maplibre-gl'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import { MA_MAP_STYLE } from './mapStyles'
+import { useMapGeoData } from './hooks/useMapGeoData'
+import type { ActiveMAInfo, HoverState } from './types'
+import { MapLayers } from './components/MapLayers'
+import { ActiveMAPanel } from './components/ActiveMAPanel'
 
 function App() {
-  const [maGeoData, setMaGeoData] = useState<FeatureCollection<Geometry>>(
-    EMPTY_FEATURE_COLLECTION,
-  )
-  const [digits2GeoData, setDigits2GeoData] = useState<
-    FeatureCollection<Geometry>
-  >(EMPTY_FEATURE_COLLECTION)
+  const { maGeoData, digits2GeoData } = useMapGeoData()
   const [showMA, setShowMA] = useState(true)
   const [showDigits2, setShowDigits2] = useState(true)
-
-  const mapRef = useRef<MapLibreMap | null>(null)
-
-  const hoverRef = useRef<HoverState | null>(null)
   const [activeMAs, setActiveMAs] = useState<ActiveMAInfo[]>([])
 
-  useEffect(() => {
-    fetch('/map/areacode.json')
-      // GeoJSON is simplified to TopoJSON on https://mapshaper.org/
-      .then((res) => res.json())
-      .then((topoData) => {
-        const geojson = topojson.feature(
-          topoData,
-          topoData.objects.areacode,
-        ) as unknown as FeatureCollection<Geometry>
-        geojson.features = geojson.features.map((f: Feature<Geometry>) => {
-          const properties = (f.properties ?? {}) as Record<string, string>
-          return {
-            ...f,
-            properties: {
-              ...properties,
-              fillColor: getColorStyleByAreaCode(`0${properties['_市外局番']}`)
-                .background.backgroundColor,
-            },
-          }
-        })
-        setMaGeoData(geojson)
-      })
-  }, [])
-
-  useEffect(() => {
-    fetch('/map/digits2.json')
-      // GeoJSON is simplified to TopoJSON on https://mapshaper.org/
-      .then((res) => res.json())
-      .then((topoData) => {
-        const geojson = topojson.feature(
-          topoData,
-          topoData.objects['2digits'],
-        ) as unknown as FeatureCollection<Geometry>
-        geojson.features = geojson.features.map((f: Feature<Geometry>) => {
-          const properties = (f.properties ?? {}) as Record<string, string>
-          return {
-            ...f,
-            properties: {
-              ...properties,
-              fillColor: getColorStyleByAreaCode(`0${properties['_市外局番']}`)
-                .background.backgroundColor,
-            },
-          }
-        })
-        setDigits2GeoData(geojson)
-      })
-  }, [])
+  const mapRef = useRef<MapLibreMap | null>(null)
+  const hoverRef = useRef<HoverState | null>(null)
 
   const clearHoverState = useCallback(() => {
     if (!mapRef.current || hoverRef.current === null) {
@@ -114,6 +33,7 @@ function App() {
   const onClick = useCallback((event: MapLayerMouseEvent) => {
     mapRef.current = event.target
     const feature = event.features?.[0]
+
     if (
       !feature ||
       feature.source !== 'ma-source' ||
@@ -135,11 +55,9 @@ function App() {
 
     setActiveMAs((prev) => {
       const alreadyActive = prev.some((ma) => ma.featureId === featureId)
-
       if (alreadyActive) {
         return prev.filter((ma) => ma.featureId !== featureId)
       }
-
       return [...prev, { featureId, properties, feature: activeFeature }]
     })
   }, [])
@@ -155,6 +73,7 @@ function App() {
         clearHoverState()
         return
       }
+
       if (
         hoverRef.current?.sourceId === sourceId &&
         hoverRef.current.featureId === nextHoverId
@@ -172,12 +91,6 @@ function App() {
     [clearHoverState],
   )
 
-  useEffect(() => {
-    return () => {
-      clearHoverState()
-    }
-  }, [clearHoverState])
-
   const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
     () => ({
       type: 'FeatureCollection',
@@ -186,120 +99,10 @@ function App() {
     [activeMAs],
   )
 
-  const maFillStyle: FillLayerSpecification = {
-    source: 'ma-source',
-    id: 'ma-fills',
-    type: 'fill',
-    paint: {
-      'fill-color': ['get', 'fillColor'],
-      'fill-outline-color': ['get', 'fillColor'],
-      'fill-opacity': [
-        'case',
-        ['boolean', ['feature-state', 'hover'], false],
-        0.55,
-        0.85,
-      ],
-    },
-  }
-
-  const maBorderStyle: LineLayerSpecification = {
-    source: 'ma-source',
-    id: 'ma-borders',
-    type: 'line',
-    paint: {
-      'line-color': '#1a1a1a',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.4, 8, 1.2],
-      'line-opacity': 0.7,
-    },
-  }
-
-  const activeMAFillStyle: FillLayerSpecification = {
-    source: 'active-ma-source',
-    id: 'active-ma-fills',
-    type: 'fill',
-    paint: {
-      'fill-color': '#ef4444',
-      'fill-opacity': 0.18,
-    },
-  }
-
-  const activeMABorderStyle: LineLayerSpecification = {
-    source: 'active-ma-source',
-    id: 'active-ma-borders',
-    type: 'line',
-    paint: {
-      'line-color': '#dc2626',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.8, 8, 5.2],
-      'line-opacity': 1,
-    },
-  }
-
-  const maLabelStyle: SymbolLayerSpecification = {
-    source: 'ma-source',
-    id: 'ma-labels',
-    type: 'symbol',
-    layout: {
-      'text-field': ['coalesce', ['get', '_MA名']],
-      'text-size': ['interpolate', ['linear'], ['zoom'], 5, 8, 8, 11],
-      'text-font': ['Roboto', 'Noto Sans JP', 'sans-serif'],
-      'text-allow-overlap': false,
-      'text-ignore-placement': false,
-    },
-    paint: {
-      'text-color': '#111827',
-      'text-halo-color': '#ffffff',
-      'text-halo-width': 1.1,
-      'text-halo-blur': 0.2,
-    },
-  }
-
-  const digits2BorderStyle: LineLayerSpecification = {
-    source: 'digits2-source',
-    id: 'digits2-borders',
-    type: 'line',
-    paint: {
-      'line-color': '#374151',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 2.0],
-      'line-opacity': 0.85,
-    },
-  }
-
-  const digits2LabelStyle: SymbolLayerSpecification = {
-    source: 'digits2-source',
-    id: 'digits2-labels',
-    type: 'symbol',
-    layout: {
-      'text-field': ['coalesce', ['get', '市外局番2桁']],
-      'text-size': ['interpolate', ['linear'], ['zoom'], 5, 20, 8, 30],
-      'text-font': ['Roboto', 'sans-serif'],
-      'text-allow-overlap': false,
-      'text-ignore-placement': false,
-    },
-    paint: {
-      'text-color': '#111827',
-      'text-halo-color': '#ffffff',
-      'text-halo-width': 1.3,
-      'text-halo-blur': 0.2,
-    },
-  }
-
   const interactiveLayerIds = [
     ...(showMA ? ['ma-fills'] : []),
     ...(showDigits2 ? ['digits2-fills'] : []),
   ]
-
-  const mapCardDisplayParam = [
-    '市外局番',
-    '番号領域',
-    '都道府県',
-    'MA名',
-    '市区町村',
-    '一部地域詳細表示',
-  ]
-  const cityOptions = {
-    areaDisplayFull: true,
-    isQuiz: false,
-  }
 
   return (
     <div
@@ -341,6 +144,7 @@ function App() {
             市外局番2桁地図
           </label>
         </div>
+
         <Map
           initialViewState={{
             longitude: 139.76711,
@@ -354,126 +158,24 @@ function App() {
           onMouseLeave={clearHoverState}
           interactiveLayerIds={interactiveLayerIds}
         >
-          {maGeoData && (
-            <Source
-              id="ma-source"
-              type="geojson"
-              data={maGeoData}
-              generateId={true}
-            >
-              <Layer
-                {...maFillStyle}
-                layout={{ visibility: showMA ? 'visible' : 'none' }}
-              ></Layer>
-              <Layer
-                {...maBorderStyle}
-                layout={{ visibility: showMA ? 'visible' : 'none' }}
-              ></Layer>
-              <Layer
-                {...maLabelStyle}
-                layout={{
-                  ...maLabelStyle.layout,
-                  visibility: showMA ? 'visible' : 'none',
-                }}
-              ></Layer>
-            </Source>
-          )}
-          {digits2GeoData && (
-            <Source
-              id="digits2-source"
-              type="geojson"
-              data={digits2GeoData}
-              generateId={true}
-            >
-              <Layer
-                {...digits2BorderStyle}
-                layout={{ visibility: showDigits2 ? 'visible' : 'none' }}
-              ></Layer>
-              <Layer
-                {...digits2LabelStyle}
-                layout={{
-                  ...digits2LabelStyle.layout,
-                  visibility: showDigits2 ? 'visible' : 'none',
-                }}
-              ></Layer>
-            </Source>
-          )}
-
-          <Source
-            id="active-ma-source"
-            type="geojson"
-            data={activeMAFeatureCollection}
-          >
-            <Layer
-              {...activeMAFillStyle}
-              layout={{ visibility: showMA ? 'visible' : 'none' }}
-            ></Layer>
-            <Layer
-              {...activeMABorderStyle}
-              layout={{ visibility: showMA ? 'visible' : 'none' }}
-            ></Layer>
-          </Source>
+          <MapLayers
+            maGeoData={maGeoData}
+            digits2GeoData={digits2GeoData}
+            activeMAFeatureCollection={activeMAFeatureCollection}
+            showMA={showMA}
+            showDigits2={showDigits2}
+          />
         </Map>
       </div>
-      <div
-        style={{
-          borderLeft: '1px solid #d1d5db',
-          background: '#f9fafb',
-          padding: 12,
-          overflowY: 'auto',
+
+      <ActiveMAPanel
+        activeMAs={activeMAs}
+        onRemove={(featureId) => {
+          setActiveMAs((prev) =>
+            prev.filter((ma) => ma.featureId !== featureId),
+          )
         }}
-      >
-        <h2 style={{ margin: '4px 0 12px', fontSize: 18 }}>アクティブなMA</h2>
-        {activeMAs.length === 0 && (
-          <p style={{ margin: 0, color: '#4b5563' }}>
-            地図上のMAをクリックすると、ここに情報を表示します。
-          </p>
-        )}
-        {activeMAs.map((activeMA) => {
-          const { MAComps } = new MACompListContent().filter(
-            'MA',
-            activeMA.properties['_MA名'],
-          )
-          return (
-            <div
-              key={activeMA.featureId}
-              style={{
-                marginBottom: 12,
-                padding: 10,
-                border: '1px solid #e5e7eb',
-                borderRadius: 8,
-                backgroundColor: '#ffffff',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: 8,
-                }}
-              >
-                <strong>{activeMA.properties['_MA名']}</strong>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveMAs((prev) =>
-                      prev.filter((ma) => ma.featureId !== activeMA.featureId),
-                    )
-                  }}
-                >
-                  ×
-                </button>
-              </div>
-              <MAAreaCodeInfoCards
-                MAComps={MAComps}
-                displayParam={mapCardDisplayParam}
-                cityOptions={cityOptions}
-              />
-            </div>
-          )
-        })}
-      </div>
+      />
     </div>
   )
 }
