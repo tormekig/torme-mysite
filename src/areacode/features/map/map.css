@@ -85,7 +85,8 @@
   margin-bottom: 0;
 }
 
-.map-search-panel-label select {
+.map-search-panel-label select,
+.map-search-panel-label input {
   margin-top: 4px;
   width: 100%;
   border: 1px solid #d1d5db;
@@ -93,6 +94,31 @@
   background: #fff;
   padding: 6px 8px;
   font-size: 14px;
+}
+
+.map-search-city-result-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.map-search-city-result-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.map-search-city-result-item:hover {
+  background: #eff6ff;
 }
 
 @media (max-width: 767px) {
