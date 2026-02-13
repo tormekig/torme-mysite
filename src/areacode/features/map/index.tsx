@@ -146,9 +146,6 @@ function App() {
           }}
           style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}
           mapStyle={MA_MAP_STYLE}
-          // CJK glyph rendering fallback. `localFontFamily` is not supported by
-          // react-map-gl/maplibre types, so use the supported ideograph option.
-          localIdeographFontFamily="'Noto Sans JP', sans-serif"
           onClick={onClick}
           onMouseMove={onHover}
           onMouseLeave={clearHoverState}

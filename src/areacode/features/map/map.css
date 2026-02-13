@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
 .map-app-layout {
   width: 100vw;
   height: 100vh;
@@ -107,4 +109,40 @@
       rgba(249, 250, 251, 0.94)
     );
   }
+}
+
+
+.ma-map-label-marker,
+.digits2-map-label-marker {
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+  color: #111827;
+  text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  transform: translateZ(0);
+}
+
+.ma-map-label-code {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ma-map-label-name {
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.digits2-map-label-marker {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
 }
