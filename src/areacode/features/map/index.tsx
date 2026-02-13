@@ -18,8 +18,8 @@ import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MAAreaCodeInfoCards } from 'areacode/pages/list/components'
 import { getColorStyleByAreaCode } from 'areacode/components'
 
-// const MA_MAP_STYLE =
-//   'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json'
+const MA_MAP_STYLE =
+  'https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json'
 
 type PopupInfoType = {
   longitude: number
@@ -32,11 +32,18 @@ type HoverState = {
   featureId: string | number
 }
 
+const EMPTY_FEATURE_COLLECTION: FeatureCollection<Geometry> = {
+  type: 'FeatureCollection',
+  features: [],
+}
+
 function App() {
-  const [maGeoData, setMaGeoData] =
-    useState<FeatureCollection<Geometry> | null>(null)
-  const [digits2GeoData, setDigits2GeoData] =
-    useState<FeatureCollection<Geometry> | null>(null)
+  const [maGeoData, setMaGeoData] = useState<FeatureCollection<Geometry>>(
+    EMPTY_FEATURE_COLLECTION,
+  )
+  const [digits2GeoData, setDigits2GeoData] = useState<
+    FeatureCollection<Geometry>
+  >(EMPTY_FEATURE_COLLECTION)
   const [showMA, setShowMA] = useState(true)
   const [showDigits2, setShowDigits2] = useState(true)
 
@@ -187,7 +194,7 @@ function App() {
     layout: {
       'text-field': ['coalesce', ['get', '_MA名']],
       'text-size': ['interpolate', ['linear'], ['zoom'], 5, 8, 8, 11],
-      'text-font': ['Noto Sans Regular'],
+      'text-font': ['Roboto', 'Noto Sans JP', 'sans-serif'],
       'text-allow-overlap': false,
       'text-ignore-placement': false,
     },
@@ -217,7 +224,7 @@ function App() {
     layout: {
       'text-field': ['coalesce', ['get', '市外局番2桁']],
       'text-size': ['interpolate', ['linear'], ['zoom'], 5, 20, 8, 30],
-      'text-font': ['Noto Sans Bold'],
+      'text-font': ['Roboto', 'sans-serif'],
       'text-allow-overlap': false,
       'text-ignore-placement': false,
     },
@@ -273,33 +280,54 @@ function App() {
           zoom: 6,
         }}
         style={{ position: 'absolute', top: 0, bottom: 0, width: '100%' }}
-        // mapStyle={MA_MAP_STYLE}
+        mapStyle={MA_MAP_STYLE}
         onClick={onClick}
         onMouseMove={onHover}
         onMouseLeave={clearHoverState}
         interactiveLayerIds={interactiveLayerIds}
       >
-        {showDigits2 && digits2GeoData && (
-          <Source
-            id="digits2-source"
-            type="geojson"
-            data={digits2GeoData}
-            generateId={true}
-          >
-            <Layer {...digits2BorderStyle}></Layer>
-            <Layer {...digits2LabelStyle}></Layer>
-          </Source>
-        )}
-        {showMA && maGeoData && (
+        {maGeoData && (
           <Source
             id="ma-source"
             type="geojson"
             data={maGeoData}
             generateId={true}
           >
-            <Layer {...maFillStyle}></Layer>
-            <Layer {...maBorderStyle}></Layer>
-            <Layer {...maLabelStyle}></Layer>
+            <Layer
+              {...maFillStyle}
+              layout={{ visibility: showMA ? 'visible' : 'none' }}
+            ></Layer>
+            <Layer
+              {...maBorderStyle}
+              layout={{ visibility: showMA ? 'visible' : 'none' }}
+            ></Layer>
+            <Layer
+              {...maLabelStyle}
+              layout={{
+                ...maLabelStyle.layout,
+                visibility: showMA ? 'visible' : 'none',
+              }}
+            ></Layer>
+          </Source>
+        )}
+        {digits2GeoData && (
+          <Source
+            id="digits2-source"
+            type="geojson"
+            data={digits2GeoData}
+            generateId={true}
+          >
+            <Layer
+              {...digits2BorderStyle}
+              layout={{ visibility: showDigits2 ? 'visible' : 'none' }}
+            ></Layer>
+            <Layer
+              {...digits2LabelStyle}
+              layout={{
+                ...digits2LabelStyle.layout,
+                visibility: showDigits2 ? 'visible' : 'none',
+              }}
+            ></Layer>
           </Source>
         )}
         {popupInfo && <PopupInfo info={popupInfo} setFunc={setPopupInfo} />}
