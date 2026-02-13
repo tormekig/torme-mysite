@@ -54,7 +54,7 @@ export function ActiveMAPanel({
       ...new Set(
         activeMAs.map(
           (activeMA) =>
-            `${activeMA.properties['_都道府県名']}|${activeMA.properties['_MA名']}`,
+            `${activeMA.properties['_市外局番']}|${activeMA.properties['_MA名']}`,
         ),
       ),
     ],
@@ -64,9 +64,9 @@ export function ActiveMAPanel({
   const MAComps = useMemo(
     () =>
       uniqueMAKeys.flatMap((key) => {
-        const [pref, maName] = key.split('|')
+        const [areaCode, maName] = key.split('|')
         return new MACompListContent()
-          .filter('pref', pref)
+          .filter('code', `0${areaCode}`)
           .MAComps.filter((maComp) => maComp.MAName === maName)
       }),
     [uniqueMAKeys],

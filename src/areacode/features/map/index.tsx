@@ -16,18 +16,12 @@ import type { ActiveMAInfo, HoverState } from './types'
 import { MapLayers } from './components/MapLayers'
 import { ActiveMAPanel } from './components/ActiveMAPanel'
 import prefList from 'areacode/data/prefList'
-import cityList, {
-  checkMatchingCityName,
-  type CityInfo,
-} from 'areacode/data/cityList'
-import MACompList, { type MACompInfo } from 'areacode/data/MACompList'
+import cityList from 'areacode/data/cityList'
 import { getAvailableThreeDigitNumbers } from 'areacode/components/numberTable'
-
-function convertCompCode(maComp: MACompInfo): string {
-  return maComp.codeSub === ''
-    ? maComp.codeMain
-    : `${maComp.codeMain}-${maComp.codeSub}`
-}
+import {
+  MACompListContent,
+  type SearchType,
+} from 'areacode/pages/list/MACompListContent'
 
 function flattenCoordinates(geometry: Geometry): Position[] {
   switch (geometry.type) {
@@ -67,6 +61,17 @@ function getFeaturesBounds(features: Feature<Geometry>[]): BBox | null {
   })
 
   return [minLng, minLat, maxLng, maxLat]
+}
+
+function toMAKey(areaCode: string, MAName: string): string {
+  return `${areaCode}|${MAName}`
+}
+
+function getMAKeySetFromFilter(type: SearchType, query: string): Set<string> {
+  const MAComps = new MACompListContent().filter(type, query).MAComps
+  return new Set(
+    MAComps.map((maComp) => toMAKey(maComp.areaCode, maComp.MAName)),
+  )
 }
 
 function App() {
@@ -142,6 +147,15 @@ function App() {
       )
     },
     [maGeoData.features],
+  )
+
+  const activateByMAKeySet = useCallback(
+    (maKeySet: Set<string>) => {
+      activateFeatures((properties) =>
+        maKeySet.has(toMAKey(properties['_市外局番'], properties['_MA名'])),
+      )
+    },
+    [activateFeatures],
   )
 
   const clearHoverState = useCallback(() => {
@@ -247,9 +261,9 @@ function App() {
         return
       }
 
-      activateFeatures((properties) => properties['_都道府県名'] === pref)
+      activateByMAKeySet(getMAKeySetFromFilter('pref', pref))
     },
-    [activateFeatures],
+    [activateByMAKeySet],
   )
 
   const handleCitySelect = useCallback(
@@ -263,24 +277,9 @@ function App() {
         return
       }
 
-      const matchedCities: CityInfo[] = cityList.filter((city) =>
-        checkMatchingCityName(city, cityName),
-      )
-
-      const targetCompartmentCodes = new Set(
-        matchedCities.map((city) => city.compartmentCode),
-      )
-      const targetMAs = new Set(
-        MACompList.filter((maComp) =>
-          targetCompartmentCodes.has(convertCompCode(maComp)),
-        ).map((maComp) => `${maComp.pref}|${maComp.MAName}`),
-      )
-
-      activateFeatures((properties) =>
-        targetMAs.has(`${properties['_都道府県名']}|${properties['_MA名']}`),
-      )
+      activateByMAKeySet(getMAKeySetFromFilter('city', cityName))
     },
-    [activateFeatures],
+    [activateByMAKeySet],
   )
 
   const handleDigits3Select = useCallback(
@@ -294,12 +293,9 @@ function App() {
         return
       }
 
-      const prefix = digits3.slice(1)
-      activateFeatures((properties) =>
-        properties['_市外局番'].startsWith(prefix),
-      )
+      activateByMAKeySet(getMAKeySetFromFilter('code_prefix', `0${digits3}`))
     },
-    [activateFeatures],
+    [activateByMAKeySet],
   )
 
   const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
