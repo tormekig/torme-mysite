@@ -60,9 +60,24 @@ export const maLabelStyle: SymbolLayerSpecification = {
   id: 'ma-labels',
   type: 'symbol',
   layout: {
-    'text-field': ['coalesce', ['get', '_MA名']],
-    'text-size': ['interpolate', ['linear'], ['zoom'], 5, 8, 8, 11],
+    'text-field': [
+      'format',
+      ['concat', '0', ['coalesce', ['get', '_市外局番'], '']],
+      {
+        'font-scale': 1.2,
+      },
+      '\n',
+      {},
+      ['coalesce', ['get', '_MA名'], ''],
+      {
+        'font-scale': 0.82,
+      },
+    ],
+    'text-size': ['interpolate', ['linear'], ['zoom'], 5, 11, 8, 14],
     'text-font': ['Roboto', 'Noto Sans JP', 'sans-serif'],
+    'text-anchor': 'center',
+    'text-justify': 'center',
+    'text-line-height': 1.15,
     'text-allow-overlap': false,
     'text-ignore-placement': false,
   },
