@@ -47,20 +47,61 @@ function getLabelPosition(geometry: Geometry): Position | null {
   return [(minLng + maxLng) / 2, (minLat + maxLat) / 2]
 }
 
+
+type LabelMarker = {
+  id: string
+  position: Position
+}
+
+function reduceLabelOverlap<T extends LabelMarker>(
+  markers: T[],
+  cellSize: number,
+  maxCount: number,
+): T[] {
+  if (markers.length <= 1) {
+    return markers
+  }
+
+  const picked: T[] = []
+  const usedCells = new Set<string>()
+
+  for (const marker of markers) {
+    const [lng, lat] = marker.position
+    const cellLng = Math.floor(lng / cellSize)
+    const cellLat = Math.floor(lat / cellSize)
+    const key = `${cellLng}:${cellLat}`
+
+    if (usedCells.has(key)) {
+      continue
+    }
+
+    usedCells.add(key)
+    picked.push(marker)
+
+    if (picked.length >= maxCount) {
+      break
+    }
+  }
+
+  return picked
+}
+
 export function MapLayers({
   maGeoData,
   digits2GeoData,
   activeMAFeatureCollection,
   showMA,
   showDigits2,
+  zoom,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
   activeMAFeatureCollection: FeatureCollection<Geometry>
   showMA: boolean
   showDigits2: boolean
+  zoom: number
 }) {
-  const maLabelMarkers = useMemo(
+  const rawMALabelMarkers = useMemo(
     () =>
       maGeoData.features
         .map((feature, index) => {
@@ -84,7 +125,7 @@ export function MapLayers({
     [maGeoData.features],
   )
 
-  const digits2LabelMarkers = useMemo(
+  const rawDigits2LabelMarkers = useMemo(
     () =>
       digits2GeoData.features
         .map((feature, index) => {
@@ -106,6 +147,21 @@ export function MapLayers({
         .filter((item): item is NonNullable<typeof item> => item !== null),
     [digits2GeoData.features],
   )
+
+
+  const maLabelMarkers = useMemo(() => {
+    const cellSize = zoom < 6 ? 1.4 : zoom < 7 ? 1.0 : zoom < 8 ? 0.72 : 0.5
+    const maxCount = zoom < 6 ? 45 : zoom < 7 ? 90 : zoom < 8 ? 150 : 260
+
+    return reduceLabelOverlap(rawMALabelMarkers, cellSize, maxCount)
+  }, [rawMALabelMarkers, zoom])
+
+  const digits2LabelMarkers = useMemo(() => {
+    const cellSize = zoom < 6 ? 2.0 : zoom < 7 ? 1.4 : zoom < 8 ? 1.0 : 0.7
+    const maxCount = zoom < 6 ? 24 : zoom < 7 ? 40 : zoom < 8 ? 72 : 120
+
+    return reduceLabelOverlap(rawDigits2LabelMarkers, cellSize, maxCount)
+  }, [rawDigits2LabelMarkers, zoom])
 
   return (
     <>
