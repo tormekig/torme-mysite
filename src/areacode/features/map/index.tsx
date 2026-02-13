@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
-import Map from 'react-map-gl/maplibre'
+import MapView from 'react-map-gl/maplibre'
 import type {
   Feature,
   FeatureCollection,
@@ -67,11 +67,13 @@ function toMAKey(areaCode: string, MAName: string): string {
   return `${areaCode}|${MAName}`
 }
 
-function getMAKeySetFromFilter(type: SearchType, query: string): Set<string> {
+function getMAKeysFromFilter(type: SearchType, query: string): string[] {
   const MAComps = new MACompListContent().filter(type, query).MAComps
-  return new Set(
-    MAComps.map((maComp) => toMAKey(maComp.areaCode, maComp.MAName)),
-  )
+  return [
+    ...new Set(
+      MAComps.map((maComp) => toMAKey(maComp.areaCode, maComp.MAName)),
+    ),
+  ]
 }
 
 function App() {
@@ -96,7 +98,10 @@ function App() {
   const digits3Options = useMemo(() => getAvailableThreeDigitNumbers(), [])
 
   const activateFeatures = useCallback(
-    (predicate: (properties: Record<string, string>) => boolean) => {
+    (
+      predicate: (properties: Record<string, string>) => boolean,
+      orderedMAKeys: string[] = [],
+    ) => {
       const matchedActiveMAs: Array<ActiveMAInfo | null> =
         maGeoData.features.map((feature, index) => {
           const properties = (feature.properties ?? {}) as Record<
@@ -125,6 +130,34 @@ function App() {
         (item): item is ActiveMAInfo => item !== null,
       )
 
+      if (orderedMAKeys.length > 0) {
+        const keyOrder = orderedMAKeys.reduce<Record<string, number>>(
+          (order, key, index) => {
+            order[key] = index
+            return order
+          },
+          {},
+        )
+        nextActiveMAs.sort((a, b) => {
+          const aIndex =
+            keyOrder[toMAKey(a.properties['_市外局番'], a.properties['_MA名'])] ??
+            Number.MAX_SAFE_INTEGER
+          const bIndex =
+            keyOrder[toMAKey(b.properties['_市外局番'], b.properties['_MA名'])] ??
+            Number.MAX_SAFE_INTEGER
+
+          if (aIndex !== bIndex) {
+            return aIndex - bIndex
+          }
+
+          if (typeof a.featureId === 'number' && typeof b.featureId === 'number') {
+            return a.featureId - b.featureId
+          }
+
+          return String(a.featureId).localeCompare(String(b.featureId))
+        })
+      }
+
       setActiveMAs(nextActiveMAs)
 
       const bounds = getFeaturesBounds(
@@ -149,10 +182,13 @@ function App() {
     [maGeoData.features],
   )
 
-  const activateByMAKeySet = useCallback(
-    (maKeySet: Set<string>) => {
-      activateFeatures((properties) =>
-        maKeySet.has(toMAKey(properties['_市外局番'], properties['_MA名'])),
+  const activateByMAKeys = useCallback(
+    (orderedMAKeys: string[]) => {
+      const maKeySet = new Set(orderedMAKeys)
+      activateFeatures(
+        (properties) =>
+          maKeySet.has(toMAKey(properties['_市外局番'], properties['_MA名'])),
+        orderedMAKeys,
       )
     },
     [activateFeatures],
@@ -261,9 +297,9 @@ function App() {
         return
       }
 
-      activateByMAKeySet(getMAKeySetFromFilter('pref', pref))
+      activateByMAKeys(getMAKeysFromFilter('pref', pref))
     },
-    [activateByMAKeySet],
+    [activateByMAKeys],
   )
 
   const handleCitySelect = useCallback(
@@ -277,9 +313,9 @@ function App() {
         return
       }
 
-      activateByMAKeySet(getMAKeySetFromFilter('city', cityName))
+      activateByMAKeys(getMAKeysFromFilter('city', cityName))
     },
-    [activateByMAKeySet],
+    [activateByMAKeys],
   )
 
   const handleDigits3Select = useCallback(
@@ -293,9 +329,9 @@ function App() {
         return
       }
 
-      activateByMAKeySet(getMAKeySetFromFilter('code_prefix', `${digits3}`))
+      activateByMAKeys(getMAKeysFromFilter('code_prefix', `${digits3}`))
     },
-    [activateByMAKeySet],
+    [activateByMAKeys],
   )
 
   const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
@@ -333,7 +369,7 @@ function App() {
           </label>
         </div>
 
-        <Map
+        <MapView
           initialViewState={{
             longitude: 139.76711,
             latitude: 35.68074,
@@ -358,7 +394,7 @@ function App() {
             showDigits2={showDigits2}
             zoom={mapZoom}
           />
-        </Map>
+        </MapView>
       </div>
 
       <ActiveMAPanel
