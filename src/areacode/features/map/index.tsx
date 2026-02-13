@@ -58,9 +58,9 @@ function App() {
     setActiveMAs((prev) => {
       const alreadyActive = prev.some((ma) => ma.featureId === featureId)
       if (alreadyActive) {
-        return prev.filter((ma) => ma.featureId !== featureId)
+        return []
       }
-      return [...prev, { featureId, properties, feature: activeFeature }]
+      return [{ featureId, properties, feature: activeFeature }]
     })
   }, [])
 
