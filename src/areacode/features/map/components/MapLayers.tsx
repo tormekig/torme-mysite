@@ -27,6 +27,18 @@ function flattenCoordinates(geometry: Geometry): Position[] {
   }
 }
 
+function getDigits2FontSize(zoom: number): number {
+  const minZoom = 5
+  const maxZoom = 8
+  const minSize = 18
+  const maxSize = 34
+
+  const clampedZoom = Math.max(minZoom, Math.min(maxZoom, zoom))
+  const ratio = (clampedZoom - minZoom) / (maxZoom - minZoom)
+
+  return minSize + (maxSize - minSize) * ratio
+}
+
 function getLabelPosition(geometry: Geometry): Position | null {
   const points = flattenCoordinates(geometry)
   if (points.length === 0) {
@@ -54,12 +66,14 @@ export function MapLayers({
   activeMAFeatureCollection,
   showMA,
   showDigits2,
+  zoom,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
   activeMAFeatureCollection: FeatureCollection<Geometry>
   showMA: boolean
   showDigits2: boolean
+  zoom: number
 }) {
   const digits2LabelMarkers = useMemo(
     () =>
@@ -83,6 +97,8 @@ export function MapLayers({
         .filter((item): item is NonNullable<typeof item> => item !== null),
     [digits2GeoData.features],
   )
+
+  const digits2FontSize = useMemo(() => getDigits2FontSize(zoom), [zoom])
 
   return (
     <>
@@ -133,7 +149,9 @@ export function MapLayers({
             latitude={marker.position[1]}
             anchor="center"
           >
-            <div className="digits2-map-label-marker">{marker.label}</div>
+            <div className="digits2-map-label-marker" style={{ fontSize: `${digits2FontSize}px` }}>
+              {marker.label}
+            </div>
           </Marker>
         ))}
 
