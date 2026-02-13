@@ -1,7 +1,13 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { MACompListContent } from 'areacode/pages/list/MACompListContent'
 import { MAAreaCodeInfoCards } from 'areacode/pages/list/components'
-import type { CityInfo } from 'areacode/data/cityList'
+import {
+  getPrefCityNameType,
+  getPrefCountyCityNameType,
+  getPrefCityNameTypeKana,
+  getPrefCountyCityNameTypeKana,
+  type CityInfo,
+} from 'areacode/data/cityList'
 import type { ActiveMAInfo } from '../types'
 
 const mapCardDisplayParam = [
@@ -49,6 +55,31 @@ export function ActiveMAPanel({
   onCitySelect: (city: string) => void
   onDigits3Select: (digits3: string) => void
 }) {
+  const [citySearchInput, setCitySearchInput] = useState('')
+
+  useEffect(() => {
+    setCitySearchInput(selectedCity)
+  }, [selectedCity])
+
+  const filteredCityOptions = useMemo(() => {
+    if (!citySearchInput) {
+      return []
+    }
+
+    return cityOptions.filter((city) => {
+      const cityName = getPrefCityNameType(city)
+      const cityNameWithCounty = getPrefCountyCityNameType(city)
+      const cityNameKana = getPrefCityNameTypeKana(city)
+      const cityNameWithCountyKana = getPrefCountyCityNameTypeKana(city)
+      return (
+        cityName.includes(citySearchInput) ||
+        cityNameWithCounty.includes(citySearchInput) ||
+        cityNameKana.includes(citySearchInput) ||
+        cityNameWithCountyKana.includes(citySearchInput)
+      )
+    })
+  }, [cityOptions, citySearchInput])
+
   const uniqueMAKeys = useMemo(
     () => [
       ...new Set(
@@ -118,20 +149,40 @@ export function ActiveMAPanel({
 
         <label className="map-search-panel-label">
           市町村
-          <select
-            value={selectedCity}
-            onChange={(event) => onCitySelect(event.target.value)}
-          >
-            <option value="">選択してください</option>
-            {cityOptions.map((city) => {
-              const value = toPrefCountyCityName(city)
-              return (
-                <option key={`${city.pref}-${city.code}`} value={value}>
-                  {value}
-                </option>
-              )
-            })}
-          </select>
+          <input
+            type="text"
+            value={citySearchInput}
+            placeholder="市町村名を入力"
+            onChange={(event) => {
+              const nextValue = event.target.value
+              setCitySearchInput(nextValue)
+
+              if (nextValue === '') {
+                onCitySelect('')
+              }
+            }}
+          />
+          {filteredCityOptions.length > 0 && (
+            <ul className="map-search-city-result-list">
+              {filteredCityOptions.map((city) => {
+                const value = toPrefCountyCityName(city)
+                return (
+                  <li key={`${city.pref}-${city.code}`}>
+                    <button
+                      type="button"
+                      className="map-search-city-result-item"
+                      onClick={() => {
+                        setCitySearchInput(value)
+                        onCitySelect(value)
+                      }}
+                    >
+                      {value}
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
         </label>
 
         <label className="map-search-panel-label">
