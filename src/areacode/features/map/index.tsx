@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Map, {
   Source,
   Layer,
@@ -28,6 +28,7 @@ type HoverState = {
 type ActiveMAInfo = {
   featureId: string | number
   properties: Record<string, string>
+  feature: Feature<Geometry>
 }
 
 const EMPTY_FEATURE_COLLECTION: FeatureCollection<Geometry> = {
@@ -117,6 +118,7 @@ function App() {
       !feature ||
       feature.source !== 'ma-source' ||
       !feature.properties ||
+      !feature.geometry ||
       feature.id === undefined
     ) {
       return
@@ -124,19 +126,21 @@ function App() {
 
     const featureId = feature.id
     const properties = feature.properties as Record<string, string>
+    const activeFeature: Feature<Geometry> = {
+      type: 'Feature',
+      id: featureId,
+      properties,
+      geometry: feature.geometry as Geometry,
+    }
 
     setActiveMAs((prev) => {
       const alreadyActive = prev.some((ma) => ma.featureId === featureId)
-      event.target.setFeatureState(
-        { source: 'ma-source', id: featureId },
-        { active: !alreadyActive },
-      )
 
       if (alreadyActive) {
         return prev.filter((ma) => ma.featureId !== featureId)
       }
 
-      return [...prev, { featureId, properties }]
+      return [...prev, { featureId, properties, feature: activeFeature }]
     })
   }, [])
 
@@ -174,6 +178,14 @@ function App() {
     }
   }, [clearHoverState])
 
+  const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
+    () => ({
+      type: 'FeatureCollection',
+      features: activeMAs.map((activeMA) => activeMA.feature),
+    }),
+    [activeMAs],
+  )
+
   const maFillStyle: FillLayerSpecification = {
     source: 'ma-source',
     id: 'ma-fills',
@@ -183,8 +195,6 @@ function App() {
       'fill-outline-color': ['get', 'fillColor'],
       'fill-opacity': [
         'case',
-        ['boolean', ['feature-state', 'active'], false],
-        1,
         ['boolean', ['feature-state', 'hover'], false],
         0.55,
         0.85,
@@ -203,14 +213,23 @@ function App() {
     },
   }
 
-  const maActiveBorderStyle: LineLayerSpecification = {
-    source: 'ma-source',
-    id: 'ma-active-borders',
+  const activeMAFillStyle: FillLayerSpecification = {
+    source: 'active-ma-source',
+    id: 'active-ma-fills',
+    type: 'fill',
+    paint: {
+      'fill-color': '#ef4444',
+      'fill-opacity': 0.18,
+    },
+  }
+
+  const activeMABorderStyle: LineLayerSpecification = {
+    source: 'active-ma-source',
+    id: 'active-ma-borders',
     type: 'line',
-    filter: ['boolean', ['feature-state', 'active'], false],
     paint: {
       'line-color': '#dc2626',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.4, 8, 4.5],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.8, 8, 5.2],
       'line-opacity': 1,
     },
   }
@@ -380,12 +399,20 @@ function App() {
             </Source>
           )}
 
-          {maGeoData && (
+          <Source
+            id="active-ma-source"
+            type="geojson"
+            data={activeMAFeatureCollection}
+          >
             <Layer
-              {...maActiveBorderStyle}
+              {...activeMAFillStyle}
               layout={{ visibility: showMA ? 'visible' : 'none' }}
             ></Layer>
-          )}
+            <Layer
+              {...activeMABorderStyle}
+              layout={{ visibility: showMA ? 'visible' : 'none' }}
+            ></Layer>
+          </Source>
         </Map>
       </div>
       <div
@@ -430,11 +457,6 @@ function App() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (!mapRef.current) return
-                    mapRef.current.setFeatureState(
-                      { source: 'ma-source', id: activeMA.featureId },
-                      { active: false },
-                    )
                     setActiveMAs((prev) =>
                       prev.filter((ma) => ma.featureId !== activeMA.featureId),
                     )
