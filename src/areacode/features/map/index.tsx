@@ -131,7 +131,9 @@ function App() {
       )
 
       if (orderedMAKeys.length > 0) {
-        const keyOrder = new Map(orderedMAKeys.map((key, index) => [key, index]))
+        const keyOrder = new globalThis.Map<string, number>(
+          orderedMAKeys.map((key, index) => [key, index]),
+        )
         nextActiveMAs.sort((a, b) => {
           const aIndex =
             keyOrder.get(toMAKey(a.properties['_市外局番'], a.properties['_MA名'])) ??
@@ -140,7 +142,15 @@ function App() {
             keyOrder.get(toMAKey(b.properties['_市外局番'], b.properties['_MA名'])) ??
             Number.MAX_SAFE_INTEGER
 
-          return aIndex - bIndex || a.featureId - b.featureId
+          if (aIndex !== bIndex) {
+            return aIndex - bIndex
+          }
+
+          if (typeof a.featureId === 'number' && typeof b.featureId === 'number') {
+            return a.featureId - b.featureId
+          }
+
+          return String(a.featureId).localeCompare(String(b.featureId))
         })
       }
 
