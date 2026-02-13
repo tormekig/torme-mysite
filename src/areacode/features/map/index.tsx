@@ -293,7 +293,7 @@ function App() {
         return
       }
 
-      activateByMAKeySet(getMAKeySetFromFilter('code_prefix', `0${digits3}`))
+      activateByMAKeySet(getMAKeySetFromFilter('code_prefix', `${digits3}`))
     },
     [activateByMAKeySet],
   )
