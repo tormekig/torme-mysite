@@ -19,21 +19,32 @@ const cityOptions = {
 
 export function ActiveMAPanel({
   activeMAs,
+  isExpanded,
+  onToggleExpand,
   onRemove,
 }: {
   activeMAs: ActiveMAInfo[]
+  isExpanded: boolean
+  onToggleExpand: () => void
   onRemove: (featureId: string | number) => void
 }) {
   return (
     <div
-      style={{
-        borderLeft: '1px solid #d1d5db',
-        background: '#f9fafb',
-        padding: 12,
-        overflowY: 'auto',
-      }}
+      className={`active-ma-panel ${isExpanded ? 'expanded' : ''}`}
     >
-      <h2 style={{ margin: '4px 0 12px', fontSize: 18 }}>アクティブなMA</h2>
+      <div className="active-ma-panel-header">
+        <button
+          type="button"
+          className="active-ma-panel-toggle"
+          onClick={onToggleExpand}
+          aria-expanded={isExpanded}
+        >
+          <div className="active-ma-panel-grabber" />
+          <h2 style={{ margin: '4px 0 12px', fontSize: 18 }}>
+            アクティブなMA {isExpanded ? '（タップで縮小）' : '（タップで拡大）'}
+          </h2>
+        </button>
+      </div>
       {activeMAs.length === 0 && (
         <p style={{ margin: 0, color: '#4b5563' }}>
           地図上のMAをクリックすると、ここに情報を表示します。
