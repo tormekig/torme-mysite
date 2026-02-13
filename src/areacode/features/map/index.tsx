@@ -209,9 +209,9 @@ function App() {
     type: 'line',
     filter: ['boolean', ['feature-state', 'active'], false],
     paint: {
-      'line-color': '#ef4444',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1.4, 8, 3],
-      'line-opacity': 0.95,
+      'line-color': '#dc2626',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.4, 8, 4.5],
+      'line-opacity': 1,
     },
   }
 
@@ -351,10 +351,6 @@ function App() {
                 layout={{ visibility: showMA ? 'visible' : 'none' }}
               ></Layer>
               <Layer
-                {...maActiveBorderStyle}
-                layout={{ visibility: showMA ? 'visible' : 'none' }}
-              ></Layer>
-              <Layer
                 {...maLabelStyle}
                 layout={{
                   ...maLabelStyle.layout,
@@ -382,6 +378,13 @@ function App() {
                 }}
               ></Layer>
             </Source>
+          )}
+
+          {maGeoData && (
+            <Layer
+              {...maActiveBorderStyle}
+              layout={{ visibility: showMA ? 'visible' : 'none' }}
+            ></Layer>
           )}
         </Map>
       </div>
