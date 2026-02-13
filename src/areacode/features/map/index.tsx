@@ -92,8 +92,8 @@ function App() {
 
   const activateFeatures = useCallback(
     (predicate: (properties: Record<string, string>) => boolean) => {
-      const nextActiveMAs: ActiveMAInfo[] = maGeoData.features
-        .map((feature, index) => {
+      const matchedActiveMAs: Array<ActiveMAInfo | null> =
+        maGeoData.features.map((feature, index) => {
           const properties = (feature.properties ?? {}) as Record<
             string,
             string
@@ -102,20 +102,23 @@ function App() {
             return null
           }
 
+          const featureId: ActiveMAInfo['featureId'] = index
           const activeFeature: Feature<Geometry> = {
             type: 'Feature',
-            id: index,
+            id: featureId,
             properties,
             geometry: feature.geometry,
           }
 
           return {
-            featureId: index,
+            featureId,
             properties,
             feature: activeFeature,
           }
         })
-        .filter((item): item is ActiveMAInfo => item !== null)
+      const nextActiveMAs = matchedActiveMAs.filter(
+        (item): item is ActiveMAInfo => item !== null,
+      )
 
       setActiveMAs(nextActiveMAs)
 
