@@ -8,7 +8,7 @@ const DEFAULT_FILL_COLOR = '#9ca3af'
 
 function getFillColor(properties: Record<string, string>): string {
   const areaCode = properties['_市外局番'] ?? properties['市外局番2桁']
-  if (!areaCode || !/^\d{1,3}$/.test(areaCode)) {
+  if (!areaCode || !/^\d{1,4}$/.test(areaCode)) {
     return DEFAULT_FILL_COLOR
   }
 
