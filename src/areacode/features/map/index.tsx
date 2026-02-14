@@ -1,3 +1,6 @@
+import maplibregl from 'maplibre-gl'
+// @ts-ignore
+import MapLibreWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import MapView from 'react-map-gl/maplibre'
 import type {
@@ -7,7 +10,11 @@ import type {
   Position,
   BBox,
 } from 'geojson'
-import type { MapLayerMouseEvent, Map as MapLibreMap } from 'maplibre-gl'
+import type {
+  MapGeoJSONFeature,
+  MapLayerMouseEvent,
+  Map as MapLibreMap,
+} from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import './map.css'
 import { MA_MAP_STYLE } from './mapStyles'
@@ -140,17 +147,22 @@ function App() {
         )
         nextActiveMAs.sort((a, b) => {
           const aIndex =
-            keyOrder[toMAKey(a.properties['_市外局番'], a.properties['_MA名'])] ??
-            Number.MAX_SAFE_INTEGER
+            keyOrder[
+              toMAKey(a.properties['_市外局番'], a.properties['_MA名'])
+            ] ?? Number.MAX_SAFE_INTEGER
           const bIndex =
-            keyOrder[toMAKey(b.properties['_市外局番'], b.properties['_MA名'])] ??
-            Number.MAX_SAFE_INTEGER
+            keyOrder[
+              toMAKey(b.properties['_市外局番'], b.properties['_MA名'])
+            ] ?? Number.MAX_SAFE_INTEGER
 
           if (aIndex !== bIndex) {
             return aIndex - bIndex
           }
 
-          if (typeof a.featureId === 'number' && typeof b.featureId === 'number') {
+          if (
+            typeof a.featureId === 'number' &&
+            typeof b.featureId === 'number'
+          ) {
             return a.featureId - b.featureId
           }
 
@@ -209,8 +221,7 @@ function App() {
   const onClick = useCallback(
     (event: MapLayerMouseEvent) => {
       mapRef.current = event.target
-      const feature = event.features?.[0]
-
+      const feature = event.features?.[0] as MapGeoJSONFeature | undefined
       if (
         !feature ||
         feature.source !== 'ma-source' ||
@@ -260,9 +271,9 @@ function App() {
   const onHover = useCallback(
     (event: MapLayerMouseEvent) => {
       mapRef.current = event.target
-      const feature = event.features?.[0]
-      const nextHoverId = feature?.id
+      const feature = event.features?.[0] as MapGeoJSONFeature | undefined
       const sourceId = feature?.source as HoverState['sourceId'] | undefined
+      const nextHoverId = feature?.id
 
       if (nextHoverId === undefined || !sourceId) {
         clearHoverState()

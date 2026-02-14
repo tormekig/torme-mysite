@@ -83,7 +83,10 @@ export function MapLayers({
             return null
           }
           const position = getLabelPosition(feature.geometry)
-          const properties = (feature.properties ?? {}) as Record<string, string>
+          const properties = (feature.properties ?? {}) as Record<
+            string,
+            string
+          >
           if (!position) {
             return null
           }
@@ -103,11 +106,7 @@ export function MapLayers({
   return (
     <>
       {maGeoData && (
-        <Source
-          id="ma-source"
-          type="geojson"
-          data={maGeoData}
-        >
+        <Source id="ma-source" type="geojson" data={maGeoData}>
           <Layer
             {...maFillStyle}
             layout={{ visibility: showMA ? 'visible' : 'none' }}
@@ -127,11 +126,7 @@ export function MapLayers({
       )}
 
       {digits2GeoData && (
-        <Source
-          id="digits2-source"
-          type="geojson"
-          data={digits2GeoData}
-        >
+        <Source id="digits2-source" type="geojson" data={digits2GeoData}>
           <Layer
             {...digits2BorderStyle}
             layout={{ visibility: showDigits2 ? 'visible' : 'none' }}
@@ -147,7 +142,10 @@ export function MapLayers({
             latitude={marker.position[1]}
             anchor="center"
           >
-            <div className="digits2-map-label-marker" style={{ fontSize: `${digits2FontSize}px` }}>
+            <div
+              className="digits2-map-label-marker"
+              style={{ fontSize: `${digits2FontSize}px` }}
+            >
               {marker.label}
             </div>
           </Marker>
