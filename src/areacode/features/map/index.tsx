@@ -84,9 +84,12 @@ function getMAKeysFromFilter(type: SearchType, query: string): string[] {
 }
 
 function App() {
-  const { maGeoData, digits2GeoData } = useMapGeoData()
+  const { maGeoData, digits2GeoData, prefGeoData, cityGeoData } =
+    useMapGeoData()
   const [showMA, setShowMA] = useState(true)
   const [showDigits2, setShowDigits2] = useState(true)
+  const [showPref, setShowPref] = useState(true)
+  const [showCity, setShowCity] = useState(true)
   const [activeMAs, setActiveMAs] = useState<ActiveMAInfo[]>([])
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [mapZoom, setMapZoom] = useState(6)
@@ -185,8 +188,8 @@ function App() {
           [bounds[2], bounds[3]],
         ],
         {
-          padding: { top: 40, right: 40, bottom: 40, left: 40 },
-          duration: 800,
+          padding: { top: 100, right: 100, bottom: 100, left: 100 },
+          duration: 1500,
           maxZoom: 10,
         },
       )
@@ -378,6 +381,22 @@ function App() {
             />{' '}
             市外局番2桁地図
           </label>
+          <label className="map-layer-toggle-item">
+            <input
+              type="checkbox"
+              checked={showPref}
+              onChange={(event) => setShowPref(event.target.checked)}
+            />{' '}
+            都道府県地図
+          </label>
+          <label className="map-layer-toggle-item">
+            <input
+              type="checkbox"
+              checked={showCity}
+              onChange={(event) => setShowCity(event.target.checked)}
+            />{' '}
+            市区町村地図
+          </label>
         </div>
 
         <MapView
@@ -401,9 +420,13 @@ function App() {
           <MapLayers
             maGeoData={maGeoData}
             digits2GeoData={digits2GeoData}
+            prefGeoData={prefGeoData}
+            cityGeoData={cityGeoData}
             activeMAFeatureCollection={activeMAFeatureCollection}
             showMA={showMA}
             showDigits2={showDigits2}
+            showPref={showPref}
+            showCity={showCity}
             zoom={mapZoom}
           />
         </MapView>

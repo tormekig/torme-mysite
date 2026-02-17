@@ -63,16 +63,24 @@ function getLabelPosition(geometry: Geometry): Position | null {
 export function MapLayers({
   maGeoData,
   digits2GeoData,
+  prefGeoData,
+  cityGeoData,
   activeMAFeatureCollection,
   showMA,
   showDigits2,
+  showPref,
+  showCity,
   zoom,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
+  prefGeoData: FeatureCollection<Geometry>
+  cityGeoData: FeatureCollection<Geometry>
   activeMAFeatureCollection: FeatureCollection<Geometry>
   showMA: boolean
   showDigits2: boolean
+  showPref: boolean
+  showCity: boolean
   zoom: number
 }) {
   const digits2LabelMarkers = useMemo(
@@ -105,6 +113,46 @@ export function MapLayers({
 
   return (
     <>
+      {prefGeoData && (
+        <Source id="pref-source" type="geojson" data={prefGeoData}>
+          <Layer
+            id="pref-border"
+            type="line"
+            paint={{
+              'line-color': '#888',
+              'line-width': 1,
+            }}
+            layout={{ visibility: showPref ? 'visible' : 'none' }}
+          ></Layer>
+        </Source>
+      )}
+
+      {cityGeoData && (
+        <Source id="city-source" type="geojson" data={cityGeoData}>
+          <Layer
+            id="city-border"
+            type="line"
+            paint={{
+              'line-color': '#888',
+              'line-width': 1,
+            }}
+            layout={{ visibility: showCity ? 'visible' : 'none' }}
+          ></Layer>
+          <Layer
+            id="city-label"
+            type="symbol"
+            layout={{
+              'text-field': ['get', 'CITY_NAME'],
+              'text-size': 12,
+              'text-anchor': 'center',
+              visibility: showCity ? 'visible' : 'none',
+            }}
+            paint={{
+              'text-color': '#555',
+            }}
+          ></Layer>
+        </Source>
+      )}
       {maGeoData && (
         <Source id="ma-source" type="geojson" data={maGeoData}>
           <Layer
