@@ -527,6 +527,7 @@ function App() {
             showPref={showPref}
             showCity={showCity}
             zoom={mapZoom}
+            onPrefLabelClick={handlePrefSelect}
           />
         </MapView>
       </div>

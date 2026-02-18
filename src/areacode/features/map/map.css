@@ -188,3 +188,24 @@
   font-weight: 700;
   line-height: 1;
 }
+
+.pref-map-label-marker {
+  border: none;
+  border-radius: 9999px;
+  background: #16a34a;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  pointer-events: auto;
+  user-select: none;
+  transition: opacity 0.15s ease;
+}
+
+.pref-map-label-marker:hover {
+  opacity: 0.8;
+}

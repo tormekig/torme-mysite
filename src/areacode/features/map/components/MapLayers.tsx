@@ -75,6 +75,7 @@ export function MapLayers({
   showPref,
   showCity,
   zoom,
+  onPrefLabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
@@ -88,6 +89,7 @@ export function MapLayers({
   showPref: boolean
   showCity: boolean
   zoom: number
+  onPrefLabelClick: (prefName: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
     () =>
@@ -117,6 +119,32 @@ export function MapLayers({
 
   const digits2FontSize = useMemo(() => getDigits2FontSize(zoom), [zoom])
 
+  const prefLabelMarkers = useMemo(
+    () =>
+      prefGeoData.features
+        .map((feature, index) => {
+          if (!feature.geometry) {
+            return null
+          }
+          const position = getLabelPosition(feature.geometry)
+          const properties = (feature.properties ?? {}) as Record<
+            string,
+            string
+          >
+          if (!position) {
+            return null
+          }
+
+          return {
+            id: String(feature.id ?? `pref-${index}`),
+            position,
+            label: properties['PREF_NAME'] ?? '',
+          }
+        })
+        .filter((item): item is NonNullable<typeof item> => item !== null),
+    [prefGeoData.features],
+  )
+
   return (
     <>
       {prefGeoData && (
@@ -132,6 +160,24 @@ export function MapLayers({
           ></Layer>
         </Source>
       )}
+
+      {showPref &&
+        prefLabelMarkers.map((marker) => (
+          <Marker
+            key={marker.id}
+            longitude={marker.position[0]}
+            latitude={marker.position[1]}
+            anchor="center"
+          >
+            <button
+              type="button"
+              className="pref-map-label-marker"
+              onClick={() => onPrefLabelClick(marker.label)}
+            >
+              {marker.label}
+            </button>
+          </Marker>
+        ))}
 
       {cityGeoData && (
         <Source id="city-source" type="geojson" data={cityGeoData}>
