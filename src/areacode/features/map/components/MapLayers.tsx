@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Layer, Marker, Source } from 'react-map-gl/maplibre'
-import type { FeatureCollection, Geometry, Position } from 'geojson'
+import type { Feature, FeatureCollection, Geometry, Point, Position } from 'geojson'
 import {
   activeCityBorderStyle,
   activeMABorderStyle,
@@ -98,7 +98,6 @@ export function MapLayers({
   showCity,
   zoom,
   onPrefLabelClick,
-  onCityLabelClick,
   onDigits2LabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
@@ -114,7 +113,6 @@ export function MapLayers({
   showCity: boolean
   zoom: number
   onPrefLabelClick: (prefName: string) => void
-  onCityLabelClick: (prefName: string, cityName: string) => void
   onDigits2LabelClick: (digits2: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
@@ -182,12 +180,11 @@ export function MapLayers({
     return placedPrefMarkers
   }, [prefGeoData.features, digits2LabelMarkers, showDigits2])
 
-  const cityLabelMarkers = useMemo(() => {
+  const cityLabelGeoData = useMemo<FeatureCollection<Point>>(() => {
     const groupedByCity = new Map<
       string,
       {
         id: string
-        label: string
         prefName: string
         cityName: string
         candidates: Position[]
@@ -218,65 +215,67 @@ export function MapLayers({
 
       groupedByCity.set(cityKey, {
         id: String(feature.id ?? `city-${index}`),
-        label: cityName,
         prefName,
         cityName,
         candidates: [position],
       })
     })
 
-    const mergedCityMarkers = Array.from(groupedByCity.values()).map((city) => {
+    const features = Array.from(groupedByCity.values()).map((city) => {
       const averagedPosition: Position = city.candidates.reduce<Position>(
         (sum, candidate) => [sum[0] + candidate[0], sum[1] + candidate[1]],
         [0, 0],
       )
+      const center: Position = [
+        averagedPosition[0] / city.candidates.length,
+        averagedPosition[1] / city.candidates.length,
+      ]
 
       return {
-        ...city,
-        position: [
-          averagedPosition[0] / city.candidates.length,
-          averagedPosition[1] / city.candidates.length,
-        ] as Position,
-      }
+        type: 'Feature',
+        id: city.id,
+        properties: {
+          PREF_NAME: city.prefName,
+          CITY_NAME: city.cityName,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: center,
+        },
+      } as Feature<Point>
     })
 
-    if (zoom >= CITY_LABEL_MAX_COLLISION_ZOOM) {
-      return mergedCityMarkers
+    return {
+      type: 'FeatureCollection',
+      features,
     }
-
-    const zoomRatio = Math.max(
-      0,
-      Math.min(
-        1,
-        (zoom - CITY_LABEL_MIN_ZOOM) /
-          (CITY_LABEL_MAX_COLLISION_ZOOM - CITY_LABEL_MIN_ZOOM),
-      ),
-    )
-    const collisionThreshold = 0.21 - zoomRatio * 0.15
-    const acceptedMarkers: typeof mergedCityMarkers = []
-
-    for (const marker of mergedCityMarkers) {
-      const overlapsPref = hasCollision(marker.position, prefLabelMarkers, 0.08)
-      if (overlapsPref) {
-        continue
-      }
-
-      const overlapsCity = hasCollision(
-        marker.position,
-        acceptedMarkers,
-        collisionThreshold,
-      )
-      if (overlapsCity) {
-        continue
-      }
-
-      acceptedMarkers.push(marker)
-    }
-
-    return acceptedMarkers
-  }, [cityGeoData.features, prefLabelMarkers, zoom])
+  }, [cityGeoData.features])
 
   const shouldShowCityLabels = showCity && zoom >= CITY_LABEL_MIN_ZOOM
+  const cityLabelAllowOverlap = zoom >= CITY_LABEL_MAX_COLLISION_ZOOM
+
+  const cityLabelLayout = useMemo(
+    () => ({
+      'text-field': ['get', 'CITY_NAME'],
+      'text-size': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        CITY_LABEL_MIN_ZOOM,
+        10,
+        10,
+        11,
+        12,
+        12,
+      ],
+      'text-font': ['Roboto Bold', 'Noto Sans CJK JP Bold', 'sans-serif'],
+      'text-anchor': 'center' as const,
+      'text-allow-overlap': cityLabelAllowOverlap,
+      'text-ignore-placement': cityLabelAllowOverlap,
+      visibility: shouldShowCityLabels ? ('visible' as const) : ('none' as const),
+    }),
+    [cityLabelAllowOverlap, shouldShowCityLabels],
+  )
 
   return (
     <>
@@ -329,26 +328,19 @@ export function MapLayers({
         </Source>
       )}
 
-      {shouldShowCityLabels &&
-        cityLabelMarkers.map((marker) => (
-          <Marker
-            key={marker.id}
-            longitude={marker.position[0]}
-            latitude={marker.position[1]}
-            anchor="center"
-          >
-            <button
-              type="button"
-              className="city-map-label-marker"
-              onClick={(event) => {
-                event.stopPropagation()
-                onCityLabelClick(marker.prefName, marker.cityName)
-              }}
-            >
-              {marker.label}
-            </button>
-          </Marker>
-        ))}
+      <Source id="city-label-source" type="geojson" data={cityLabelGeoData}>
+        <Layer
+          id="city-labels"
+          type="symbol"
+          layout={cityLabelLayout}
+          paint={{
+            'text-color': '#065f46',
+            'text-halo-color': 'rgba(236, 253, 245, 0.96)',
+            'text-halo-width': 2,
+            'text-halo-blur': 0.2,
+          }}
+        ></Layer>
+      </Source>
 
       {maGeoData && (
         <Source id="ma-source" type="geojson" data={maGeoData}>
