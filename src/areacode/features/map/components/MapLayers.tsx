@@ -41,6 +41,62 @@ function getDigits2FontSize(zoom: number): number {
   return minSize + (maxSize - minSize) * ratio
 }
 
+function getDistance(a: Position, b: Position): number {
+  const lngDiff = a[0] - b[0]
+  const latDiff = a[1] - b[1]
+  const latRad = (a[1] * Math.PI) / 180
+  const adjustedLngDiff = lngDiff * Math.cos(latRad)
+
+  return Math.hypot(adjustedLngDiff, latDiff)
+}
+
+function hasCollision(
+  position: Position,
+  targets: Array<{ position: Position }>,
+  threshold: number,
+): boolean {
+  return targets.some(
+    (target) => getDistance(position, target.position) < threshold,
+  )
+}
+
+function getAdjustedPrefPosition(
+  basePosition: Position,
+  digits2Markers: Array<{ position: Position }>,
+  placedPrefMarkers: Array<{ position: Position }>,
+): Position {
+  const offsets: Array<[number, number]> = [
+    [0, 0],
+    [0, 0.22],
+    [0.22, 0],
+    [0, -0.22],
+    [-0.22, 0],
+    [0.16, 0.16],
+    [0.16, -0.16],
+    [-0.16, 0.16],
+    [-0.16, -0.16],
+    [0, 0.34],
+    [0.34, 0],
+    [0, -0.34],
+    [-0.34, 0],
+  ]
+
+  for (const [offsetLng, offsetLat] of offsets) {
+    const candidate: Position = [
+      basePosition[0] + offsetLng,
+      basePosition[1] + offsetLat,
+    ]
+
+    const overlapsDigits2 = hasCollision(candidate, digits2Markers, 0.16)
+    const overlapsPref = hasCollision(candidate, placedPrefMarkers, 0.12)
+    if (!overlapsDigits2 && !overlapsPref) {
+      return candidate
+    }
+  }
+
+  return basePosition
+}
+
 function getLabelPosition(geometry: Geometry): Position | null {
   const points = flattenCoordinates(geometry)
   if (points.length === 0) {
@@ -75,6 +131,8 @@ export function MapLayers({
   showPref,
   showCity,
   zoom,
+  onPrefLabelClick,
+  onDigits2LabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
@@ -88,6 +146,8 @@ export function MapLayers({
   showPref: boolean
   showCity: boolean
   zoom: number
+  onPrefLabelClick: (prefName: string) => void
+  onDigits2LabelClick: (digits2: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
     () =>
@@ -117,6 +177,43 @@ export function MapLayers({
 
   const digits2FontSize = useMemo(() => getDigits2FontSize(zoom), [zoom])
 
+  const prefLabelMarkers = useMemo(() => {
+    const placedPrefMarkers: Array<{
+      id: string
+      position: Position
+      label: string
+    }> = []
+
+    prefGeoData.features.forEach((feature, index) => {
+      if (!feature.geometry) {
+        return
+      }
+      const position = getLabelPosition(feature.geometry)
+      const properties = (feature.properties ?? {}) as Record<string, string>
+      const label = properties['PREF_NAME']
+
+      if (!position || !label) {
+        return
+      }
+
+      const adjustedPosition = showDigits2
+        ? getAdjustedPrefPosition(
+            position,
+            digits2LabelMarkers,
+            placedPrefMarkers,
+          )
+        : position
+
+      placedPrefMarkers.push({
+        id: String(feature.id ?? `pref-${index}`),
+        position: adjustedPosition,
+        label,
+      })
+    })
+
+    return placedPrefMarkers
+  }, [prefGeoData.features, digits2LabelMarkers, showDigits2])
+
   return (
     <>
       {prefGeoData && (
@@ -132,6 +229,27 @@ export function MapLayers({
           ></Layer>
         </Source>
       )}
+
+      {showPref &&
+        prefLabelMarkers.map((marker) => (
+          <Marker
+            key={marker.id}
+            longitude={marker.position[0]}
+            latitude={marker.position[1]}
+            anchor="center"
+          >
+            <button
+              type="button"
+              className="pref-map-label-marker"
+              onClick={(event) => {
+                event.stopPropagation()
+                onPrefLabelClick(marker.label)
+              }}
+            >
+              {marker.label}
+            </button>
+          </Marker>
+        ))}
 
       {cityGeoData && (
         <Source id="city-source" type="geojson" data={cityGeoData}>
@@ -197,12 +315,17 @@ export function MapLayers({
             latitude={marker.position[1]}
             anchor="center"
           >
-            <div
+            <button
+              type="button"
               className="digits2-map-label-marker"
               style={{ fontSize: `${digits2FontSize}px` }}
+              onClick={(event) => {
+                event.stopPropagation()
+                onDigits2LabelClick(marker.label)
+              }}
             >
               {marker.label}
-            </div>
+            </button>
           </Marker>
         ))}
 
