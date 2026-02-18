@@ -295,6 +295,20 @@ function App() {
     [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
+  const handleCityLabelClick = useCallback(
+    (prefName: string, cityName: string) => {
+      setSelectedPref('')
+      setSelectedCity('')
+      setSelectedDigits3('')
+
+      const cityNameWithPref = `${prefName}${cityName}`
+      activateByMAKeys(getMAKeysFromFilter('city', cityNameWithPref))
+      activatePrefKeys([])
+      activateCityKeys([cityNameWithPref])
+    },
+    [activateByMAKeys, activatePrefKeys, activateCityKeys],
+  )
+
   const handleDigits3Select = useCallback(
     (digits3: string) => {
       setSelectedPref('')
@@ -403,6 +417,7 @@ function App() {
             showCity={showCity}
             zoom={mapZoom}
             onPrefLabelClick={handlePrefSelect}
+            onCityLabelClick={handleCityLabelClick}
             onDigits2LabelClick={handleDigits3Select}
           />
         </MapView>

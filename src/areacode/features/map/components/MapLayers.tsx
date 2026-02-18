@@ -13,6 +13,9 @@ import {
 } from '../mapStyles'
 import { getLabelPosition } from '../utils/geometry'
 
+const CITY_LABEL_MIN_ZOOM = 8.3
+const CITY_LABEL_MAX_COLLISION_ZOOM = 12
+
 function getDigits2FontSize(zoom: number): number {
   const minZoom = 5
   const maxZoom = 8
@@ -95,6 +98,7 @@ export function MapLayers({
   showCity,
   zoom,
   onPrefLabelClick,
+  onCityLabelClick,
   onDigits2LabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
@@ -110,6 +114,7 @@ export function MapLayers({
   showCity: boolean
   zoom: number
   onPrefLabelClick: (prefName: string) => void
+  onCityLabelClick: (prefName: string, cityName: string) => void
   onDigits2LabelClick: (digits2: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
@@ -177,6 +182,102 @@ export function MapLayers({
     return placedPrefMarkers
   }, [prefGeoData.features, digits2LabelMarkers, showDigits2])
 
+  const cityLabelMarkers = useMemo(() => {
+    const groupedByCity = new Map<
+      string,
+      {
+        id: string
+        label: string
+        prefName: string
+        cityName: string
+        candidates: Position[]
+      }
+    >()
+
+    cityGeoData.features.forEach((feature, index) => {
+      if (!feature.geometry) {
+        return
+      }
+
+      const position = getLabelPosition(feature.geometry)
+      const properties = (feature.properties ?? {}) as Record<string, string>
+      const cityName = properties['CITY_NAME']
+      const prefName = properties['PREF_NAME']
+
+      if (!position || !cityName || !prefName) {
+        return
+      }
+
+      const cityKey = `${prefName}|${cityName}`
+      const existing = groupedByCity.get(cityKey)
+
+      if (existing) {
+        existing.candidates.push(position)
+        return
+      }
+
+      groupedByCity.set(cityKey, {
+        id: String(feature.id ?? `city-${index}`),
+        label: cityName,
+        prefName,
+        cityName,
+        candidates: [position],
+      })
+    })
+
+    const mergedCityMarkers = Array.from(groupedByCity.values()).map((city) => {
+      const averagedPosition: Position = city.candidates.reduce<Position>(
+        (sum, candidate) => [sum[0] + candidate[0], sum[1] + candidate[1]],
+        [0, 0],
+      )
+
+      return {
+        ...city,
+        position: [
+          averagedPosition[0] / city.candidates.length,
+          averagedPosition[1] / city.candidates.length,
+        ] as Position,
+      }
+    })
+
+    if (zoom >= CITY_LABEL_MAX_COLLISION_ZOOM) {
+      return mergedCityMarkers
+    }
+
+    const zoomRatio = Math.max(
+      0,
+      Math.min(
+        1,
+        (zoom - CITY_LABEL_MIN_ZOOM) /
+          (CITY_LABEL_MAX_COLLISION_ZOOM - CITY_LABEL_MIN_ZOOM),
+      ),
+    )
+    const collisionThreshold = 0.21 - zoomRatio * 0.15
+    const acceptedMarkers: typeof mergedCityMarkers = []
+
+    for (const marker of mergedCityMarkers) {
+      const overlapsPref = hasCollision(marker.position, prefLabelMarkers, 0.08)
+      if (overlapsPref) {
+        continue
+      }
+
+      const overlapsCity = hasCollision(
+        marker.position,
+        acceptedMarkers,
+        collisionThreshold,
+      )
+      if (overlapsCity) {
+        continue
+      }
+
+      acceptedMarkers.push(marker)
+    }
+
+    return acceptedMarkers
+  }, [cityGeoData.features, prefLabelMarkers, zoom])
+
+  const shouldShowCityLabels = showCity && zoom >= CITY_LABEL_MIN_ZOOM
+
   return (
     <>
       {prefGeoData && (
@@ -225,21 +326,29 @@ export function MapLayers({
             }}
             layout={{ visibility: showCity ? 'visible' : 'none' }}
           ></Layer>
-          <Layer
-            id="city-label"
-            type="symbol"
-            layout={{
-              'text-field': ['get', 'CITY_NAME'],
-              'text-size': 12,
-              'text-anchor': 'center',
-              visibility: showCity ? 'visible' : 'none',
-            }}
-            paint={{
-              'text-color': '#555',
-            }}
-          ></Layer>
         </Source>
       )}
+
+      {shouldShowCityLabels &&
+        cityLabelMarkers.map((marker) => (
+          <Marker
+            key={marker.id}
+            longitude={marker.position[0]}
+            latitude={marker.position[1]}
+            anchor="center"
+          >
+            <button
+              type="button"
+              className="city-map-label-marker"
+              onClick={(event) => {
+                event.stopPropagation()
+                onCityLabelClick(marker.prefName, marker.cityName)
+              }}
+            >
+              {marker.label}
+            </button>
+          </Marker>
+        ))}
 
       {maGeoData && (
         <Source id="ma-source" type="geojson" data={maGeoData}>
