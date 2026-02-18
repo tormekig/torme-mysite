@@ -1,12 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import MapView from 'react-map-gl/maplibre'
-import type {
-  Feature,
-  FeatureCollection,
-  Geometry,
-  Position,
-  BBox,
-} from 'geojson'
+import type { Feature, Geometry } from 'geojson'
 import type {
   MapGeoJSONFeature,
   MapLayerMouseEvent,
@@ -19,66 +13,15 @@ import { useMapGeoData } from './hooks/useMapGeoData'
 import type { ActiveGeometryInfo, HoverState } from './types'
 import { MapLayers } from './components/MapLayers'
 import { ActiveMAPanel } from './components/ActiveMAPanel'
+import {
+  buildActiveGeometryList,
+  toFeatureCollection,
+} from './utils/activeGeometry'
+import { getFeaturesBounds } from './utils/geometry'
+import { getMAKeysFromFilter, toMAKey } from './utils/maSearch'
 import prefList from 'areacode/data/prefList'
 import cityList from 'areacode/data/cityList'
 import { getAvailableThreeDigitNumbers } from 'areacode/components/numberTable'
-import {
-  MACompListContent,
-  type SearchType,
-} from 'areacode/pages/list/MACompListContent'
-
-function flattenCoordinates(geometry: Geometry): Position[] {
-  switch (geometry.type) {
-    case 'Point':
-      return [geometry.coordinates]
-    case 'MultiPoint':
-    case 'LineString':
-      return geometry.coordinates
-    case 'MultiLineString':
-    case 'Polygon':
-      return geometry.coordinates.flat(1)
-    case 'MultiPolygon':
-      return geometry.coordinates.flat(2)
-    default:
-      return []
-  }
-}
-
-function getFeaturesBounds(features: Feature<Geometry>[]): BBox | null {
-  const points = features.flatMap((feature) =>
-    flattenCoordinates(feature.geometry),
-  )
-  if (points.length === 0) {
-    return null
-  }
-
-  let minLng = Infinity
-  let maxLng = -Infinity
-  let minLat = Infinity
-  let maxLat = -Infinity
-
-  points.forEach(([lng, lat]) => {
-    if (lng < minLng) minLng = lng
-    if (lng > maxLng) maxLng = lng
-    if (lat < minLat) minLat = lat
-    if (lat > maxLat) maxLat = lat
-  })
-
-  return [minLng, minLat, maxLng, maxLat]
-}
-
-function toMAKey(areaCode: string, MAName: string): string {
-  return `${areaCode}|${MAName}`
-}
-
-function getMAKeysFromFilter(type: SearchType, query: string): string[] {
-  const MAComps = new MACompListContent().filter(type, query).MAComps
-  return [
-    ...new Set(
-      MAComps.map((maComp) => toMAKey(maComp.areaCode, maComp.MAName)),
-    ),
-  ]
-}
 
 function App() {
   const { maGeoData, digits2GeoData, prefGeoData, cityGeoData } =
@@ -111,32 +54,9 @@ function App() {
       predicate: (properties: Record<string, string>) => boolean,
       orderedMAKeys: string[] = [],
     ) => {
-      const matchedActiveMAs: Array<ActiveGeometryInfo | null> =
-        maGeoData.features.map((feature, index) => {
-          const properties = (feature.properties ?? {}) as Record<
-            string,
-            string
-          >
-          if (!feature.geometry || !predicate(properties)) {
-            return null
-          }
-
-          const featureId: ActiveGeometryInfo['featureId'] = index
-          const activeFeature: Feature<Geometry> = {
-            type: 'Feature',
-            id: featureId,
-            properties,
-            geometry: feature.geometry,
-          }
-
-          return {
-            featureId,
-            properties,
-            feature: activeFeature,
-          }
-        })
-      const nextActiveMAs = matchedActiveMAs.filter(
-        (item): item is ActiveGeometryInfo => item !== null,
+      const nextActiveMAs = buildActiveGeometryList(
+        maGeoData.features,
+        predicate,
       )
 
       if (orderedMAKeys.length > 0) {
@@ -208,49 +128,11 @@ function App() {
     [activateMAFeatures],
   )
 
-  const createFeatureActivator = useCallback(
-    (
-      features: Feature<Geometry>[],
-      setState: (features: ActiveGeometryInfo[]) => void,
-    ) => {
-      return (predicate: (properties: Record<string, string>) => boolean) => {
-        const matchedFeatures: Array<ActiveGeometryInfo | null> = features.map(
-          (feature, index) => {
-            const properties = (feature.properties ?? {}) as Record<
-              string,
-              string
-            >
-            if (!feature.geometry || !predicate(properties)) {
-              return null
-            }
-            const featureId: ActiveGeometryInfo['featureId'] = index
-            const activeFeature: Feature<Geometry> = {
-              type: 'Feature',
-              id: featureId,
-              properties,
-              geometry: feature.geometry,
-            }
-
-            return {
-              featureId,
-              properties,
-              feature: activeFeature,
-            }
-          },
-        )
-        const nextActiveFeatures = matchedFeatures.filter(
-          (item): item is ActiveGeometryInfo => item !== null,
-        )
-
-        setState(nextActiveFeatures)
-      }
-    },
-    [],
-  )
-
   const activatePrefFeatures = useCallback(
-    createFeatureActivator(prefGeoData.features, setActivePrefs),
-    [createFeatureActivator, prefGeoData.features],
+    (predicate: (properties: Record<string, string>) => boolean) => {
+      setActivePrefs(buildActiveGeometryList(prefGeoData.features, predicate))
+    },
+    [prefGeoData.features],
   )
 
   const activatePrefKeys = useCallback(
@@ -264,8 +146,10 @@ function App() {
   )
 
   const activateCityFeatures = useCallback(
-    createFeatureActivator(cityGeoData.features, setActiveCities),
-    [createFeatureActivator, cityGeoData.features],
+    (predicate: (properties: Record<string, string>) => boolean) => {
+      setActiveCities(buildActiveGeometryList(cityGeoData.features, predicate))
+    },
+    [cityGeoData.features],
   )
 
   const activateCityKeys = useCallback(
@@ -429,27 +313,18 @@ function App() {
     [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
-  const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
-    () => ({
-      type: 'FeatureCollection',
-      features: activeMAs.map((activeMA) => activeMA.feature),
-    }),
+  const activeMAFeatureCollection = useMemo(
+    () => toFeatureCollection(activeMAs),
     [activeMAs],
   )
 
-  const activePrefFeatureCollection = useMemo<FeatureCollection<Geometry>>(
-    () => ({
-      type: 'FeatureCollection',
-      features: activePrefs.map((activePref) => activePref.feature),
-    }),
+  const activePrefFeatureCollection = useMemo(
+    () => toFeatureCollection(activePrefs),
     [activePrefs],
   )
 
-  const activeCityFeatureCollection = useMemo<FeatureCollection<Geometry>>(
-    () => ({
-      type: 'FeatureCollection',
-      features: activeCities.map((activeCity) => activeCity.feature),
-    }),
+  const activeCityFeatureCollection = useMemo(
+    () => toFeatureCollection(activeCities),
     [activeCities],
   )
 
