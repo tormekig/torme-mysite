@@ -340,20 +340,6 @@ export function MapLayers({
         </Source>
       )}
 
-      <Source id="city-label-source" type="geojson" data={cityLabelGeoData}>
-        <Layer
-          id="city-labels"
-          type="symbol"
-          layout={cityLabelLayout}
-          paint={{
-            'text-color': '#065f46',
-            'text-halo-color': 'rgba(236, 253, 245, 0.96)',
-            'text-halo-width': 2,
-            'text-halo-blur': 0.2,
-          }}
-        ></Layer>
-      </Source>
-
       {maGeoData && (
         <Source id="ma-source" type="geojson" data={maGeoData}>
           <Layer
@@ -439,6 +425,20 @@ export function MapLayers({
         <Layer
           {...activeCityBorderStyle}
           layout={{ visibility: showCity ? 'visible' : 'none' }}
+        ></Layer>
+      </Source>
+
+      <Source id="city-label-source" type="geojson" data={cityLabelGeoData}>
+        <Layer
+          id="city-labels"
+          type="symbol"
+          layout={cityLabelLayout}
+          paint={{
+            'text-color': '#065f46',
+            'text-halo-color': 'rgba(236, 253, 245, 0.96)',
+            'text-halo-width': 2,
+            'text-halo-blur': 0.2,
+          }}
         ></Layer>
       </Source>
     </>
