@@ -438,7 +438,6 @@ export function MapLayers({
       {maGeoData && (
         <Source id="ma-label-source" type="geojson" data={maGeoData}>
           <Layer
-            id="ma-label-top"
             {...maLabelStyle}
             layout={{
               ...maLabelStyle.layout,
