@@ -350,13 +350,6 @@ export function MapLayers({
             {...maBorderStyle}
             layout={{ visibility: showMA ? 'visible' : 'none' }}
           ></Layer>
-          <Layer
-            {...maLabelStyle}
-            layout={{
-              ...maLabelStyle.layout,
-              visibility: showMA ? 'visible' : 'none',
-            }}
-          ></Layer>
         </Source>
       )}
 
@@ -441,6 +434,19 @@ export function MapLayers({
           }}
         ></Layer>
       </Source>
+
+      {maGeoData && (
+        <Source id="ma-label-source" type="geojson" data={maGeoData}>
+          <Layer
+            id="ma-label-top"
+            {...maLabelStyle}
+            layout={{
+              ...maLabelStyle.layout,
+              visibility: showMA ? 'visible' : 'none',
+            }}
+          ></Layer>
+        </Source>
+      )}
     </>
   )
 }
