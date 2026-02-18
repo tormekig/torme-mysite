@@ -32,15 +32,33 @@ async function fetchTopoJson(url: string, objectKey: string) {
   const contentType = response.headers.get('content-type') ?? 'unknown'
   const topoData = await response.json()
 
-  if (!topoData?.objects || !topoData.objects[objectKey]) {
-    throw new Error(
-      `[MapData] Invalid TopoJSON: url=${url}, objectKey=${objectKey}, contentType=${contentType}, availableObjects=${Object.keys(
-        topoData?.objects ?? {},
-      ).join(',')}`,
-    )
+  // If the file is already GeoJSON FeatureCollection, return it as-is.
+  if (topoData?.type === 'FeatureCollection') {
+    return topoData
   }
 
-  return topoData
+  // If it's TopoJSON and contains the desired object, return it.
+  if (topoData?.objects && topoData.objects[objectKey]) {
+    return topoData
+  }
+
+  // If it's TopoJSON but the expected objectKey is missing, try to
+  // gracefully fall back to the first available object.
+  if (topoData?.objects) {
+    const available = Object.keys(topoData.objects)
+    if (available.length > 0) {
+      console.warn(
+        `[MapData] objectKey ${objectKey} not found in TopoJSON; falling back to ${available[0]} for url=${url}`,
+      )
+      return topoData
+    }
+  }
+
+  throw new Error(
+    `[MapData] Invalid TopoJSON/GeoJSON: url=${url}, objectKey=${objectKey}, contentType=${contentType}, availableObjects=${Object.keys(
+      topoData?.objects ?? {},
+    ).join(',')}`,
+  )
 }
 
 function normalizeGeoJsonFeatures(
@@ -69,10 +87,21 @@ function loadGeoData(
 ) {
   return fetchTopoJson(getMapAssetUrl(filename), objectKey)
     .then((topoData) => {
-      const rawGeojson = topojson.feature(
-        topoData,
-        topoData.objects[objectKey],
-      ) as unknown as FeatureCollection<Geometry>
+      // If the response is already a GeoJSON FeatureCollection, use it.
+      if (topoData?.type === 'FeatureCollection') {
+        return normalizeGeoJsonFeatures(topoData as FeatureCollection<Geometry>)
+      }
+
+      // If the response is TopoJSON, try to extract the requested object.
+      const targetObject = topoData.objects?.[objectKey] ??
+        // fallback to first available object
+        (topoData.objects ? topoData.objects[Object.keys(topoData.objects)[0]] : undefined)
+
+      if (!targetObject) {
+        throw new Error(`No suitable object found in TopoJSON: ${filename}`)
+      }
+
+      const rawGeojson = topojson.feature(topoData, targetObject) as unknown as FeatureCollection<Geometry>
       return normalizeGeoJsonFeatures(rawGeojson)
     })
     .catch((error) => {

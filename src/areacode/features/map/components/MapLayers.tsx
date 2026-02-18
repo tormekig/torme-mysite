@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { Layer, Marker, Source } from 'react-map-gl/maplibre'
 import type { FeatureCollection, Geometry, Position } from 'geojson'
 import {
+  activeCityBorderStyle,
   activeMABorderStyle,
   activeMAFillStyle,
   activePrefBorderStyle,
@@ -68,6 +69,7 @@ export function MapLayers({
   cityGeoData,
   activeMAFeatureCollection,
   activePrefFeatureCollection,
+  activeCityFeatureCollection,
   showMA,
   showDigits2,
   showPref,
@@ -80,6 +82,7 @@ export function MapLayers({
   cityGeoData: FeatureCollection<Geometry>
   activeMAFeatureCollection: FeatureCollection<Geometry>
   activePrefFeatureCollection: FeatureCollection<Geometry>
+  activeCityFeatureCollection: FeatureCollection<Geometry>
   showMA: boolean
   showDigits2: boolean
   showPref: boolean
@@ -224,12 +227,19 @@ export function MapLayers({
         data={activePrefFeatureCollection}
       >
         <Layer
-          {...activeMAFillStyle}
-          layout={{ visibility: showPref ? 'visible' : 'none' }}
-        ></Layer>
-        <Layer
           {...activePrefBorderStyle}
           layout={{ visibility: showPref ? 'visible' : 'none' }}
+        ></Layer>
+      </Source>
+
+      <Source
+        id="active-city-source"
+        type="geojson"
+        data={activeCityFeatureCollection}
+      >
+        <Layer
+          {...activeCityBorderStyle}
+          layout={{ visibility: showCity ? 'visible' : 'none' }}
         ></Layer>
       </Source>
     </>

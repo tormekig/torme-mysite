@@ -29,7 +29,7 @@ import {
   MACompListContent,
   type SearchType,
 } from 'areacode/pages/list/MACompListContent'
-import { ma } from 'areacode/assets/css/MAList.module.scss'
+import { ma, pref } from 'areacode/assets/css/MAList.module.scss'
 
 function flattenCoordinates(geometry: Geometry): Position[] {
   switch (geometry.type) {
@@ -93,6 +93,7 @@ function App() {
   const [showCity, setShowCity] = useState(true)
   const [activeMAs, setActiveMAs] = useState<ActiveGeometryInfo[]>([])
   const [activePrefs, setActivePrefs] = useState<ActiveGeometryInfo[]>([])
+  const [activeCities, setActiveCities] = useState<ActiveGeometryInfo[]>([])
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [mapZoom, setMapZoom] = useState(6)
   const [selectedPref, setSelectedPref] = useState('')
@@ -303,17 +304,13 @@ function App() {
   )
 
   const activatePrefFeatures = useCallback(
-    (
-      predicate: (properties: Record<string, string>) => boolean,
-      orderedMAKeys: string[] = [],
-    ) => {
+    (predicate: (properties: Record<string, string>) => boolean) => {
       const matchedActivePrefs: Array<ActiveGeometryInfo | null> =
         prefGeoData.features.map((feature, index) => {
           const properties = (feature.properties ?? {}) as Record<
             string,
             string
           >
-
           if (!feature.geometry || !predicate(properties)) {
             return null
           }
@@ -335,16 +332,6 @@ function App() {
         (item): item is ActiveGeometryInfo => item !== null,
       )
 
-      if (orderedMAKeys.length > 0) {
-        const keyOrder = orderedMAKeys.reduce<Record<string, number>>(
-          (order, key, index) => {
-            order[key] = index
-            return order
-          },
-          {},
-        )
-      }
-
       setActivePrefs(nextActivePrefs)
     },
     [prefGeoData.features],
@@ -358,6 +345,54 @@ function App() {
       )
     },
     [activatePrefFeatures],
+  )
+
+  const activateCityFeatures = useCallback(
+    (predicate: (properties: Record<string, string>) => boolean) => {
+      const matchedActiveCities: Array<ActiveGeometryInfo | null> =
+        cityGeoData.features.map((feature, index) => {
+          const properties = (feature.properties ?? {}) as Record<
+            string,
+            string
+          >
+          if (!feature.geometry || !predicate(properties)) {
+            return null
+          }
+          const featureId: ActiveGeometryInfo['featureId'] = index
+          const activeFeature: Feature<Geometry> = {
+            type: 'Feature',
+            id: featureId,
+            properties,
+            geometry: feature.geometry,
+          }
+
+          return {
+            featureId,
+            properties,
+            feature: activeFeature,
+          }
+        })
+      const nextActiveCities = matchedActiveCities.filter(
+        (item): item is ActiveGeometryInfo => item !== null,
+      )
+
+      setActiveCities(nextActiveCities)
+    },
+    [cityGeoData.features],
+  )
+
+  const activateCityKeys = useCallback(
+    (cityNames: string[]) => {
+      const cityNamesSet = new Set(cityNames)
+      console.log(cityGeoData)
+      activateCityFeatures((properties) =>
+        cityNamesSet.has(
+          // TODO: 郡名を考慮する
+          `${properties['PREF_NAME']}${properties['CITY_NAME']}`,
+        ),
+      )
+    },
+    [activateCityFeatures],
   )
 
   const handlePrefSelect = useCallback(
@@ -389,8 +424,9 @@ function App() {
       }
 
       activateByMAKeys(getMAKeysFromFilter('city', cityName))
+      activateCityKeys([cityName])
     },
-    [activateByMAKeys],
+    [activateByMAKeys, activateCityKeys],
   )
 
   const handleDigits3Select = useCallback(
@@ -423,6 +459,14 @@ function App() {
       features: activePrefs.map((activePref) => activePref.feature),
     }),
     [activePrefs],
+  )
+
+  const activeCityFeatureCollection = useMemo<FeatureCollection<Geometry>>(
+    () => ({
+      type: 'FeatureCollection',
+      features: activeCities.map((activeCity) => activeCity.feature),
+    }),
+    [activeCities],
   )
 
   const interactiveLayerIds = [
@@ -493,6 +537,7 @@ function App() {
             cityGeoData={cityGeoData}
             activeMAFeatureCollection={activeMAFeatureCollection}
             activePrefFeatureCollection={activePrefFeatureCollection}
+            activeCityFeatureCollection={activeCityFeatureCollection}
             showMA={showMA}
             showDigits2={showDigits2}
             showPref={showPref}
