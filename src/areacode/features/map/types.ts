@@ -5,7 +5,7 @@ export type HoverState = {
   featureId: string | number
 }
 
-export type ActiveMAInfo = {
+export type ActiveGeometryInfo = {
   featureId: string | number
   properties: Record<string, string>
   feature: Feature<Geometry>

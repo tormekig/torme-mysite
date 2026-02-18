@@ -4,6 +4,7 @@ import type { FeatureCollection, Geometry, Position } from 'geojson'
 import {
   activeMABorderStyle,
   activeMAFillStyle,
+  activePrefBorderStyle,
   digits2BorderStyle,
   maBorderStyle,
   maFillStyle,
@@ -66,6 +67,7 @@ export function MapLayers({
   prefGeoData,
   cityGeoData,
   activeMAFeatureCollection,
+  activePrefFeatureCollection,
   showMA,
   showDigits2,
   showPref,
@@ -77,6 +79,7 @@ export function MapLayers({
   prefGeoData: FeatureCollection<Geometry>
   cityGeoData: FeatureCollection<Geometry>
   activeMAFeatureCollection: FeatureCollection<Geometry>
+  activePrefFeatureCollection: FeatureCollection<Geometry>
   showMA: boolean
   showDigits2: boolean
   showPref: boolean
@@ -153,6 +156,7 @@ export function MapLayers({
           ></Layer>
         </Source>
       )}
+
       {maGeoData && (
         <Source id="ma-source" type="geojson" data={maGeoData}>
           <Layer
@@ -211,6 +215,21 @@ export function MapLayers({
         <Layer
           {...activeMABorderStyle}
           layout={{ visibility: showMA ? 'visible' : 'none' }}
+        ></Layer>
+      </Source>
+
+      <Source
+        id="active-pref-source"
+        type="geojson"
+        data={activePrefFeatureCollection}
+      >
+        <Layer
+          {...activeMAFillStyle}
+          layout={{ visibility: showPref ? 'visible' : 'none' }}
+        ></Layer>
+        <Layer
+          {...activePrefBorderStyle}
+          layout={{ visibility: showPref ? 'visible' : 'none' }}
         ></Layer>
       </Source>
     </>

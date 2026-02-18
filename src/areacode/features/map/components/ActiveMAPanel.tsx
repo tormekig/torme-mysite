@@ -8,7 +8,7 @@ import {
   getPrefCountyCityNameTypeKana,
   type CityInfo,
 } from 'areacode/data/cityList'
-import type { ActiveMAInfo } from '../types'
+import type { ActiveGeometryInfo } from '../types'
 
 const mapCardDisplayParam = [
   '市外局番',
@@ -42,7 +42,7 @@ export function ActiveMAPanel({
   onCitySelect,
   onDigits3Select,
 }: {
-  activeMAs: ActiveMAInfo[]
+  activeMAs: ActiveGeometryInfo[]
   isExpanded: boolean
   onToggleExpand: () => void
   prefOptions: string[]
