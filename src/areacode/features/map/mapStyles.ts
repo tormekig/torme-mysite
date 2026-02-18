@@ -72,7 +72,7 @@ export const activeCityBorderStyle: LineLayerSpecification = {
   type: 'line',
   paint: {
     'line-color': '#26d6dc',
-    'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.8, 8, 5.2],
+    'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1, 8, 2],
     'line-opacity': 1,
   },
 }
