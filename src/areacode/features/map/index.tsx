@@ -528,6 +528,7 @@ function App() {
             showCity={showCity}
             zoom={mapZoom}
             onPrefLabelClick={handlePrefSelect}
+            onDigits2LabelClick={handleDigits3Select}
           />
         </MapView>
       </div>

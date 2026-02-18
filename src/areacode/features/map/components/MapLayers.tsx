@@ -41,6 +41,21 @@ function getDigits2FontSize(zoom: number): number {
   return minSize + (maxSize - minSize) * ratio
 }
 
+function isOverlappingWithDigits2(
+  prefPosition: Position,
+  digits2Markers: Array<{ position: Position }>,
+): boolean {
+  return digits2Markers.some((marker) => {
+    const lngDiff = prefPosition[0] - marker.position[0]
+    const latDiff = prefPosition[1] - marker.position[1]
+    const latRad = (prefPosition[1] * Math.PI) / 180
+    const adjustedLngDiff = lngDiff * Math.cos(latRad)
+    const distance = Math.hypot(adjustedLngDiff, latDiff)
+
+    return distance < 0.18
+  })
+}
+
 function getLabelPosition(geometry: Geometry): Position | null {
   const points = flattenCoordinates(geometry)
   if (points.length === 0) {
@@ -76,6 +91,7 @@ export function MapLayers({
   showCity,
   zoom,
   onPrefLabelClick,
+  onDigits2LabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
@@ -90,6 +106,7 @@ export function MapLayers({
   showCity: boolean
   zoom: number
   onPrefLabelClick: (prefName: string) => void
+  onDigits2LabelClick: (digits2: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
     () =>
@@ -131,18 +148,23 @@ export function MapLayers({
             string,
             string
           >
-          if (!position) {
+          if (!position || !properties['PREF_NAME']) {
             return null
           }
 
           return {
             id: String(feature.id ?? `pref-${index}`),
             position,
-            label: properties['PREF_NAME'] ?? '',
+            label: properties['PREF_NAME'],
           }
         })
-        .filter((item): item is NonNullable<typeof item> => item !== null),
-    [prefGeoData.features],
+        .filter((item): item is NonNullable<typeof item> => item !== null)
+        .filter(
+          (marker) =>
+            !showDigits2 ||
+            !isOverlappingWithDigits2(marker.position, digits2LabelMarkers),
+        ),
+    [prefGeoData.features, digits2LabelMarkers, showDigits2],
   )
 
   return (
@@ -243,12 +265,14 @@ export function MapLayers({
             latitude={marker.position[1]}
             anchor="center"
           >
-            <div
+            <button
+              type="button"
               className="digits2-map-label-marker"
               style={{ fontSize: `${digits2FontSize}px` }}
+              onClick={() => onDigits2LabelClick(marker.label)}
             >
               {marker.label}
-            </div>
+            </button>
           </Marker>
         ))}
 

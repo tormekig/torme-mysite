@@ -172,6 +172,9 @@
 }
 
 .digits2-map-label-marker {
+  border: none;
+  background: transparent;
+  padding: 0;
   font-family: 'Roboto', sans-serif;
   color: #111827;
   text-shadow:
@@ -179,14 +182,21 @@
     1px -1px 0 #fff,
     -1px 1px 0 #fff,
     1px 1px 0 #fff;
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
   white-space: nowrap;
   text-align: center;
   transform: translateZ(0);
-  transition: font-size 0.1s linear;
+  transition:
+    font-size 0.1s linear,
+    opacity 0.15s ease;
   font-weight: 700;
   line-height: 1;
+  cursor: pointer;
+}
+
+.digits2-map-label-marker:hover {
+  opacity: 0.85;
 }
 
 .pref-map-label-marker {
