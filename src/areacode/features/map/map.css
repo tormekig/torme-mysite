@@ -202,7 +202,7 @@
 .pref-map-label-marker {
   border: none;
   border-radius: 9999px;
-  background: #16a34a;
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
   font-size: 12px;
@@ -218,4 +218,28 @@
 
 .pref-map-label-marker:hover {
   opacity: 0.8;
+}
+
+.city-map-label-marker {
+  border: 1px solid rgba(6, 95, 70, 0.45);
+  border-radius: 9999px;
+  background: rgba(236, 253, 245, 0.94);
+  color: #065f46;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  pointer-events: auto;
+  user-select: none;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.city-map-label-marker:hover {
+  opacity: 0.9;
+  background: rgba(209, 250, 229, 0.96);
 }
