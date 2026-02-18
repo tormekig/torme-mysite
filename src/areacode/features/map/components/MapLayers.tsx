@@ -256,7 +256,7 @@ export function MapLayers({
 
   const cityLabelLayout = useMemo(
     () => ({
-      'text-field': ['get', 'CITY_NAME'],
+      'text-field': ['get', 'CITY_NAME'] as const,
       'text-size': [
         'interpolate',
         ['linear'],
@@ -267,7 +267,7 @@ export function MapLayers({
         11,
         12,
         12,
-      ],
+      ] as const,
       'text-font': ['Roboto Bold', 'Noto Sans CJK JP Bold', 'sans-serif'],
       'text-anchor': 'center' as const,
       'text-allow-overlap': cityLabelAllowOverlap,
