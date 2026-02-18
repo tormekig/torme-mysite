@@ -254,10 +254,19 @@ export function MapLayers({
   const shouldShowCityLabels = showCity && zoom >= CITY_LABEL_MIN_ZOOM
   const cityLabelAllowOverlap = zoom >= CITY_LABEL_MAX_COLLISION_ZOOM
 
-  const cityLabelLayout = useMemo(
-    () => ({
-      'text-field': ['get', 'CITY_NAME'] as const,
-      'text-size': [
+  const cityLabelLayout = useMemo(() => {
+    const textFieldExpression: ['get', string] = ['get', 'CITY_NAME']
+    const textSizeExpression: [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+    ] = [
         'interpolate',
         ['linear'],
         ['zoom'],
@@ -267,15 +276,18 @@ export function MapLayers({
         11,
         12,
         12,
-      ] as const,
+      ]
+
+    return {
+      'text-field': textFieldExpression,
+      'text-size': textSizeExpression,
       'text-font': ['Roboto Bold', 'Noto Sans CJK JP Bold', 'sans-serif'],
       'text-anchor': 'center' as const,
       'text-allow-overlap': cityLabelAllowOverlap,
       'text-ignore-placement': cityLabelAllowOverlap,
       visibility: shouldShowCityLabels ? ('visible' as const) : ('none' as const),
-    }),
-    [cityLabelAllowOverlap, shouldShowCityLabels],
-  )
+    }
+  }, [cityLabelAllowOverlap, shouldShowCityLabels])
 
   return (
     <>
