@@ -188,3 +188,22 @@
   font-weight: 700;
   line-height: 1;
 }
+
+.pref-map-label-marker {
+  font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #16a34a;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 9999px;
+  padding: 4px 8px;
+  line-height: 1.1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.pref-map-label-marker:hover {
+  opacity: 0.72;
+}

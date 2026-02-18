@@ -393,6 +393,13 @@ function App() {
     [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
+  const handlePrefLabelClick = useCallback(
+    (pref: string) => {
+      handlePrefSelect(pref)
+    },
+    [handlePrefSelect],
+  )
+
   const handleCitySelect = useCallback(
     (cityName: string) => {
       setSelectedPref('')
@@ -527,6 +534,7 @@ function App() {
             showPref={showPref}
             showCity={showCity}
             zoom={mapZoom}
+            onPrefLabelClick={handlePrefLabelClick}
           />
         </MapView>
       </div>
