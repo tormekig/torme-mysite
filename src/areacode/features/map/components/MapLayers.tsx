@@ -41,19 +41,60 @@ function getDigits2FontSize(zoom: number): number {
   return minSize + (maxSize - minSize) * ratio
 }
 
-function isOverlappingWithDigits2(
-  prefPosition: Position,
-  digits2Markers: Array<{ position: Position }>,
-): boolean {
-  return digits2Markers.some((marker) => {
-    const lngDiff = prefPosition[0] - marker.position[0]
-    const latDiff = prefPosition[1] - marker.position[1]
-    const latRad = (prefPosition[1] * Math.PI) / 180
-    const adjustedLngDiff = lngDiff * Math.cos(latRad)
-    const distance = Math.hypot(adjustedLngDiff, latDiff)
+function getDistance(a: Position, b: Position): number {
+  const lngDiff = a[0] - b[0]
+  const latDiff = a[1] - b[1]
+  const latRad = (a[1] * Math.PI) / 180
+  const adjustedLngDiff = lngDiff * Math.cos(latRad)
 
-    return distance < 0.18
-  })
+  return Math.hypot(adjustedLngDiff, latDiff)
+}
+
+function hasCollision(
+  position: Position,
+  targets: Array<{ position: Position }>,
+  threshold: number,
+): boolean {
+  return targets.some(
+    (target) => getDistance(position, target.position) < threshold,
+  )
+}
+
+function getAdjustedPrefPosition(
+  basePosition: Position,
+  digits2Markers: Array<{ position: Position }>,
+  placedPrefMarkers: Array<{ position: Position }>,
+): Position {
+  const offsets: Array<[number, number]> = [
+    [0, 0],
+    [0, 0.22],
+    [0.22, 0],
+    [0, -0.22],
+    [-0.22, 0],
+    [0.16, 0.16],
+    [0.16, -0.16],
+    [-0.16, 0.16],
+    [-0.16, -0.16],
+    [0, 0.34],
+    [0.34, 0],
+    [0, -0.34],
+    [-0.34, 0],
+  ]
+
+  for (const [offsetLng, offsetLat] of offsets) {
+    const candidate: Position = [
+      basePosition[0] + offsetLng,
+      basePosition[1] + offsetLat,
+    ]
+
+    const overlapsDigits2 = hasCollision(candidate, digits2Markers, 0.16)
+    const overlapsPref = hasCollision(candidate, placedPrefMarkers, 0.12)
+    if (!overlapsDigits2 && !overlapsPref) {
+      return candidate
+    }
+  }
+
+  return basePosition
 }
 
 function getLabelPosition(geometry: Geometry): Position | null {
@@ -136,36 +177,42 @@ export function MapLayers({
 
   const digits2FontSize = useMemo(() => getDigits2FontSize(zoom), [zoom])
 
-  const prefLabelMarkers = useMemo(
-    () =>
-      prefGeoData.features
-        .map((feature, index) => {
-          if (!feature.geometry) {
-            return null
-          }
-          const position = getLabelPosition(feature.geometry)
-          const properties = (feature.properties ?? {}) as Record<
-            string,
-            string
-          >
-          if (!position || !properties['PREF_NAME']) {
-            return null
-          }
+  const prefLabelMarkers = useMemo(() => {
+    const placedPrefMarkers: Array<{
+      id: string
+      position: Position
+      label: string
+    }> = []
 
-          return {
-            id: String(feature.id ?? `pref-${index}`),
+    prefGeoData.features.forEach((feature, index) => {
+      if (!feature.geometry) {
+        return
+      }
+      const position = getLabelPosition(feature.geometry)
+      const properties = (feature.properties ?? {}) as Record<string, string>
+      const label = properties['PREF_NAME']
+
+      if (!position || !label) {
+        return
+      }
+
+      const adjustedPosition = showDigits2
+        ? getAdjustedPrefPosition(
             position,
-            label: properties['PREF_NAME'],
-          }
-        })
-        .filter((item): item is NonNullable<typeof item> => item !== null)
-        .filter(
-          (marker) =>
-            !showDigits2 ||
-            !isOverlappingWithDigits2(marker.position, digits2LabelMarkers),
-        ),
-    [prefGeoData.features, digits2LabelMarkers, showDigits2],
-  )
+            digits2LabelMarkers,
+            placedPrefMarkers,
+          )
+        : position
+
+      placedPrefMarkers.push({
+        id: String(feature.id ?? `pref-${index}`),
+        position: adjustedPosition,
+        label,
+      })
+    })
+
+    return placedPrefMarkers
+  }, [prefGeoData.features, digits2LabelMarkers, showDigits2])
 
   return (
     <>
@@ -194,7 +241,10 @@ export function MapLayers({
             <button
               type="button"
               className="pref-map-label-marker"
-              onClick={() => onPrefLabelClick(marker.label)}
+              onClick={(event) => {
+                event.stopPropagation()
+                onPrefLabelClick(marker.label)
+              }}
             >
               {marker.label}
             </button>
@@ -269,7 +319,10 @@ export function MapLayers({
               type="button"
               className="digits2-map-label-marker"
               style={{ fontSize: `${digits2FontSize}px` }}
-              onClick={() => onDigits2LabelClick(marker.label)}
+              onClick={(event) => {
+                event.stopPropagation()
+                onDigits2LabelClick(marker.label)
+              }}
             >
               {marker.label}
             </button>
