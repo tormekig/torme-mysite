@@ -32,15 +32,33 @@ async function fetchTopoJson(url: string, objectKey: string) {
   const contentType = response.headers.get('content-type') ?? 'unknown'
   const topoData = await response.json()
 
-  if (!topoData?.objects || !topoData.objects[objectKey]) {
-    throw new Error(
-      `[MapData] Invalid TopoJSON: url=${url}, objectKey=${objectKey}, contentType=${contentType}, availableObjects=${Object.keys(
-        topoData?.objects ?? {},
-      ).join(',')}`,
-    )
+  // If the file is already GeoJSON FeatureCollection, return it as-is.
+  if (topoData?.type === 'FeatureCollection') {
+    return topoData
   }
 
-  return topoData
+  // If it's TopoJSON and contains the desired object, return it.
+  if (topoData?.objects && topoData.objects[objectKey]) {
+    return topoData
+  }
+
+  // If it's TopoJSON but the expected objectKey is missing, try to
+  // gracefully fall back to the first available object.
+  if (topoData?.objects) {
+    const available = Object.keys(topoData.objects)
+    if (available.length > 0) {
+      console.warn(
+        `[MapData] objectKey ${objectKey} not found in TopoJSON; falling back to ${available[0]} for url=${url}`,
+      )
+      return topoData
+    }
+  }
+
+  throw new Error(
+    `[MapData] Invalid TopoJSON/GeoJSON: url=${url}, objectKey=${objectKey}, contentType=${contentType}, availableObjects=${Object.keys(
+      topoData?.objects ?? {},
+    ).join(',')}`,
+  )
 }
 
 function normalizeGeoJsonFeatures(
@@ -63,6 +81,38 @@ function normalizeGeoJsonFeatures(
   }
 }
 
+function loadGeoData(
+  filename: string,
+  objectKey: string,
+) {
+  return fetchTopoJson(getMapAssetUrl(filename), objectKey)
+    .then((topoData) => {
+      // If the response is already a GeoJSON FeatureCollection, use it.
+      if (topoData?.type === 'FeatureCollection') {
+        return normalizeGeoJsonFeatures(topoData as FeatureCollection<Geometry>)
+      }
+
+      // If the response is TopoJSON, try to extract the requested object.
+      const targetObject = topoData.objects?.[objectKey] ??
+        // fallback to first available object
+        (topoData.objects ? topoData.objects[Object.keys(topoData.objects)[0]] : undefined)
+
+      if (!targetObject) {
+        throw new Error(`No suitable object found in TopoJSON: ${filename}`)
+      }
+
+      const rawGeojson = topojson.feature(topoData, targetObject) as unknown as FeatureCollection<Geometry>
+      return normalizeGeoJsonFeatures(rawGeojson)
+    })
+    .catch((error) => {
+      console.error(`[MapData] Failed to load ${filename} data`, {
+        filename,
+        error,
+      })
+      return EMPTY_FEATURE_COLLECTION
+    })
+}
+
 export function useMapGeoData() {
   const [maGeoData, setMaGeoData] = useState<FeatureCollection<Geometry>>(
     EMPTY_FEATURE_COLLECTION,
@@ -70,43 +120,33 @@ export function useMapGeoData() {
   const [digits2GeoData, setDigits2GeoData] = useState<
     FeatureCollection<Geometry>
   >(EMPTY_FEATURE_COLLECTION)
+  const [prefGeoData, setPrefGeoData] = useState<
+    FeatureCollection<Geometry>
+  >(EMPTY_FEATURE_COLLECTION)
+  const [cityGeoData, setCityGeoData] = useState<
+    FeatureCollection<Geometry>
+  >(EMPTY_FEATURE_COLLECTION)
 
   useEffect(() => {
-    const url = getMapAssetUrl('areacode.json')
-
-    fetchTopoJson(url, 'areacode')
-      .then((topoData) => {
-        const rawGeojson = topojson.feature(
-          topoData,
-          topoData.objects.areacode,
-        ) as unknown as FeatureCollection<Geometry>
-        const geojson = normalizeGeoJsonFeatures(rawGeojson)
-        setMaGeoData(geojson)
-      })
-      .catch((error) => {
-        console.error('[MapData] Failed to load MA data', { url, error })
-      })
+    loadGeoData('ma.json', 'ma').then(setMaGeoData)
   }, [])
 
   useEffect(() => {
-    const url = getMapAssetUrl('digits2.json')
+    loadGeoData('digits2.json', 'digits2').then(setDigits2GeoData)
+  }, [])
 
-    fetchTopoJson(url, '2digits')
-      .then((topoData) => {
-        const rawGeojson = topojson.feature(
-          topoData,
-          topoData.objects['2digits'],
-        ) as unknown as FeatureCollection<Geometry>
-        const geojson = normalizeGeoJsonFeatures(rawGeojson)
-        setDigits2GeoData(geojson)
-      })
-      .catch((error) => {
-        console.error('[MapData] Failed to load 2-digits data', { url, error })
-      })
+  useEffect(() => {
+    loadGeoData('pref.json', 'pref').then(setPrefGeoData)
+  }, [])
+
+  useEffect(() => {
+    loadGeoData('city.json', 'city').then(setCityGeoData)
   }, [])
 
   return {
     maGeoData,
     digits2GeoData,
+    prefGeoData,
+    cityGeoData,
   }
 }

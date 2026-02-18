@@ -1,15 +1,6 @@
-import maplibregl from 'maplibre-gl'
-// @ts-ignore
-import MapLibreWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import MapView from 'react-map-gl/maplibre'
-import type {
-  Feature,
-  FeatureCollection,
-  Geometry,
-  Position,
-  BBox,
-} from 'geojson'
+import type { Feature, Geometry } from 'geojson'
 import type {
   MapGeoJSONFeature,
   MapLayerMouseEvent,
@@ -19,75 +10,29 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import './map.css'
 import { MA_MAP_STYLE } from './mapStyles'
 import { useMapGeoData } from './hooks/useMapGeoData'
-import type { ActiveMAInfo, HoverState } from './types'
+import type { ActiveGeometryInfo, HoverState } from './types'
 import { MapLayers } from './components/MapLayers'
 import { ActiveMAPanel } from './components/ActiveMAPanel'
+import {
+  buildActiveGeometryList,
+  toFeatureCollection,
+} from './utils/activeGeometry'
+import { getFeaturesBounds } from './utils/geometry'
+import { getMAKeysFromFilter, toMAKey } from './utils/maSearch'
 import prefList from 'areacode/data/prefList'
 import cityList from 'areacode/data/cityList'
 import { getAvailableThreeDigitNumbers } from 'areacode/components/numberTable'
-import {
-  MACompListContent,
-  type SearchType,
-} from 'areacode/pages/list/MACompListContent'
-
-function flattenCoordinates(geometry: Geometry): Position[] {
-  switch (geometry.type) {
-    case 'Point':
-      return [geometry.coordinates]
-    case 'MultiPoint':
-    case 'LineString':
-      return geometry.coordinates
-    case 'MultiLineString':
-    case 'Polygon':
-      return geometry.coordinates.flat(1)
-    case 'MultiPolygon':
-      return geometry.coordinates.flat(2)
-    default:
-      return []
-  }
-}
-
-function getFeaturesBounds(features: Feature<Geometry>[]): BBox | null {
-  const points = features.flatMap((feature) =>
-    flattenCoordinates(feature.geometry),
-  )
-  if (points.length === 0) {
-    return null
-  }
-
-  let minLng = Infinity
-  let maxLng = -Infinity
-  let minLat = Infinity
-  let maxLat = -Infinity
-
-  points.forEach(([lng, lat]) => {
-    if (lng < minLng) minLng = lng
-    if (lng > maxLng) maxLng = lng
-    if (lat < minLat) minLat = lat
-    if (lat > maxLat) maxLat = lat
-  })
-
-  return [minLng, minLat, maxLng, maxLat]
-}
-
-function toMAKey(areaCode: string, MAName: string): string {
-  return `${areaCode}|${MAName}`
-}
-
-function getMAKeysFromFilter(type: SearchType, query: string): string[] {
-  const MAComps = new MACompListContent().filter(type, query).MAComps
-  return [
-    ...new Set(
-      MAComps.map((maComp) => toMAKey(maComp.areaCode, maComp.MAName)),
-    ),
-  ]
-}
 
 function App() {
-  const { maGeoData, digits2GeoData } = useMapGeoData()
+  const { maGeoData, digits2GeoData, prefGeoData, cityGeoData } =
+    useMapGeoData()
   const [showMA, setShowMA] = useState(true)
   const [showDigits2, setShowDigits2] = useState(true)
-  const [activeMAs, setActiveMAs] = useState<ActiveMAInfo[]>([])
+  const [showPref, setShowPref] = useState(true)
+  const [showCity, setShowCity] = useState(true)
+  const [activeMAs, setActiveMAs] = useState<ActiveGeometryInfo[]>([])
+  const [activePrefs, setActivePrefs] = useState<ActiveGeometryInfo[]>([])
+  const [activeCities, setActiveCities] = useState<ActiveGeometryInfo[]>([])
   const [isPanelExpanded, setIsPanelExpanded] = useState(false)
   const [mapZoom, setMapZoom] = useState(6)
   const [selectedPref, setSelectedPref] = useState('')
@@ -104,37 +49,14 @@ function App() {
   )
   const digits3Options = useMemo(() => getAvailableThreeDigitNumbers(), [])
 
-  const activateFeatures = useCallback(
+  const activateMAFeatures = useCallback(
     (
       predicate: (properties: Record<string, string>) => boolean,
       orderedMAKeys: string[] = [],
     ) => {
-      const matchedActiveMAs: Array<ActiveMAInfo | null> =
-        maGeoData.features.map((feature, index) => {
-          const properties = (feature.properties ?? {}) as Record<
-            string,
-            string
-          >
-          if (!feature.geometry || !predicate(properties)) {
-            return null
-          }
-
-          const featureId: ActiveMAInfo['featureId'] = index
-          const activeFeature: Feature<Geometry> = {
-            type: 'Feature',
-            id: featureId,
-            properties,
-            geometry: feature.geometry,
-          }
-
-          return {
-            featureId,
-            properties,
-            feature: activeFeature,
-          }
-        })
-      const nextActiveMAs = matchedActiveMAs.filter(
-        (item): item is ActiveMAInfo => item !== null,
+      const nextActiveMAs = buildActiveGeometryList(
+        maGeoData.features,
+        predicate,
       )
 
       if (orderedMAKeys.length > 0) {
@@ -185,8 +107,8 @@ function App() {
           [bounds[2], bounds[3]],
         ],
         {
-          padding: { top: 40, right: 40, bottom: 40, left: 40 },
-          duration: 800,
+          padding: { top: 100, right: 100, bottom: 100, left: 100 },
+          duration: 1500,
           maxZoom: 10,
         },
       )
@@ -197,13 +119,50 @@ function App() {
   const activateByMAKeys = useCallback(
     (orderedMAKeys: string[]) => {
       const maKeySet = new Set(orderedMAKeys)
-      activateFeatures(
+      activateMAFeatures(
         (properties) =>
           maKeySet.has(toMAKey(properties['_市外局番'], properties['_MA名'])),
         orderedMAKeys,
       )
     },
-    [activateFeatures],
+    [activateMAFeatures],
+  )
+
+  const activatePrefFeatures = useCallback(
+    (predicate: (properties: Record<string, string>) => boolean) => {
+      setActivePrefs(buildActiveGeometryList(prefGeoData.features, predicate))
+    },
+    [prefGeoData.features],
+  )
+
+  const activatePrefKeys = useCallback(
+    (prefNames: string[]) => {
+      const prefNameSet = new Set(prefNames)
+      activatePrefFeatures((properties) =>
+        prefNameSet.has(properties['PREF_NAME']),
+      )
+    },
+    [activatePrefFeatures],
+  )
+
+  const activateCityFeatures = useCallback(
+    (predicate: (properties: Record<string, string>) => boolean) => {
+      setActiveCities(buildActiveGeometryList(cityGeoData.features, predicate))
+    },
+    [cityGeoData.features],
+  )
+
+  const activateCityKeys = useCallback(
+    (cityNames: string[]) => {
+      const cityNamesSet = new Set(cityNames)
+      // TODO: 郡名を考慮する
+      activateCityFeatures((properties) =>
+        cityNamesSet.has(
+          `${properties['PREF_NAME']}${properties['CITY_NAME']}`,
+        ),
+      )
+    },
+    [activateCityFeatures],
   )
 
   const clearHoverState = useCallback(() => {
@@ -236,6 +195,9 @@ function App() {
       setSelectedCity('')
       setSelectedDigits3('')
 
+      activatePrefKeys([])
+      activateCityKeys([])
+
       const featureId = feature.id
       const sourceFeature =
         typeof featureId === 'number'
@@ -265,7 +227,7 @@ function App() {
         return [{ featureId, properties, feature: activeFeature }]
       })
     },
-    [maGeoData.features],
+    [maGeoData.features, activatePrefKeys, activateCityKeys],
   )
 
   const onHover = useCallback(
@@ -309,8 +271,10 @@ function App() {
       }
 
       activateByMAKeys(getMAKeysFromFilter('pref', pref))
+      activatePrefKeys([pref])
+      activateCityKeys([])
     },
-    [activateByMAKeys],
+    [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
   const handleCitySelect = useCallback(
@@ -325,8 +289,10 @@ function App() {
       }
 
       activateByMAKeys(getMAKeysFromFilter('city', cityName))
+      activatePrefKeys([])
+      activateCityKeys([cityName])
     },
-    [activateByMAKeys],
+    [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
   const handleDigits3Select = useCallback(
@@ -341,16 +307,25 @@ function App() {
       }
 
       activateByMAKeys(getMAKeysFromFilter('code_prefix', `${digits3}`))
+      activatePrefKeys([])
+      activateCityKeys([])
     },
-    [activateByMAKeys],
+    [activateByMAKeys, activatePrefKeys, activateCityKeys],
   )
 
-  const activeMAFeatureCollection = useMemo<FeatureCollection<Geometry>>(
-    () => ({
-      type: 'FeatureCollection',
-      features: activeMAs.map((activeMA) => activeMA.feature),
-    }),
+  const activeMAFeatureCollection = useMemo(
+    () => toFeatureCollection(activeMAs),
     [activeMAs],
+  )
+
+  const activePrefFeatureCollection = useMemo(
+    () => toFeatureCollection(activePrefs),
+    [activePrefs],
+  )
+
+  const activeCityFeatureCollection = useMemo(
+    () => toFeatureCollection(activeCities),
+    [activeCities],
   )
 
   const interactiveLayerIds = [
@@ -378,6 +353,22 @@ function App() {
             />{' '}
             市外局番2桁地図
           </label>
+          <label className="map-layer-toggle-item">
+            <input
+              type="checkbox"
+              checked={showPref}
+              onChange={(event) => setShowPref(event.target.checked)}
+            />{' '}
+            都道府県地図
+          </label>
+          <label className="map-layer-toggle-item">
+            <input
+              type="checkbox"
+              checked={showCity}
+              onChange={(event) => setShowCity(event.target.checked)}
+            />{' '}
+            市区町村地図
+          </label>
         </div>
 
         <MapView
@@ -401,10 +392,18 @@ function App() {
           <MapLayers
             maGeoData={maGeoData}
             digits2GeoData={digits2GeoData}
+            prefGeoData={prefGeoData}
+            cityGeoData={cityGeoData}
             activeMAFeatureCollection={activeMAFeatureCollection}
+            activePrefFeatureCollection={activePrefFeatureCollection}
+            activeCityFeatureCollection={activeCityFeatureCollection}
             showMA={showMA}
             showDigits2={showDigits2}
+            showPref={showPref}
+            showCity={showCity}
             zoom={mapZoom}
+            onPrefLabelClick={handlePrefSelect}
+            onDigits2LabelClick={handleDigits3Select}
           />
         </MapView>
       </div>

@@ -13,7 +13,11 @@ import Yamanote from 'yamanote/Yamanote'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+      }}
+    >
       <Routes>
         <Route path="/">
           {mysiteRoutes.map((route: RoutePath) => (

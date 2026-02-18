@@ -55,6 +55,28 @@ export const activeMABorderStyle: LineLayerSpecification = {
   },
 }
 
+export const activePrefBorderStyle: LineLayerSpecification = {
+  source: 'active-pref-source',
+  id: 'active-pref-borders',
+  type: 'line',
+  paint: {
+    'line-color': '#44dc26',
+    'line-width': ['interpolate', ['linear'], ['zoom'], 4, 2.8, 8, 5.2],
+    'line-opacity': 1,
+  },
+}
+
+export const activeCityBorderStyle: LineLayerSpecification = {
+  source: 'active-city-source',
+  id: 'active-city-borders',
+  type: 'line',
+  paint: {
+    'line-color': '#26d6dc',
+    'line-width': ['interpolate', ['linear'], ['zoom'], 4, 1, 8, 2],
+    'line-opacity': 1,
+  },
+}
+
 export const maLabelStyle: SymbolLayerSpecification = {
   source: 'ma-source',
   id: 'ma-labels',
