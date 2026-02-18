@@ -108,9 +108,8 @@ export function MAAreaCodeInfoCards({
     <>
       {MAComps.map((MAComp, i) => {
         return (
-          <div className={MAList.infoBlockContainer}>
+          <div className={MAList.infoBlockContainer} key={i}>
             <MAAreaCodeInfoCard
-              key={i}
               MAComp={MAComp}
               displayParam={displayParam}
               cityOptions={cityOptions}
