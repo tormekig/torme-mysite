@@ -75,6 +75,7 @@ export function MapLayers({
   showPref,
   showCity,
   zoom,
+  onPrefLabelClick,
 }: {
   maGeoData: FeatureCollection<Geometry>
   digits2GeoData: FeatureCollection<Geometry>
@@ -88,6 +89,7 @@ export function MapLayers({
   showPref: boolean
   showCity: boolean
   zoom: number
+  onPrefLabelClick: (prefName: string) => void
 }) {
   const digits2LabelMarkers = useMemo(
     () =>
@@ -113,6 +115,38 @@ export function MapLayers({
         })
         .filter((item): item is NonNullable<typeof item> => item !== null),
     [digits2GeoData.features],
+  )
+
+  const prefLabelMarkers = useMemo(
+    () =>
+      prefGeoData.features
+        .map((feature, index) => {
+          if (!feature.geometry) {
+            return null
+          }
+
+          const position = getLabelPosition(feature.geometry)
+          if (!position) {
+            return null
+          }
+
+          const properties = (feature.properties ?? {}) as Record<
+            string,
+            string
+          >
+          const prefName = properties['PREF_NAME'] ?? ''
+          if (!prefName) {
+            return null
+          }
+
+          return {
+            id: String(feature.id ?? `pref-${index}`),
+            position,
+            prefName,
+          }
+        })
+        .filter((item): item is NonNullable<typeof item> => item !== null),
+    [prefGeoData.features],
   )
 
   const digits2FontSize = useMemo(() => getDigits2FontSize(zoom), [zoom])
@@ -188,6 +222,27 @@ export function MapLayers({
           ></Layer>
         </Source>
       )}
+
+      {showPref &&
+        prefLabelMarkers.map((marker) => (
+          <Marker
+            key={marker.id}
+            longitude={marker.position[0]}
+            latitude={marker.position[1]}
+            anchor="center"
+          >
+            <button
+              type="button"
+              className="pref-map-label-marker"
+              onClick={(event) => {
+                event.stopPropagation()
+                onPrefLabelClick(marker.prefName)
+              }}
+            >
+              <span>{marker.prefName}</span>
+            </button>
+          </Marker>
+        ))}
 
       {showDigits2 &&
         digits2LabelMarkers.map((marker) => (
