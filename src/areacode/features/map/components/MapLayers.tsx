@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Layer, Marker, Source } from 'react-map-gl/maplibre'
-import type { FeatureCollection, Geometry, Position } from 'geojson'
+import type { Feature, FeatureCollection, Geometry, Point, Position } from 'geojson'
 import {
   activeCityBorderStyle,
   activeMABorderStyle,
@@ -12,6 +12,9 @@ import {
   maLabelStyle,
 } from '../mapStyles'
 import { getLabelPosition } from '../utils/geometry'
+
+const CITY_LABEL_MIN_ZOOM = 8.3
+const CITY_LABEL_MAX_COLLISION_ZOOM = 12
 
 function getDigits2FontSize(zoom: number): number {
   const minZoom = 5
@@ -177,6 +180,115 @@ export function MapLayers({
     return placedPrefMarkers
   }, [prefGeoData.features, digits2LabelMarkers, showDigits2])
 
+  const cityLabelGeoData = useMemo<FeatureCollection<Point>>(() => {
+    const groupedByCity = new Map<
+      string,
+      {
+        id: string
+        prefName: string
+        cityName: string
+        candidates: Position[]
+      }
+    >()
+
+    cityGeoData.features.forEach((feature, index) => {
+      if (!feature.geometry) {
+        return
+      }
+
+      const position = getLabelPosition(feature.geometry)
+      const properties = (feature.properties ?? {}) as Record<string, string>
+      const cityName = properties['CITY_NAME']
+      const prefName = properties['PREF_NAME']
+
+      if (!position || !cityName || !prefName) {
+        return
+      }
+
+      const cityKey = `${prefName}|${cityName}`
+      const existing = groupedByCity.get(cityKey)
+
+      if (existing) {
+        existing.candidates.push(position)
+        return
+      }
+
+      groupedByCity.set(cityKey, {
+        id: String(feature.id ?? `city-${index}`),
+        prefName,
+        cityName,
+        candidates: [position],
+      })
+    })
+
+    const features = Array.from(groupedByCity.values()).map((city) => {
+      const averagedPosition: Position = city.candidates.reduce<Position>(
+        (sum, candidate) => [sum[0] + candidate[0], sum[1] + candidate[1]],
+        [0, 0],
+      )
+      const center: Position = [
+        averagedPosition[0] / city.candidates.length,
+        averagedPosition[1] / city.candidates.length,
+      ]
+
+      return {
+        type: 'Feature',
+        id: city.id,
+        properties: {
+          PREF_NAME: city.prefName,
+          CITY_NAME: city.cityName,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: center,
+        },
+      } as Feature<Point>
+    })
+
+    return {
+      type: 'FeatureCollection',
+      features,
+    }
+  }, [cityGeoData.features])
+
+  const shouldShowCityLabels = showCity && zoom >= CITY_LABEL_MIN_ZOOM
+  const cityLabelAllowOverlap = zoom >= CITY_LABEL_MAX_COLLISION_ZOOM
+
+  const cityLabelLayout = useMemo(() => {
+    const textFieldExpression: ['get', string] = ['get', 'CITY_NAME']
+    const textSizeExpression: [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+    ] = [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        CITY_LABEL_MIN_ZOOM,
+        10,
+        10,
+        11,
+        12,
+        12,
+      ]
+
+    return {
+      'text-field': textFieldExpression,
+      'text-size': textSizeExpression,
+      'text-font': ['Roboto Bold', 'Noto Sans CJK JP Bold', 'sans-serif'],
+      'text-anchor': 'center' as const,
+      'text-allow-overlap': cityLabelAllowOverlap,
+      'text-ignore-placement': cityLabelAllowOverlap,
+      visibility: shouldShowCityLabels ? ('visible' as const) : ('none' as const),
+    }
+  }, [cityLabelAllowOverlap, shouldShowCityLabels])
+
   return (
     <>
       {prefGeoData && (
@@ -225,19 +337,6 @@ export function MapLayers({
             }}
             layout={{ visibility: showCity ? 'visible' : 'none' }}
           ></Layer>
-          <Layer
-            id="city-label"
-            type="symbol"
-            layout={{
-              'text-field': ['get', 'CITY_NAME'],
-              'text-size': 12,
-              'text-anchor': 'center',
-              visibility: showCity ? 'visible' : 'none',
-            }}
-            paint={{
-              'text-color': '#555',
-            }}
-          ></Layer>
         </Source>
       )}
 
@@ -250,13 +349,6 @@ export function MapLayers({
           <Layer
             {...maBorderStyle}
             layout={{ visibility: showMA ? 'visible' : 'none' }}
-          ></Layer>
-          <Layer
-            {...maLabelStyle}
-            layout={{
-              ...maLabelStyle.layout,
-              visibility: showMA ? 'visible' : 'none',
-            }}
           ></Layer>
         </Source>
       )}
@@ -328,6 +420,32 @@ export function MapLayers({
           layout={{ visibility: showCity ? 'visible' : 'none' }}
         ></Layer>
       </Source>
+
+      <Source id="city-label-source" type="geojson" data={cityLabelGeoData}>
+        <Layer
+          id="city-labels"
+          type="symbol"
+          layout={cityLabelLayout}
+          paint={{
+            'text-color': '#065f46',
+            'text-halo-color': 'rgba(236, 253, 245, 0.96)',
+            'text-halo-width': 2,
+            'text-halo-blur': 0.2,
+          }}
+        ></Layer>
+      </Source>
+
+      {maGeoData && (
+        <Source id="ma-label-source" type="geojson" data={maGeoData}>
+          <Layer
+            {...maLabelStyle}
+            layout={{
+              ...maLabelStyle.layout,
+              visibility: showMA ? 'visible' : 'none',
+            }}
+          ></Layer>
+        </Source>
+      )}
     </>
   )
 }

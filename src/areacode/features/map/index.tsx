@@ -165,6 +165,20 @@ function App() {
     [activateCityFeatures],
   )
 
+  const handleCityLabelClick = useCallback(
+    (prefName: string, cityName: string) => {
+      setSelectedPref('')
+      setSelectedCity('')
+      setSelectedDigits3('')
+
+      const cityNameWithPref = `${prefName}${cityName}`
+      activateByMAKeys(getMAKeysFromFilter('city', cityNameWithPref))
+      activatePrefKeys([])
+      activateCityKeys([cityNameWithPref])
+    },
+    [activateByMAKeys, activatePrefKeys, activateCityKeys],
+  )
+
   const clearHoverState = useCallback(() => {
     if (!mapRef.current || hoverRef.current === null) {
       return
@@ -181,6 +195,18 @@ function App() {
     (event: MapLayerMouseEvent) => {
       mapRef.current = event.target
       const feature = event.features?.[0] as MapGeoJSONFeature | undefined
+
+      if (feature?.source === 'city-label-source' && feature.properties) {
+        const properties = feature.properties as Record<string, string>
+        const prefName = properties['PREF_NAME']
+        const cityName = properties['CITY_NAME']
+
+        if (prefName && cityName) {
+          handleCityLabelClick(prefName, cityName)
+        }
+        return
+      }
+
       if (
         !feature ||
         feature.source !== 'ma-source' ||
@@ -227,7 +253,12 @@ function App() {
         return [{ featureId, properties, feature: activeFeature }]
       })
     },
-    [maGeoData.features, activatePrefKeys, activateCityKeys],
+    [
+      maGeoData.features,
+      activatePrefKeys,
+      activateCityKeys,
+      handleCityLabelClick,
+    ],
   )
 
   const onHover = useCallback(
@@ -236,6 +267,11 @@ function App() {
       const feature = event.features?.[0] as MapGeoJSONFeature | undefined
       const sourceId = feature?.source as HoverState['sourceId'] | undefined
       const nextHoverId = feature?.id
+
+      if (sourceId !== 'ma-source' && sourceId !== 'digits2-source') {
+        clearHoverState()
+        return
+      }
 
       if (nextHoverId === undefined || !sourceId) {
         clearHoverState()
@@ -331,6 +367,7 @@ function App() {
   const interactiveLayerIds = [
     ...(showMA ? ['ma-fills'] : []),
     ...(showDigits2 ? ['digits2-fills'] : []),
+    ...(showCity ? ['city-labels'] : []),
   ]
 
   return (
